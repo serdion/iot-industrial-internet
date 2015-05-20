@@ -5,8 +5,10 @@
  */
 package fi.iot.iiframework;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -14,11 +16,13 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author atte
  */
 @Entity
+@Table(name = "demo")
 public class DemoSaveable {
     @Id
-    @NotBlank
+    @Column(name = "i")
     private int i;
     @NotBlank
+    @Column(name = "s")
     private String s;
 
     public DemoSaveable(int i, String s) {
