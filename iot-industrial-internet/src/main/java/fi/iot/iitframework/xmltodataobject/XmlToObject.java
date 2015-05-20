@@ -1,6 +1,5 @@
 package fi.iot.iitframework.xmltodataobject;
 
-
 import fi.iot.iitframework.dataobject.DataObject;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,24 +13,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class XmlToObject {
 
-
-
+    /**
+     * Converts XML representation of DataObject to actual object.
+     *
+     * @param url URL to load the XML from
+     * @return DataObject based on the XML
+     */
     public static DataObject convertXml(String url) {
         DataObject data = null;
+        
         try {
             JAXBContext context = JAXBContext.newInstance(DataObject.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             data = (DataObject) unmarshaller.unmarshal(new URL(url));
-            
-            
-
         } catch (JAXBException ex) {
             Logger.getLogger(XmlToObject.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedURLException ex) {
             Logger.getLogger(XmlToObject.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return data;
 
+        return data;
     }
 }
