@@ -9,7 +9,7 @@ package fi.iot.iiframework.datasourcereaders;
 import fi.iot.iiframework.dataobject.DataObject;
 import fi.iot.iiframework.xmltodataobject.XmlToObject;
 
-public class XMLReader implements DataSourceReader{
+public class XMLReader implements InformationSourceReader{
     private String URI;
 
     public XMLReader(String URI) {
