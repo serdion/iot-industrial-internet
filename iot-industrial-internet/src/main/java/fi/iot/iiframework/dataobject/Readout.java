@@ -5,6 +5,8 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -14,21 +16,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author ooppa
  */
+@Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "readout")
 public class Readout {
     
     @XmlAttribute
+    @Id
     protected String time;
+    
+    @XmlAttribute
+    @Id
+    protected double value;
     
     @XmlAttribute
     protected String unit;
     
     @XmlAttribute
     protected String quantity;
-    
-    @XmlAttribute
-    protected double value;
 
     public Readout() {
     }
