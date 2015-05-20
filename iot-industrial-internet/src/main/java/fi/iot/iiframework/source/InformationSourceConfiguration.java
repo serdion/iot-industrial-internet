@@ -8,7 +8,7 @@ package fi.iot.iiframework.source;
 
 /**
  *
- * Configures an information source object based on database configuration information
+ * Configures a data source object based on database configuration information
  */
 public class InformationSourceConfiguration {
 

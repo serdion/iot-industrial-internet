@@ -11,15 +11,21 @@ import java.util.List;
 
 /**
  *
- * Creates and manages InformationSource classes
+ * Creates and manages objects that represent external data sources
  */
 public class InformationSourceManager {
-    
+
     private static List<InformationSource> sources = new ArrayList<>();
-    
+
+    /**
+     *
+     * Creates and manages objects that represent external data sources
+     * 
+     * @param config the configuration for this data source fetched from the database
+     */
     public static void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSource(config);
         sources.add(source);
     }
-    
+
 }
