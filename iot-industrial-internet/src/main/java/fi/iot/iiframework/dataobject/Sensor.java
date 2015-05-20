@@ -6,6 +6,9 @@
 package fi.iot.iiframework.dataobject;
 
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -17,12 +20,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author ooppa
  */
+@Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 public class Sensor {
+    
+    @Id
     @XmlAttribute
     protected String id;
     
+    @OneToMany
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
     protected List<Readout> readouts;

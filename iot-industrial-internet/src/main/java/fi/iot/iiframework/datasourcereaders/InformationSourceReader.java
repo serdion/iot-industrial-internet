@@ -12,6 +12,6 @@ import fi.iot.iiframework.dataobject.DataObject;
  * Defines reader for a DataSource.
  * 
  */
-public interface DataSourceReader {
+public interface InformationSourceReader {
     public DataObject read();
 }
