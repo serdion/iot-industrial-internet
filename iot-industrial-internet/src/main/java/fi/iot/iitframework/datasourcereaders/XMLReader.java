@@ -6,8 +6,8 @@
  */
 package fi.iot.iitframework.datasourcereaders;
 
-import fi.iot.iitframework.dataobject.DataObject;
-import fi.iot.iitframework.xmltodataobject.XmlToObject;
+import fi.iot.iiframework.dataobject.DataObject;
+import fi.iot.iiframework.xmltodataobject.XmlToObject;
 
 public class XMLReader implements DataSourceReader{
     private String URI;
@@ -16,7 +16,6 @@ public class XMLReader implements DataSourceReader{
         this.URI = URI;
     }
     
-    @Override
     public DataObject read() {
         return XmlToObject.convertXml(URI);
     }
