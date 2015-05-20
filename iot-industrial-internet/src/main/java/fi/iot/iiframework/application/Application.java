@@ -21,7 +21,9 @@ public class Application {
         
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         DemoSaveable demo = new DemoSaveable(10, "ten");
+        session.beginTransaction();
         session.save(demo);
+        session.getTransaction().commit();
         
     }
 

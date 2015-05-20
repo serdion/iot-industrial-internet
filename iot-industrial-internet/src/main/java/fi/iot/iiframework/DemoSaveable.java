@@ -5,12 +5,20 @@
  */
 package fi.iot.iiframework;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *
  * @author atte
  */
+@Entity
 public class DemoSaveable {
+    @Id
+    @NotBlank
     private int i;
+    @NotBlank
     private String s;
 
     public DemoSaveable(int i, String s) {
