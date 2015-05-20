@@ -1,6 +1,7 @@
 package fi.iot.iitframework.xmltodataobject;
 
-import fi.iotteam.fakexmlgenerator.data.DataObject;
+
+import fi.iot.iitframework.dataobject.DataObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -13,11 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class XmlToObject {
 
-    public XmlToObject() {
 
-    }
 
-    public DataObject convertXml(String url) {
+    public static DataObject convertXml(String url) {
         DataObject data = null;
         try {
             JAXBContext context = JAXBContext.newInstance(DataObject.class);
