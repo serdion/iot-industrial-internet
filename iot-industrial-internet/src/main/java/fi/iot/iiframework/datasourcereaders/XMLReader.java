@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iitframework.datasourcereaders;
+package fi.iot.iiframework.datasourcereaders;
 
 import fi.iot.iiframework.dataobject.DataObject;
 import fi.iot.iiframework.xmltodataobject.XmlToObject;
