@@ -13,6 +13,9 @@ package fi.iot.iiframework.source;
 public class InformationSourceConfiguration {
     
     private String id;
+    private String name;
+    private InformationSourceType type;
+    private String url;
 
     public String getId() {
         return id;
@@ -20,6 +23,30 @@ public class InformationSourceConfiguration {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public InformationSourceType getType() {
+        return type;
+    }
+
+    public void setType(InformationSourceType type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
     
     
