@@ -1,7 +1,6 @@
 package fi.iot.iiframework.xmltodataobject;
 
 import fi.iot.iiframework.dataobject.DataObject;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -9,7 +8,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlRootElement;
+
 
 public class XmlToObject {
 
