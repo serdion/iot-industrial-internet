@@ -11,5 +11,17 @@ package fi.iot.iiframework.source;
  * Configures a data source object based on database configuration information
  */
 public class InformationSourceConfiguration {
+    
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
 
 }

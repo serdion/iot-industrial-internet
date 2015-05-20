@@ -6,16 +6,28 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
+
 /**
  *
  * An object representing an external data source
  */
 public class InformationSource {
-    
+
     private InformationSourceConfiguration config;
-    
-    public InformationSource (InformationSourceConfiguration config) {
+    private InformationSourceReader reader;
+
+    public InformationSource(InformationSourceConfiguration config) {
         this.config = config;
     }
+
+    public String getId() {
+        return config.getId();
+    }
+    
+    public void createReader() {
+        
+    }
+    
     
 }
