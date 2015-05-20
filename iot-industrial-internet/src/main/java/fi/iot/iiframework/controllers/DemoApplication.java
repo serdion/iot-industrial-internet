@@ -1,4 +1,4 @@
-package main;
+package fi.iot.iiframework.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
