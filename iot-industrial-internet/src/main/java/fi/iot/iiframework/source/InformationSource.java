@@ -8,7 +8,7 @@ package fi.iot.iiframework.source;
 
 /**
  *
- * @author Teemu
+ * An object representing an external data source
  */
 public class InformationSource {
     
