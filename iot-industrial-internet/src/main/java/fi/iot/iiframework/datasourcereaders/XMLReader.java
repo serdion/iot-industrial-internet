@@ -16,6 +16,7 @@ public class XMLReader implements DataSourceReader{
         this.URI = URI;
     }
     
+    @Override
     public DataObject read() {
         return XmlToObject.convertXml(URI);
     }
