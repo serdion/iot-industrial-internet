@@ -5,7 +5,7 @@
  * Software Engineering Lab in summer 2015
  */
 
-package fi.iot.iitframework.xmltodataobject;
+package fi.iot.iiframework.xmltodataobject;
 
 import org.junit.After;
 import org.junit.AfterClass;

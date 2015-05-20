@@ -1,7 +1,7 @@
-package fi.iot.iitframework.xmltodataobject;
+package fi.iot.iiframework.xmltodataobject;
 
 
-import fi.iot.iitframework.dataobject.DataObject;
+import fi.iot.iiframework.dataobject.DataObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;

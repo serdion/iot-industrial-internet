@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.iot.iitframework.dataobject;
+package fi.iot.iiframework.dataobject;
 
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
