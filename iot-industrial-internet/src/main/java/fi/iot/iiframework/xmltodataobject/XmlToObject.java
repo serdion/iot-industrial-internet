@@ -20,7 +20,7 @@ public class XmlToObject {
      */
     public static DataObject convertXml(String url) {
         DataObject data = null;
-        
+
         try {
             JAXBContext context = JAXBContext.newInstance(DataObject.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
