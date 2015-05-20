@@ -8,7 +8,10 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 977b27f4b051ba27db5675a80aad2c5160b8b4a4
 
 public class XmlToObject {
 
@@ -25,9 +28,7 @@ public class XmlToObject {
             JAXBContext context = JAXBContext.newInstance(DataObject.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             data = (DataObject) unmarshaller.unmarshal(new URL(url));
-        } catch (JAXBException ex) {
-            Logger.getLogger(XmlToObject.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MalformedURLException ex) {
+        } catch (JAXBException | MalformedURLException ex) {
             Logger.getLogger(XmlToObject.class.getName()).log(Level.SEVERE, null, ex);
         }
 
