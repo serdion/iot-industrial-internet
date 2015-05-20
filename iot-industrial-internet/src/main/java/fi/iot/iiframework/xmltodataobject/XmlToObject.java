@@ -1,11 +1,7 @@
 package fi.iot.iiframework.xmltodataobject;
 
-<<<<<<< HEAD:iot-industrial-internet/src/main/java/fi/iot/iiframework/xmltodataobject/XmlToObject.java
-
 import fi.iot.iiframework.dataobject.DataObject;
-=======
-import fi.iot.iitframework.dataobject.DataObject;
->>>>>>> b2f85d86ede9b389244044e1a5c7a0a0df9e124c:iot-industrial-internet/src/main/java/fi/iot/iiframework/xmltodataobject/XmlToObject.java
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -15,7 +11,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 public class XmlToObject {
 
     /**
