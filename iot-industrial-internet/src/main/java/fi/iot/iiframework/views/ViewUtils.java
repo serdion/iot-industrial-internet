@@ -9,13 +9,18 @@ package fi.iot.iiframework.views;
 import org.springframework.ui.Model;
 
 /**
- *
- * @author ooppa
+ * Utilities for managing the views in the system.
  */
 public class ViewUtils {
-    
-    public static void addToModelFromViewParams(Model model, ViewParams params){
+
+    /**
+     * Adds view parameters to the given model
+     *
+     * @param model Model in which the parameters should be added
+     * @param params Parameters to add
+     */
+    public static void addViewParamsToModel(Model model, ViewParams params) {
         model.addAttribute("viewparams", params);
     }
-    
+
 }

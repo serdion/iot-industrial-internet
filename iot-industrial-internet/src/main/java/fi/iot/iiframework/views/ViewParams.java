@@ -7,8 +7,7 @@
 package fi.iot.iiframework.views;
 
 /**
- *
- * @author ooppa
+ * Defines the the parameters to be added to the view.
  */
 public class ViewParams {
 
@@ -17,19 +16,33 @@ public class ViewParams {
     private String footertype;
     private String content;
 
+    /**
+     * Creates a new ViewParams object with no parameters.
+     */
     public ViewParams() {
     }
 
     /**
      * Creates a new ViewParams object with default header and footer.
+     *
      * @param pagetitle
      * @param content
      */
     public ViewParams(String pagetitle, String content) {
         this.pagetitle = pagetitle;
-        this.headertype = "defaultheader";
-        this.footertype = "defaultfooter";
+        this.headertype = "default";
+        this.footertype = "default";
         this.content = content;
+    }
+
+    /**
+     * Set all types to the given String.
+     *
+     * @param type Type as a String
+     */
+    public void setAllTypes(String type) {
+        setHeadertype(type);
+        setFootertype(type);
     }
 
     public String getPagetitle() {

@@ -18,7 +18,7 @@ public class IndexController {
     @RequestMapping("*")
     public String index(Model model) {
         ViewParams params = new ViewParams("Hello world!", "Hei kaikki maailmassa.");
-        ViewUtils.addToModelFromViewParams(model, params);
+        ViewUtils.addViewParamsToModel(model, params);
         
         return "default";
     }
