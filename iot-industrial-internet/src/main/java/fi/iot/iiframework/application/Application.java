@@ -19,6 +19,7 @@ public class Application {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         
+        HibernateUtil.getSessionFactory().openSession();
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         DemoSaveable demo = new DemoSaveable(10, "ten");
         session.beginTransaction();
