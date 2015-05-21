@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.source;
 
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -15,6 +14,8 @@ public class InformationSourceManagerTest {
     @Test
     public void createdSourceIsAddedToSources() {
         InformationSourceConfiguration config = new InformationSourceConfiguration();
+        config.type = InformationSourceType.XML;
+        config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
         InformationSourceManager.createSource(config);
         assertEquals(1, InformationSourceManager.getSources().size());
     }
