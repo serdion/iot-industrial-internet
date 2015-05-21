@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.application;
 
-import fi.iot.iiframework.DemoSaveable;
 import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.DataObject;
 import fi.iot.iiframework.dataobject.DataObjectFactory;

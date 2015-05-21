@@ -1,8 +1,6 @@
 
 package fi.iot.iiframework.database;
 
-import fi.iot.iiframework.DemoSaveable;
-import javax.imageio.spi.ServiceRegistry;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -16,7 +14,6 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             AnnotationConfiguration configuration = new AnnotationConfiguration().configure(CONFIGFILE);
-            configuration.addAnnotatedClass(DemoSaveable.class);
             StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
             return configuration.buildSessionFactory(serviceRegistry);

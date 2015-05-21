@@ -16,7 +16,6 @@
     <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
     <!-- Echo all executed SQL to stdout -->
     <property name="show_sql">true</property>
-    <mapping class="fi.iot.iiframework.DemoSaveable"/>
     <mapping class="fi.iot.iiframework.dataobject.DataObject"/>
     <mapping class="fi.iot.iiframework.dataobject.Device"/>
     <mapping class="fi.iot.iiframework.dataobject.Sensor"/>
