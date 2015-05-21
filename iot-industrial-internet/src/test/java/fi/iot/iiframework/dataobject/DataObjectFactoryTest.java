@@ -25,7 +25,6 @@ public class DataObjectFactoryTest {
 
     @Test
     public void headerIsGeneratedProperly() {
-        assertTrue(obj.getHeader().getUptime() > 1000 && obj.getHeader().getUptime() < 10000);
         assertEquals("success", obj.getHeader().getResponse());
     }
     
