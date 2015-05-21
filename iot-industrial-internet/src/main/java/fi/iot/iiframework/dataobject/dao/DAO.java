@@ -9,11 +9,6 @@ package fi.iot.iiframework.dataobject.dao;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author atte
- * @param <T>
- */
 public interface DAO <T extends Serializable> {
     public void add(T t);
     public void update(T t);
