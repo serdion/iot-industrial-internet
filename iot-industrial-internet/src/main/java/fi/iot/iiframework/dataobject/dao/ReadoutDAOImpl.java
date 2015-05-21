@@ -7,32 +7,32 @@
 package fi.iot.iiframework.dataobject.dao;
 
 import fi.iot.iiframework.database.HibernateUtil;
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.dataobject.Readout;
 import java.util.List;
 import org.hibernate.Session;
 
-public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
+public class ReadoutDAOImpl implements ReadoutDAO {
 
     @Override
-    public void save(DataSourceObject dbo) {
+    public void save(Readout readout) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(dbo);
+        session.persist(readout);
     }
 
     @Override
-    public DataSourceObject get(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return null;
-    }
-
-    @Override
-    public List<DataSourceObject> getAll() {
+    public Readout get(Long id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         return null;
     }
 
     @Override
-    public void remove(String id) {
+    public List<Readout> getAll() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        return null;
+    }
+
+    @Override
+    public void remove(Long id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
     }
     
