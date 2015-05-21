@@ -25,16 +25,16 @@ public class InformationSource {
     }
 
     public String getId() {
-        return config.getId();
+        return config.id;
     }
 
     private void createReader() {
-        switch (config.getType()) {
+        switch (config.type) {
             case XML:
-                this.reader = new XMLReader(config.getUrl());
+                this.reader = new XMLReader(config.url);
                 break;
             default:
-                throw new AssertionError(config.getType().name());
+                throw new AssertionError(config.type.name());
         }
 
     }
