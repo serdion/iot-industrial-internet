@@ -5,14 +5,11 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import java.io.Serializable;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlList;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import javax.xml.bind.annotation.*;
 
 /**
  *
@@ -20,15 +17,25 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "device")
-public class Device {
+@Entity
+public class Device implements Serializable {
+
     @XmlAttribute
+    @Id
     protected String id;
-    
+
     @XmlAttribute
+    @NotNull
     protected boolean status;
 
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "DEVICE_SENSORS",
+            joinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "SENSOR_ID", referencedColumnName="id")
+    )
     protected List<Sensor> sensors;
 
     public Device() {
@@ -57,6 +64,5 @@ public class Device {
     public void setSensors(List<Sensor> sensors) {
         this.sensors = sensors;
     }
-    
-    
+
 }

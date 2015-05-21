@@ -6,8 +6,12 @@
 package fi.iot.iiframework.dataobject;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -29,9 +33,14 @@ public class Sensor {
     @XmlAttribute
     protected String id;
     
-    @OneToMany
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable (
+            name="SENSOR_READOUTS",
+            joinColumns = @JoinColumn(name="SENSOR_ID", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name="READOUT_ID", referencedColumnName="id")
+    )
     protected List<Readout> readouts;
 
     public Sensor() {

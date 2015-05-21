@@ -11,10 +11,11 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public class HibernateUtil {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
-
+    private static final String CONFIGFILE = "hibernate.cfg.xml";
+    
     private static SessionFactory buildSessionFactory() {
         try {
-            AnnotationConfiguration configuration = new AnnotationConfiguration().configure("hibernate.cfg.xml");
+            AnnotationConfiguration configuration = new AnnotationConfiguration().configure(CONFIGFILE);
             configuration.addAnnotatedClass(DemoSaveable.class);
             StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
