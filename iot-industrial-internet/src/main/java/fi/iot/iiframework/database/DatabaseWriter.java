@@ -6,8 +6,8 @@
  */
 package fi.iot.iiframework.database;
 
-import fi.iot.iiframework.dataobject.DataObject;
+import fi.iot.iiframework.dataobject.DataSourceObject;
 
 public interface DatabaseWriter {
-    public void writeToDb(DataObject obj);
+    public void writeToDb(DataSourceObject obj);
 }

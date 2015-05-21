@@ -6,9 +6,15 @@
  */
 package fi.iot.iiframework.database;
 
-import fi.iot.iiframework.dataobject.DataObject;
+import fi.iot.iiframework.dataobject.DataSourceObject;
+import java.io.Serializable;
+import org.hibernate.Session;
 
+/**
+ * Read an object from Database
+ * @author atte
+ */
 public interface DatabaseReader {
     //TODO: filters
-    public DataObject readFromDb();
+    public <T extends Serializable> T readFromDb();
 }

@@ -7,7 +7,7 @@
 package fi.iot.iiframework.application;
 
 import fi.iot.iiframework.database.HibernateUtil;
-import fi.iot.iiframework.dataobject.DataObject;
+import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.DataObjectFactory;
 import org.hibernate.Session;
 import org.springframework.boot.SpringApplication;

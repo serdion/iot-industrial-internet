@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "datasource")
 @Entity
 @Table(name = "datasource")
-public class DataObject implements Serializable {    
+public class DataSourceObject implements Serializable {    
     @XmlAttribute
     @Id
     protected String id;
@@ -32,10 +32,7 @@ public class DataObject implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id")
     )
     protected List<Device> devices;
-
-    public DataObject() {
-    }
-
+    
     public String getId() {
         return id;
     }

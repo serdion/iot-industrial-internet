@@ -1,6 +1,6 @@
 package fi.iot.iiframework.xmltodataobject;
 
-import fi.iot.iiframework.dataobject.DataObject;
+import fi.iot.iiframework.dataobject.DataSourceObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -17,12 +17,12 @@ public class XmlToObject {
      * @param url URL to load the XML from
      * @return DataObject based on the XML
      */
-    public static DataObject convertXml(String url) throws JAXBException, MalformedURLException {
-        DataObject data = null;
+    public static DataSourceObject convertXml(String url) throws JAXBException, MalformedURLException {
+        DataSourceObject data = null;
 
-        JAXBContext context = JAXBContext.newInstance(DataObject.class);
+        JAXBContext context = JAXBContext.newInstance(DataSourceObject.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        data = (DataObject) unmarshaller.unmarshal(new URL(url));
+        data = (DataSourceObject) unmarshaller.unmarshal(new URL(url));
 
         return data;
     }

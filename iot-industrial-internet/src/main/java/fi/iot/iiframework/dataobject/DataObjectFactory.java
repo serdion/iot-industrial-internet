@@ -20,8 +20,8 @@ public class DataObjectFactory {
      * Returns a randomly generated DataObject
      * @return DataObject
      */
-    public static DataObject getRandomDataObject() {
-        DataObject obj = new DataObject();
+    public static DataSourceObject getRandomDataObject() {
+        DataSourceObject obj = new DataSourceObject();
 
         obj.setId(UUID.randomUUID().toString());
         obj.setHeader(getHeader());
