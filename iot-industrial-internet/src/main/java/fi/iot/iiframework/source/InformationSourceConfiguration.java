@@ -16,4 +16,6 @@ public class InformationSourceConfiguration {
     protected String name;
     protected InformationSourceType type;
     protected String url;
+    protected int readFrequency; //in seconds
+    
 }
