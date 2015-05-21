@@ -6,6 +6,8 @@
  */
 package fi.iot.iiframework.controllers;
 
+import fi.iot.iiframework.views.ViewParams;
+import fi.iot.iiframework.views.ViewUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,9 @@ public class ErrorController {
     
     @RequestMapping("/error")
     public String generalError(Model model, @RequestParam(required=false, defaultValue="unknown") String type) {
+        ViewParams params = new ViewParams("Hello error!", "Hei kaikki errorit maailmassa.");
+        ViewUtils.addViewParamsToModel(model, params);
         
-        
-        return "/WEB-INF/views/error.jsp";
+        return "default"; // TODO error view?
     }
 }
