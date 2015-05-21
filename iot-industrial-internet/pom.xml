@@ -6,7 +6,7 @@
     <groupId>fi.iot</groupId>
     <artifactId>iiframework</artifactId>
     <version>0.0.1-DEV</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Industrial-Internet Framework</name>
     <description>IoT Industrial Internet framework</description>
