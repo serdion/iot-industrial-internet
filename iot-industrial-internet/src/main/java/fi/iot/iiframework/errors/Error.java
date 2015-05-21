@@ -12,8 +12,6 @@ import java.util.Date;
 
 /**
  * Contains information about an error
- *
- * @author ptpihlaj
  */
 public class Error {
 
