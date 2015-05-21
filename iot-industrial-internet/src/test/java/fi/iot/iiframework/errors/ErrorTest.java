@@ -8,7 +8,6 @@ package fi.iot.iiframework.errors;
 
 import java.util.Date;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -19,19 +18,11 @@ public class ErrorTest {
     private static Error[] testErrors;
     private static Date now;
 
-    public ErrorTest() {
-
-    }
-
     @BeforeClass
     public static void setUpClass() {
         now = new Date();
         testErrors = new Error[3];
 
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
     }
 
     @Before
@@ -74,8 +65,8 @@ public class ErrorTest {
         testErrors[0].setDate(newdate);
         assertTrue(testErrors[0].getDate().equals(newdate));
     }
-    
-        @Test
+
+    @Test
     public void changedDescpritionSaved() {
         testErrors[2].setDescription("test");
         assertTrue(testErrors[2].getDescription().equals("test"));

@@ -9,35 +9,17 @@ package fi.iot.iiframework.errors;
 import java.util.ArrayList;
 import java.util.Date;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ErrorLogTest {
 
     private ErrorLog testLog;
 
-    public ErrorLogTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         testLog = new ErrorLog();
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
