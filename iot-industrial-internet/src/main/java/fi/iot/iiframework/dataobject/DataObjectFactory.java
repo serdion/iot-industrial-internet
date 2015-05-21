@@ -7,6 +7,7 @@ package fi.iot.iiframework.dataobject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class DataObjectFactory {
      * @return DataObject
      */
     public static DataObject getRandomDataObject() {
+        java.util.Locale.setDefault(Locale.ENGLISH);
         DataObject obj = new DataObject();
 
         obj.setId(UUID.randomUUID().toString());
