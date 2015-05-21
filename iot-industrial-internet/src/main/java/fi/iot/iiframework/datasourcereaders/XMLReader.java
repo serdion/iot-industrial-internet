@@ -8,6 +8,8 @@ package fi.iot.iiframework.datasourcereaders;
 
 import fi.iot.iiframework.dataobject.DataObject;
 import fi.iot.iiframework.xmltodataobject.XmlToObject;
+import java.net.MalformedURLException;
+import javax.xml.bind.JAXBException;
 
 public class XMLReader implements InformationSourceReader{
     private String URI;
@@ -17,7 +19,7 @@ public class XMLReader implements InformationSourceReader{
     }
     
     @Override
-    public DataObject read() {
+    public DataObject read() throws JAXBException, MalformedURLException {
         return XmlToObject.convertXml(URI);
     }
     
