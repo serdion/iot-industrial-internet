@@ -6,10 +6,38 @@
  */
 package fi.iot.iiframework.dataobject.dao;
 
+import fi.iot.iiframework.database.HibernateUtil;
+import fi.iot.iiframework.dataobject.DataSourceObject;
+import java.util.List;
+import org.hibernate.Session;
+
 /**
  *
  * @author atte
  */
-public class DataSourceObjectDAOImpl {
+public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
+
+    @Override
+    public void save(DataSourceObject dbo) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.persist(dbo);
+    }
+
+    @Override
+    public DataSourceObject get(String id) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        return null;
+    }
+
+    @Override
+    public List<DataSourceObject> getAll() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        return null;
+    }
+
+    @Override
+    public void remove(String id) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    }
     
 }
