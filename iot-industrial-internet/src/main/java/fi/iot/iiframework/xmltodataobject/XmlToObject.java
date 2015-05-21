@@ -9,7 +9,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-
 public class XmlToObject {
 
     /**
@@ -18,16 +17,12 @@ public class XmlToObject {
      * @param url URL to load the XML from
      * @return DataObject based on the XML
      */
-    public static DataObject convertXml(String url) {
+    public static DataObject convertXml(String url) throws JAXBException, MalformedURLException {
         DataObject data = null;
 
-        try {
-            JAXBContext context = JAXBContext.newInstance(DataObject.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            data = (DataObject) unmarshaller.unmarshal(new URL(url));
-        } catch (JAXBException | MalformedURLException ex) {
-            Logger.getLogger(XmlToObject.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        JAXBContext context = JAXBContext.newInstance(DataObject.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        data = (DataObject) unmarshaller.unmarshal(new URL(url));
 
         return data;
     }
