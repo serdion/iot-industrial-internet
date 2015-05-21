@@ -8,6 +8,8 @@ package fi.iot.iiframework.dataobject;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -30,6 +32,11 @@ public class Sensor {
     protected String id;
     
     @OneToMany
+    @JoinTable (
+            name="SENSOR_READOUTS",
+            joinColumns = @JoinColumn(name="SENSOR_ID"),
+            inverseJoinColumns = @JoinColumn(name="READOUT_ID")
+    )
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
     protected List<Readout> readouts;
