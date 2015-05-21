@@ -9,6 +9,8 @@ package fi.iot.iiframework.source;
 import fi.iot.iiframework.dataobject.DataObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
+import java.net.MalformedURLException;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -39,7 +41,7 @@ public class InformationSource {
 
     }
     
-    public void readAndWrite(){
+    public void readAndWrite() throws JAXBException, MalformedURLException{
         DataObject dobj = reader.read();
         //TODO: db.write dobj
     }
