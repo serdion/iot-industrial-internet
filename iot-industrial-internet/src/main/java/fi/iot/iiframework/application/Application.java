@@ -24,15 +24,8 @@ public class Application {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        
         HibernateUtil.getSessionFactory().openSession();
-
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        DataObject obj = DataObjectFactory.getRandomDataObject();
-//        DemoSaveable demo = new DemoSaveable(10, "ten");
-//        session.beginTransaction();
-//        session.save(obj);
-//        session.getTransaction().commit();
-
     }
 
 }
