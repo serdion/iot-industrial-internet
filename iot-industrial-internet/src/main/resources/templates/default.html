@@ -7,16 +7,16 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>${title}</title>
+        <title>${viewparams.title}</title>
     </head>
     <body>
-        <div id="header" th:replace="fragments/header :: defaultheader">
+        <div id="header" th:replace="fragments/header :: ${viewparams.headertype}">
             <!-- Default header, found in fragments/header.html -->
         </div>
         
-        ${content}
+        ${viewparams.content}
         
-        <div id="footer" th:replace="fragments/footer :: defaultfooter">
+        <div id="footer" th:replace="fragments/footer :: ${viewparams.footertype}">
             <!-- Default footer, found in fragments/footer.html -->
         </div>
     </body>
