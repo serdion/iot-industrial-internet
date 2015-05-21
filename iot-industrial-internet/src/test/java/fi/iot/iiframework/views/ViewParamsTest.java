@@ -12,12 +12,21 @@ import static org.junit.Assert.*;
 public class ViewParamsTest {
 
     @Test
-    public void testSetAllTypes() {
-        System.out.println("setAllTypes");
-        String type = "";
-        ViewParams instance = new ViewParams();
-        instance.setAllTypes(type);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void newViewParamsObjectIsCreatedSuccessfully() {
+        ViewParams params = new ViewParams();
+        assertNotEquals(null, params);
+        ViewParams params2 = new ViewParams("title", "content");
+        assertEquals("default", params2.getFootertype());
+        assertEquals("default", params2.getHeadertype());
+        assertEquals("title", params2.getPagetitle());
+        assertEquals("content", params2.getContent());
+    }
+    
+    @Test
+    public void canSetAllTypesProperly() {
+        ViewParams params = new ViewParams();
+        params.setAllTypes("test");
+        assertEquals("test", params.getFootertype());
+        assertEquals("test", params.getHeadertype());
     }
 }
