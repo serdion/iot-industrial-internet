@@ -8,6 +8,8 @@ package fi.iot.iiframework.application;
 
 import fi.iot.iiframework.DemoSaveable;
 import fi.iot.iiframework.database.HibernateUtil;
+import fi.iot.iiframework.dataobject.DataObject;
+import fi.iot.iiframework.dataobject.DataObjectFactory;
 import org.hibernate.Session;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,14 +20,15 @@ public class Application {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
-        
         HibernateUtil.getSessionFactory().openSession();
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        DemoSaveable demo = new DemoSaveable(10, "ten");
-        session.beginTransaction();
-        session.save(demo);
-        session.getTransaction().commit();
-        
+
+//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        DataObject obj = DataObjectFactory.getRandomDataObject();
+//        DemoSaveable demo = new DemoSaveable(10, "ten");
+//        session.beginTransaction();
+//        session.save(obj);
+//        session.getTransaction().commit();
+
     }
 
 }

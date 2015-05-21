@@ -23,6 +23,7 @@ public class DataObjectFactory {
     public static DataObject getRandomDataObject() {
         DataObject obj = new DataObject();
 
+        obj.setId(UUID.randomUUID().toString());
         obj.setHeader(getHeader());
         obj.setDevices(new ArrayList<Device>());
         
