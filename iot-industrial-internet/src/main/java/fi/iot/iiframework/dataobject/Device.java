@@ -30,11 +30,11 @@ public class Device implements Serializable {
 
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "DEVICE_SENSORS",
-            joinColumns = @JoinColumn(name = "DEVICE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "SENSOR_ID")
+            joinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "SENSOR_ID", referencedColumnName="id")
     )
     protected List<Sensor> sensors;
 

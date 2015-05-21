@@ -7,19 +7,8 @@ package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "datasource")
@@ -31,15 +20,16 @@ public class DataObject implements Serializable {
     protected String id;
     
     @XmlElement
+    @Transient
     protected Header header;
     
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "SOURCE_DEVICES",
-            joinColumns = @JoinColumn(name = "SOURCE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "DEVICE_ID")
+            joinColumns = @JoinColumn(name = "SOURCE_ID", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id")
     )
     protected List<Device> devices;
 

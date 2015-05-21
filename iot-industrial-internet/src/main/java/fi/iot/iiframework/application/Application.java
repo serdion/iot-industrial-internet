@@ -22,12 +22,12 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         HibernateUtil.getSessionFactory().openSession();
 
-        DataObject obj = DataObjectFactory.getRandomDataObject();
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        DemoSaveable demo = new DemoSaveable(10, "ten");
-        session.beginTransaction();
-        session.save(demo);
-        session.getTransaction().commit();
+//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        DataObject obj = DataObjectFactory.getRandomDataObject();
+//        DemoSaveable demo = new DemoSaveable(10, "ten");
+//        session.beginTransaction();
+//        session.save(obj);
+//        session.getTransaction().commit();
 
     }
 

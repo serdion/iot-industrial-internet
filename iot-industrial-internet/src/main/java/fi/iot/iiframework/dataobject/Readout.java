@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Readout implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_STORE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @XmlAttribute
