@@ -6,6 +6,8 @@
  */
 package fi.iot.iiframework.controllers;
 
+import fi.iot.iiframework.views.ViewParams;
+import fi.iot.iiframework.views.ViewUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,9 @@ public class IndexController {
 
     @RequestMapping("*")
     public String index(Model model) {
-        return "/WEB-INF/views/index.jsp";
+        ViewParams params = new ViewParams("Hello world!", "Hei kaikki maailmassa.");
+        ViewUtils.addToModelFromViewParams(model, params);
+        
+        return "default";
     }
 }
