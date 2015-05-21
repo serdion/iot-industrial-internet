@@ -33,4 +33,8 @@ public class InformationSourceManager {
         //
     }
 
+    public static List<InformationSource> getSources() {
+        return sources;
+    }
+
 }
