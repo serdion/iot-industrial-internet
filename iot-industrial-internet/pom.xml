@@ -6,7 +6,7 @@
     <groupId>fi.iot</groupId>
     <artifactId>iiframework</artifactId>
     <version>0.0.1-DEV</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Industrial-Internet Framework</name>
     <description>IoT Industrial Internet framework</description>
@@ -59,6 +59,11 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.187</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

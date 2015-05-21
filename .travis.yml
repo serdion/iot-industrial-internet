@@ -1,0 +1,7 @@
+language: java
+before_script:
+- "cd iot-industrial-internet"
+
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
+
