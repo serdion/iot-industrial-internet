@@ -6,16 +6,81 @@
  */
 package fi.iot.iiframework.source;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *
  * Configures a data source object based on database configuration information
  */
-public class InformationSourceConfiguration {
+@Entity
+@Table(name = "InformationSource")
+public class InformationSourceConfiguration implements Serializable {
     
+    /**
+     * Information source id
+     */
+    @Id
+    @NotBlank
     protected String id;
+    /**
+     * Information source name
+     */
     protected String name;
+    /**
+     * Information source type xml/mbus/etc
+     */
     protected InformationSourceType type;
+    /**
+     * Url read from
+     */
     protected String url;
-    protected int readFrequency; //in seconds
+    /**
+     * How often read (in seconds)
+     */
+    protected int readFrequency;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public InformationSourceType getType() {
+        return type;
+    }
+
+    public void setType(InformationSourceType type) {
+        this.type = type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getReadFrequency() {
+        return readFrequency;
+    }
+
+    public void setReadFrequency(int readFrequency) {
+        this.readFrequency = readFrequency;
+    }
     
 }

@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "device")
 @Entity
 public class Device implements Serializable {
-
+    
     @XmlAttribute
     @Id
     protected String id;
