@@ -30,8 +30,15 @@ public interface DeviceDAO{
      */
     public List<Device> getAll();
     /**
-     * Removes a Device with given id
+     * Removes a Device with the given id
      * @param id id of device to be removed
      */
     public void remove(String id);
+
+    /**
+     * Updates a Device with the given id
+     *
+     * @param device updated device
+     */
+    public void update(Device device);
 }

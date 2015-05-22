@@ -6,18 +6,17 @@
  */
 package fi.iot.iiframework.dataobject.service;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.dataobject.Device;
 import java.util.List;
 
-public interface DataSourceObjectService {
+public interface DeviceService {
+    public void add(Device device);
 
-    public void add(DataSourceObject dso);
+    public void update(Device device);
 
-    public void update(DataSourceObject dso);
-
-    public DataSourceObject get(String id);
+    public Device get(String id);
 
     public void delete(String id);
 
-    public List<DataSourceObject> getAll();
+    public List<Device> getAll();
 }

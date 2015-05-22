@@ -9,6 +9,7 @@ package fi.iot.iiframework.dataobject.dao;
 import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 
 public class SensorDAOImpl implements SensorDAO {
@@ -22,18 +23,28 @@ public class SensorDAOImpl implements SensorDAO {
     @Override
     public Sensor get(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return null;
+        return (Sensor) session.get(Sensor.class, id);
     }
 
     @Override
     public List<Sensor> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return null;
+        Criteria criteria = session.createCriteria(Sensor.class);
+        return criteria.list();
     }
 
     @Override
     public void remove(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Sensor sensor = get(id);
+        session.delete(sensor);
+    }
+
+    @Override
+    public void update(Sensor sensor) {
+        Sensor sensorToUpdate = get(sensor.getId());
+        sensorToUpdate.setReadouts(sensor.getReadouts());
+        HibernateUtil.getSessionFactory().getCurrentSession().update(sensorToUpdate);
     }
     
 }

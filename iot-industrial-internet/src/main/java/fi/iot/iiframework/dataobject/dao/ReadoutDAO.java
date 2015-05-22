@@ -34,4 +34,11 @@ public interface ReadoutDAO{
      * @param id id of readout to be removed
      */
     public void remove(Long id);
+    
+    /**
+     * Updates a Readout with the given id
+     *
+     * @param readout updated readout
+     */
+    public void update(Readout readout);
 }

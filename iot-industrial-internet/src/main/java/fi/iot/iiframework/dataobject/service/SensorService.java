@@ -6,18 +6,17 @@
  */
 package fi.iot.iiframework.dataobject.service;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
 
-public interface DataSourceObjectService {
+public interface SensorService {
+    public void add(Sensor sensor);
 
-    public void add(DataSourceObject dso);
+    public void update(Sensor sensor);
 
-    public void update(DataSourceObject dso);
-
-    public DataSourceObject get(String id);
+    public Sensor get(String id);
 
     public void delete(String id);
 
-    public List<DataSourceObject> getAll();
+    public List<Sensor> getAll();
 }

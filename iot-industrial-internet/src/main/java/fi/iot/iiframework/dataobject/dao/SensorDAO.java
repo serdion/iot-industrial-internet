@@ -34,4 +34,11 @@ public interface SensorDAO{
      * @param id id of sensor to be removed
      */
     public void remove(String id);
+    
+    /**
+     * Updates a Sensor with the given id
+     *
+     * @param sensor updated sensor
+     */
+    public void update(Sensor sensor);
 }

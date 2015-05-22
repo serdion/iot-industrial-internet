@@ -13,10 +13,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author atte
- */
 @Repository
 public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
 
@@ -44,6 +40,14 @@ public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         DataSourceObject dso = get(id);
         session.delete(dso);
+    }
+
+    @Override
+    public void update(DataSourceObject dso) {
+        DataSourceObject dsoToUpdate = get(dso.getId());
+        dsoToUpdate.setDevices(dso.getDevices());
+        dsoToUpdate.setHeader(dso.getHeader());
+        HibernateUtil.getSessionFactory().getCurrentSession().update(dsoToUpdate);
     }
     
 }
