@@ -4,47 +4,47 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.dataobject.dao;
+package fi.iot.iiframework.daos;
 
 import fi.iot.iiframework.database.HibernateUtil;
-import fi.iot.iiframework.dataobject.Device;
+import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 
-public class DeviceDAOImpl implements DeviceDAO {
+public class SensorDAOImpl implements SensorDAO {
 
     @Override
-    public void save(Device device) {
+    public void save(Sensor sensor) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(device);
+        session.persist(sensor);
     }
 
     @Override
-    public Device get(String id) {
+    public Sensor get(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return (Device) session.get(Device.class, id);
+        return (Sensor) session.get(Sensor.class, id);
     }
 
     @Override
-    public List<Device> getAll() {
+    public List<Sensor> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Criteria criteria = session.createCriteria(Device.class);
+        Criteria criteria = session.createCriteria(Sensor.class);
         return criteria.list();
     }
 
     @Override
     public void remove(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Device device = get(id);
-        session.delete(device);
+        Sensor sensor = get(id);
+        session.delete(sensor);
     }
 
     @Override
-    public void update(Device device) {
-        Device deviceToUpdate = get(device.getId());
-        deviceToUpdate.setSensors(device.getSensors());
-        HibernateUtil.getSessionFactory().getCurrentSession().update(deviceToUpdate);
+    public void update(Sensor sensor) {
+        Sensor sensorToUpdate = get(sensor.getId());
+        sensorToUpdate.setReadouts(sensor.getReadouts());
+        HibernateUtil.getSessionFactory().getCurrentSession().update(sensorToUpdate);
     }
     
 }

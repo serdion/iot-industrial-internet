@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.dataobject.dao;
+package fi.iot.iiframework.daos;
 
 import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.Readout;

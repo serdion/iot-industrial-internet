@@ -4,10 +4,10 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.dataobject.service;
+package fi.iot.iiframework.services;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.dao.DataSourceObjectDAO;
+import fi.iot.iiframework.daos.DataSourceObjectDAO;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
