@@ -36,7 +36,7 @@ public class InformationSourceImpl implements InformationSource {
     private Timer scheduler;
 
     public InformationSourceImpl(InformationSourceConfiguration config) {
-
+        this.config = config;
         createReader();
         createOrUpdateScheduler();
     }

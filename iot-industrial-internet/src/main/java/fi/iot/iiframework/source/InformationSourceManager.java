@@ -8,6 +8,7 @@ package fi.iot.iiframework.source;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.context.annotation.Bean;
 
 /**
  *
@@ -15,10 +16,10 @@ import java.util.List;
  */
 public class InformationSourceManager {
 
-    private static List<InformationSource> sources;
+    private List<InformationSource> sources;
     
     public InformationSourceManager() {
-        sources = new ArrayList<>();
+        this.sources = new ArrayList<>();
     }
 
     /**
@@ -28,16 +29,16 @@ public class InformationSourceManager {
      * @param config the configuration for this data source fetched from the
      * database
      */
-    public static void createSource(InformationSourceConfiguration config) {
+    public void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSourceImpl(config);
         sources.add(source);
     }
 
-    public static void removeSource(String id) {
+    public void removeSource(String id) {
         
     }
 
-    public static List<InformationSource> getSources() {
+    public List<InformationSource> getSources() {
         return sources;
     }
 
