@@ -15,7 +15,11 @@ import java.util.List;
  */
 public class InformationSourceManager {
 
-    private static List<InformationSource> sources = new ArrayList<>();
+    private static List<InformationSource> sources;
+    
+    public InformationSourceManager() {
+        sources = new ArrayList<>();
+    }
 
     /**
      *
@@ -25,16 +29,18 @@ public class InformationSourceManager {
      * database
      */
     public static void createSource(InformationSourceConfiguration config) {
-        InformationSource source = new InformationSource(config);
+        InformationSource source = new InformationSourceImpl(config);
         sources.add(source);
     }
 
     public static void removeSource(String id) {
-        //
+        
     }
 
     public static List<InformationSource> getSources() {
         return sources;
     }
 
+    
+    
 }
