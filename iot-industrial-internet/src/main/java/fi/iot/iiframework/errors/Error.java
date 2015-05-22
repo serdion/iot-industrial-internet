@@ -35,10 +35,7 @@ public class Error {
     /**
      *
      * @param type ErrorType of error
-     * @param date Date of error
      */
-
-
     public void setType(ErrorType type) {
         this.type = type;
     }

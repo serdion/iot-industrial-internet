@@ -7,44 +7,32 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
-import fi.iot.iiframework.datasourcereaders.XMLReader;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
+
 
 /**
  *
  * An object representing an external data source
  */
-public class InformationSource {
-
-    private InformationSourceConfiguration config;
-    private InformationSourceReader reader;
-
-    public InformationSource(InformationSourceConfiguration config) {
-        this.config = config;
-        createReader();
-    }
-
-    public String getId() {
-        return config.id;
-    }
-
-    private void createReader() {
-        switch (config.type) {
-            case XML:
-                this.reader = new XMLReader(config.url);
-                break;
-            default:
-                throw new AssertionError(config.type.name());
-        }
-
-    }
-    
-    public void readAndWrite() throws JAXBException, MalformedURLException{
-        DataSourceObject dobj = reader.read();
-        //TODO: db.write dobj
-    }
-    
-    //TODO: Timers.
+public interface InformationSource {
+    /**
+     * Read a source from the reader
+     *
+     * @return DataSourceObject read from URL and parsed
+     * @throws JAXBException
+     * @throws MalformedURLException
+     */
+    public DataSourceObject read() throws JAXBException, MalformedURLException;
+    /**
+     * Reads an DataSourceObject and writes it to database
+     * @throws JAXBException
+     * @throws MalformedURLException 
+     */
+    public void readAndWrite() throws JAXBException, MalformedURLException;
+    /**
+     * Set the frequency of reads and writes
+     * @param seconds frequency in seconds
+     */
+    public void setReadFrequency(int seconds);
 }

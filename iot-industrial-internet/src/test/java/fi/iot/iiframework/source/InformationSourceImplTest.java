@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class InformationSourceTest {
+public class InformationSourceImplTest {
     
     private InformationSource source;
     private InformationSourceConfiguration config;
@@ -22,7 +22,7 @@ public class InformationSourceTest {
         config = new InformationSourceConfiguration();
         config.type = InformationSourceType.XML;
         config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
-        source = new InformationSource(config);
+        source = new InformationSourceImpl(config);
     }
 
     @Test
