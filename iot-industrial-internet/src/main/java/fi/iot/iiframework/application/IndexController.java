@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.controllers;
+package fi.iot.iiframework.application;
 
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    @RequestMapping("*")
+    @RequestMapping("/")
     public String index(Model model) {
         ViewParams params = new ViewParams("Hello world!", "Hei kaikki maailmassa.");
         ViewUtils.addViewParamsToModel(model, params);
+        
+        System.out.println("Controller found");
         
         return "default";
     }
