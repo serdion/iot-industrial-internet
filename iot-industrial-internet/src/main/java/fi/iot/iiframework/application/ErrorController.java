@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.application;
 
+import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ErrorController {
 
     public String generalError(Model model, @RequestParam(required = false, defaultValue = "unknown") String type) {
-        ViewParams params = new ViewParams("Hello error!", "Hei kaikki errorit maailmassa.");
+        
+        ErrorType errorType = ErrorType.getType(type);
+        
+        ViewParams params = new ViewParams("Error occured!", "Hei kaikki errorit maailmassa.");
         ViewUtils.addViewParamsToModel(model, params);
 
         return "default"; // TODO error view?
