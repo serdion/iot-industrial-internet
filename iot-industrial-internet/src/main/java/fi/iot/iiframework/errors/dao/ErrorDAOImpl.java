@@ -11,10 +11,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 
-/**
- *
- * @author petri
- */
+
 public class ErrorDAOImpl implements ErrorDAO {
 
     @Override
