@@ -6,25 +6,16 @@
  */
 package fi.iot.iiframework.application;
 
-import fi.iot.iiframework.views.ViewParams;
-import fi.iot.iiframework.views.ViewUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
-
-    @RequestMapping("/")
+@RequestMapping("sources")
+public class SourceController {
+    @RequestMapping("*")
     public String index(Model model) {
-        ViewParams params = new ViewParams("Hello world!", "Tervetuloa Springiin!");
-
-        if(true){ // if user logged in etc...
-            params.setNavtype("loggedin");
-        }
-        
-        ViewUtils.addViewParamsToModel(model, params);
-
-        return "default";
+        return "redirect:/";
     }
 }
+

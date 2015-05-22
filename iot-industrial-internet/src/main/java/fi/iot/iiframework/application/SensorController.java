@@ -13,10 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- *
- * @author Ooppa
- */
 @Controller
 @RequestMapping("sensors")
 public class SensorController {
@@ -30,20 +26,23 @@ public class SensorController {
     public String list(Model model) {
         ViewParams params = new ViewParams("List of all Sensors", "---");
         ViewUtils.addViewParamsToModel(model, params);
+        params.setNavtype("loggedin");
         return "default";
     }
 
     @RequestMapping("/{id}/view/")
-    public String view(Model model, @PathVariable Long id) {
+    public String view(Model model, @PathVariable String id) {
         ViewParams params = new ViewParams("View Sensor with id "+id, "---");
         ViewUtils.addViewParamsToModel(model, params);
+        params.setNavtype("loggedin");
         return "default";
     }
 
     @RequestMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable Long id) {
+    public String edit(Model model, @PathVariable String id) {
         ViewParams params = new ViewParams("Edit Sensor with id "+id, "---");
         ViewUtils.addViewParamsToModel(model, params);
+        params.setNavtype("loggedin");
         return "default";
     }
 }
