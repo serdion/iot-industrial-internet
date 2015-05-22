@@ -7,43 +7,33 @@
 package fi.iot.iiframework.dataobject.dao;
 
 import fi.iot.iiframework.database.HibernateUtil;
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author atte
- */
-@Repository
-public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
+public class SensorDAOImpl implements SensorDAO {
 
     @Override
-    public void save(DataSourceObject dso) {
+    public void save(Sensor sensor) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(dso);
+        session.persist(sensor);
     }
 
     @Override
-    public DataSourceObject get(String id) {
+    public Sensor get(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return (DataSourceObject) session.get(DataSourceObject.class, id);
+        return null;
     }
 
     @Override
-    public List<DataSourceObject> getAll() {
+    public List<Sensor> getAll() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Criteria criteria = session.createCriteria(DataSourceObject.class);
-        return criteria.list();
+        return null;
     }
 
     @Override
     public void remove(String id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        DataSourceObject dso = get(id);
-        session.delete(dso);
     }
     
 }
