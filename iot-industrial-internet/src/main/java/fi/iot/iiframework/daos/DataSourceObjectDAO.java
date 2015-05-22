@@ -4,35 +4,49 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.dataobject.dao;
+package fi.iot.iiframework.daos;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import java.util.List;
 
 /**
  * DAO for DataSourceObject
- * @author atte
  */
-public interface DataSourceObjectDAO{
+public interface DataSourceObjectDAO {
+
     /**
      * Save the DataSourceObject to Database
-     * @param dbo object to be saved
+     *
+     * @param dso object to be saved
      */
-    public void save(DataSourceObject dbo);
+    public void save(DataSourceObject dso);
+
     /**
      * Get a DataSourceObject with the given id
+     *
      * @param id id of the object
-     * @return 
+     * @return
      */
     public DataSourceObject get(String id);
+
     /**
      * Retrieves all DataSourceObjects in the database.
-     * @return 
+     *
+     * @return
      */
     public List<DataSourceObject> getAll();
+
     /**
      * Removes a DataSourceObject with given id
+     *
      * @param id id of object to be removed
      */
     public void remove(String id);
+
+    /**
+     * Updates a DataSourceObject with the given id
+     *
+     * @param dso updated object
+     */
+    public void update(DataSourceObject dso);
 }

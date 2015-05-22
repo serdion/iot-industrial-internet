@@ -5,18 +5,31 @@
  */
 package fi.iot.iiframework.errors;
 
+import java.io.Serializable;
 import java.util.Date;
-
-
-
+import javax.persistence.*;
 
 /**
  * Contains information about an error
  */
-public class Error {
+@Entity
+@Table(name = "Errors")
 
+public class Error implements Serializable {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "type")
     private ErrorType type;
+    
+    @Column(name = "errordate")
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date time;
+    
+    @Column(name = "description")
     private String description;
 
     /**
@@ -32,10 +45,10 @@ public class Error {
 
     }
 
-    /**
-     *
-     * @param type ErrorType of error
-     */
+    public Error() {
+        // Hibernate requires an empty constructor
+    }
+
     public void setType(ErrorType type) {
         this.type = type;
     }
@@ -59,8 +72,5 @@ public class Error {
     public String getDescription() {
         return description;
     }
-    
-    
-    
 
 }
