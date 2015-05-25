@@ -33,6 +33,7 @@ public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
 
     @Override
     public List<DataSourceObject> getAll() {
+        sessionFactory.openSession();
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DataSourceObject.class);
         return criteria.list();
     }
