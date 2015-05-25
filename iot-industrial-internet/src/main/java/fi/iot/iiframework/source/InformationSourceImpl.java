@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
@@ -15,6 +16,7 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
+import org.hibernate.Session;
 
 /**
  *
@@ -78,7 +80,11 @@ public class InformationSourceImpl implements InformationSource {
 
     @Override
     public void readAndWrite() throws JAXBException, MalformedURLException {
-        DataSourceObject dobj = read();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        DataSourceObject dso = read();
+        session.save(dso);
+        session.getTransaction().commit();
 
     }
 
