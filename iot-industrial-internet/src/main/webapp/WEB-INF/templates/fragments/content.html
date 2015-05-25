@@ -89,14 +89,14 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Time</th>
+                                                    <th>Time of measurement</th>
                                                     <th>Quantity</th>
                                                     <th>Measurement</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr th:each="readout : ${sensor.readouts}">
-                                                    <td th:text="${readout.time}"></td>
+                                                    <td th:text="${#dates.format(readout.getTimeAsDate(), 'dd.MM.yyyy HH:mm:ss')}"></td>
                                                     <td th:text="${readout.quantity}"></td>
                                                     <td th:text="${readout.value} +  ' ' + ${readout.unit}"></td>
                                                 </tr>
