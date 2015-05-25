@@ -27,9 +27,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ImportResource;
+
 
 @SpringBootApplication
 @ComponentScan("fi.iot.iiframework")
+@ImportResource("classpath:spring-context.xml")
 public class Application {
 
     private static final Logger logger = Logger.getLogger(Application.class.getName());
@@ -72,5 +76,20 @@ public class Application {
     public SessionFactory sessionFactory() {
         return sessionFactory;
     }
+    
+//    @Bean
+//    HibernateTransactionManager transactionManager() {
+//        return hc.transactionManager();
+//    }
+//    
+//    @Bean
+//    DataSource dataSource() {
+//        return hc.dataSource();
+//    }
+//    
+//    @Bean
+//    LocalSessionFactoryBean sessionFactory() {
+//        return hc.sessionFactory();
+//    }
 
 }
