@@ -11,35 +11,37 @@ import fi.iot.iiframework.dataobject.DataSourceObject;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public void save(DataSourceObject dso) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(dso);
+        sessionFactory.getCurrentSession().persist(dso);
     }
 
     @Override
     public DataSourceObject get(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return (DataSourceObject) session.get(DataSourceObject.class, id);
+        return (DataSourceObject) sessionFactory.getCurrentSession().get(DataSourceObject.class, id);
     }
 
     @Override
     public List<DataSourceObject> getAll() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Criteria criteria = session.createCriteria(DataSourceObject.class);
+        sessionFactory.openSession();
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(DataSourceObject.class);
         return criteria.list();
     }
 
     @Override
     public void remove(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         DataSourceObject dso = get(id);
-        session.delete(dso);
+        sessionFactory.getCurrentSession().delete(dso);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class DataSourceObjectDAOImpl implements DataSourceObjectDAO {
         DataSourceObject dsoToUpdate = get(dso.getId());
         dsoToUpdate.setDevices(dso.getDevices());
         dsoToUpdate.setHeader(dso.getHeader());
-        HibernateUtil.getSessionFactory().getCurrentSession().update(dsoToUpdate);
+        sessionFactory.getCurrentSession().update(dsoToUpdate);
     }
-    
+
 }

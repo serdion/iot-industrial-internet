@@ -10,36 +10,38 @@ import fi.iot.iiframework.database.HibernateUtil;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- *
- * @author petri
- */
+
 public class ErrorDAOImpl implements ErrorDAO {
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(Error error) {
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session s = sessionFactory.getCurrentSession();
         s.persist(error);
     }
 
     @Override
     public Error get(String id) {
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session s = sessionFactory.getCurrentSession();
         Error error = (Error) s.get(Error.class, id);
         return error;
     }
 
     @Override
     public List<Error> getAll() {
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session s = sessionFactory.getCurrentSession();
         Criteria criteria = s.createCriteria(Error.class);
         return criteria.list();
     }
 
     @Override
     public void remove(String id) {
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session s = sessionFactory.getCurrentSession();
         Error dso = get(id);
         s.delete(dso);
     }

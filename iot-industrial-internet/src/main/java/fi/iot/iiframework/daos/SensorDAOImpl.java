@@ -11,40 +11,41 @@ import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class SensorDAOImpl implements SensorDAO {
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(Sensor sensor) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(sensor);
+        sessionFactory.getCurrentSession().persist(sensor);
     }
 
     @Override
     public Sensor get(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return (Sensor) session.get(Sensor.class, id);
+        return (Sensor) sessionFactory.getCurrentSession().get(Sensor.class, id);
     }
 
     @Override
     public List<Sensor> getAll() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Criteria criteria = session.createCriteria(Sensor.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Sensor.class);
         return criteria.list();
     }
 
     @Override
     public void remove(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Sensor sensor = get(id);
-        session.delete(sensor);
+        sessionFactory.getCurrentSession().delete(sensor);
     }
 
     @Override
     public void update(Sensor sensor) {
         Sensor sensorToUpdate = get(sensor.getId());
         sensorToUpdate.setReadouts(sensor.getReadouts());
-        HibernateUtil.getSessionFactory().getCurrentSession().update(sensorToUpdate);
+        sessionFactory.getCurrentSession().update(sensorToUpdate);
     }
     
 }

@@ -7,6 +7,7 @@
 package fi.iot.iiframework.dataobject;
 
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,7 @@ public class Sensor {
             joinColumns = @JoinColumn(name="SENSOR_ID", referencedColumnName="id"),
             inverseJoinColumns = @JoinColumn(name="READOUT_ID", referencedColumnName="id")
     )
-    protected List<Readout> readouts;
+    protected Set<Readout> readouts;
 
     public Sensor() {
     }
@@ -55,11 +56,11 @@ public class Sensor {
         this.id = id;
     }
 
-    public List<Readout> getReadouts() {
+    public Set<Readout> getReadouts() {
         return readouts;
     }
 
-    public void setReadouts(List<Readout> readouts) {
+    public void setReadouts(Set<Readout> readouts) {
         this.readouts = readouts;
     }
 

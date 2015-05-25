@@ -7,6 +7,7 @@ package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.*;
@@ -36,7 +37,7 @@ public class Device implements Serializable {
             joinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id"),
             inverseJoinColumns = @JoinColumn(name = "SENSOR_ID", referencedColumnName="id")
     )
-    protected List<Sensor> sensors;
+    protected Set<Sensor> sensors;
 
     public Device() {
     }
@@ -57,11 +58,11 @@ public class Device implements Serializable {
         this.status = status;
     }
 
-    public List<Sensor> getSensors() {
+    public Set<Sensor> getSensors() {
         return sensors;
     }
 
-    public void setSensors(List<Sensor> sensors) {
+    public void setSensors(Set<Sensor> sensors) {
         this.sensors = sensors;
     }
 
