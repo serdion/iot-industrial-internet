@@ -19,7 +19,7 @@ public class DBReader {
     
 
     public static List<DataSourceObject> readDataSourceObject() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.sessionFactory().getCurrentSession();
         session.beginTransaction();
         Criteria criteria = session.createCriteria(DataSourceObject.class);
         List<DataSourceObject> list = criteria.list();

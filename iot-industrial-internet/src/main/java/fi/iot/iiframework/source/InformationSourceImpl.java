@@ -69,7 +69,7 @@ public class InformationSourceImpl implements InformationSource {
             @Override
             public void run() {
                 try {
-                    read();
+                    readAndWrite();
                 } catch (JAXBException | MalformedURLException ex) {
                     Logger.getLogger(InformationSource.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -80,12 +80,12 @@ public class InformationSourceImpl implements InformationSource {
 
     @Override
     public void readAndWrite() throws JAXBException, MalformedURLException {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
         DataSourceObject dso = read();
+        
+        Session session = HibernateUtil.sessionFactory().getCurrentSession();
+        session.beginTransaction();
         session.save(dso);
         session.getTransaction().commit();
-
     }
 
     @Override

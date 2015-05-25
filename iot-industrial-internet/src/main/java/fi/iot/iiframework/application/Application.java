@@ -26,8 +26,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan("fi.iot.iiframework")
 public class Application {
 
     private static final Logger logger = Logger.getLogger(Application.class.getName());
@@ -35,25 +37,40 @@ public class Application {
     public static void main(String[] args) throws JAXBException, MalformedURLException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        
+        Session session = ctx.getBean(SessionFactory.class).openSession();
+
         InformationSourceManager ism = ctx.getBean(InformationSourceManager.class);
-        
+
         InformationSourceConfiguration isc = new InformationSourceConfiguration();
         isc.setId("1");
         isc.setType(InformationSourceType.XML);
         isc.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         ism.createSource(isc);
         ism.getSources().get(0).readAndWrite();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(DataSourceObject.class);
-        List<DataSourceObject> list = criteria.list();
-        session.getTransaction().commit();
+
+        //System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
+    }
+    
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static final String CONFIGFILE = "hibernate_h2.cfg.xml";
+
+    private static SessionFactory buildSessionFactory() {
+        try {
+            SessionFactory sessionFactory = new Configuration().configure(CONFIGFILE)
+                    .buildSessionFactory();
+
+            return sessionFactory;
+
+        } catch (Throwable ex) {
+            // Make sure you log the exception, as it might be swallowed
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
     }
 
     @Bean
-    public InformationSourceManager informationSourceManager() {
-        return new InformationSourceManager();
+    public SessionFactory sessionFactory() {
+        return sessionFactory;
     }
 
 }
