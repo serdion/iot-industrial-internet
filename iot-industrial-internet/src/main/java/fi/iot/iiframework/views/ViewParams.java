@@ -12,8 +12,9 @@ package fi.iot.iiframework.views;
 public class ViewParams {
 
     private String pagetitle;
-    private String headertype;
+    private String navtype;
     private String footertype;
+    private String contenttype;
     private String content;
 
     /**
@@ -25,13 +26,14 @@ public class ViewParams {
     /**
      * Creates a new ViewParams object with default header and footer.
      *
-     * @param pagetitle
-     * @param content
+     * @param pagetitle Title for the page
+     * @param content   Content for the page
      */
     public ViewParams(String pagetitle, String content) {
         this.pagetitle = pagetitle;
-        this.headertype = "default";
+        this.navtype = "default";
         this.footertype = "default";
+        this.contenttype = "default";
         this.content = content;
     }
 
@@ -41,8 +43,9 @@ public class ViewParams {
      * @param type Type as a String
      */
     public void setAllTypes(String type) {
-        setHeadertype(type);
+        setNavtype(type);
         setFootertype(type);
+        setContenttype(type);
     }
 
     public String getPagetitle() {
@@ -53,12 +56,12 @@ public class ViewParams {
         this.pagetitle = pagetitle;
     }
 
-    public String getHeadertype() {
-        return headertype;
+    public String getNavtype() {
+        return navtype;
     }
 
-    public void setHeadertype(String headertype) {
-        this.headertype = headertype;
+    public void setNavtype(String headertype) {
+        this.navtype = headertype;
     }
 
     public String getFootertype() {
@@ -67,6 +70,14 @@ public class ViewParams {
 
     public void setFootertype(String footertype) {
         this.footertype = footertype;
+    }
+
+    public String getContenttype() {
+        return contenttype;
+    }
+
+    public void setContenttype(String contenttype) {
+        this.contenttype = contenttype;
     }
 
     public String getContent() {

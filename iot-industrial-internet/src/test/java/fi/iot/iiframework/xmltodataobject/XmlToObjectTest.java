@@ -7,6 +7,9 @@
 package fi.iot.iiframework.xmltodataobject;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.dataobject.Device;
+import fi.iot.iiframework.dataobject.Readout;
+import fi.iot.iiframework.dataobject.Sensor;
 import static fi.iot.iiframework.xmltodataobject.XmlToObject.convertXml;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
@@ -50,7 +53,13 @@ public class XmlToObjectTest {
 
     @Test
     public void firstReadoutUnitReadCorrectly() {
-        assertTrue(data.getDevices().get(0).getSensors().get(0).getReadouts().get(0).getQuantity().equals("Temperature"));
+        assertFalse(data.getDevices().isEmpty());
+        Device device = (Device) data.getDevices().toArray()[0];
+        assertFalse(device.getSensors().isEmpty());
+        Sensor sensor = (Sensor) device.getSensors().toArray()[0];
+        assertFalse(sensor.getReadouts().isEmpty());
+        Readout readout = (Readout) sensor.getReadouts().toArray()[0];
+        assertNotNull(readout);
     }
 
     @Rule

@@ -13,16 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
-
-    @RequestMapping("/")
-    public String index(Model model) {
-        ViewParams params = new ViewParams("Hello world!", "Tervetuloa Springiin!");
-
-        if(true){ // if user logged in etc...
-            params.setNavtype("loggedin");
-        }
-        
+public class HelpController {
+    
+    @RequestMapping("/help")
+    public String help(Model model) {
+        ViewParams params = new ViewParams("Help", "need help?");
+        params.setNavtype("loggedin");
         ViewUtils.addViewParamsToModel(model, params);
 
         return "default";

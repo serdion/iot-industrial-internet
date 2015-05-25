@@ -8,7 +8,9 @@ package fi.iot.iiframework.database;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
+@org.springframework.context.annotation.Configuration
 public class HibernateUtil {
     
     @Autowired
@@ -29,7 +31,8 @@ public class HibernateUtil {
 //        }
 //    }
 
-    public static SessionFactory getSessionFactory() {
+    @Bean
+    public static SessionFactory sessionFactory() {
         return sessionFactory;
     }
 

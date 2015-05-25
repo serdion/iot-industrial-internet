@@ -6,43 +6,38 @@
  */
 package fi.iot.iiframework.application;
 
+import fi.iot.iiframework.database.DBReader;
+import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("sensors")
-public class SensorController {
+@RequestMapping("sources")
+public class SourceController {
 
     @RequestMapping("*")
     public String index(Model model) {
-        return "redirect:/sensors/list";
+        return "redirect:/sources/example/view";
     }
 
-    @RequestMapping("/list")
-    public String list(Model model) {
-        ViewParams params = new ViewParams("List of all Sensors", "---");
-        ViewUtils.addViewParamsToModel(model, params);
-        params.setNavtype("loggedin");
-        return "default";
-    }
-
-    @RequestMapping("/{id}/view/")
+    @RequestMapping("/{id}/view")
     public String view(Model model, @PathVariable String id) {
-        ViewParams params = new ViewParams("View Sensor with id "+id, "---");
-        ViewUtils.addViewParamsToModel(model, params);
-        params.setNavtype("loggedin");
-        return "default";
-    }
+        ViewParams params = new ViewParams("List of all Sensors", "---");
 
-    @RequestMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable String id) {
-        ViewParams params = new ViewParams("Edit Sensor with id "+id, "---");
-        ViewUtils.addViewParamsToModel(model, params);
         params.setNavtype("loggedin");
+        params.setContenttype("view_source");
+
+        ViewUtils.addViewParamsToModel(model, params);
+        
+        List<DataSourceObject> datasources = DBReader.readDataSourceObject();
+
+        model.addAttribute("source", datasources.get(0));
+        
         return "default";
     }
 }

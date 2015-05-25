@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("error")
+@RequestMapping("errors")
 public class ErrorController {
 
     public String generalError(Model model, @RequestParam(required = false, defaultValue = "unknown") String type) {
@@ -25,6 +25,14 @@ public class ErrorController {
         ViewParams params = new ViewParams("Error occured!", "Hei kaikki errorit maailmassa.");
         ViewUtils.addViewParamsToModel(model, params);
 
-        return "default"; // TODO error view?
+        return "default";
+    }
+    
+    @RequestMapping("/list")
+    public String listErrors(Model model){
+        ViewParams params = new ViewParams("Errors listed", "Listana");
+        ViewUtils.addViewParamsToModel(model, params);
+
+        return "default";
     }
 }

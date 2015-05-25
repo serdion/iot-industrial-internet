@@ -11,40 +11,43 @@ import fi.iot.iiframework.dataobject.Device;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class DeviceDAOImpl implements DeviceDAO {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+    
     @Override
     public void save(Device device) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(device);
+        sessionFactory.getCurrentSession().persist(device);
     }
 
     @Override
     public Device get(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return (Device) session.get(Device.class, id);
+        return (Device) sessionFactory.getCurrentSession().get(Device.class, id);
     }
 
     @Override
     public List<Device> getAll() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Criteria criteria = session.createCriteria(Device.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Device.class);
         return criteria.list();
     }
 
     @Override
     public void remove(String id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Device device = get(id);
-        session.delete(device);
+        sessionFactory.getCurrentSession().delete(device);
     }
 
     @Override
     public void update(Device device) {
         Device deviceToUpdate = get(device.getId());
         deviceToUpdate.setSensors(device.getSensors());
-        HibernateUtil.getSessionFactory().getCurrentSession().update(deviceToUpdate);
+        sessionFactory.getCurrentSession().update(deviceToUpdate);
     }
     
 }

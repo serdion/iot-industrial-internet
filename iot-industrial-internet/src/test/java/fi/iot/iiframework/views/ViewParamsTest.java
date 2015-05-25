@@ -6,8 +6,9 @@
  */
 package fi.iot.iiframework.views;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class ViewParamsTest {
 
@@ -17,7 +18,7 @@ public class ViewParamsTest {
         assertNotEquals(null, params);
         ViewParams params2 = new ViewParams("title", "content");
         assertEquals("default", params2.getFootertype());
-        assertEquals("default", params2.getHeadertype());
+        assertEquals("default", params2.getNavtype());
         assertEquals("title", params2.getPagetitle());
         assertEquals("content", params2.getContent());
     }
@@ -27,6 +28,6 @@ public class ViewParamsTest {
         ViewParams params = new ViewParams();
         params.setAllTypes("test");
         assertEquals("test", params.getFootertype());
-        assertEquals("test", params.getHeadertype());
+        assertEquals("test", params.getNavtype());
     }
 }

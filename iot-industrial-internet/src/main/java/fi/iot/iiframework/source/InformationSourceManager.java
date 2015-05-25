@@ -8,12 +8,13 @@ package fi.iot.iiframework.source;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * Creates and manages objects that represent external data sources
  */
+@Component
 public class InformationSourceManager {
 
     private List<InformationSource> sources;

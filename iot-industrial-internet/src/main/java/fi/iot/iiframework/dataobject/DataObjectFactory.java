@@ -7,7 +7,7 @@
 package fi.iot.iiframework.dataobject;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class DataObjectFactory {
 
         obj.setId(UUID.randomUUID().toString());
         obj.setHeader(getHeader());
-        obj.setDevices(new ArrayList<Device>());
+        obj.setDevices(new HashSet<>());
 
         for (int i = 0; i < 10; i++) {
             obj.getDevices().add(getDevice());
@@ -52,7 +52,7 @@ public class DataObjectFactory {
 
         device.setId(uuid());
         device.setStatus(true);
-        device.setSensors(new ArrayList<Sensor>());
+        device.setSensors(new HashSet<>());
 
         for (int i = 0; i < 10; i++) {
             device.getSensors().add(getSensor());
@@ -64,7 +64,7 @@ public class DataObjectFactory {
     private static Sensor getSensor() {
         Sensor sensor = new Sensor();
         sensor.setId(uuid());
-        sensor.setReadouts(new ArrayList<Readout>());
+        sensor.setReadouts(new HashSet<>());
 
         long currtime = System.currentTimeMillis();
 

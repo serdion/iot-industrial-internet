@@ -11,33 +11,36 @@ import fi.iot.iiframework.dataobject.Readout;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ReadoutDAOImpl implements ReadoutDAO {
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(Readout readout) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.persist(readout);
+        sessionFactory.getCurrentSession().persist(readout);
     }
 
     @Override
     public Readout get(Long id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        return (Readout) session.get(Readout.class, id);
+        return (Readout) sessionFactory.getCurrentSession().get(Readout.class, id);
     }
 
     @Override
     public List<Readout> getAll() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Criteria criteria = session.createCriteria(Readout.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Readout.class);
         return criteria.list();
     }
 
     @Override
     public void remove(Long id) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Readout readout = get(id);
-        session.delete(readout);
+        sessionFactory.getCurrentSession().delete(readout);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class ReadoutDAOImpl implements ReadoutDAO {
         readoutToUpdate.setTime(readout.getTime());
         readoutToUpdate.setUnit(readout.getUnit());
         readoutToUpdate.setValue(readout.getValue());
-        HibernateUtil.getSessionFactory().getCurrentSession().update(readoutToUpdate);
+        sessionFactory.getCurrentSession().update(readoutToUpdate);
     }
     
 }
