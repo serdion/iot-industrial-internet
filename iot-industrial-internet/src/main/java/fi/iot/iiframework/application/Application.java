@@ -46,7 +46,7 @@ public class Application {
     }
 
     @Bean
-    public InformationSourceManager bean() {
+    public InformationSourceManager informationSourceManager() {
         return new InformationSourceManager();
     }
 
