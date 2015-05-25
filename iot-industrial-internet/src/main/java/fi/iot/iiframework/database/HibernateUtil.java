@@ -11,7 +11,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
+import org.springframework.context.annotation.Bean;
 
+@org.springframework.context.annotation.Configuration
 public class HibernateUtil {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -31,7 +33,8 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
+    @Bean
+    public static SessionFactory sessionFactory() {
         return sessionFactory;
     }
 
