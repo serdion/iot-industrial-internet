@@ -22,7 +22,7 @@ public class SourceController {
 
     @RequestMapping("*")
     public String index(Model model) {
-        return "redirect:/";
+        return "redirect:/sources/example/view";
     }
 
     @RequestMapping("/{id}/view")
