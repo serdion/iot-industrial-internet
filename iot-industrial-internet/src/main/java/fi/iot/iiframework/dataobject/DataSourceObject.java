@@ -20,6 +20,8 @@ public class DataSourceObject implements Serializable {
     @Id
     protected String id;
     
+    protected String datasourceid;
+    
     @XmlElement
     @Transient
     protected Header header;
@@ -40,6 +42,14 @@ public class DataSourceObject implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDatasourceid() {
+        return datasourceid;
+    }
+
+    public void setDatasourceid(String datasourceid) {
+        this.datasourceid = datasourceid;
     }
 
     public Header getHeader() {

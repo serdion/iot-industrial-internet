@@ -8,7 +8,6 @@ package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,10 +18,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author ooppa
- */
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "readout")
@@ -94,7 +89,7 @@ public class Readout implements Serializable {
     /**
      * Returns the time of this Readout as Java Date.
      *
-     * @return
+     * @return Date
      */
     public Date getTimeAsDate() {
         long timestamp = Long.parseLong(time);
