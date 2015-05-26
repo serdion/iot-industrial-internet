@@ -29,7 +29,7 @@ public class DataObjectFactory {
 
         obj.setId(UUID.randomUUID().toString());
         obj.setHeader(getHeader());
-        obj.setDevices(new HashSet<>());
+        obj.setDevices(new HashSet<Device>());
 
         for (int i = 0; i < 10; i++) {
             obj.getDevices().add(getDevice());
@@ -52,7 +52,7 @@ public class DataObjectFactory {
 
         device.setId(uuid());
         device.setStatus(true);
-        device.setSensors(new HashSet<>());
+        device.setSensors(new HashSet<Sensor>());
 
         for (int i = 0; i < 10; i++) {
             device.getSensors().add(getSensor());
@@ -64,7 +64,7 @@ public class DataObjectFactory {
     private static Sensor getSensor() {
         Sensor sensor = new Sensor();
         sensor.setId(uuid());
-        sensor.setReadouts(new HashSet<>());
+        sensor.setReadouts(new HashSet<Readout>());
 
         long currtime = System.currentTimeMillis();
 

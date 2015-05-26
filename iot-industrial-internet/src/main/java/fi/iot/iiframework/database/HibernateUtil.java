@@ -10,7 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
-@org.springframework.context.annotation.Configuration
+//@org.springframework.context.annotation.Configuration
 public class HibernateUtil {
     
     @Autowired
@@ -31,7 +31,7 @@ public class HibernateUtil {
 //        }
 //    }
 
-    @Bean
+    //@Bean
     public static SessionFactory sessionFactory() {
         return sessionFactory;
     }
