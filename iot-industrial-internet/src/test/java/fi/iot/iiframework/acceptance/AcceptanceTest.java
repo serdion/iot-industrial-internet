@@ -6,47 +6,58 @@
  */
 package fi.iot.iiframework.acceptance;
 
+import fi.iot.iiframework.application.Application;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes=Application.class)
+//@WebAppConfiguration
+
+@Ignore
+// comment this @Ignore line if you want to run the acceptance tests, but make sure that the
+// server is running first by pressing Run Project!
 public class AcceptanceTest {
 
     private WebDriver webDriver;
 
     @Before
     public void open() {
+//        SpringApplication.run(Application.class);
         webDriver = new HtmlUnitDriver();
-        webDriver.get("http://localhost:8080");
     }
 
     @Test
     public void webInterfaceOpensProperly() {
-        // the following 3 tests now work IF you first choose Run Project
+        webDriver.get("http://localhost:8080");
+        String title = webDriver.getTitle();
+        assertEquals("Hello world!", title);
         
-//        String title = webDriver.getTitle();
-//        assertEquals("Hello world!", title);
-//        
-//        WebElement element = webDriver.findElement(By.id("wrapper"));
-//        String tagname = element.getTagName();
-//        assertEquals("div", tagname);
+        WebElement element = webDriver.findElement(By.id("wrapper"));
+        String tagname = element.getTagName();
+        assertEquals("div", tagname);
     }
     
     @Test
     public void webInterfaceShowsSomeXMLData() {
-//        webDriver.get("http://localhost:8080/sources/example/view");
-//        String title = webDriver.getTitle();
-//        assertEquals("List of all Sensors", title);
+        webDriver.get("http://localhost:8080/sources/example/view");
+        String title = webDriver.getTitle();
+        assertEquals("List of all Sensors", title);
         
-        // this last test still has an error - can't find the searched link?
-        
-//        WebElement element = webDriver.findElement(By.linkText("http://localhost:8080/sources/example/view/readouts/c613d936-80c2-4e2f-a53c-cb404603c6ef/752324c6-a4e4-4b4a-8add-fb78cfed8f94/view"));
-//        assertNotEquals(null, element);  
+        WebElement element = webDriver.findElement(By.linkText("Readouts"));
+        assertNotEquals(null, element);  
     }
 
     @After
