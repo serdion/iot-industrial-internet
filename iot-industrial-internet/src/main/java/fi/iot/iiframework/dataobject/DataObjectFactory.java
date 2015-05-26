@@ -12,10 +12,6 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
-/**
- *
- * @author ooppa
- */
 public class DataObjectFactory {
 
     /**
@@ -27,7 +23,7 @@ public class DataObjectFactory {
         java.util.Locale.setDefault(Locale.ENGLISH);
         DataSourceObject obj = new DataSourceObject();
 
-        obj.setId(UUID.randomUUID().toString());
+        obj.setId(getUUID());
         obj.setHeader(getHeader());
         obj.setDevices(new HashSet<>());
 
@@ -50,7 +46,8 @@ public class DataObjectFactory {
     private static Device getDevice() {
         Device device = new Device();
 
-        device.setId(uuid());
+        device.setId(getUUID());
+        device.setDeviceid(getUUID());
         device.setStatus(true);
         device.setSensors(new HashSet<>());
 
@@ -63,7 +60,8 @@ public class DataObjectFactory {
 
     private static Sensor getSensor() {
         Sensor sensor = new Sensor();
-        sensor.setId(uuid());
+        sensor.setId(getUUID());
+        sensor.setSensorid(getUUID());
         sensor.setReadouts(new HashSet<>());
 
         long currtime = System.currentTimeMillis();
@@ -79,7 +77,7 @@ public class DataObjectFactory {
         Readout readout = new Readout();
         readout.setTime("" + (currentTime - 1));
         readout.setQuantity("Temperature");
-        readout.setUnit("C");
+        readout.setUnit("°C"); // Celsius
 
         DecimalFormat df = new DecimalFormat("#.00");
         String format = df.format(randDouble(22.1));
@@ -91,17 +89,15 @@ public class DataObjectFactory {
 
     private static double randDouble(double min) {
         Random random = new Random();
-
         return min + random.nextDouble();
     }
 
     private static int randInt(int min, int max) {
         Random random = new Random();
-
         return random.nextInt(max) + min;
     }
 
-    private static String uuid() {
+    private static String getUUID() {
         return UUID.randomUUID().toString();
     }
 }

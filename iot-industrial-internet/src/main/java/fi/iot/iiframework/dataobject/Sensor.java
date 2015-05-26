@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.dataobject;
 
-import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,10 +21,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author ooppa
- */
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
@@ -34,6 +29,8 @@ public class Sensor {
     @Id
     @XmlAttribute
     protected String id;
+    
+    protected String sensorid;
     
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
@@ -54,6 +51,14 @@ public class Sensor {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getSensorid() {
+        return sensorid;
+    }
+
+    public void setSensorid(String sensorid) {
+        this.sensorid = sensorid;
     }
 
     public Set<Readout> getReadouts() {

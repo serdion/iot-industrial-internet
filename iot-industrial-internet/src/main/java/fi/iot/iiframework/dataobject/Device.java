@@ -6,16 +6,11 @@
 package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.*;
 
-/**
- *
- * @author ooppa
- */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "device")
 @Entity
@@ -24,6 +19,8 @@ public class Device implements Serializable {
     @XmlAttribute
     @Id
     protected String id;
+    
+    protected String deviceid;
 
     @XmlAttribute
     @NotNull
@@ -48,6 +45,14 @@ public class Device implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDeviceid() {
+        return deviceid;
+    }
+
+    public void setDeviceid(String deviceid) {
+        this.deviceid = deviceid;
     }
 
     public boolean isStatus() {
