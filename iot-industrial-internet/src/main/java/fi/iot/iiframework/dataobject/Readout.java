@@ -7,6 +7,7 @@
 package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -88,6 +89,16 @@ public class Readout implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * Returns the time of this Readout as Java Date.
+     *
+     * @return
+     */
+    public Date getTimeAsDate() {
+        long timestamp = Long.parseLong(time);
+        return new Date(timestamp);
     }
 
 }
