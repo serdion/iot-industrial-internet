@@ -9,7 +9,7 @@
     <packaging>war</packaging>
 
     <name>Industrial-Internet Framework</name>
-    <description>IoT Industrial Internet framework</description>
+    <description>IoT Industrial Internet Framework</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
