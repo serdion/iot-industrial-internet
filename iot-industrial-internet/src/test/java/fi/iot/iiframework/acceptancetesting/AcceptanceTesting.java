@@ -10,7 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class AcceptanceTesting {
@@ -20,13 +22,14 @@ public class AcceptanceTesting {
     @Before
     public void setUp() {
         webDriver = new FirefoxDriver();
-        webDriver.get("http://localhost:8080/sources/example/view");
+        webDriver.get("http://localhost:8080");
     }
 
     @Test
-    public void webPageShowsSomeData() {
-        webDriver.findElement(null);
-        assertEquals("text", "text");
+    public void webInterfaceOpensProperly() {
+//        WebElement element = webDriver.findElement(By.id("wrapper"));
+//        String tagname = element.getTagName();
+//        assertEquals("div", tagname);
     }
     
     @After
