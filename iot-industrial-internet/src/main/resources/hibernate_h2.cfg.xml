@@ -20,6 +20,7 @@
         <mapping class="fi.iot.iiframework.dataobject.Device"/>
         <mapping class="fi.iot.iiframework.dataobject.Sensor"/>
         <mapping class="fi.iot.iiframework.dataobject.Readout"/>
-        <mapping class="fi.iot.iiframework.errors.Error"/>
+        <mapping class="fi.iot.iiframework.source.InformationSourceConfiguration"/>
+        <mapping class="fi.iot.iiframework.source.InformationSourceImpl"/>
     </session-factory>
 </hibernate-configuration>

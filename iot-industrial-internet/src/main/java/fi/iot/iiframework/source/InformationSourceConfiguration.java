@@ -7,9 +7,7 @@
 package fi.iot.iiframework.source;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -17,30 +15,35 @@ import org.hibernate.validator.constraints.NotBlank;
  * Configures a data source object based on database configuration information
  */
 @Entity
-@Table(name = "InformationSource")
+@Table(name = "infosourceconfigs")
 public class InformationSourceConfiguration implements Serializable {
-    
+
     /**
      * Information source id
      */
     @Id
-    @NotBlank
+    @GeneratedValue
+    @Column(name = "id")
     protected String id;
     /**
      * Information source name
      */
+    @Column(name = "name")
     protected String name;
     /**
      * Information source type xml/mbus/etc
      */
+    @Column(name = "type")
     protected InformationSourceType type;
     /**
      * Url read from
      */
+    @Column(name = "url")
     protected String url;
     /**
      * How often read (in seconds)
      */
+    @Column(name = "readfrequency")
     protected int readFrequency;
 
     public String getId() {
@@ -82,5 +85,5 @@ public class InformationSourceConfiguration implements Serializable {
     public void setReadFrequency(int readFrequency) {
         this.readFrequency = readFrequency;
     }
-    
+
 }

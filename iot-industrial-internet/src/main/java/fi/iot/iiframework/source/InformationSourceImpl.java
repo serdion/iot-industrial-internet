@@ -10,11 +10,13 @@ import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.*;
 import javax.xml.bind.JAXBException;
 import org.hibernate.Session;
 
@@ -22,20 +24,37 @@ import org.hibernate.Session;
  *
  * @author atte
  */
-public class InformationSourceImpl implements InformationSource {
+@Entity
+@Table(name = "infosources")
+
+public class InformationSourceImpl implements InformationSource, Serializable {
 
     /**
      * Configuration
      */
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
+
+    @OneToOne
+    @JoinColumn(name = "config")
     private InformationSourceConfiguration config;
+
     /**
      * Reader used to read the server information
      */
+    @Transient
     private InformationSourceReader reader;
     /**
      * Scheduler that schedules the read operation based on config.
      */
+    @Transient
     private Timer scheduler;
+
+    public InformationSourceImpl() {
+
+    }
 
     public InformationSourceImpl(InformationSourceConfiguration config) {
         this.config = config;
@@ -81,7 +100,7 @@ public class InformationSourceImpl implements InformationSource {
     @Override
     public void readAndWrite() throws JAXBException, MalformedURLException {
         DataSourceObject dso = read();
-        
+
         Session session = HibernateUtil.sessionFactory().getCurrentSession();
         session.beginTransaction();
         session.save(dso);
@@ -94,16 +113,23 @@ public class InformationSourceImpl implements InformationSource {
         return dobj;
     }
 
+    @Override
     public InformationSourceConfiguration getConfig() {
         return config;
     }
 
+    @Override
     public void setConfig(InformationSourceConfiguration config) {
         this.config = config;
     }
-    
+
     public void setId(String id) {
         config.id = id;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     public String getName() {
@@ -130,13 +156,18 @@ public class InformationSourceImpl implements InformationSource {
         config.url = url;
     }
 
-    public int getReadFrequency() {
-        return config.readFrequency;
-    }
+
 
     @Override
     public void setReadFrequency(int readFrequency) {
         config.readFrequency = readFrequency;
         createOrUpdateScheduler();
     }
+
+    @Override
+    public int getReadFrequency() {
+        return config.getReadFrequency();
+    }
+
+
 }

@@ -24,11 +24,11 @@ public class Error implements Serializable {
 
     @Column(name = "type")
     private ErrorType type;
-    
+
     @Column(name = "errordate")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date time;
-    
+
     @Column(name = "description")
     private String description;
 
@@ -42,6 +42,13 @@ public class Error implements Serializable {
         this.type = type;
         this.time = date;
         this.description = desc;
+
+    }
+
+    public Error(ErrorType type, Date date) {
+        this.type = type;
+        this.time = date;
+        this.description = "No description";
 
     }
 
