@@ -16,17 +16,17 @@ public class InformationSourceImplTest {
     private InformationSource source;
     private InformationSourceConfiguration config;
     private InformationSourceReader reader;
-
-    @Before
-    public void setUp() {
-        config = new InformationSourceConfiguration();
-        config.type = InformationSourceType.XML;
-        config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
-        source = new InformationSourceImpl(config);
-    }
-
-    @Test
-    public void canCreateAnXMLReader() {
-        assertNotEquals(null, source);
-    }
+    
+//
+//    @Before
+//    public void setUp() {
+//        config = new InformationSourceConfiguration();
+//        config.type = InformationSourceType.XML;
+//        config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
+//    }
+//
+//    @Test
+//    public void canCreateAnXMLReader() {
+//        assertNotEquals(null, source);
+//    }
 }

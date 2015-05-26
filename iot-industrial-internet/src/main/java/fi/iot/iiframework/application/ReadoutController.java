@@ -6,14 +6,15 @@
  */
 package fi.iot.iiframework.application;
 
-import fi.iot.iiframework.database.DBReader;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.services.DataSourceObjectService;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
 import java.util.List;
 import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("readouts")
 public class ReadoutController {
+    
+    @Autowired
+    private DataSourceObjectService service;
 
     @RequestMapping("*")
     public String index(Model model) {
@@ -37,7 +41,7 @@ public class ReadoutController {
 
         ViewUtils.addViewParamsToModel(model, params);
 
-        List<DataSourceObject> datasources = DBReader.readDataSourceObject();
+        List<DataSourceObject> datasources = service.getAll();
 
         Set<Device> devices = datasources.get(0).getDevices();
         

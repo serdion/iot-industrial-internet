@@ -6,11 +6,12 @@
  */
 package fi.iot.iiframework.application;
 
-import fi.iot.iiframework.database.DBReader;
 import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.services.DataSourceObjectService;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("sources")
 public class SourceController {
+    
+    @Autowired
+    private DataSourceObjectService service;
 
     @RequestMapping("*")
     public String index(Model model) {
@@ -34,7 +38,7 @@ public class SourceController {
 
         ViewUtils.addViewParamsToModel(model, params);
         
-        List<DataSourceObject> datasources = DBReader.readDataSourceObject();
+        List<DataSourceObject> datasources = service.getAll();
 
         model.addAttribute("source", datasources.get(0));
         

@@ -6,8 +6,10 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.services.DataSourceObjectService;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +20,10 @@ import org.springframework.stereotype.Component;
 public class InformationSourceManager {
 
     private List<InformationSource> sources;
+    
+    @Autowired
+    private DataSourceObjectService service;
+
     
     public InformationSourceManager() {
         this.sources = new ArrayList<>();
@@ -31,7 +37,7 @@ public class InformationSourceManager {
      * database
      */
     public void createSource(InformationSourceConfiguration config) {
-        InformationSource source = new InformationSourceImpl(config);
+        InformationSource source = new InformationSourceImpl(config, service);
         sources.add(source);
     }
 

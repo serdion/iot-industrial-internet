@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.daos;
 
-import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.Readout;
 import java.util.List;
 import org.hibernate.Criteria;
