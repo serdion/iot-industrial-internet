@@ -15,11 +15,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class DeviceServiceImpl extends GenericHibernateService<Device, String> {
-    
+public class DeviceServiceImpl
+        extends GenericHibernateService<Device, String>
+        implements DeviceService {
+
     @Autowired
     public DeviceServiceImpl(DeviceDAO dao) {
         super.dao = dao;
     }
-    
+
 }
