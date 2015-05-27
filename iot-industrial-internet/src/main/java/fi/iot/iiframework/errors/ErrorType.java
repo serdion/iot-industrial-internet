@@ -20,8 +20,9 @@ public enum ErrorType {
     CONFLICT_ERROR("Conflict", "conflict"),
     PARSE_ERROR("Parse error", "parseerror"),
     READ_ERROR("Read error", "readerror"),
+    TEST_ERROR("Read error", "readerror"),
     UNKNOWN_ERROR("Unknown error", "unknown");
-
+    
     private final String name;
     private final String id;
 

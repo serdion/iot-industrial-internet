@@ -8,16 +8,31 @@ package fi.iot.iiframework.errors;
 
 import fi.iot.iiframework.errors.service.ErrorService;
 import java.util.Date;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Create and save new errors to database.
  *
  */
+@Component
 public class ErrorLogger {
+    
+    private static ErrorService eService;
 
     @Autowired
-    static ErrorService eService;
+    private ErrorService eServiceAW;
+
+    
+    /**
+     * Class needed to allow using Autowired-annotation in a static class 
+     */
+    
+    @PostConstruct
+    public void ErrorLogger() {
+        eService = this.eServiceAW;
+    }
 
     /**
      * Creates a new error and calls newError to save it to database
@@ -43,12 +58,12 @@ public class ErrorLogger {
         saveError(error);
 
     }
-    
+
     /**
      * Saves a predefined SysError to the database
-     * @param error 
+     *
+     * @param error
      */
-
     public static void newError(SysError error) {
         saveError(error);
 
@@ -60,6 +75,7 @@ public class ErrorLogger {
      * @param error SysError to be saved
      */
     private static void saveError(SysError error) {
+//        System.out.println("eService is: " + eService);
         eService.add(error);
 
     }
