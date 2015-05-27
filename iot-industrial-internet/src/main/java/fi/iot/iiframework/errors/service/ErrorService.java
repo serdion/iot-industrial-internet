@@ -13,8 +13,6 @@ public interface ErrorService {
 
     public void add(SysError e);
 
-    public void update(SysError e);
-
     public SysError get(String id);
 
     public void delete(String id);

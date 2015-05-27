@@ -27,11 +27,6 @@ public class ErrorServiceImpl implements ErrorService {
     }
 
     @Override
-    public void update(SysError e) {
-        errorDAO.equals(e);
-    }
-
-    @Override
     public SysError get(String id) {
         SysError e  = errorDAO.get(id);
         return e;
