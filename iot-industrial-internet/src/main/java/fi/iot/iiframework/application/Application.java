@@ -10,11 +10,8 @@ import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.net.MalformedURLException;
-import java.util.Arrays;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -27,20 +24,15 @@ public class Application {
     private static final Logger logger = Logger.getLogger(Application.class.getName());
 
     public static void main(String[] args) throws JAXBException, MalformedURLException {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
-        System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
-        
-        Session session = ctx.getBean(SessionFactory.class).openSession();
+        ApplicationContext ctx = SpringApplication.run(Application.class, args);        
 
         InformationSourceManager ism = ctx.getBean(InformationSourceManager.class);
-
         InformationSourceConfiguration isc = new InformationSourceConfiguration();
         isc.setId("1");
         isc.setType(InformationSourceType.XML);
         isc.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         ism.createSource(isc);
         ism.getSources().get(0).readAndWrite();
-
     }
 
 }
