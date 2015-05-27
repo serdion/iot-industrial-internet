@@ -46,12 +46,22 @@ public class ErrorLogger {
         saveError(error);
 
     }
-
-/**
- * Uses ErrorService to save SysError to database
- * @param error SysError to be saved
- */
     
+    /**
+     * Saves a predefined SysError to the database
+     * @param error 
+     */
+
+    public static void newError(SysError error) {
+        saveError(error);
+
+    }
+
+    /**
+     * Uses ErrorService to save SysError to database
+     *
+     * @param error SysError to be saved
+     */
     private static void saveError(SysError error) {
         eService.add(error);
 
