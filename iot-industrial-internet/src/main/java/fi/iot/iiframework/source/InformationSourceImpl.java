@@ -16,7 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.*;
+
 import javax.xml.bind.JAXBException;
 import org.hibernate.Session;
 
@@ -37,12 +37,12 @@ public class InformationSourceImpl implements InformationSource, Serializable {
     /**
      * Reader used to read the server information
      */
-    @Transient
+
     private InformationSourceReader reader;
     /**
      * Scheduler that schedules the read operation based on config.
      */
-    @Transient
+
     private Timer scheduler;
 
     public InformationSourceImpl(InformationSourceConfiguration config) {
