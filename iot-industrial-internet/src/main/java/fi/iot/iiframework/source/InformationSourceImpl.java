@@ -17,26 +17,20 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-
-
-
-
+import org.hibernate.Session;
 
 public class InformationSourceImpl implements InformationSource, Serializable {
 
     /**
      * Configuration
      */
-
     private int id;
-
 
     private InformationSourceConfiguration config;
 
     /**
      * Reader used to read the server information
      */
-
     private InformationSourceReader reader;
     /**
      * Scheduler that schedules the read operation based on config.
@@ -91,8 +85,7 @@ public class InformationSourceImpl implements InformationSource, Serializable {
     public void readAndWrite() throws JAXBException, MalformedURLException {
         DataSourceObject dso = read();
 
-
-
+        service.add(dso);
     }
 
     @Override
@@ -144,8 +137,6 @@ public class InformationSourceImpl implements InformationSource, Serializable {
         config.url = url;
     }
 
-
-
     @Override
     public void setReadFrequency(int readFrequency) {
         config.readFrequency = readFrequency;
@@ -156,6 +147,5 @@ public class InformationSourceImpl implements InformationSource, Serializable {
     public int getReadFrequency() {
         return config.getReadFrequency();
     }
-
 
 }
