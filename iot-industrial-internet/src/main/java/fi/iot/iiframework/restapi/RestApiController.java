@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Header;
 import fi.iot.iiframework.dataobject.Readout;
@@ -37,18 +38,21 @@ public class RestApiController {
 
     @Autowired
     private DataSourceObjectService datasourceservice;
-    
+
     @Autowired
     private DeviceService deviceservice;
-    
+
     @Autowired
     private ReadoutService readoutservice;
-    
+
     @Autowired
     private SensorService sensorservice;
-    
+
     @Autowired
     private ErrorService errorservice;
+
+    @Autowired
+    ApplicationSettings settings;
 
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
@@ -65,7 +69,7 @@ public class RestApiController {
     public List<DataSourceObject> listDatasources(
             @RequestParam(required = false) Map<String, String> params
     ) {
-        return datasourceservice.getAll();
+        return datasourceservice.get(0, settings.getDefaultAmountOfDataSourcesRetrievedFromDatabase());
     }
 
     @RequestMapping(value = "/datasources/list/{amount}", produces = "application/json")
@@ -73,9 +77,11 @@ public class RestApiController {
     public List<DataSourceObject> listDatasourcesAmount(
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
-    ) {
+    ) throws InvalidParametersException {
 
-        return null;
+        exceptionIfWrongLimits(0, amount);
+
+        return datasourceservice.get(0, amount);
     }
 
     @RequestMapping(value = "/datasources/list/{from}/{to}", produces = "application/json")
@@ -84,9 +90,11 @@ public class RestApiController {
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
-    ) {
+    ) throws InvalidParametersException {
 
-        return null;
+        exceptionIfWrongLimits(to, from);
+
+        return datasourceservice.get(to, from);
     }
 
     @RequestMapping(value = "/datasources/{datasourceid}/view", produces = "application/json")
@@ -94,18 +102,18 @@ public class RestApiController {
     public DataSourceObject getDatasource(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
-    ) {
+    ) throws ResourceNotFoundException {
 
-        return datasourceservice.get(datasourceid);
+        return (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
     }
 
     @RequestMapping(value = "/datasources/{datasourceid}/header", produces = "application/json")
     @ResponseBody
     public Header getDatasourceHeader(
             @PathVariable String datasourceid,
-            @RequestParam(required = false) Map<String, String> params) {
+            @RequestParam(required = false) Map<String, String> params) throws ResourceNotFoundException {
 
-        return datasourceservice.get(datasourceid).getHeader();
+        return (Header) returnOrException(datasourceservice.get(datasourceid).getHeader());
     }
 
     @RequestMapping(value = "/devices/{datasourceid}/list", produces = "application/json")
@@ -115,18 +123,20 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return deviceservice.get(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase());
     }
 
-    @RequestMapping(value = "/devices/{datasourceid}/list/{amont}", produces = "application/json")
+    @RequestMapping(value = "/devices/{datasourceid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Device> listDevicesAmount(
             @PathVariable String datasourceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
-    ) {
+    ) throws InvalidParametersException {
 
-        return null;
+        exceptionIfWrongLimits(0, amount);
+
+        return deviceservice.get(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase());
     }
 
     @RequestMapping(value = "/devices/{datasourceid}/list/{from}/{to}", produces = "application/json")
@@ -135,9 +145,11 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @PathVariable int from,
             @PathVariable int to,
-            @RequestParam(required = false) Map<String, String> params) {
+            @RequestParam(required = false) Map<String, String> params) throws InvalidParametersException {
 
-        return null;
+        exceptionIfWrongLimits(to, from);
+
+        return deviceservice.get(to, from);
     }
 
     @RequestMapping(value = "/devices/{deviceid}/view", produces = "application/json")
@@ -178,9 +190,11 @@ public class RestApiController {
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
-    ) {
+    ) throws InvalidParametersException {
 
-        return null;
+        exceptionIfWrongLimits(to, from);
+
+        return sensorservice.get(to, from);
     }
 
     @RequestMapping(value = "/readouts/{sensorid}/list", produces = "application/json")
@@ -211,12 +225,18 @@ public class RestApiController {
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
-    ) {
+    ) throws InvalidParametersException, ResourceNotFoundException {
 
-        return null;
+        Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
+
+        exceptionIfWrongLimits(to, from);
+        
+        
+
+        return null; // TODO
     }
 
-    @RequestMapping(value = "/readouts/{readoutid}/view/{timestamp}", produces = "application/json")
+    @RequestMapping(value = "/readouts/{readoutid}/view", produces = "application/json")
     @ResponseBody
     public Readout getReadout(
             @PathVariable long readoutid,
@@ -225,7 +245,7 @@ public class RestApiController {
 
         return readoutservice.get(readoutid);
     }
-    
+
     @RequestMapping(value = "/errors/{errorid}/view", produces = "application/json")
     @ResponseBody
     public SysError getError(
@@ -235,7 +255,7 @@ public class RestApiController {
 
         return errorservice.get(errorid);
     }
-    
+
     @RequestMapping(value = "/errors/list", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrors(
@@ -244,9 +264,9 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return errorservice.getAll();
+        return errorservice.get(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase());
     }
-    
+
     @RequestMapping(value = "/errors/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrorsAmount(
@@ -256,7 +276,7 @@ public class RestApiController {
 
         return null;
     }
-    
+
     @RequestMapping(value = "/errors/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrorsFromTo(
@@ -278,6 +298,32 @@ public class RestApiController {
                         ErrorType.NOT_FOUND,
                         "The object you tried to retrieve could not be found."
                 ), HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(produces = "application/json")
+    @ExceptionHandler(InvalidParametersException.class)
+    @ResponseBody
+    public ResponseEntity<RestAPIError> invalidParametersException() {
+
+        return new ResponseEntity<>(
+                new RestAPIError(
+                        ErrorType.BAD_REQUEST,
+                        "Invalid parameters found in your request."
+                ), HttpStatus.BAD_REQUEST);
+    }
+
+    private void exceptionIfWrongLimits(int to, int from) throws InvalidParametersException {
+        if (from <= 0 || to > settings.getMaxObjectsRetrievedFromDatabase()) {
+            throw new InvalidParametersException();
+        }
+    }
+
+    private Object returnOrException(Object object) throws ResourceNotFoundException {
+        if (object == null) {
+            throw new ResourceNotFoundException();
+        }
+
+        return object;
     }
 
 }
