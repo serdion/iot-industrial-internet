@@ -60,7 +60,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     protected List<T> findByCriteriaFromTo(int from, int to, Criterion... criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setFirstResult(from)
-                .setMaxResults(to);
+                .setMaxResults(to - from);
         for (Criterion c : criterion) {
             crit.add(c);
         }
