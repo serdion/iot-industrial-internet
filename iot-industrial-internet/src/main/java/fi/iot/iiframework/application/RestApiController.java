@@ -11,8 +11,10 @@ import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Header;
 import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.services.DataSourceObjectService;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("1.0")
 public class RestApiController {
+    
+    @Autowired
+    private DataSourceObjectService service;
 
     @RequestMapping(value = "/test", produces = "text/html")
     @ResponseBody
@@ -38,6 +43,23 @@ public class RestApiController {
         }
         
         return sb.toString();
+    }
+    
+    @RequestMapping(value = "/datasources/list/", produces = "application/json")
+    @ResponseBody
+    public List<DataSourceObject> listDatasources( 
+            @RequestParam(required=false) Map<String, String> params
+    ) {
+        try {
+            // Hae tietokannasta ja palauta
+            List<DataSourceObject> datasources = service.getAll();
+            
+            return datasources;
+            
+        } catch (Exception ex) {
+            // TODO Not found
+            return null;
+        }
     }
 
     @RequestMapping(value = "/datasources/list/{amount}", produces = "application/json")
