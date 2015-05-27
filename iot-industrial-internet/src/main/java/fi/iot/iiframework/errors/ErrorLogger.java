@@ -7,6 +7,7 @@
 package fi.iot.iiframework.errors;
 
 import fi.iot.iiframework.errors.service.ErrorService;
+import fi.iot.iiframework.services.GenericService;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ErrorLogger {
     
-    private static ErrorService eService;
+    private static ErrorService gService;
 
     @Autowired
-    private ErrorService eServiceAW;
+    private ErrorService gServiceAW;
 
     
     /**
@@ -31,7 +32,7 @@ public class ErrorLogger {
     
     @PostConstruct
     public void ErrorLogger() {
-        eService = this.eServiceAW;
+        gService = this.gServiceAW;
     }
 
     /**
@@ -75,7 +76,7 @@ public class ErrorLogger {
      * @param error SysError to be saved
      */
     private static void saveError(SysError error) {
-        eService.add(error);
+       gService.save(error);
 
     }
 
