@@ -33,6 +33,11 @@ public class GenericHibernateService<T, ID extends Serializable>
     public T get(ID id) {
         return (T) dao.get(id);
     }
+    
+    @Override
+    public List<T> get(int from, int to) {
+        return dao.get(from, to);
+    }
 
     @Override
     public void delete(T t) {

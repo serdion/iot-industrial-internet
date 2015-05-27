@@ -20,6 +20,8 @@ public interface GenericService<T, ID extends Serializable> {
     public void save(T t);
 
     public T get(ID id);
+    
+    public List<T> get(int from, int to);
 
     public void delete(T t);
 
