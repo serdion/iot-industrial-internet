@@ -11,7 +11,7 @@ import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Header;
 import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.dataobject.Sensor;
-import fi.iot.iiframework.services.DataSourceObjectService;
+import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

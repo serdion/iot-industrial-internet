@@ -9,7 +9,7 @@ package fi.iot.iiframework.application;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Sensor;
-import fi.iot.iiframework.services.DataSourceObjectService;
+import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
 import java.util.List;

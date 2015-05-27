@@ -10,7 +10,7 @@ import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
 import java.io.Serializable;
-import fi.iot.iiframework.services.DataSourceObjectService;
+import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import java.net.MalformedURLException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -85,7 +85,7 @@ public class InformationSourceImpl implements InformationSource {
     @Override
     public void readAndWrite() throws JAXBException, MalformedURLException {
         DataSourceObject dso = read();
-        service.add(dso);
+        service.save(dso);
     }
 
     @Override
