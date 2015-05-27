@@ -75,7 +75,6 @@ public class ErrorLogger {
      * @param error SysError to be saved
      */
     private static void saveError(SysError error) {
-//        System.out.println("eService is: " + eService);
         eService.add(error);
 
     }
