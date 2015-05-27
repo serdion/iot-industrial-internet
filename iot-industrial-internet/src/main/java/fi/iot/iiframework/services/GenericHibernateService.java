@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 public class GenericHibernateService<T, ID extends Serializable>
     implements GenericService<T, ID> {
     
+    
     protected GenericDAO dao;
 
     @Override
