@@ -8,10 +8,7 @@ package fi.iot.iiframework.errors;
 
 import fi.iot.iiframework.errors.service.ErrorService;
 import java.util.Date;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
 
 /**
  * Create and save new errors to database.

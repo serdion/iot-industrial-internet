@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.application;
+package fi.iot.iiframework.controllers;
 
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
