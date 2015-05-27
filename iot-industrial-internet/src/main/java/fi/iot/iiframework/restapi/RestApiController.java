@@ -14,6 +14,7 @@ import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.errors.ErrorType;
+import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.services.DataSourceObjectService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -122,12 +123,6 @@ public class RestApiController {
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params) {
-        try {
-            // Hae tietokannasta ja palauta
-
-        } catch (Exception ex) {
-            // TODO Not found
-        }
 
         return null;
     }
@@ -138,12 +133,6 @@ public class RestApiController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) {
-        try {
-            // Hae tietokannasta ja palauta
-
-        } catch (Exception ex) {
-            // TODO Not found
-        }
 
         return null;
     }
@@ -219,6 +208,48 @@ public class RestApiController {
     public Readout getReadout(
             @PathVariable String sensorid,
             @PathVariable String timestamp,
+            @RequestParam(required = false) Map<String, String> params
+    ) {
+
+        return null;
+    }
+    
+    @RequestMapping(value = "/errors/{errorid}/view", produces = "application/json")
+    @ResponseBody
+    public SysError getError(
+            @PathVariable String errorid,
+            @RequestParam(required = false) Map<String, String> params
+    ) {
+
+        return null;
+    }
+    
+    @RequestMapping(value = "/errors/list", produces = "application/json")
+    @ResponseBody
+    public List<SysError> listErrors(
+            @PathVariable String sensorid,
+            @PathVariable String timestamp,
+            @RequestParam(required = false) Map<String, String> params
+    ) {
+
+        return null;
+    }
+    
+    @RequestMapping(value = "/errors/list/{amount}", produces = "application/json")
+    @ResponseBody
+    public List<SysError> listErrorsAmount(
+            @PathVariable int amount,
+            @RequestParam(required = false) Map<String, String> params
+    ) {
+
+        return null;
+    }
+    
+    @RequestMapping(value = "/errors/list/{from}/{to}", produces = "application/json")
+    @ResponseBody
+    public List<SysError> listErrorsFromTo(
+            @PathVariable int from,
+            @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) {
 

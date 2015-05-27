@@ -1,4 +1,4 @@
-/*
+    /*
  * IoT - Industrial Internet Framework
  * Apache License Version 2.0, January 2004
  * Released as a part of Helsinki University
@@ -12,10 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- *
- * @author Ooppa
- */
 @Controller
 @RequestMapping("/visual")
 public class VisualizationController {
