@@ -20,25 +20,18 @@ import javax.persistence.*;
 import javax.xml.bind.JAXBException;
 import org.hibernate.Session;
 
-/**
- *
- * @author atte
- */
-@Entity
-@Table(name = "infosources")
+
+
 
 public class InformationSourceImpl implements InformationSource, Serializable {
 
     /**
      * Configuration
      */
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
+
     private int id;
 
-    @OneToOne
-    @JoinColumn(name = "config")
+
     private InformationSourceConfiguration config;
 
     /**
@@ -51,10 +44,6 @@ public class InformationSourceImpl implements InformationSource, Serializable {
      */
     @Transient
     private Timer scheduler;
-
-    public InformationSourceImpl() {
-
-    }
 
     public InformationSourceImpl(InformationSourceConfiguration config) {
         this.config = config;
