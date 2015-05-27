@@ -9,6 +9,7 @@ package fi.iot.iiframework.source;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
+import java.io.Serializable;
 import fi.iot.iiframework.services.DataSourceObjectService;
 import java.net.MalformedURLException;
 import java.util.Timer;
@@ -16,17 +17,17 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
+import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- *
- * @author atte
- */
-public class InformationSourceImpl implements InformationSource {
+public class InformationSourceImpl implements InformationSource, Serializable {
 
     /**
      * Configuration
      */
+    private int id;
+
     private InformationSourceConfiguration config;
+
     /**
      * Reader used to read the server information
      */
@@ -34,7 +35,9 @@ public class InformationSourceImpl implements InformationSource {
     /**
      * Scheduler that schedules the read operation based on config.
      */
+
     private Timer scheduler;
+    @Autowired
     private DataSourceObjectService service;
 
     public InformationSourceImpl(InformationSourceConfiguration config, DataSourceObjectService service) {
@@ -91,16 +94,23 @@ public class InformationSourceImpl implements InformationSource {
         return dobj;
     }
 
+    @Override
     public InformationSourceConfiguration getConfig() {
         return config;
     }
 
+    @Override
     public void setConfig(InformationSourceConfiguration config) {
         this.config = config;
     }
-    
+
     public void setId(String id) {
         config.id = id;
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     public String getName() {
@@ -127,13 +137,15 @@ public class InformationSourceImpl implements InformationSource {
         config.url = url;
     }
 
-    public int getReadFrequency() {
-        return config.readFrequency;
-    }
-
     @Override
     public void setReadFrequency(int readFrequency) {
         config.readFrequency = readFrequency;
         createOrUpdateScheduler();
     }
+
+    @Override
+    public int getReadFrequency() {
+        return config.getReadFrequency();
+    }
+
 }

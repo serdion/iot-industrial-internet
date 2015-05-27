@@ -10,6 +10,8 @@ import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import org.springframework.boot.SpringApplication;
@@ -25,14 +27,17 @@ public class Application {
 
     public static void main(String[] args) throws JAXBException, MalformedURLException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);        
+        logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
+        
+        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
-        InformationSourceManager ism = ctx.getBean(InformationSourceManager.class);
-        InformationSourceConfiguration isc = new InformationSourceConfiguration();
-        isc.setId("1");
-        isc.setType(InformationSourceType.XML);
-        isc.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
-        ism.createSource(isc);
-        ism.getSources().get(0).readAndWrite();
+        InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
+        infSourceConfiguration.setId("1");
+        infSourceConfiguration.setType(InformationSourceType.XML);
+        infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
+        infSourceManager.createSource(infSourceConfiguration);
+        infSourceManager.getSources().get(0).readAndWrite();
+
     }
 
 }
