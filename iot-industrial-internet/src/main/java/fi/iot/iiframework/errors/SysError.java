@@ -56,6 +56,22 @@ public class SysError implements Serializable {
         // Hibernate requires an empty constructor
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
     public void setType(ErrorType type) {
         this.type = type;
     }
