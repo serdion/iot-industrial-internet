@@ -45,6 +45,13 @@ public class SysError implements Serializable {
 
     }
 
+     /**
+     *
+     * @param type ErrorType of error
+     * @param date Date of error
+     * 
+     */
+    
     public SysError(ErrorType type, Date date) {
         this.type = type;
         this.time = date;
