@@ -97,7 +97,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/devices/{datasourceid}/list", produces = "application/json")
     @ResponseBody
-    public List<Device> getDevices(
+    public List<Device> listDevices(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -107,7 +107,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/devices/{datasourceid}/list/{amont}", produces = "application/json")
     @ResponseBody
-    public List<Device> getDevicesAmount(
+    public List<Device> listDevicesAmount(
             @PathVariable String datasourceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
@@ -118,7 +118,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/devices/{datasourceid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
-    public List<Device> getDevicesFromTo(
+    public List<Device> listDevicesFromTo(
             @PathVariable String datasourceid,
             @PathVariable int from,
             @PathVariable int to,
@@ -149,7 +149,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/sensors/{deviceid}/list/{amont}", produces = "application/json")
     @ResponseBody
-    public List<Sensor> getSensorAmount(
+    public List<Sensor> listSensorsAmount(
             @PathVariable String deviceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
@@ -160,7 +160,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/sensors/{deviceid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
-    public List<Sensor> getSensorFromTo(
+    public List<Sensor> listSensorsFromTo(
             @PathVariable String deviceid,
             @PathVariable int from,
             @PathVariable int to,
@@ -172,7 +172,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/readouts/{sensorid}/list", produces = "application/json")
     @ResponseBody
-    public List<Readout> getReadoutsList(
+    public List<Readout> listReadoutsList(
             @PathVariable String sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -182,7 +182,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/readouts/{sensorid}/list/{amont}", produces = "application/json")
     @ResponseBody
-    public List<Readout> getReadoutsAmount(
+    public List<Readout> listReadoutsAmount(
             @PathVariable String sensorid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
@@ -193,7 +193,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/readouts/{sensorid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
-    public List<Sensor> getReadoutsFromTo(
+    public List<Sensor> listReadoutsFromTo(
             @PathVariable String sensorid,
             @PathVariable int from,
             @PathVariable int to,
