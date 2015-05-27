@@ -6,29 +6,34 @@
  */
 package fi.iot.iiframework.errors.service;
 
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.errors.dao.ErrorDAO;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Service
+@Transactional
 public class ErrorServiceImpl implements ErrorService {
 
     @Autowired
     private ErrorDAO errorDAO;
 
     @Override
-    public void add(Error e) {
+    public void add(SysError e) {
         errorDAO.save(e);
     }
 
     @Override
-    public void update(Error e) {
+    public void update(SysError e) {
         errorDAO.equals(e);
     }
 
     @Override
-    public Error get(String id) {
-        Error e  = errorDAO.get(id);
+    public SysError get(String id) {
+        SysError e  = errorDAO.get(id);
         return e;
     }
 
@@ -38,8 +43,8 @@ public class ErrorServiceImpl implements ErrorService {
     }
 
     @Override
-    public List<Error> getAll() {
-       List<Error> list =  errorDAO.getAll();
+    public List<SysError> getAll() {
+       List<SysError> list =  errorDAO.getAll();
        return list;
     }
 

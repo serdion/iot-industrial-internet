@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Errors")
 
-public class Error implements Serializable {
+public class SysError implements Serializable {
 
     @Id
     @GeneratedValue
@@ -38,21 +38,21 @@ public class Error implements Serializable {
      * @param date Date of error
      * @param desc Description of error, optional.
      */
-    public Error(ErrorType type, Date date, String desc) {
+    public SysError(ErrorType type, Date date, String desc) {
         this.type = type;
         this.time = date;
         this.description = desc;
 
     }
 
-    public Error(ErrorType type, Date date) {
+    public SysError(ErrorType type, Date date) {
         this.type = type;
         this.time = date;
         this.description = "No description";
 
     }
 
-    public Error() {
+    public SysError() {
         // Hibernate requires an empty constructor
     }
 

@@ -13,23 +13,23 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ErrorTest {
+public class SysErrorTest {
 
-    private static Error[] testErrors;
+    private static SysError[] testErrors;
     private static Date now;
 
     @BeforeClass
     public static void setUpClass() {
         now = new Date();
-        testErrors = new Error[3];
+        testErrors = new SysError[3];
 
     }
 
     @Before
     public void setUp() {
-        testErrors[0] = new Error(ErrorType.BAD_CONFIGURATION, now, "Hello");
-        testErrors[1] = new Error(ErrorType.TIMEOUT_ERROR, new Date(), "muh");
-        testErrors[2] = new Error(ErrorType.CONFLICT_ERROR, new Date(), "muh");
+        testErrors[0] = new SysError(ErrorType.BAD_CONFIGURATION, now, "Hello");
+        testErrors[1] = new SysError(ErrorType.TIMEOUT_ERROR, new Date(), "muh");
+        testErrors[2] = new SysError(ErrorType.CONFLICT_ERROR, new Date(), "muh");
     }
 
     @After
