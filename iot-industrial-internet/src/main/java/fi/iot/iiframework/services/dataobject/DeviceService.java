@@ -10,6 +10,7 @@ import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
-public interface DeviceService extends GenericService<Device, String> {
-    
+public interface DeviceService
+        extends GenericService<Device, String> {
+
 }

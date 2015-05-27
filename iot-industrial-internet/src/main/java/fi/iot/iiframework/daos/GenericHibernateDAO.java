@@ -9,12 +9,10 @@ package fi.iot.iiframework.daos;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import javax.persistence.criteria.Expression;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.RowCountProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -70,21 +68,40 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     }
 
 
+    /**
+     * Get an object of type T with the given id.
+     * @param id
+     * @return 
+     */
     @Override
     public T get(ID id) {
         return (T) getSession().get(getPersistentClass(), id);
     }
 
+    /**
+     * Get all objects of type T
+     * @return 
+     */
     @Override
     public List<T> getAll() {
         return findByCriteria();
     }
-
+    
+    /**
+     * Get all objects of type T from index from to index to.
+     * @param from
+     * @param to
+     * @return 
+     */
     @Override
     public List<T> get(int from, int to) {
         return findByCriteriaFromTo(from, to);
     }
 
+    /**
+     * Removes an object from the database.
+     * @param t 
+     */
     @Override
     public void remove(T t) {
         getSession().delete(t);
