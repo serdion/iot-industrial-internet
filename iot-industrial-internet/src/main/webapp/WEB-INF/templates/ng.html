@@ -25,7 +25,7 @@
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
     </head>
 
-    <body>
+    <body ng-app="IIFramework">
 
         <div id="wrapper">
 
@@ -171,15 +171,17 @@
                     <!-- /.navbar-static-side -->
                 </nav>
             </div>
-
-            <!-- TODO: ng-view -->
+            <div id="page-wrapper">
+                <div ng-view></div>
+            </div>
 
         </div>
 
         <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
         <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
         <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
-
+        <script th:attr="src=@{/bower_components/angular/angular.js}"></script>
+        <script th:attr="src=@{/bower_components/angular-route/angular-route.min.js}"></script>
         <!-- Flot Charts JavaScript -->
         <script th:attr="src=@{/bower_components/flot/excanvas.min.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.js}"></script>
@@ -190,6 +192,9 @@
         <script th:attr="src=@{/js/flot-data.js}"></script>
 
         <script th:attr="src=@{/dist/js/sb-admin-2.js}"></script>
+
+        <script th:attr="src=@{/js/ngapp.js}"></script>
+        <script th:attr="src=@{/js/controllers/front_controller.js}"></script>
     </body>
 
 </html>
