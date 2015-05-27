@@ -54,7 +54,7 @@ public class ErrorLogTest {
     public void getErrorArrayList() {
         testLog.newError(ErrorType.CONFLICT_ERROR);
         testLog.newError(ErrorType.IO_ERROR);
-        ArrayList<Error>  list = testLog.getErrorList();
+        ArrayList<SysError>  list = testLog.getErrorList();
         assertTrue(list.get(0).getType().equals(ErrorType.CONFLICT_ERROR));
 
     }

@@ -15,10 +15,10 @@ import java.util.Date;
  */
 public class ErrorLog {
 
-    private ArrayList<Error> errorLog;
+    private ArrayList<SysError> errorLog;
 
     public ErrorLog() {
-        errorLog = new ArrayList<Error>();
+        errorLog = new ArrayList<SysError>();
 
     }
     
@@ -30,18 +30,18 @@ public class ErrorLog {
      */
 
     public void newError(ErrorType type, Date date, String desc) {
-        errorLog.add(new Error(type, date, desc));
+        errorLog.add(new SysError(type, date, desc));
     }
 
     public void newError(ErrorType type, Date date) {
-        errorLog.add(new Error(type, date, "no description"));
+        errorLog.add(new SysError(type, date, "no description"));
     }
 
     public void newError(ErrorType type) {
-        errorLog.add(new Error(type, new Date(), "no description"));
+        errorLog.add(new SysError(type, new Date(), "no description"));
     }
 
-    public Error getError(int i) {
+    public SysError getError(int i) {
         return errorLog.get(i);
     }
 
@@ -49,7 +49,7 @@ public class ErrorLog {
         return errorLog.size();
     }
 
-    public ArrayList<Error> getErrorList() {
+    public ArrayList<SysError> getErrorList() {
         return errorLog;
     }
     

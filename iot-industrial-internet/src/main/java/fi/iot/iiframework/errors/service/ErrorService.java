@@ -6,17 +6,19 @@
  */
 package fi.iot.iiframework.errors.service;
 
+import fi.iot.iiframework.errors.SysError;
 import java.util.List;
 
+public interface ErrorService {
 
-interface ErrorService {
-    public void add(Error e);
+    public void add(SysError e);
 
-    public void update(Error e);
+    public void update(SysError e);
 
-    public Error get(String id);
+    public SysError get(String id);
 
     public void delete(String id);
 
-    public List<Error> getAll();
+    public List<SysError> getAll();
+
 }
