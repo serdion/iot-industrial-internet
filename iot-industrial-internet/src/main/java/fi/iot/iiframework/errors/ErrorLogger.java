@@ -6,8 +6,10 @@
  */
 package fi.iot.iiframework.errors;
 
+import fi.iot.iiframework.errors.service.ErrorService;
 import java.util.Date;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 
@@ -23,21 +25,26 @@ public class ErrorLogger {
      * @param d Date
      * @param desc Optional
      */
+    
+    @Autowired
+    static ErrorService eService;
+    
 
     public static void newError(ErrorType e, Date d, String desc) {
-        Error error = new Error(e,d,desc);
+        SysError error = new SysError(e,d,desc);
         saveError(error);
         
     }
 
     public static void newError(ErrorType e, Date d) {
-        Error error = new Error(e,d);
+        SysError error = new SysError(e,d);
         saveError(error);
         
     }
 
-    private static void saveError(Error error) {
-
+    private static void saveError(SysError error) {
+        eService.add(error);
+        
     }
     
 

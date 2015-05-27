@@ -14,6 +14,7 @@ import javax.persistence.*;
  *
  * Configures a data source object based on database configuration information
  */
+
 @Entity
 @Table(name = "infosourceconfigs")
 public class InformationSourceConfiguration implements Serializable {

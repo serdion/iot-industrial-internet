@@ -7,6 +7,7 @@
 package fi.iot.iiframework.errors.dao;
 
 import java.util.List;
+import fi.iot.iiframework.errors.SysError;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,34 +16,34 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ErrorDAOImpl implements ErrorDAO {
-    
+
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public void save(Error error) {
+    public void save(SysError error) {
         Session s = sessionFactory.getCurrentSession();
         s.persist(error);
     }
 
     @Override
-    public Error get(String id) {
+    public SysError get(String id) {
         Session s = sessionFactory.getCurrentSession();
-        Error error = (Error) s.get(Error.class, id);
+        SysError error = (SysError) s.get(SysError.class, id);
         return error;
     }
 
     @Override
-    public List<Error> getAll() {
+    public List<SysError> getAll() {
         Session s = sessionFactory.getCurrentSession();
-        Criteria criteria = s.createCriteria(Error.class);
+        Criteria criteria = s.createCriteria(SysError.class);
         return criteria.list();
     }
 
     @Override
     public void remove(String id) {
         Session s = sessionFactory.getCurrentSession();
-        Error dso = get(id);
+        SysError dso = get(id);
         s.delete(dso);
     }
 
