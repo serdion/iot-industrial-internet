@@ -28,12 +28,8 @@ public class DataSourceObject implements Serializable {
     
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "SOURCE_DEVICES",
-            joinColumns = @JoinColumn(name = "SOURCE_ID", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id")
-    )
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="datasource")
     protected Set<Device> devices;
     
     public String getId() {

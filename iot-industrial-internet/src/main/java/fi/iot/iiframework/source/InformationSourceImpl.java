@@ -17,9 +17,9 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class InformationSourceImpl implements InformationSource, Serializable {
+public class InformationSourceImpl implements InformationSource {
 
     /**
      * Configuration
@@ -37,6 +37,7 @@ public class InformationSourceImpl implements InformationSource, Serializable {
      */
 
     private Timer scheduler;
+    @Autowired
     private DataSourceObjectService service;
 
     public InformationSourceImpl(InformationSourceConfiguration config, DataSourceObjectService service) {
@@ -84,7 +85,6 @@ public class InformationSourceImpl implements InformationSource, Serializable {
     @Override
     public void readAndWrite() throws JAXBException, MalformedURLException {
         DataSourceObject dso = read();
-
         service.add(dso);
     }
 

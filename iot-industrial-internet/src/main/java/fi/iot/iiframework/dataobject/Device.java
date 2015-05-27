@@ -15,11 +15,11 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "device")
 @Entity
 public class Device implements Serializable {
-    
+
     @XmlAttribute
     @Id
     protected String id;
-    
+
     protected String deviceid;
 
     @XmlAttribute
@@ -29,12 +29,12 @@ public class Device implements Serializable {
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "DEVICE_SENSORS",
-            joinColumns = @JoinColumn(name = "DEVICE_ID", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name = "SENSOR_ID", referencedColumnName="id")
-    )
+    @JoinColumn(name = "DEVICE_ID")
     protected Set<Sensor> sensors;
+
+    @ManyToOne
+    @JoinColumn()
+    protected DataSourceObject source;
 
     public Device() {
     }
