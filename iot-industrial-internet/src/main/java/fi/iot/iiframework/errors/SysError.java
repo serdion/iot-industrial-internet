@@ -45,6 +45,13 @@ public class SysError implements Serializable {
 
     }
 
+     /**
+     *
+     * @param type ErrorType of error
+     * @param date Date of error
+     * 
+     */
+    
     public SysError(ErrorType type, Date date) {
         this.type = type;
         this.time = date;
@@ -54,6 +61,22 @@ public class SysError implements Serializable {
 
     public SysError() {
         // Hibernate requires an empty constructor
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public void setType(ErrorType type) {

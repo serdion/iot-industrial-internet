@@ -8,44 +8,75 @@ package fi.iot.iiframework.errors;
 
 import fi.iot.iiframework.errors.service.ErrorService;
 import java.util.Date;
-import org.hibernate.SessionFactory;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 /**
- * Create and save new errors to database. 
+ * Create and save new errors to database.
  *
  */
+@Component
 public class ErrorLogger {
     
+    private static ErrorService eService;
+
+    @Autowired
+    private ErrorService eServiceAW;
+
+    
     /**
-     * 
-     * @param e ErrorType
-     * @param d Date
-     * @param desc Optional
+     * Class needed to allow using Autowired-annotation in a static class 
      */
     
-    @Autowired
-    static ErrorService eService;
-    
+    @PostConstruct
+    public void ErrorLogger() {
+        eService = this.eServiceAW;
+    }
 
+    /**
+     * Creates a new error and calls newError to save it to database
+     *
+     * @param e ErrorType
+     * @param d Date
+     * @param desc Optional description
+     */
     public static void newError(ErrorType e, Date d, String desc) {
-        SysError error = new SysError(e,d,desc);
+        SysError error = new SysError(e, d, desc);
         saveError(error);
-        
+
     }
 
+    /**
+     * Creates a new error and calls newError to save it to database
+     *
+     * @param e ErrorType
+     * @param d Date
+     */
     public static void newError(ErrorType e, Date d) {
-        SysError error = new SysError(e,d);
+        SysError error = new SysError(e, d);
         saveError(error);
-        
+
     }
 
+    /**
+     * Saves a predefined SysError to the database
+     *
+     * @param error
+     */
+    public static void newError(SysError error) {
+        saveError(error);
+
+    }
+
+    /**
+     * Uses ErrorService to save SysError to database
+     *
+     * @param error SysError to be saved
+     */
     private static void saveError(SysError error) {
         eService.add(error);
-        
+
     }
-    
 
 }

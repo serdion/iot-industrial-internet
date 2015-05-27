@@ -6,11 +6,15 @@
  */
 package fi.iot.iiframework.application;
 
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorType;
+import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
@@ -37,6 +41,9 @@ public class Application {
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
         infSourceManager.getSources().get(0).readAndWrite();
+        
+        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
+        ErrorLogger.newError(e);
 
     }
 

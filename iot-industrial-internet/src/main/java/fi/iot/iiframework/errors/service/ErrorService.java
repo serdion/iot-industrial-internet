@@ -9,11 +9,14 @@ package fi.iot.iiframework.errors.service;
 import fi.iot.iiframework.errors.SysError;
 import java.util.List;
 
+/**
+ * Service for manipulating errors in database
+ * 
+ */
+
 public interface ErrorService {
 
     public void add(SysError e);
-
-    public void update(SysError e);
 
     public SysError get(String id);
 
