@@ -6,8 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import java.util.List;
-import java.util.Map;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Header;
 import fi.iot.iiframework.dataobject.Readout;
@@ -15,9 +13,6 @@ import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;

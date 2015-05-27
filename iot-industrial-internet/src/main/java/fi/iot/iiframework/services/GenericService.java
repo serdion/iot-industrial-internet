@@ -23,5 +23,5 @@ public interface GenericService<T, ID extends Serializable> {
 
     public void delete(T t);
 
-    public List<DataSourceObject> getAll();
+    public List<T> getAll();
 }

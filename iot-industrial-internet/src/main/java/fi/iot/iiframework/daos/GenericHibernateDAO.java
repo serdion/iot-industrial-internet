@@ -72,7 +72,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 
     @Override
     public T get(ID id) {
-        return (T) getSession().load(getPersistentClass(), id);
+        return (T) getSession().get(getPersistentClass(), id);
     }
 
     @Override

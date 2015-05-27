@@ -40,7 +40,7 @@ public class GenericHibernateService<T, ID extends Serializable>
     }
 
     @Override
-    public List<DataSourceObject> getAll() {
+    public List<T> getAll() {
         return dao.getAll();
     }
     
