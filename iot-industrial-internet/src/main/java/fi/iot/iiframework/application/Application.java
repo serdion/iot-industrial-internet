@@ -6,26 +6,18 @@
  */
 package fi.iot.iiframework.application;
 
-import fi.iot.iiframework.database.HibernateUtil;
-import fi.iot.iiframework.dataobject.DataObjectFactory;
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.net.MalformedURLException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -36,7 +28,8 @@ public class Application {
 
     public static void main(String[] args) throws JAXBException, MalformedURLException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
-
+        System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
+        
         Session session = ctx.getBean(SessionFactory.class).openSession();
 
         InformationSourceManager ism = ctx.getBean(InformationSourceManager.class);
@@ -48,29 +41,6 @@ public class Application {
         ism.createSource(isc);
         ism.getSources().get(0).readAndWrite();
 
-        //System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
-    }
-    
-    private static final SessionFactory sessionFactory = buildSessionFactory();
-    private static final String CONFIGFILE = "hibernate_h2.cfg.xml";
-
-    private static SessionFactory buildSessionFactory() {
-        try {
-            SessionFactory sessionFactory = new Configuration().configure(CONFIGFILE)
-                    .buildSessionFactory();
-
-            return sessionFactory;
-
-        } catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        return sessionFactory;
     }
 
 }

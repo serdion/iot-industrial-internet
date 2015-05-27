@@ -6,11 +6,9 @@
  */
 package fi.iot.iiframework.daos;
 
-import fi.iot.iiframework.database.HibernateUtil;
 import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
