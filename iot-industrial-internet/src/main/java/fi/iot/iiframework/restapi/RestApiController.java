@@ -16,6 +16,11 @@ import java.util.Map;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
+import fi.iot.iiframework.errors.service.ErrorService;
+import fi.iot.iiframework.services.dataobject.DeviceService;
+import fi.iot.iiframework.services.dataobject.ReadoutService;
+import fi.iot.iiframework.services.dataobject.SensorService;
+import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +36,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestApiController {
 
     @Autowired
-    private DataSourceObjectService service;
+    private DataSourceObjectService datasourceservice;
+    
+    @Autowired
+    private DeviceService deviceservice;
+    
+    @Autowired
+    private ReadoutService readoutservice;
+    
+    @Autowired
+    private SensorService sensorservice;
+    
+    @Autowired
+    private ErrorService errorservice;
 
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
@@ -48,11 +65,7 @@ public class RestApiController {
     public List<DataSourceObject> listDatasources(
             @RequestParam(required = false) Map<String, String> params
     ) {
-        // Hae tietokannasta ja palauta
-        List<DataSourceObject> datasources = service.getAll();
-
-        return datasources;
-
+        return datasourceservice.getAll();
     }
 
     @RequestMapping(value = "/datasources/list/{amount}", produces = "application/json")
@@ -83,7 +96,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return datasourceservice.get(datasourceid);
     }
 
     @RequestMapping(value = "/datasources/{datasourceid}/header", produces = "application/json")
@@ -92,7 +105,7 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params) {
 
-        return null;
+        return datasourceservice.get(datasourceid).getHeader();
     }
 
     @RequestMapping(value = "/devices/{datasourceid}/list", produces = "application/json")
@@ -134,17 +147,17 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return deviceservice.get(deviceid);
     }
 
     @RequestMapping(value = "/sensors/{deviceid}/list/", produces = "application/json")
     @ResponseBody
-    public List<Sensor> getSensor(
+    public List<Sensor> listSensors(
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return new ArrayList<>(deviceservice.get(deviceid).getSensors());
     }
 
     @RequestMapping(value = "/sensors/{deviceid}/list/{amont}", produces = "application/json")
@@ -177,7 +190,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return new ArrayList<>(sensorservice.get(sensorid).getReadouts());
     }
 
     @RequestMapping(value = "/readouts/{sensorid}/list/{amont}", produces = "application/json")
@@ -203,15 +216,14 @@ public class RestApiController {
         return null;
     }
 
-    @RequestMapping(value = "/readouts/{sensorid}/view/{timestamp}", produces = "application/json")
+    @RequestMapping(value = "/readouts/{readoutid}/view/{timestamp}", produces = "application/json")
     @ResponseBody
     public Readout getReadout(
-            @PathVariable String sensorid,
-            @PathVariable String timestamp,
+            @PathVariable long readoutid,
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return readoutservice.get(readoutid);
     }
     
     @RequestMapping(value = "/errors/{errorid}/view", produces = "application/json")
@@ -221,7 +233,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return errorservice.get(errorid);
     }
     
     @RequestMapping(value = "/errors/list", produces = "application/json")
@@ -232,7 +244,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) {
 
-        return null;
+        return errorservice.getAll();
     }
     
     @RequestMapping(value = "/errors/list/{amount}", produces = "application/json")
