@@ -11,7 +11,6 @@ import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.services.dataobject.ReadoutService;
 import fi.iot.iiframework.services.dataobject.SensorService;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-public class ReadoutServiceTest implements Serializable {
+public class ReadoutServiceTest {
 
     Readout r1;
     Readout r2;

@@ -6,37 +6,38 @@
  */
 package fi.iot.iiframework.services;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import fi.iot.iiframework.application.TestConfig;
+import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {TestConfig.class})
 public class DataSourceObjectServiceTest {
-    
-    public DataSourceObjectServiceTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
+    DataSourceObject dso1;
+    DataSourceObject dso2;
+
+    @Autowired
+    private DataSourceObjectService service;
+
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        dso1 = new DataSourceObject();
+        dso1.setId("ssds");
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void aDataSourceObjectCanBeSavedAndRetrievedFromDatabase() {
+        service.save(dso1);
+        DataSourceObject dso2 = service.get(dso1.getId());
+        assertEquals(dso1.getId(), dso2.getId());
+    }
+
 }
