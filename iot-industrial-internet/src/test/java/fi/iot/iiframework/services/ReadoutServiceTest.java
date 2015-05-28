@@ -41,7 +41,7 @@ public class ReadoutServiceTest implements Serializable {
     }
 
     @Test
-    public void anEntityCanBeSavedAndRetrievedFromDatabase() {
+    public void readoutCanBeSavedAndRetrievedFromDatabase() {
         service.save(r1);
         Readout rdb = service.get(r1.getId());
         assertEquals(r1.getId(), rdb.getId());
