@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
 public class DeviceServiceTest implements Serializable {
@@ -38,13 +37,13 @@ public class DeviceServiceTest implements Serializable {
     public void setUp() {
         d1 = new Device();
         d1.setId("ssds");
+        d1.setDeviceid("ss");
     }
 
     @Test
     public void anEntityCanBeSavedAndRetrievedFromDatabase() {
         service.save(d1);
         Device d2 = service.get(d1.getId());
-        d2.setId("ssds");
         assertEquals(d1.getId(), d2.getId());
         assertEquals(d1.getDeviceid(), d2.getDeviceid());
         assertEquals(d1.getSensors(), d2.getSensors());
