@@ -21,5 +21,9 @@ IIFramework.config(function ($routeProvider) {
             .when('/visual/history', {
                 controller: 'FrontController',
                 templateUrl: 'ngviews/visual_history.html'
-            });
+            })
+            .when('/sources', {
+				controller: 'InformationSourcesController',
+				templateUrl: 'ngviews/front.html'
+				});
 });
