@@ -6,8 +6,10 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import fi.iot.iiframework.database.Saveable;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,11 +22,17 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "readout")
-public class Readout implements Serializable {
+@Data
+@EqualsAndHashCode(exclude = {"sensor"})
+@ToString(exclude = {"sensor"})
+public class Readout implements Saveable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,46 +68,6 @@ public class Readout implements Serializable {
         this.quantity = quantity;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     /**
      * Returns the time of this Readout as Java Date.
      *
@@ -109,13 +77,4 @@ public class Readout implements Serializable {
         long timestamp = Long.parseLong(time);
         return new Date(timestamp);
     }
-
-    public Sensor getSensor() {
-        return sensor;
-    }
-
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
-    }
-
 }

@@ -6,18 +6,25 @@
 package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
+import fi.iot.iiframework.database.Saveable;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "device")
 @Entity
-public class Device implements Serializable {
+@Data
+@EqualsAndHashCode(exclude = {"status", "sensors", "source"})
+@ToString(exclude = {"status", "sensors", "source"})
+public class Device implements Saveable<String> {
 
     @XmlAttribute
     @Id
@@ -44,44 +51,7 @@ public class Device implements Serializable {
     public Device() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public Device(String id) {
         this.id = id;
     }
-
-    public String getDeviceid() {
-        return deviceid;
-    }
-
-    public void setDeviceid(String deviceid) {
-        this.deviceid = deviceid;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Set<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public void setSensors(Set<Sensor> sensors) {
-        this.sensors = sensors;
-    }
-
-    public DataSourceObject getSource() {
-        return source;
-    }
-
-    public void setSource(DataSourceObject source) {
-        this.source = source;
-    }
-
 }

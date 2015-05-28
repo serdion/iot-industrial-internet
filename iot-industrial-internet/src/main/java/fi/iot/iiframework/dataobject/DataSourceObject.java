@@ -7,19 +7,26 @@
 package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
+import fi.iot.iiframework.database.Saveable;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "datasource")
 @Entity
 @Table(name = "datasource")
-public class DataSourceObject implements Serializable {    
+@Data
+@EqualsAndHashCode(exclude = {"devices", "header"})
+@ToString(exclude = {"devices", "header"})
+public class DataSourceObject implements Saveable<String> {    
     @XmlAttribute
     @Id
     protected String id;
@@ -36,38 +43,5 @@ public class DataSourceObject implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
     @JoinColumn(name = "source")
-    protected Set<Device> devices;
-    
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDatasourceid() {
-        return datasourceid;
-    }
-
-    public void setDatasourceid(String datasourceid) {
-        this.datasourceid = datasourceid;
-    }
-
-    public Header getHeader() {
-        return header;
-    }
-
-    public void setHeader(Header header) {
-        this.header = header;
-    }
-
-    public Set<Device> getDevices() {
-        return devices;
-    }
-
-    public void setDevices(Set<Device> devices) {
-        this.devices = devices;
-    }
-
+    protected Set<Device> devices;    
 }
