@@ -17,23 +17,34 @@ public class DBConsole {
 
     public String response;
     private final Scanner scan;
+    private String input;
 
     public DBConsole() {
-        response = "Enter a new error!";
+        response = "What do you want to enter to the database?";
         scan = new Scanner(System.in);
+        input = " ";
 
     }
 
     public void run() {
-        while (true) {
+        while (input.equals("exit") == false) {
             System.out.println(response);
-            String input = scan.nextLine();
+            input = scan.nextLine();
+            input = input.trim().toLowerCase();
 
-            System.out.println(input);
-
-            break;
+            if (input.equals("error")) {
+                response = "Lets create an error!";
+                
+            } else if (input.equals("source")) {
+                response = "Not implemented :(";
+                
+            } else {
+                response = "Not a valid command!";
+                
+            }
 
         }
+        System.out.println(response = "Console stopped!");
 
     }
 
