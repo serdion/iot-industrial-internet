@@ -26,7 +26,7 @@ public class DeviceDAOImpl
     @Override
     public List<Device> getBy(int from, int to, DataSourceObject dso) {
         return findByCriteriaFromTo(from, to,
-                Restrictions.eq("dataSourceObject", dso));
+                Restrictions.eq("source_id", dso.getId()));
     }
 
 }

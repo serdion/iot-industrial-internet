@@ -8,12 +8,10 @@ package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,27 +20,31 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 public class Sensor implements Serializable {
-    
+
     @Id
     @XmlAttribute
     protected String id;
-    
+
     protected String sensorid;
-    
+
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "sensor")
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @JoinColumn(name="sensor_id")
     protected Set<Readout> readouts;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "device")
+    @JoinColumn(name = "device_id")
     protected Device device;
-    
+
     public Sensor() {
     }
 
@@ -83,5 +85,5 @@ public class Sensor implements Serializable {
     public void setDevice(Device device) {
         this.device = device;
     }
-    
+
 }
