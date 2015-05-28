@@ -44,6 +44,7 @@ public class Device implements Saveable<String> {
     @JoinColumn(name = "device")
     protected Set<Sensor> sensors;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source")
     protected DataSourceObject source;

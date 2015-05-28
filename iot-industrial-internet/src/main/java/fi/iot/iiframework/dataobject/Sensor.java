@@ -41,6 +41,7 @@ public class Sensor implements Saveable<String> {
     @JoinColumn(name = "sensor")
     protected Set<Readout> readouts;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="device")
     protected Device device;

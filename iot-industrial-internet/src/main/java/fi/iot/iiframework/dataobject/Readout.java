@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.iot.iiframework.database.Saveable;
 import java.io.Serializable;
 import java.util.Date;
@@ -54,6 +55,7 @@ public class Readout implements Saveable<Long> {
     @NotNull
     protected String quantity;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sensor")
     protected Sensor sensor;
