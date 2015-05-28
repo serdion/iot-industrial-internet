@@ -22,6 +22,8 @@ public class ApplicationSettings {
     
     private int defaultAmountOfDataSourcesRetrievedFromDatabase = 10;
     
+    private int defaultAmountOfSensorsRetrievedFromDatabase = 10;
+    
     private int defautAmountOfErrorsRetrievedFromDatabase = 25;
 
     public int getMaxObjectsRetrievedFromDatabase() {
@@ -42,6 +44,10 @@ public class ApplicationSettings {
 
     public int getDefautAmountOfErrorsRetrievedFromDatabase() {
         return defautAmountOfErrorsRetrievedFromDatabase;
+    }
+
+    public int getDefaultAmountOfSensorsRetrievedFromDatabase() {
+        return defaultAmountOfSensorsRetrievedFromDatabase;
     }
     
     
