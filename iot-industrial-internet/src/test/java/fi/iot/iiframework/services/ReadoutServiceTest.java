@@ -15,6 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,12 +26,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author atte
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes={TestConfig.class })
+@SpringApplicationConfiguration(classes = {TestConfig.class})
 public class ReadoutServiceTest implements Serializable {
-    
+
     Readout r1;
     Readout r2;
-    
+
     @Autowired
     private ReadoutService service;
 
@@ -39,7 +40,7 @@ public class ReadoutServiceTest implements Serializable {
         r1 = new Readout("134214158", 20.2, "C", "Temperature");
         r2 = new Readout("134214858", 19.8, "C", "Temperature");
     }
-    
+
     @Test
     public void anIdIsGeneratedAutomaticallyWhenSaved() {
         service.save(r1);
