@@ -26,7 +26,7 @@ public class InformationSourceManager {
     @Autowired
     private DataSourceObjectService service;
     @Autowired
-    private InformationSourceConfigurationService infService;
+    private InformationSourceConfigurationService configService;
 
     
     public InformationSourceManager() {
@@ -43,11 +43,7 @@ public class InformationSourceManager {
     public void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSourceImpl(config, service);
         sources.add(source);
-        infService.save(config);
-    }
-    
-    public List<InformationSourceConfiguration> getAllFromDB() {
-        return infService.getAll();
+        configService.save(config);
     }
 
     public void removeSource(String id) {
@@ -58,6 +54,8 @@ public class InformationSourceManager {
         return sources;
     }
 
-    
+    public List<InformationSourceConfiguration> getAllFromDB() {
+        return configService.getAll();
+    }
     
 }
