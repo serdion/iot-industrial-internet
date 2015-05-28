@@ -36,7 +36,6 @@ public class Application {
         InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
         InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
-        infSourceConfiguration.setId("1");
         infSourceConfiguration.setType(InformationSourceType.XML);
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
@@ -44,6 +43,7 @@ public class Application {
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
         ErrorLogger.newError(e);
+//        System.out.println(infSourceManager.getAllFromDB().get(0).getUrl());
 
     }
 
