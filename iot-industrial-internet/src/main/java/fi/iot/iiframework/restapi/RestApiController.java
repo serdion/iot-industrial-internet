@@ -17,12 +17,12 @@ import fi.iot.iiframework.services.dataobject.ReadoutService;
 import fi.iot.iiframework.services.dataobject.SensorService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @RestController
 @RequestMapping("1.0")
@@ -49,12 +49,27 @@ public class RestApiController {
     @Autowired
     InformationSourceConfigurationService informationsourceservice;
 
+    @Autowired
+    private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
     public List<Device> test(
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         return deviceservice.getAll();
+    }
+
+    @RequestMapping(value = "/", produces = "application/json")
+    @ResponseBody
+    public Object[] index() {
+        Set<String> links = new HashSet<>();
+
+        requestMappingHandlerMapping.getHandlerMethods().entrySet().stream().forEach((entrySet)->{
+            links.addAll(entrySet.getKey().getPatternsCondition().getPatterns());
+        });
+
+        return links.stream().filter((p) ->  p.contains("1.0")).toArray();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -157,7 +172,7 @@ public class RestApiController {
         return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), device);
     }
 
-    @RequestMapping(value = "/sensors/{deviceid}/list/{amont}", produces = "application/json")
+    @RequestMapping(value = "/sensors/{deviceid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensorsAmount(
             @PathVariable String deviceid,
@@ -300,8 +315,8 @@ public class RestApiController {
             @PathVariable String configid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        InformationSourceConfiguration configuration = 
-                (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
+        InformationSourceConfiguration configuration
+                = (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
         informationsourceservice.delete(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
