@@ -54,7 +54,6 @@ public class RestApiController {
     public List<Device> test(
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         return deviceservice.getAll();
     }
 
@@ -72,9 +71,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(0, amount);
-
         return datasourceservice.get(0, amount);
     }
 
@@ -85,9 +82,7 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(to, from);
-
         return datasourceservice.get(to, from);
     }
 
@@ -97,7 +92,6 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         return (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
     }
 
@@ -106,7 +100,6 @@ public class RestApiController {
     public Header getDatasourceHeader(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params) throws ResourceNotFoundException {
-
         return (Header) returnOrException(datasourceservice.get(datasourceid).getHeader());
     }
 
@@ -116,7 +109,6 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
         return deviceservice.getBy(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase(), source);
     }
@@ -128,11 +120,8 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-
         DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
-
         exceptionIfWrongLimits(0, amount);
-
         return deviceservice.getBy(0, amount, source);
     }
 
@@ -144,11 +133,8 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-
         DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
-
         exceptionIfWrongLimits(from, to);
-
         return deviceservice.getBy(to, from, source);
     }
 
@@ -158,7 +144,6 @@ public class RestApiController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         return (Device) returnOrException(deviceservice.get(deviceid));
     }
 
@@ -168,9 +153,7 @@ public class RestApiController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         Device device = (Device) returnOrException(deviceservice.get(deviceid));
-
         return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), device);
     }
 
@@ -181,11 +164,8 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
-
         Device device = (Device) returnOrException(deviceservice.get(deviceid));
-
         exceptionIfWrongLimits(0, amount);
-
         return sensorservice.getBy(0, amount, device);
     }
 
@@ -197,11 +177,8 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-
         Device device = (Device) returnOrException(deviceservice.get(deviceid));
-
         exceptionIfWrongLimits(to, from);
-
         return sensorservice.getBy(from, to, device);
     }
 
@@ -212,7 +189,6 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
-
         return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), sensor);
     }
 
@@ -224,9 +200,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
-
         exceptionIfWrongLimits(0, amount);
-
         return readoutservice.getBy(0, amount, sensor);
     }
 
@@ -239,9 +213,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
-
         exceptionIfWrongLimits(from, to);
-
         return readoutservice.getBy(from, to, sensor);
     }
 
@@ -251,7 +223,6 @@ public class RestApiController {
             @PathVariable long readoutid,
             @RequestParam(required = false) Map<String, String> params
     ) {
-
         return readoutservice.get(readoutid);
     }
 
@@ -261,7 +232,6 @@ public class RestApiController {
             @PathVariable String errorid,
             @RequestParam(required = false) Map<String, String> params
     ) {
-
         return errorservice.get(errorid);
     }
 
@@ -272,7 +242,6 @@ public class RestApiController {
             @PathVariable String timestamp,
             @RequestParam(required = false) Map<String, String> params
     ) {
-
         return errorservice.get(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase());
     }
 
@@ -282,9 +251,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(0, amount);
-
         return errorservice.get(0, amount);
     }
 
@@ -295,12 +262,10 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(from, to);
-
         return errorservice.get(from, to);
     }
-    
+
     @RequestMapping(value = "/configurations/informationsources/{configid}/view", produces = "application/json")
     @ResponseBody
     public InformationSourceConfiguration getInformationSource(
@@ -309,21 +274,19 @@ public class RestApiController {
     ) throws InvalidParametersException, ResourceNotFoundException {
         return (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
     }
-    
+
     @RequestMapping(
-            value = "/configurations/informationsources/add", 
-            method = RequestMethod.POST, 
+            value = "/configurations/informationsources/add",
+            method = RequestMethod.POST,
             produces = "application/json",
-            consumes="application/json"
+            consumes = "application/json"
     )
     @ResponseBody
     public ResponseEntity<InformationSourceConfiguration> addInformationSource(
             @RequestBody InformationSourceConfiguration configuration,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        
         informationsourceservice.save(configuration);
-        
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
@@ -332,7 +295,6 @@ public class RestApiController {
     public List<InformationSourceConfiguration> listInformationSourcesList(
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         return informationsourceservice.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
     }
 
@@ -342,9 +304,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(0, amount);
-
         return informationsourceservice.get(0, amount);
     }
 
@@ -355,9 +315,7 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(to, from);
-
         return informationsourceservice.get(to, from);
     }
 
@@ -371,7 +329,6 @@ public class RestApiController {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseBody
     public ResponseEntity<RestAPIError> resourceNotFoundException() {
-
         return new ResponseEntity<>(
                 new RestAPIError(
                         ErrorType.NOT_FOUND,
@@ -389,7 +346,6 @@ public class RestApiController {
     @ExceptionHandler(InvalidParametersException.class)
     @ResponseBody
     public ResponseEntity<RestAPIError> invalidParametersException() {
-
         return new ResponseEntity<>(
                 new RestAPIError(
                         ErrorType.BAD_REQUEST,
@@ -402,7 +358,7 @@ public class RestApiController {
      * {to} cannot be negative
      * {to} cannot be equal to {from}
      * {to} cannot be smaller than {from}
-     * from-to cannot be bigger than 
+     * from-to cannot be bigger than
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if(from<0||to<=0||to==from||from>to
