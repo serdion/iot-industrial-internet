@@ -9,6 +9,7 @@ package fi.iot.iiframework.errors;
 import fi.iot.iiframework.errors.service.ErrorService;
 import fi.iot.iiframework.services.GenericService;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -78,6 +79,10 @@ public class ErrorLogger {
     private static void saveError(SysError error) {
        gService.save(error);
 
+    }
+    
+    public static List<SysError> getAllErrors() {
+        return gService.getAll();
     }
 
 }
