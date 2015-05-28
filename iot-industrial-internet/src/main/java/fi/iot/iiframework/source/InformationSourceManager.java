@@ -50,8 +50,8 @@ public class InformationSourceManager {
         
     }
 
-    public List<InformationSourceConfiguration> getSources() {
-        return configService.getAll();
+    public List<InformationSource> getSources() {
+        return sources;
     }
 
     
