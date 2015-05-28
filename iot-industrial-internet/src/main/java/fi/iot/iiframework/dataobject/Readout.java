@@ -46,7 +46,7 @@ public class Readout implements Serializable {
     @NotNull
     protected String quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sensor_id")
     protected Sensor sensor;
 
