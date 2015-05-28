@@ -110,7 +110,5 @@ public class Device implements Serializable {
         }
         return true;
     }
-    
-    
 
 }

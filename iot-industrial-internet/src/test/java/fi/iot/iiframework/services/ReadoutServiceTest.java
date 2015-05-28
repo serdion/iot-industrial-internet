@@ -68,8 +68,14 @@ public class ReadoutServiceTest implements Serializable {
         Sensor s = new Sensor("dkjawkdja", readouts);
         
         sensorService.save(s);
-        List<Readout> readReadouts =  readoutService.getBy(s);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
+        List<Readout> readReadouts = readoutService.getBy(s);
+        readReadouts.add(r3);
         assertTrue(readReadouts.contains(r1));
+        assertTrue(readReadouts.contains(r2));
+        assertFalse(readReadouts.contains(r3));
     }
 
 }
