@@ -64,4 +64,15 @@ public class ErrorLoggerTest {
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("no description"));
     }
 
+    @Test
+    public void newErrorISCreatedWithPresetError() {
+
+        int sizeOfErrorList = ErrorLogger.getAllErrors().size();
+        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "I was added directly...");
+        ErrorLogger.newError(e);
+
+        List<SysError> allErrors = ErrorLogger.getAllErrors();
+        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("I was added directly..."));
+    }
+
 }
