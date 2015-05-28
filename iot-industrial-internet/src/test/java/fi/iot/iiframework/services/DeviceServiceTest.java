@@ -9,6 +9,7 @@ package fi.iot.iiframework.services;
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.services.dataobject.DeviceService;
+import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,27 +24,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-public class DeviceServiceTest {
+public class DeviceServiceTest extends GenericServiceTest<Device, String> {
 
     Device d1;
     Device d2;
+    Device d3;
 
     @Autowired
-    private DeviceService service;
+    private DeviceService deviceService;
 
     @Before
     public void setUp() {
-        d1 = new Device();
-        d1.setId("ssds");
-        d1.setDeviceid("ss");
-    }
-
-    @Test
-    public void anEntityCanBeSavedAndRetrievedFromDatabase() {
-        service.save(d1);
-        Device d2 = service.get(d1.getId());
-        assertEquals(d1.getId(), d2.getId());
-        assertEquals(d1.getDeviceid(), d2.getDeviceid());
+        service = deviceService;
+        s1 = d1 = new Device(UUID.randomUUID().toString());
+        s2 = d2 = new Device(UUID.randomUUID().toString());
+        s3 = d3 = new Device(UUID.randomUUID().toString());
     }
 
 }

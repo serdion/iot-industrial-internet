@@ -14,7 +14,6 @@ import fi.iot.iiframework.services.dataobject.SensorService;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -29,92 +28,57 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-public class ReadoutServiceTest {
-
-    Readout r1;
-    Readout r2;
-    Readout r3;
+public class ReadoutServiceTest extends GenericServiceTest<Readout, Long> {
 
     @Autowired
     private ReadoutService readoutService;
     @Autowired
     private SensorService sensorService;
-    @Autowired
-    private SessionFactory sessionFactory;
+    
+    Readout r1;
+    Readout r2;
+    Readout r3;
 
     @Before
     public void setUp() {
-        r1 = new Readout("134214158", 20.2, "C", "Temperature");
-        r2 = new Readout("134214858", 19.8, "C", "Temperature");
-        r3 = new Readout("13184174a", 7.8, "C", "Temperature");
+        super.service = readoutService;
+        s1 = r1 = new Readout("134214158", 20.2, "C", "Temperature");
+        s2 = r2 = new Readout("134214858", 19.8, "C", "Temperature");
+        s3 = r3 = new Readout("13184174a", 7.8, "C", "Temperature");
     }
 
     @Test
     public void anIdIsGeneratedAutomaticallyWhenSaved() {
-        readoutService.save(r1);
-        assertNotNull(r1.getId());
+        readoutService.save(s1);
+        assertNotNull(s1.getId());
     }
 
     @Test
-    public void readoutCanBeSavedAndRetrievedFromDatabase() {
-        readoutService.save(r1);
-        Readout rdb = readoutService.get(r1.getId());
-        assertEquals(r1.getId(), rdb.getId());
-        assertEquals(r1.getQuantity(), rdb.getQuantity());
-        assertEquals(r1.getTime(), rdb.getTime());
-        assertEquals(r1.getUnit(), rdb.getUnit());
-        assertEquals(r1.getValue(), rdb.getValue(), 0.1);
-    }
-    
-    @Test
     public void readoutsCanBeFoundBySensor() {
         Set<Readout> readouts = new HashSet<>();
-        readouts.add(r1);
-        readouts.add(r2);
+        readouts.add(s1);
+        readouts.add(s2);
         Sensor s = new Sensor("dkjawkdja", readouts);
         
         sensorService.save(s);
         
         List<Readout> readReadouts = readoutService.getBy(s);
-        assertTrue(readReadouts.contains(r1));
-        assertTrue(readReadouts.contains(r2));
-    }
-    
-    @Test
-    public void readoutsCanBeDeleted() {
-        readoutService.save(r1);
-        readoutService.save(r2);
-        readoutService.delete(r1);
-        
-        assertFalse(readoutService.getAll().contains(r1));
-        assertEquals(1, readoutService.getAll().size());
-    }
-    
-    @Test
-    public void allReadoutsCanBeRead() {
-        readoutService.save(r1);
-        readoutService.save(r2);
-        readoutService.save(r3);
-        
-        List<Readout> readouts = readoutService.getAll();
-        assertTrue(readouts.contains(r1));
-        assertTrue(readouts.contains(r2));
-        assertTrue(readouts.contains(r3));
-        assertEquals(3, readouts.size());
+        assertTrue(readReadouts.contains(s1));
+        assertTrue(readReadouts.contains(s2));
     }
     
     @Test
     public void readoutsNotConnectedToSensorNotReturnedWhenSearchingBySensor() {
         Set<Readout> readouts = new HashSet<>();
-        readouts.add(r1);
-        readouts.add(r2);
+        readouts.add(s1);
+        readouts.add(s2);
         Sensor s = new Sensor("dkjawkdja", readouts);
         
         sensorService.save(s);
-        readoutService.save(r3);
+        readoutService.save(s3);
         
         List<Readout> readReadouts = readoutService.getBy(s);
-        assertFalse(readReadouts.contains(r3));
+        assertFalse(readReadouts.contains(s3));
     }    
 
 }
