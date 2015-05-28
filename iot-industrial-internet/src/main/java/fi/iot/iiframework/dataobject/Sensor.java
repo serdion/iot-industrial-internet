@@ -40,7 +40,7 @@ public class Sensor implements Serializable {
     protected Set<Readout> readouts;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "DEVICE_ID")
+    @JoinColumn(name = "device")
     protected Device device;
     
     public Sensor() {

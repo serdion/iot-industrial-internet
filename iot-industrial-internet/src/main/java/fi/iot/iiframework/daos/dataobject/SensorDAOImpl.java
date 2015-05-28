@@ -26,6 +26,6 @@ public class SensorDAOImpl
     @Override
     public List<Sensor> getBy(int from, int to, Device device) {
         return findByCriteriaFromTo(from, to,
-                Restrictions.eq("DEVICE_ID", device.getId()));
+                Restrictions.eq("device", device.getId()));
     }
 }
