@@ -38,7 +38,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" th:href="@{/}">Industrial Internet Framework</a>
+                        <a class="navbar-brand" th:href="@{#/}">Industrial Internet Framework</a>
                     </div>
                     <!-- /.navbar-header -->
 
@@ -126,16 +126,16 @@
                         <div class="sidebar-nav navbar-collapse">
                             <ul class="nav" id="side-menu">
                                 <li>
-                                    <a th:href="@{/}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                    <a th:href="@{#/}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Visualization<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <li>
-                                            <a th:href="@{/visual/now}"><i class="fa fa-spinner fa-spin fa-fw"></i> Realtime</a>
+                                            <a th:href="@{#/visual/now}"><i class="fa fa-spinner fa-spin fa-fw"></i> Realtime</a>
                                         </li>
                                         <li>
-                                            <a th:href="@{/visual/history}"><i class="fa fa-history fa-fw"></i> History</a>
+                                            <a th:href="@{#/visual/history}"><i class="fa fa-history fa-fw"></i> History</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-second-level -->
@@ -191,12 +191,13 @@
         <script th:attr="src=@{/bower_components/flot/jquery.flot.resize.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.time.js}"></script>
         <script th:attr="src=@{/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js}"></script>
-        <script th:attr="src=@{/js/flot-data.js}"></script>
+        <script th:attr="src=@{/bower_components/angular-flot/angular-flot.js}"></script>
 
         <script th:attr="src=@{/dist/js/sb-admin-2.js}"></script>
 
         <script th:attr="src=@{/js/ngapp.js}"></script>
         <script th:attr="src=@{/js/controllers/front_controller.js}"></script>
+        <script th:attr="src=@{/js/controllers/visual_realtime_controller.js}"></script>
     </body>
 
 </html>

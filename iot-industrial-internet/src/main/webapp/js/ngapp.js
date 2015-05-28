@@ -6,13 +6,20 @@
  */
 
 
-var IIFramework = angular.module('IIFramework', ['ngRoute']);
+var IIFramework = angular.module('IIFramework', ['ngRoute', 'angular-flot']);
 
 
-IIFramework.config(function($routeProvider){
-    console.log($routeProvider);
+IIFramework.config(function ($routeProvider) {
     $routeProvider.when('/', {
         controller: 'FrontController',
         templateUrl: 'ngviews/front.html'
-    });
+    })
+            .when('/visual/now', {
+                controller: 'VisualRealtimeController',
+                templateUrl: 'ngviews/visual_realtime.html'
+            })
+            .when('/visual/history', {
+                controller: 'FrontController',
+                templateUrl: 'ngviews/visual_history.html'
+            });
 });
