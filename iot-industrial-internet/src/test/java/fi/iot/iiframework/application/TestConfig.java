@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {
     "fi.iot.iiframework.daos",
     "fi.iot.iiframework.services",
-    "fi.iot.iiframework.database"
+    "fi.iot.iiframework.database",
+    "fi.iot.iiframework.errors"
+        
 })
 public class TestConfig {
     

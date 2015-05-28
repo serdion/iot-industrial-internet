@@ -57,6 +57,7 @@ public class ReadoutServiceTest {
         assertEquals(r1.getTime(), rdb.getTime());
         assertEquals(r1.getUnit(), rdb.getUnit());
         assertEquals(r1.getValue(), rdb.getValue(), 0.1);
+        //
     }
     
     @Test

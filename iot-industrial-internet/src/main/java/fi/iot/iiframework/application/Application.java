@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.application;
 
+
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
@@ -42,10 +43,10 @@ public class Application {
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
         infSourceManager.getSources().get(0).readAndWrite();
-
-        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
+        
+        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "This is a test error");
         ErrorLogger.newError(e);
-//        System.out.println(infSourceManager.getAllFromDB().get(0).getUrl());
+
 
     }
 
