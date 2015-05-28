@@ -7,10 +7,8 @@
 package fi.iot.iiframework.services;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.services.dataobject.SensorService;
-import java.io.Serializable;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -36,7 +34,7 @@ public class SensorServiceTest {
     }
 
     @Test
-    public void aSCanBeSavedAndRetrievedFromDatabase() {
+    public void aSensorCanBeSavedAndRetrievedFromDatabase() {
         service.save(s1);
         Sensor s2 = service.get(s1.getId());
         assertEquals(s1.getId(), s2.getId());
