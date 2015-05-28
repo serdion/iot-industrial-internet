@@ -54,6 +54,8 @@ public class InformationSourceManager {
         return sources;
     }
 
-    
+    public List<InformationSourceConfiguration> getAllFromDB() {
+        return configService.getAll();
+    }
     
 }

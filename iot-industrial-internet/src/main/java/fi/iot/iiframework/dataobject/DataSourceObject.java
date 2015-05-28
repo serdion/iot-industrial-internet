@@ -8,8 +8,17 @@ package fi.iot.iiframework.dataobject;
 
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "datasource")
@@ -28,7 +37,9 @@ public class DataSourceObject implements Serializable {
     
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "dataSourceObject")
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @JoinColumn(name = "source_id")
     protected Set<Device> devices;
     
     public String getId() {

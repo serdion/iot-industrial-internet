@@ -31,9 +31,9 @@ public class Application {
     private static final Logger logger = Logger.getLogger(Application.class.getName());
 
     public static void main(String[] args) throws JAXBException, MalformedURLException {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);        
+        ApplicationContext ctx = SpringApplication.run(Application.class, args);
         logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
-        
+
         InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
         InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
@@ -41,9 +41,16 @@ public class Application {
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
         infSourceManager.getSources().get(0).readAndWrite();
+<<<<<<< HEAD
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "This is a test error");
         ErrorLogger.newError(e);
+=======
+
+        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
+        ErrorLogger.newError(e);
+//        System.out.println(infSourceManager.getAllFromDB().get(0).getUrl());
+>>>>>>> master
 
     }
 

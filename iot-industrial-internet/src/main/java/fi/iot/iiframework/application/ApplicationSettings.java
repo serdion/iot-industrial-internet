@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationSettings {
 
-    private int maxObjectsRetrievedFromDatabase = 1000;
-
+    private final int maxObjectsRetrievedFromDatabase = 1000;
+    
     private int defaultAmountOfReadoutsRetrievedFromDatabase = 100;
 
     private int defaultAmountOfDevicesRetrievedFromDatabase = 10;

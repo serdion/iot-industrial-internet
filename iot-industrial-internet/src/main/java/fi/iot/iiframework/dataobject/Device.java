@@ -10,6 +10,8 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "device")
@@ -28,11 +30,13 @@ public class Device implements Serializable {
 
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "device")
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @JoinColumn(name = "device_id")
     protected Set<Sensor> sensors;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "source")
+    @JoinColumn(name = "source_id")
     protected DataSourceObject dataSourceObject;
 
     public Device() {
@@ -77,5 +81,5 @@ public class Device implements Serializable {
     public void setDataSourceObject(DataSourceObject dataSourceObject) {
         this.dataSourceObject = dataSourceObject;
     }
-    
+
 }
