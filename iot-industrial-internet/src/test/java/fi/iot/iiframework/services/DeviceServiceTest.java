@@ -48,7 +48,7 @@ public class DeviceServiceTest implements Serializable {
         assertEquals(d1.getId(), d2.getId());
         assertEquals(d1.getDeviceid(), d2.getDeviceid());
         assertEquals(d1.getSensors(), d2.getSensors());
-        assertEquals(d1.getDataSourceObject(), d2.getDataSourceObject());
+        assertEquals(d1.getSource(), d2.getSource());
     }
 
 }
