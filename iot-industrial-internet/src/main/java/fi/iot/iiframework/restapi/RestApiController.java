@@ -15,7 +15,8 @@ import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import fi.iot.iiframework.services.dataobject.DeviceService;
 import fi.iot.iiframework.services.dataobject.ReadoutService;
 import fi.iot.iiframework.services.dataobject.SensorService;
-import java.util.ArrayList;
+import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +46,15 @@ public class RestApiController {
     @Autowired
     ApplicationSettings settings;
 
+    @Autowired
+    InformationSourceConfigurationService informationsourceservice;
+
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> test(
+    public List<Device> test(
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
-        throw new ResourceNotFoundException();
-
+        return deviceservice.getAll();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -69,9 +71,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(0, amount);
-
         return datasourceservice.get(0, amount);
     }
 
@@ -82,9 +82,7 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(to, from);
-
         return datasourceservice.get(to, from);
     }
 
@@ -94,7 +92,6 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         return (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
     }
 
@@ -103,7 +100,6 @@ public class RestApiController {
     public Header getDatasourceHeader(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params) throws ResourceNotFoundException {
-
         return (Header) returnOrException(datasourceservice.get(datasourceid).getHeader());
     }
 
@@ -113,11 +109,8 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
-        Object returnOrException = returnOrException(datasourceservice.get(datasourceid));
-
-        // TODO
-        return deviceservice.get(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase());
+        DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
+        return deviceservice.getBy(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase(), source);
     }
 
     @RequestMapping(value = "/devices/{datasourceid}/list/{amount}", produces = "application/json")
@@ -126,12 +119,10 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
-    ) throws InvalidParametersException {
-
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
         exceptionIfWrongLimits(0, amount);
-
-        // TODO
-        return deviceservice.get(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase());
+        return deviceservice.getBy(0, amount, source);
     }
 
     @RequestMapping(value = "/devices/{datasourceid}/list/{from}/{to}", produces = "application/json")
@@ -140,12 +131,11 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @PathVariable int from,
             @PathVariable int to,
-            @RequestParam(required = false) Map<String, String> params) throws InvalidParametersException {
-
-        exceptionIfWrongLimits(to, from);
-
-        // TODO
-        return deviceservice.get(to, from);
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
+        exceptionIfWrongLimits(from, to);
+        return deviceservice.getBy(to, from, source);
     }
 
     @RequestMapping(value = "/devices/{deviceid}/view", produces = "application/json")
@@ -154,18 +144,17 @@ public class RestApiController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-
         return (Device) returnOrException(deviceservice.get(deviceid));
     }
 
-    @RequestMapping(value = "/sensors/{deviceid}/list/", produces = "application/json")
+    @RequestMapping(value = "/sensors/{deviceid}/list", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensors(
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
-    ) {
-
-        return new ArrayList<>(deviceservice.get(deviceid).getSensors());
+    ) throws ResourceNotFoundException {
+        Device device = (Device) returnOrException(deviceservice.get(deviceid));
+        return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), device);
     }
 
     @RequestMapping(value = "/sensors/{deviceid}/list/{amont}", produces = "application/json")
@@ -174,9 +163,10 @@ public class RestApiController {
             @PathVariable String deviceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
-    ) {
-
-        return null;
+    ) throws ResourceNotFoundException, InvalidParametersException {
+        Device device = (Device) returnOrException(deviceservice.get(deviceid));
+        exceptionIfWrongLimits(0, amount);
+        return sensorservice.getBy(0, amount, device);
     }
 
     @RequestMapping(value = "/sensors/{deviceid}/list/{from}/{to}", produces = "application/json")
@@ -186,11 +176,10 @@ public class RestApiController {
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
-    ) throws InvalidParametersException {
-
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        Device device = (Device) returnOrException(deviceservice.get(deviceid));
         exceptionIfWrongLimits(to, from);
-
-        return sensorservice.get(to, from);
+        return sensorservice.getBy(from, to, device);
     }
 
     @RequestMapping(value = "/readouts/{sensorid}/list", produces = "application/json")
@@ -200,7 +189,6 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
-
         return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), sensor);
     }
 
@@ -212,9 +200,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
-
         exceptionIfWrongLimits(0, amount);
-
         return readoutservice.getBy(0, amount, sensor);
     }
 
@@ -227,9 +213,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
-
         exceptionIfWrongLimits(from, to);
-
         return readoutservice.getBy(from, to, sensor);
     }
 
@@ -239,7 +223,6 @@ public class RestApiController {
             @PathVariable long readoutid,
             @RequestParam(required = false) Map<String, String> params
     ) {
-
         return readoutservice.get(readoutid);
     }
 
@@ -249,7 +232,6 @@ public class RestApiController {
             @PathVariable String errorid,
             @RequestParam(required = false) Map<String, String> params
     ) {
-
         return errorservice.get(errorid);
     }
 
@@ -260,7 +242,6 @@ public class RestApiController {
             @PathVariable String timestamp,
             @RequestParam(required = false) Map<String, String> params
     ) {
-
         return errorservice.get(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase());
     }
 
@@ -270,9 +251,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(0, amount);
-
         return errorservice.get(0, amount);
     }
 
@@ -283,17 +262,73 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-
         exceptionIfWrongLimits(from, to);
-
         return errorservice.get(from, to);
     }
 
-    @RequestMapping(value = "/error/notfound", produces = "application/json")
+    @RequestMapping(value = "/configurations/informationsources/{configid}/view", produces = "application/json")
+    @ResponseBody
+    public InformationSourceConfiguration getInformationSource(
+            @PathVariable String configid,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        return (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
+    }
+
+    @RequestMapping(
+            value = "/configurations/informationsources/add",
+            method = RequestMethod.POST,
+            produces = "application/json",
+            consumes = "application/json"
+    )
+    @ResponseBody
+    public ResponseEntity<InformationSourceConfiguration> addInformationSource(
+            @RequestBody InformationSourceConfiguration configuration,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        informationsourceservice.save(configuration);
+        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/configurations/informationsources/list", produces = "application/json")
+    @ResponseBody
+    public List<InformationSourceConfiguration> listInformationSourcesList(
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException {
+        return informationsourceservice.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
+    }
+
+    @RequestMapping(value = "/configurations/informationsources/list/{amount}", produces = "application/json")
+    @ResponseBody
+    public List<InformationSourceConfiguration> listInformationSourcesListAmount(
+            @PathVariable int amount,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException {
+        exceptionIfWrongLimits(0, amount);
+        return informationsourceservice.get(0, amount);
+    }
+
+    @RequestMapping(value = "/configurations/informationsources/list/{to}/{from}", produces = "application/json")
+    @ResponseBody
+    public List<InformationSourceConfiguration> listInformationSourcesListFromTo(
+            @PathVariable int from,
+            @PathVariable int to,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException {
+        exceptionIfWrongLimits(to, from);
+        return informationsourceservice.get(to, from);
+    }
+
+    /**
+     * Catches ResourceNotFoundExceptions created by RestAPI and notifies the
+     * user with RestAPIError object that contains an ErrorType and a message.
+     *
+     * @return ResponseEntity with RestAPIError object
+     */
+    @RequestMapping(value = "/error/resourcenotfound", produces = "application/json")
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseBody
     public ResponseEntity<RestAPIError> resourceNotFoundException() {
-
         return new ResponseEntity<>(
                 new RestAPIError(
                         ErrorType.NOT_FOUND,
@@ -301,11 +336,16 @@ public class RestApiController {
                 ), HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Catches InvalidParametersException created by RestAPI and notifies the
+     * user with RestAPIError object that contains an ErrorType and a message.
+     *
+     * @return ResponseEntity with RestAPIError object
+     */
     @RequestMapping(value = "/error/invalidparameters", produces = "application/json")
     @ExceptionHandler(InvalidParametersException.class)
     @ResponseBody
     public ResponseEntity<RestAPIError> invalidParametersException() {
-
         return new ResponseEntity<>(
                 new RestAPIError(
                         ErrorType.BAD_REQUEST,
@@ -313,13 +353,21 @@ public class RestApiController {
                 ), HttpStatus.BAD_REQUEST);
     }
 
-    private void exceptionIfWrongLimits(int to, int from) throws InvalidParametersException {
-        if(from<=0||to>settings.getMaxObjectsRetrievedFromDatabase()) {
+    /*
+     * {from} cannot be negative
+     * {to} cannot be negative
+     * {to} cannot be equal to {from}
+     * {to} cannot be smaller than {from}
+     * from-to cannot be bigger than
+     */
+    public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
+        if(from<0||to<=0||to==from||from>to
+                ||(from-to)>settings.getMaxObjectsRetrievedFromDatabase()) {
             throw new InvalidParametersException();
         }
     }
 
-    private Object returnOrException(Object object) throws ResourceNotFoundException {
+    public Object returnOrException(Object object) throws ResourceNotFoundException {
         if(object==null) {
             throw new ResourceNotFoundException();
         }

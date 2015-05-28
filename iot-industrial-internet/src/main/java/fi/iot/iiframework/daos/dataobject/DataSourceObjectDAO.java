@@ -14,5 +14,4 @@ import fi.iot.iiframework.dataobject.DataSourceObject;
  */
 public interface DataSourceObjectDAO extends GenericDAO<DataSourceObject, String>{
 
-
 }

@@ -14,15 +14,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationSettings {
 
-    private int maxObjectsRetrievedFromDatabase = 1000;
-
+    private final int maxObjectsRetrievedFromDatabase = 1000;
+    
     private int defaultAmountOfReadoutsRetrievedFromDatabase = 100;
-    
+
     private int defaultAmountOfDevicesRetrievedFromDatabase = 10;
-    
+
     private int defaultAmountOfDataSourcesRetrievedFromDatabase = 10;
-    
+
+    private int defaultAmountOfSensorsRetrievedFromDatabase = 10;
+
     private int defautAmountOfErrorsRetrievedFromDatabase = 25;
+
+    private int defaultInformationSourcesRetrievedFromDatabase = 10;
 
     public int getMaxObjectsRetrievedFromDatabase() {
         return maxObjectsRetrievedFromDatabase;
@@ -43,7 +47,13 @@ public class ApplicationSettings {
     public int getDefautAmountOfErrorsRetrievedFromDatabase() {
         return defautAmountOfErrorsRetrievedFromDatabase;
     }
-    
-    
+
+    public int getDefaultAmountOfSensorsRetrievedFromDatabase() {
+        return defaultAmountOfSensorsRetrievedFromDatabase;
+    }
+
+    public int getDefaultInformationSourcesRetrievedFromDatabase() {
+        return defaultInformationSourcesRetrievedFromDatabase;
+    }
 
 }

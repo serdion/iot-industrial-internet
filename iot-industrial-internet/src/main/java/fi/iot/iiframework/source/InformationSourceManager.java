@@ -7,6 +7,8 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
+import fi.iot.iiframework.source.InformationSourceConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class InformationSourceManager {
     
     @Autowired
     private DataSourceObjectService service;
+    @Autowired
+    private InformationSourceConfigurationService configService;
 
     
     public InformationSourceManager() {
@@ -39,6 +43,7 @@ public class InformationSourceManager {
     public void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSourceImpl(config, service);
         sources.add(source);
+        configService.save(config);
     }
 
     public void removeSource(String id) {
@@ -49,6 +54,8 @@ public class InformationSourceManager {
         return sources;
     }
 
-    
+    public List<InformationSourceConfiguration> getAllFromDB() {
+        return configService.getAll();
+    }
     
 }

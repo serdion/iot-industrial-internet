@@ -6,8 +6,10 @@
  */
 package fi.iot.iiframework.services.dataobject;
 
+import fi.iot.iiframework.daos.dataobject.DeviceDAO;
 import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.daos.dataobject.SensorDAO;
+import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.io.Serializable;
 import java.util.List;
@@ -21,9 +23,22 @@ public class SensorServiceImpl
         extends GenericHibernateService<Sensor, String>
         implements SensorService {
 
+    SensorDAO sensorDAO;
+
     @Autowired
     public SensorServiceImpl(SensorDAO dao) {
+        sensorDAO = dao;
         super.dao = dao;
+    }
+
+    @Override
+    public List<Sensor> getBy(Device device) {
+        return getBy(0, Integer.MAX_VALUE, device);
+    }
+
+    @Override
+    public List<Sensor> getBy(int from, int to, Device device) {
+        return sensorDAO.getBy(from, to, device);
     }
 
 }

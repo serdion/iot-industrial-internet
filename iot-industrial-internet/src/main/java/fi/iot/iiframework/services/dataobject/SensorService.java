@@ -6,9 +6,14 @@
  */
 package fi.iot.iiframework.services.dataobject;
 
+import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
 public interface SensorService extends GenericService<Sensor, String> {
+
+    public List<Sensor> getBy(Device device);
+
+    public List<Sensor> getBy(int from, int to, Device device);
 }

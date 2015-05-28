@@ -47,11 +47,19 @@ public class Readout implements Serializable {
     protected String quantity;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SENSOR_ID")
+    @JoinColumn(name = "sensor_id")
     protected Sensor sensor;
 
     public Readout() {
     }
+
+    public Readout(String time, double value, String unit, String quantity) {
+        this.time = time;
+        this.value = value;
+        this.unit = unit;
+        this.quantity = quantity;
+    }
+    
 
     public Long getId() {
         return id;

@@ -6,19 +6,14 @@
  */
 package fi.iot.iiframework.source.dao;
 
+import fi.iot.iiframework.daos.GenericDAO;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import java.util.List;
 
-public interface InformationSourceConfigurationDAO {
-
-    public void save(InformationSourceConfiguration isc);
-
-    public InformationSourceConfiguration get(String id);
-
-    public List<InformationSourceConfiguration> getAll();
-
-    public void remove(String id);
-
-    public void update(InformationSourceConfiguration isc);
+/**
+ * DAO for InformationSourceConfiguration
+ *
+ */
+public interface InformationSourceConfigurationDAO extends GenericDAO<InformationSourceConfiguration, String> {
 
 }
