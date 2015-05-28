@@ -51,12 +51,11 @@ public class RestApiController {
 
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> test(
+    public List<Device> test(
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
 
-        throw new ResourceNotFoundException();
-
+        return deviceservice.getAll();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
