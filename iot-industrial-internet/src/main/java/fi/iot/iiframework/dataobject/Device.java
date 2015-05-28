@@ -5,6 +5,7 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Device implements Serializable {
     @NotNull
     protected boolean status;
 
+    @JsonIgnore
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
     @OneToMany(fetch = FetchType.LAZY)
