@@ -9,9 +9,12 @@ package fi.iot.iiframework.dataobject;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Readout implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @XmlAttribute
@@ -42,6 +45,10 @@ public class Readout implements Serializable {
     @XmlAttribute
     @NotNull
     protected String quantity;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SENSOR_ID")
+    protected Sensor sensor;
 
     public Readout() {
     }
@@ -95,5 +102,15 @@ public class Readout implements Serializable {
         long timestamp = Long.parseLong(time);
         return new Date(timestamp);
     }
+
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+    
+    
 
 }

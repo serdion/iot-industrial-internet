@@ -6,44 +6,12 @@
  */
 package fi.iot.iiframework.errors.dao;
 
-import fi.iot.iiframework.database.HibernateUtil;
-import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import fi.iot.iiframework.daos.GenericHibernateDAO;
+import fi.iot.iiframework.errors.SysError;
+import org.springframework.stereotype.Repository;
 
-
-public class ErrorDAOImpl implements ErrorDAO {
-    
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    @Override
-    public void save(Error error) {
-        Session s = sessionFactory.getCurrentSession();
-        s.persist(error);
-    }
-
-    @Override
-    public Error get(String id) {
-        Session s = sessionFactory.getCurrentSession();
-        Error error = (Error) s.get(Error.class, id);
-        return error;
-    }
-
-    @Override
-    public List<Error> getAll() {
-        Session s = sessionFactory.getCurrentSession();
-        Criteria criteria = s.createCriteria(Error.class);
-        return criteria.list();
-    }
-
-    @Override
-    public void remove(String id) {
-        Session s = sessionFactory.getCurrentSession();
-        Error dso = get(id);
-        s.delete(dso);
-    }
+@Repository
+public class ErrorDAOImpl extends GenericHibernateDAO<SysError, String>
+        implements ErrorDAO {
 
 }

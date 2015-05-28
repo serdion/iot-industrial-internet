@@ -6,41 +6,13 @@
  */
 package fi.iot.iiframework.errors.dao;
 
-import java.util.List;
+import fi.iot.iiframework.daos.GenericDAO;
+import fi.iot.iiframework.errors.SysError;
 
 /**
- * DAO for Error
+ * DAO for SysError
  *
  */
-public interface ErrorDAO {
-    
-    /**
-     * Save error to database
-     * @param error 
-     */
-
-    public void save(Error error);
-    
-    /**
-     * Get error from database based on id
-     * @param id of the error
-     * @return 
-     */
-
-    public Error get(String id);
-    
-    /**
-     * Get a list of errors in database
-     * @return 
-     */
-
-    public List<Error> getAll();
-    
-    /**
-     * Remove an error from database
-     * @param id of the error
-     */
-
-    public void remove(String id);
+public interface ErrorDAO extends GenericDAO<SysError, String> {
 
 }

@@ -6,17 +6,16 @@
  */
 package fi.iot.iiframework.errors.service;
 
+import fi.iot.iiframework.errors.SysError;
+import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
+/**
+ * Service for manipulating errors in database
+ * 
+ */
 
-interface ErrorService {
-    public void add(Error e);
+public interface ErrorService extends GenericService<SysError, String> {
 
-    public void update(Error e);
 
-    public Error get(String id);
-
-    public void delete(String id);
-
-    public List<Error> getAll();
 }

@@ -6,26 +6,21 @@
  */
 package fi.iot.iiframework.application;
 
-import fi.iot.iiframework.database.HibernateUtil;
-import fi.iot.iiframework.dataobject.DataObjectFactory;
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Readout;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorType;
+import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.net.MalformedURLException;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
@@ -35,42 +30,21 @@ public class Application {
     private static final Logger logger = Logger.getLogger(Application.class.getName());
 
     public static void main(String[] args) throws JAXBException, MalformedURLException {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        ApplicationContext ctx = SpringApplication.run(Application.class, args);        
+        logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
+        
+        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
-        Session session = ctx.getBean(SessionFactory.class).openSession();
+        InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
+        infSourceConfiguration.setId("1");
+        infSourceConfiguration.setType(InformationSourceType.XML);
+        infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
+        infSourceManager.createSource(infSourceConfiguration);
+        infSourceManager.getSources().get(0).readAndWrite();
+        
+        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
+        ErrorLogger.newError(e);
 
-        InformationSourceManager ism = ctx.getBean(InformationSourceManager.class);
-
-        InformationSourceConfiguration isc = new InformationSourceConfiguration();
-        isc.setId("1");
-        isc.setType(InformationSourceType.XML);
-        isc.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
-        ism.createSource(isc);
-        ism.getSources().get(0).readAndWrite();
-
-        //System.out.println(Arrays.asList(ctx.getBeanDefinitionNames()));
-    }
-    
-    private static final SessionFactory sessionFactory = buildSessionFactory();
-    private static final String CONFIGFILE = "hibernate_h2.cfg.xml";
-
-    private static SessionFactory buildSessionFactory() {
-        try {
-            SessionFactory sessionFactory = new Configuration().configure(CONFIGFILE)
-                    .buildSessionFactory();
-
-            return sessionFactory;
-
-        } catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        return sessionFactory;
     }
 
 }

@@ -7,26 +7,30 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
+import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class InformationSourceImplTest {
     
-    private InformationSource source;
+    private InformationSourceImpl impl;
     private InformationSourceConfiguration config;
     private InformationSourceReader reader;
+    private DataSourceObjectService service;
+    
 
     @Before
     public void setUp() {
         config = new InformationSourceConfiguration();
         config.type = InformationSourceType.XML;
         config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
-        source = new InformationSourceImpl(config);
+        impl = new InformationSourceImpl(config, service);
+        
     }
 
     @Test
     public void canCreateAnXMLReader() {
-        assertNotEquals(null, source);
+        assertNotEquals(null, impl);
     }
 }
