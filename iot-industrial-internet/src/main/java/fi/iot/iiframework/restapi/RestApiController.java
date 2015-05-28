@@ -389,7 +389,7 @@ public class RestApiController {
      * {to} cannot be negative
      * {to} cannot be equal to {from}
      * {to} cannot be smaller than {from}
-     * from-to cannot be bigger than
+     * from-to cannot be bigger than default max objects retrieved
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if(from<0||to<=0||to==from||from>to
