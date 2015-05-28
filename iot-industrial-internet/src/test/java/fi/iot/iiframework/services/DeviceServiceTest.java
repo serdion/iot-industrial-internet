@@ -7,16 +7,10 @@
 package fi.iot.iiframework.services;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.services.dataobject.DeviceService;
-import java.io.Serializable;
-import java.util.Set;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-public class DeviceServiceTest implements Serializable {
+public class DeviceServiceTest {
 
     Device d1;
     Device d2;

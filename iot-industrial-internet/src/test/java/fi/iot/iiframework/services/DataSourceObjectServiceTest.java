@@ -8,12 +8,8 @@ package fi.iot.iiframework.services;
 
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Header;
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
