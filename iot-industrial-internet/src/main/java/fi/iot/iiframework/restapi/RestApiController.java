@@ -300,6 +300,32 @@ public class RestApiController {
 
         return errorservice.get(from, to);
     }
+    
+    @RequestMapping(value = "/configurations/informationsources/{configid}/view", produces = "application/json")
+    @ResponseBody
+    public InformationSourceConfiguration getInformationSource(
+            @PathVariable String configid,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        return (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
+    }
+    
+    @RequestMapping(
+            value = "/configurations/informationsources/add", 
+            method = RequestMethod.POST, 
+            produces = "application/json",
+            consumes="application/json"
+    )
+    @ResponseBody
+    public ResponseEntity<InformationSourceConfiguration> addInformationSource(
+            @RequestBody InformationSourceConfiguration configuration,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        
+        informationsourceservice.save(configuration);
+        
+        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+    }
 
     @RequestMapping(value = "/configurations/informationsources/list", produces = "application/json")
     @ResponseBody
