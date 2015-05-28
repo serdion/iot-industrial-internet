@@ -8,8 +8,12 @@ package fi.iot.iiframework.services;
 
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.dataobject.Readout;
+import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.services.dataobject.ReadoutService;
+import fi.iot.iiframework.services.dataobject.SensorService;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,26 +28,30 @@ public class ReadoutServiceTest implements Serializable {
 
     Readout r1;
     Readout r2;
+    Readout r3;
 
     @Autowired
-    private ReadoutService service;
+    private ReadoutService readoutService;
+    @Autowired
+    private SensorService sensorService;
 
     @Before
     public void setUp() {
         r1 = new Readout("134214158", 20.2, "C", "Temperature");
         r2 = new Readout("134214858", 19.8, "C", "Temperature");
+        r3 = new Readout("13184174a", 7.8, "C", "Temperature");
     }
 
     @Test
     public void anIdIsGeneratedAutomaticallyWhenSaved() {
-        service.save(r1);
+        readoutService.save(r1);
         assertNotNull(r1.getId());
     }
 
     @Test
     public void readoutCanBeSavedAndRetrievedFromDatabase() {
-        service.save(r1);
-        Readout rdb = service.get(r1.getId());
+        readoutService.save(r1);
+        Readout rdb = readoutService.get(r1.getId());
         assertEquals(r1.getId(), rdb.getId());
         assertEquals(r1.getQuantity(), rdb.getQuantity());
         assertEquals(r1.getTime(), rdb.getTime());
@@ -53,6 +61,11 @@ public class ReadoutServiceTest implements Serializable {
     
     @Test
     public void readoutsCanBeFoundBySensor() {
+        Set<Readout> readouts = new HashSet<>();
+        readouts.add(r1);
+        readouts.add(r2);
+        Sensor s = new Sensor("dkjawkdja", readouts);
+        
         
     }
 

@@ -40,9 +40,8 @@ public class Sensor implements Serializable {
     public Sensor() {
     }
 
-    public Sensor(String id, String sensorid, Set<Readout> readouts) {
+    public Sensor(String id,  Set<Readout> readouts) {
         this.id = id;
-        this.sensorid = sensorid;
         this.readouts = readouts;
     }
 
