@@ -41,16 +41,10 @@ public class Application {
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
         infSourceManager.getSources().get(0).readAndWrite();
-<<<<<<< HEAD
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "This is a test error");
         ErrorLogger.newError(e);
-=======
 
-        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
-        ErrorLogger.newError(e);
-//        System.out.println(infSourceManager.getAllFromDB().get(0).getUrl());
->>>>>>> master
 
     }
 
