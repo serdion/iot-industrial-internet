@@ -25,15 +25,6 @@
         <hibernate.version>4.3.10.Final</hibernate.version>
     </properties>
 	
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-    
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -159,11 +150,6 @@
             <artifactId>xml-apis</artifactId>
             <version>1.4.01</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>xml-apis</groupId>
-            <artifactId>xml-apis</artifactId>
-            <version>1.4.01</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
