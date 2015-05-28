@@ -36,7 +36,12 @@ public class ReadoutServiceImpl
     
     @Override
     public List<Readout> getBy(Sensor sensor) {
-        return getBy(0, Integer.MAX_VALUE, sensor);
+        return readoutDAO.getBy(0, Integer.MAX_VALUE, sensor);
+    }
+
+    @Override
+    public List<Readout> getBy(int amount, Sensor sensor) {
+        return readoutDAO.getBy(0, amount - 1, sensor);
     }
 
 }

@@ -33,4 +33,9 @@ public class ReadoutDAOImpl
                 Restrictions.eq("sensor_id", sensor.getId()));
     }
 
+    @Override
+    public List<Readout> getBy(int amount, Sensor sensor) {
+        return getBy(0, amount - 1, sensor);
+    }
+
 }
