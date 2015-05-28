@@ -43,7 +43,7 @@ public class Application {
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
         ErrorLogger.newError(e);
-//        System.out.println(infSourceManager.getAllFromDB().get(0).getUrl());
+//        System.out.println(infSourceManager.getSources().get(0).getUrl());
 
     }
 
