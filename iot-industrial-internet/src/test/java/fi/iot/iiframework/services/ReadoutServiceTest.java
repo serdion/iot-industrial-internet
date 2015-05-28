@@ -13,6 +13,7 @@ import fi.iot.iiframework.services.dataobject.ReadoutService;
 import fi.iot.iiframework.services.dataobject.SensorService;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +67,9 @@ public class ReadoutServiceTest implements Serializable {
         readouts.add(r2);
         Sensor s = new Sensor("dkjawkdja", readouts);
         
-        
+        sensorService.save(s);
+        List<Readout> readReadouts =  readoutService.getBy(s);
+        assertTrue(readReadouts.contains(r1));
     }
 
 }

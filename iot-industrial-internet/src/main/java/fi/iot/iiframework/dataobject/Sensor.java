@@ -8,6 +8,7 @@ package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
@@ -75,6 +76,32 @@ public class Sensor implements Serializable {
 
     public void setDevice(Device device) {
         this.device = device;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.sensorid);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sensor other = (Sensor) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.sensorid, other.sensorid)) {
+            return false;
+        }
+        return true;
     }
 
 }
