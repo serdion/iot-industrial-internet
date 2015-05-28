@@ -30,7 +30,7 @@ public class ReadoutDAOImpl
     @Override
     public List<Readout> getBy(int from, int to, Sensor sensor) {
         return findByCriteriaFromTo(from, to, 
-                Restrictions.eq("sensor_id", sensor.getId()));
+                Restrictions.eq("sensor", sensor));
     }
 
     @Override

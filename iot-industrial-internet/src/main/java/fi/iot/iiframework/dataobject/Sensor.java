@@ -30,11 +30,11 @@ public class Sensor implements Serializable {
     @XmlElementWrapper(name = "readouts")
     @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name="sensor_id")
+    @JoinColumn(name = "sensor")
     protected Set<Readout> readouts;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="device")
     protected Device device;
 
     public Sensor() {

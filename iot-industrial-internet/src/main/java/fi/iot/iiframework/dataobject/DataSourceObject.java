@@ -35,7 +35,7 @@ public class DataSourceObject implements Serializable {
     @XmlElement(name = "device")
     @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "source_id")
+    @JoinColumn(name = "source")
     protected Set<Device> devices;
     
     public String getId() {
