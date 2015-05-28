@@ -44,7 +44,6 @@ public class Application {
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "ZZZZ");
         ErrorLogger.newError(e);
-
     }
 
 }

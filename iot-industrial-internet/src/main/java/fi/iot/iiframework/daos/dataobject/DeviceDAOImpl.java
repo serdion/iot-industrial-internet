@@ -9,8 +9,6 @@ package fi.iot.iiframework.daos.dataobject;
 import fi.iot.iiframework.daos.GenericHibernateDAO;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -28,7 +26,7 @@ public class DeviceDAOImpl
     @Override
     public List<Device> getBy(int from, int to, DataSourceObject dso) {
         return findByCriteriaFromTo(from, to,
-                Restrictions.eq("DEVICE_ID", dso.getId()));
+                Restrictions.eq("dataSourceObject", dso));
     }
 
 }

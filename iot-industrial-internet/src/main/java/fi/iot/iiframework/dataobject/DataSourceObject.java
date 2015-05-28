@@ -28,7 +28,7 @@ public class DataSourceObject implements Serializable {
     
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "datasource")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "dataSourceObject")
     protected Set<Device> devices;
     
     public String getId() {

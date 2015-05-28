@@ -32,8 +32,8 @@ public class Device implements Serializable {
     protected Set<Sensor> sensors;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SOURCE_ID")
-    protected DataSourceObject datasource;
+    @JoinColumn(name = "source")
+    protected DataSourceObject dataSourceObject;
 
     public Device() {
     }
@@ -70,12 +70,12 @@ public class Device implements Serializable {
         this.sensors = sensors;
     }
 
-    public DataSourceObject getDatasource() {
-        return datasource;
+    public DataSourceObject getDataSourceObject() {
+        return dataSourceObject;
     }
 
-    public void setDatasource(DataSourceObject datasource) {
-        this.datasource = datasource;
+    public void setDataSourceObject(DataSourceObject dataSourceObject) {
+        this.dataSourceObject = dataSourceObject;
     }
-
+    
 }
