@@ -53,6 +53,14 @@ public class Readout implements Serializable {
     public Readout() {
     }
 
+    public Readout(String time, double value, String unit, String quantity) {
+        this.time = time;
+        this.value = value;
+        this.unit = unit;
+        this.quantity = quantity;
+    }
+    
+
     public Long getId() {
         return id;
     }
