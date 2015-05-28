@@ -11,7 +11,6 @@ import fi.iot.iiframework.dataobject.Sensor;
 import fi.iot.iiframework.daos.dataobject.SensorDAO;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.services.GenericHibernateService;
-import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

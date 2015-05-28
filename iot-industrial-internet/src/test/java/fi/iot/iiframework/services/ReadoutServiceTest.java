@@ -34,10 +34,13 @@ public class ReadoutServiceTest extends GenericServiceTest<Readout, Long> {
     private ReadoutService readoutService;
     @Autowired
     private SensorService sensorService;
-    
+
     Readout r1;
     Readout r2;
     Readout r3;
+
+    Set<Readout> readouts;
+    Sensor s;
 
     @Before
     public void setUp() {
@@ -45,6 +48,11 @@ public class ReadoutServiceTest extends GenericServiceTest<Readout, Long> {
         s1 = r1 = new Readout("134214158", 20.2, "C", "Temperature");
         s2 = r2 = new Readout("134214858", 19.8, "C", "Temperature");
         s3 = r3 = new Readout("13184174a", 7.8, "C", "Temperature");
+
+        readouts = new HashSet<>();
+        readouts.add(s1);
+        readouts.add(s2);
+        s = new Sensor("dkjawkdja", readouts);
     }
 
     @Test
@@ -55,30 +63,21 @@ public class ReadoutServiceTest extends GenericServiceTest<Readout, Long> {
 
     @Test
     public void readoutsCanBeFoundBySensor() {
-        Set<Readout> readouts = new HashSet<>();
-        readouts.add(s1);
-        readouts.add(s2);
-        Sensor s = new Sensor("dkjawkdja", readouts);
-        
         sensorService.save(s);
-        
+
         List<Readout> readReadouts = readoutService.getBy(s);
         assertTrue(readReadouts.contains(s1));
         assertTrue(readReadouts.contains(s2));
+        assertTrue(false);
     }
-    
+
     @Test
     public void readoutsNotConnectedToSensorNotReturnedWhenSearchingBySensor() {
-        Set<Readout> readouts = new HashSet<>();
-        readouts.add(s1);
-        readouts.add(s2);
-        Sensor s = new Sensor("dkjawkdja", readouts);
-        
         sensorService.save(s);
         readoutService.save(s3);
-        
+
         List<Readout> readReadouts = readoutService.getBy(s);
         assertFalse(readReadouts.contains(s3));
-    }    
+    }
 
 }
