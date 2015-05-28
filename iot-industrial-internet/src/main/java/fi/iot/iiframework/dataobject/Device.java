@@ -32,14 +32,14 @@ public class Device implements Serializable {
     @JsonIgnore
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "device")
     protected Set<Sensor> sensors;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "source_id")
-    protected DataSourceObject dataSourceObject;
+    @JoinColumn(name = "source")
+    protected DataSourceObject source;
 
     public Device() {
     }
@@ -76,12 +76,12 @@ public class Device implements Serializable {
         this.sensors = sensors;
     }
 
-    public DataSourceObject getDataSourceObject() {
-        return dataSourceObject;
+    public DataSourceObject getSource() {
+        return source;
     }
 
-    public void setDataSourceObject(DataSourceObject dataSourceObject) {
-        this.dataSourceObject = dataSourceObject;
+    public void setSource(DataSourceObject source) {
+        this.source = source;
     }
 
 }

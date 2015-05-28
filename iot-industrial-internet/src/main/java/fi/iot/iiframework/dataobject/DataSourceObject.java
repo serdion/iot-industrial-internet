@@ -33,9 +33,9 @@ public class DataSourceObject implements Serializable {
     @JsonIgnore
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "source_id")
+    @JoinColumn(name = "source")
     protected Set<Device> devices;
     
     public String getId() {

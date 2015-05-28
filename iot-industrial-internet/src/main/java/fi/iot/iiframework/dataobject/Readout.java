@@ -47,7 +47,7 @@ public class Readout implements Serializable {
     protected String quantity;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sensor_id")
+    @JoinColumn(name = "sensor")
     protected Sensor sensor;
 
     public Readout() {
@@ -59,7 +59,6 @@ public class Readout implements Serializable {
         this.unit = unit;
         this.quantity = quantity;
     }
-    
 
     public Long getId() {
         return id;
@@ -118,7 +117,5 @@ public class Readout implements Serializable {
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
     }
-    
-    
 
 }
