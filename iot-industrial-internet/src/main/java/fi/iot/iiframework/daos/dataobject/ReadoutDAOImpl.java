@@ -13,10 +13,6 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author atte
- */
 @Repository
 public class ReadoutDAOImpl
         extends GenericHibernateDAO<Readout, Long>
@@ -29,13 +25,13 @@ public class ReadoutDAOImpl
 
     @Override
     public List<Readout> getBy(int from, int to, Sensor sensor) {
-        return findByCriteriaFromTo(from, to, 
+        return findByCriteriaFromTo(from, to,
                 Restrictions.eq("sensor", sensor));
     }
 
     @Override
     public List<Readout> getBy(int amount, Sensor sensor) {
-        return getBy(0, amount - 1, sensor);
+        return getBy(0, amount-1, sensor);
     }
 
 }
