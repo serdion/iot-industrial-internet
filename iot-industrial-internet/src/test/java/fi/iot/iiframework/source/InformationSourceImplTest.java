@@ -24,6 +24,10 @@ public class InformationSourceImplTest {
     public void setUp() {
         config = new InformationSourceConfiguration();
         config.type = InformationSourceType.XML;
+        config.readFrequency = 11;
+        config.id = "3";
+        config.name = "test";
+        config.type = InformationSourceType.XML;
         config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
         impl = new InformationSourceImpl(config, service);
         
