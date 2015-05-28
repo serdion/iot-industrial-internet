@@ -16,12 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 
-public class InformationSourceConfigurationImpl
+public class InformationSourceConfigurationServiceImpl
         extends GenericHibernateService<InformationSourceConfiguration, String>
         implements InformationSourceConfigurationService {
 
     @Autowired
-    public InformationSourceConfigurationImpl(InformationSourceConfigurationDAO dao) {
+    public InformationSourceConfigurationServiceImpl(InformationSourceConfigurationDAO dao) {
         super.dao = dao;
     }
 }
