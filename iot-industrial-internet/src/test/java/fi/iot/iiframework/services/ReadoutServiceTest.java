@@ -68,7 +68,6 @@ public class ReadoutServiceTest extends GenericServiceTest<Readout, Long> {
         List<Readout> readReadouts = readoutService.getBy(s);
         assertTrue(readReadouts.contains(s1));
         assertTrue(readReadouts.contains(s2));
-        assertTrue(false);
     }
 
     @Test
