@@ -84,5 +84,7 @@ public class ErrorLogger {
     public static List<SysError> getAllErrors() {
         return gService.getAll();
     }
+    
+    
 
 }
