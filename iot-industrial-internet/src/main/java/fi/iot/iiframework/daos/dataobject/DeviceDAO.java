@@ -7,11 +7,16 @@
 package fi.iot.iiframework.daos.dataobject;
 
 import fi.iot.iiframework.daos.GenericDAO;
+import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
+import java.util.List;
 
 /**
  * DAO for Device
  */
 public interface DeviceDAO extends GenericDAO<Device, String> {
 
+    public List<Device> getBy(DataSourceObject dso);
+
+    public List<Device> getBy(int from, int to, DataSourceObject dso);
 }
