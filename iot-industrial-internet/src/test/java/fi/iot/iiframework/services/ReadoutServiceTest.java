@@ -14,6 +14,7 @@ import fi.iot.iiframework.services.dataobject.SensorService;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -21,7 +22,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
 public class ReadoutServiceTest {
@@ -34,6 +39,8 @@ public class ReadoutServiceTest {
     private ReadoutService readoutService;
     @Autowired
     private SensorService sensorService;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Before
     public void setUp() {
@@ -67,14 +74,47 @@ public class ReadoutServiceTest {
         Sensor s = new Sensor("dkjawkdja", readouts);
         
         sensorService.save(s);
+        
+        List<Readout> readReadouts = readoutService.getBy(s);
+        assertTrue(readReadouts.contains(r1));
+        assertTrue(readReadouts.contains(r2));
+    }
+    
+    @Test
+    public void readoutsCanBeDeleted() {
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.delete(r1);
+        
+        assertFalse(readoutService.getAll().contains(r1));
+        assertEquals(1, readoutService.getAll().size());
+    }
+    
+    @Test
+    public void allReadoutsCanBeRead() {
         readoutService.save(r1);
         readoutService.save(r2);
         readoutService.save(r3);
-        List<Readout> readReadouts = readoutService.getBy(s);
-        readReadouts.add(r3);
-        assertTrue(readReadouts.contains(r1));
-        assertTrue(readReadouts.contains(r2));
-        assertFalse(readReadouts.contains(r3));
+        
+        List<Readout> readouts = readoutService.getAll();
+        assertTrue(readouts.contains(r1));
+        assertTrue(readouts.contains(r2));
+        assertTrue(readouts.contains(r3));
+        assertEquals(3, readouts.size());
     }
+    
+    @Test
+    public void readoutsNotConnectedToSensorNotReturnedWhenSearchingBySensor() {
+        Set<Readout> readouts = new HashSet<>();
+        readouts.add(r1);
+        readouts.add(r2);
+        Sensor s = new Sensor("dkjawkdja", readouts);
+        
+        sensorService.save(s);
+        readoutService.save(r3);
+        
+        List<Readout> readReadouts = readoutService.getBy(s);
+        assertFalse(readReadouts.contains(r3));
+    }    
 
 }
