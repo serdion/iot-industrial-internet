@@ -290,6 +290,22 @@ public class RestApiController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @RequestMapping(
+            value = "/configurations/informationsources/{configid}/delete",
+            method = RequestMethod.DELETE,
+            produces = "application/json"
+    )
+    @ResponseBody
+    public ResponseEntity<InformationSourceConfiguration> deleteInformationSource(
+            @PathVariable String configid,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        InformationSourceConfiguration configuration = 
+                (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
+        informationsourceservice.delete(configuration);
+        return new ResponseEntity<>(configuration, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/configurations/informationsources/list", produces = "application/json")
     @ResponseBody
     public List<InformationSourceConfiguration> listInformationSourcesList(

@@ -6,15 +6,10 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -35,6 +30,7 @@ public class DataSourceObject implements Serializable {
     @Transient
     protected Header header;
     
+    @JsonIgnore
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
     @OneToMany(fetch = FetchType.EAGER)
