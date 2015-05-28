@@ -37,6 +37,8 @@ public class Application {
         InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
         InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
+        infSourceConfiguration.setName("Example Config");
+        infSourceConfiguration.setReadFrequency(1000);
         infSourceConfiguration.setType(InformationSourceType.XML);
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
