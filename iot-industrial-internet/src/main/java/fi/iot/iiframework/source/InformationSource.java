@@ -7,6 +7,7 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 
@@ -23,7 +24,7 @@ public interface InformationSource {
      * @throws JAXBException
      * @throws MalformedURLException
      */
-    public DataSourceObject read() throws JAXBException, MalformedURLException;
+    public DataSourceObject read() throws JAXBException, MalformedURLException, IOException;
 
     /**
      * Reads an DataSourceObject and writes it to database
@@ -31,7 +32,7 @@ public interface InformationSource {
      * @throws JAXBException
      * @throws MalformedURLException
      */
-    public void readAndWrite() throws JAXBException, MalformedURLException;
+    public void readAndWrite() throws JAXBException, MalformedURLException, IOException;
 
     /**
      * Set the frequency of reads and writes
