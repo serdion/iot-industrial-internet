@@ -69,7 +69,7 @@ public class RestApiController {
             links.addAll(entrySet.getKey().getPatternsCondition().getPatterns());
         });
 
-        return links.stream().filter((p) ->  p.contains("1.0")).toArray();
+        return links.stream().filter((p)->p.contains("1.0")).toArray();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -398,6 +398,16 @@ public class RestApiController {
         }
     }
 
+    /**
+     * Returns the object it was given, if the object is null
+     * ResourceNotFoundException will be thrown.
+     *
+     * @param object Object to check for null
+     *
+     * @return Object it was given
+     *
+     * @throws ResourceNotFoundException if the object is null
+     */
     public Object returnOrException(Object object) throws ResourceNotFoundException {
         if(object==null) {
             throw new ResourceNotFoundException();
