@@ -141,6 +141,12 @@
             <artifactId>spring-orm</artifactId>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.4</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 	
     <build>
@@ -163,6 +169,11 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.1.4</version>
+                <configuration>
+                    <excludedClasses>
+                        fi.iot.iiframework.dataobject.DataObjectFactory
+                    </excludedClasses>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -16,12 +16,6 @@ import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author atte
- * @param <T>
- * @param <ID>
- */
 @Repository
 public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID> {
 
@@ -62,7 +56,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     protected List<T> findByCriteriaFromTo(int from, int to, Criterion... criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setFirstResult(from)
-                .setMaxResults(to - from);
+                .setMaxResults((to + 1) - from);
         for (Criterion c : criterion) {
             crit.add(c);
         }

@@ -6,23 +6,16 @@
  */
 package fi.iot.iiframework.daos;
 
-import fi.iot.iiframework.dataobject.Device;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author atte
- * @param <T>
- * @param <ID>
- */
 public interface GenericDAO<T, ID extends Serializable> {
 
     /**
      * Save an object to database
      *
      * @param t object to be saved
-     * @return 
+     * @return T
      */
     public T save(T t);
 
@@ -30,14 +23,14 @@ public interface GenericDAO<T, ID extends Serializable> {
      * Get an object with the given id
      *
      * @param id id of the object
-     * @return
+     * @return T
      */
     public T get(ID id);
 
     /**
      * Retrieves all objects of type T in the database.
      *
-     * @return
+     * @return T
      */
     public List<T> getAll();
 
@@ -46,7 +39,7 @@ public interface GenericDAO<T, ID extends Serializable> {
      *
      * @param from
      * @param to
-     * @return
+     * @return T
      */
     public List<T> get(int from, int to);
 
