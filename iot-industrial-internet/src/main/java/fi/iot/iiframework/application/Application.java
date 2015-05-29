@@ -38,15 +38,27 @@ public class Application {
 
         InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
         infSourceConfiguration.setName("Example Config");
-        //infSourceConfiguration.setReadFrequency(1000);
         infSourceConfiguration.setType(InformationSourceType.XML);
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
+        InformationSourceConfiguration infSourceConfiguration2 = new InformationSourceConfiguration();
+        infSourceConfiguration2.setName("Example Config");
+        infSourceConfiguration2.setType(InformationSourceType.XML);
+        infSourceConfiguration2.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
+        infSourceManager.createSource(infSourceConfiguration2);
         infSourceManager.getSources().get(0).readAndWrite();
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(1).getUrl());
+        infSourceManager.removeSource(infSourceConfiguration.getId());
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
+        infSourceConfiguration2.setUrl("updated url");
+        infSourceManager.updateSource(infSourceConfiguration2.getId(), infSourceConfiguration2);
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "This is a test error");
         ErrorLogger.newError(e);
-
+        
+        
 
     }
 
