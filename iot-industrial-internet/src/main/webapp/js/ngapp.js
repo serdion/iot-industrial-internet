@@ -29,5 +29,9 @@ IIFramework.config(function ($routeProvider) {
             .when('/sources', {
                 controller: 'InformationSourcesController',
                 templateUrl: 'ngviews/information_sources.html'
+            })
+            .when('/sources/:datasourceid', {
+                controller: 'InformationSourceController',
+                templateUrl: 'ngviews/information_source.html'
             });
 });
