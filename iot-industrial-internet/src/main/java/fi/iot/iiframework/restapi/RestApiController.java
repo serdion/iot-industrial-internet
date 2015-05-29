@@ -56,14 +56,6 @@ public class RestApiController {
     @Autowired
     private CriterionFactory criterionfactory;
 
-    @RequestMapping(value = "/test", produces = "application/json")
-    @ResponseBody
-    public List<Device> test(
-            @RequestParam(required = false) Map<String, String> params
-    ) throws ResourceNotFoundException {
-        return deviceservice.getAll();
-    }
-
     @RequestMapping(value = "/", produces = "application/json")
     @ResponseBody
     public Object[] index() {
