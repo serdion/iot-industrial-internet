@@ -25,6 +25,7 @@ informationSources.factory('Device', ['$resource',
 informationSources.factory('Sensor', ['$resource',
     function ($resource) {
         return $resource('1.0/sensors/:deviceid/:action', {}, {
+            get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });
     }]);

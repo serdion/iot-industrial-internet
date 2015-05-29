@@ -33,5 +33,8 @@ IIFramework.config(function ($routeProvider) {
             .when('/sources/:datasourceid', {
                 controller: 'InformationSourceController',
                 templateUrl: 'ngviews/information_source.html'
-            });
+            })
+            .when('/sensors/:sensorid', {
+                controller: 'SensorController',
+                templateUrl: 'ngviews/sensor.html'});
 });

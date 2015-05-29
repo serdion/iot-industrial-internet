@@ -26,3 +26,9 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
         });
         
     }]);
+
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function ($scope, $routeParams, Sensor, Readout) {
+        $scope.sensor = {};
+        $scope.sensor.id = $routeParams.sensorid;
+        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
+    }]);
