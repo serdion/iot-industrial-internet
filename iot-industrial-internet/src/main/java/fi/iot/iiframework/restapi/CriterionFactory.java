@@ -27,7 +27,6 @@ public class CriterionFactory {
     public void initAcceptedReadoutFilters(){
         acceptedReadoutFilters.put("unit", new Equals("unit"));
         acceptedReadoutFilters.put("quantity", new Equals("quantity"));
-        acceptedReadoutFilters.put("value", new Equals("value"));
         
         acceptedReadoutFilters.put("moretthan", new MoreThan("value"));
         acceptedReadoutFilters.put("lessthan", new LessThan("value"));
