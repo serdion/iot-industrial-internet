@@ -75,7 +75,7 @@ public class DataObjectFactory {
 
     private static Readout getReadout(long currentTime) {
         Readout readout = new Readout();
-        readout.setTime("" + (currentTime - 1));
+        readout.setTime((currentTime - 1));
         readout.setQuantity("Temperature");
         readout.setUnit("°C"); // Celsius
 

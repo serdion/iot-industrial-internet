@@ -8,16 +8,8 @@ package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.iot.iiframework.database.Saveable;
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -41,7 +33,7 @@ public class Readout implements Saveable<Long> {
 
     @XmlAttribute
     @NotNull
-    protected String time;
+    protected long time;
 
     @XmlAttribute
     @NotNull
@@ -63,7 +55,7 @@ public class Readout implements Saveable<Long> {
     public Readout() {
     }
 
-    public Readout(String time, double value, String unit, String quantity) {
+    public Readout(long time, double value, String unit, String quantity) {
         this.time = time;
         this.value = value;
         this.unit = unit;
@@ -76,7 +68,6 @@ public class Readout implements Saveable<Long> {
      * @return Date
      */
     public Date getTimeAsDate() {
-        long timestamp = Long.parseLong(time);
-        return new Date(timestamp);
+        return new Date(time);
     }
 }
