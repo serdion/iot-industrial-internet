@@ -6,7 +6,11 @@
  */
 
 
-var IIFramework = angular.module('IIFramework', ['ngRoute', 'angular-flot']);
+var IIFramework = angular.module('IIFramework', [
+    'ngRoute',
+    'angular-flot',
+    'informationSources'
+]);
 
 
 IIFramework.config(function ($routeProvider) {
@@ -23,7 +27,7 @@ IIFramework.config(function ($routeProvider) {
                 templateUrl: 'ngviews/visual_history.html'
             })
             .when('/sources', {
-				controller: 'InformationSourcesController',
-				templateUrl: 'ngviews/front.html'
-				});
+                controller: 'InformationSourcesController',
+                templateUrl: 'ngviews/front.html'
+            });
 });
