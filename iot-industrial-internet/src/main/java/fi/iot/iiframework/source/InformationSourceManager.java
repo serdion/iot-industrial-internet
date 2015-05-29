@@ -19,14 +19,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class InformationSourceManager {
-
+    
     private List<InformationSource> sources;
     
     @Autowired
     private DataSourceObjectService service;
     @Autowired
     private InformationSourceConfigurationService configService;
-
     
     public InformationSourceManager() {
         this.sources = new ArrayList<>();
@@ -34,26 +33,51 @@ public class InformationSourceManager {
 
     /**
      *
-     * Creates and manages objects that represent external data sources
+     * Creates an object that represents an external data source
      *
-     * @param config the configuration for this data source fetched from the
-     * database
+     * @param config the new configuration for this data source
      */
     public void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSourceImpl(config, service);
         sources.add(source);
         configService.save(config);
     }
-
+    
+    /**
+     *
+     * Deletes an object that represents an external data source
+     *
+     * @param id the id of the data source representation to be deleted
+     */
     public void removeSource(String id) {
-        
+        sources.removeIf(p -> id.equals(p.getId()));
+        configService.delete(configService.get(id));
     }
-
+    
+    /**
+     *
+     * Updates the configuration information of an object that represents an external data source
+     *
+     * @param id the id of the data source representation to be updated
+     * @param config the new configuration that will replace the previous one
+     */
+    public void updateSource(String id, InformationSourceConfiguration config) {
+        sources.removeIf(p -> id.equals(p.getId()));
+        sources.add(new InformationSourceImpl(config, service));
+        InformationSourceConfiguration newConfig = config;
+        newConfig.setId(id);
+        createSource(newConfig);
+    }
+    
     public List<InformationSource> getSources() {
         return sources;
     }
-
-    public List<InformationSourceConfiguration> getAllFromDB() {
+    
+    public InformationSourceConfiguration getSourceConfigFromDB(String id) {
+        return configService.get(id);
+    }
+    
+    public List<InformationSourceConfiguration> getAllSourceConfigsFromDB() {
         return configService.getAll();
     }
     

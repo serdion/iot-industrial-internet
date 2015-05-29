@@ -18,6 +18,7 @@ import fi.iot.iiframework.services.dataobject.SensorService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.*;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,14 +52,9 @@ public class RestApiController {
 
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
-
-    @RequestMapping(value = "/test", produces = "application/json")
-    @ResponseBody
-    public List<Device> test(
-            @RequestParam(required = false) Map<String, String> params
-    ) throws ResourceNotFoundException {
-        return deviceservice.getAll();
-    }
+    
+    @Autowired
+    private CriterionFactory criterionfactory;
 
     @RequestMapping(value = "/", produces = "application/json")
     @ResponseBody
@@ -69,7 +65,7 @@ public class RestApiController {
             links.addAll(entrySet.getKey().getPatternsCondition().getPatterns());
         });
 
-        return links.stream().filter((p) ->  p.contains("1.0")).toArray();
+        return links.stream().filter((p)->p.contains("1.0")).toArray();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -216,6 +212,9 @@ public class RestApiController {
     ) throws ResourceNotFoundException, InvalidParametersException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
         exceptionIfWrongLimits(0, amount);
+        
+        List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
+        
         return readoutservice.getBy(0, amount, sensor);
     }
 
@@ -389,7 +388,7 @@ public class RestApiController {
      * {to} cannot be negative
      * {to} cannot be equal to {from}
      * {to} cannot be smaller than {from}
-     * from-to cannot be bigger than default max objects retrieved
+     * {from} minus {to} cannot be bigger than default max objects retrieved
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if(from<0||to<=0||to==from||from>to
@@ -398,6 +397,16 @@ public class RestApiController {
         }
     }
 
+    /**
+     * Returns the object it was given, if the object is null
+     * ResourceNotFoundException will be thrown.
+     *
+     * @param object Object to check for null
+     *
+     * @return Object it was given
+     *
+     * @throws ResourceNotFoundException if the object is null
+     */
     public Object returnOrException(Object object) throws ResourceNotFoundException {
         if(object==null) {
             throw new ResourceNotFoundException();

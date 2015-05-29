@@ -54,7 +54,7 @@ public class DataObjectProvider {
 
     public static Readout provideReadout() {
         Readout readout = new Readout();
-        readout.setTime("" + (System.currentTimeMillis() - 1));
+        readout.setTime(System.currentTimeMillis() - 1);
         readout.setQuantity("Temperature");
         readout.setUnit("°C"); // Celsius
 
