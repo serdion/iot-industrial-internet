@@ -13,6 +13,7 @@ import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class Application {
 
     public static final Logger logger = Logger.getLogger(Application.class.getName());
 
-    public static void main(String[] args) throws JAXBException, MalformedURLException {
+    public static void main(String[] args) throws JAXBException, MalformedURLException, IOException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
 
