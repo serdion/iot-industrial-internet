@@ -28,6 +28,6 @@ IIFramework.config(function ($routeProvider) {
             })
             .when('/sources', {
                 controller: 'InformationSourcesController',
-                templateUrl: 'ngviews/front.html'
+                templateUrl: 'ngviews/information_sources.html'
             });
 });

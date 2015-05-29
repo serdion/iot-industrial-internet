@@ -1,45 +1,26 @@
 <!--
 TODO: Convert to Angular
 -->
-<div class="row">
-                        <div th:inline="text" class="col-lg-12">
-                            <h1 th:text="'Source ' + ${source.id}"></h1>
-                        </div>
-                        <!-- /.col-lg-12 -->
-                    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Source ID</th>
+                                <th>Devices</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ds in sources" >
+                                <td>{{ds.id}}</td>
+                                <td>{{ds.devices.length}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div th:each="device : ${source.devices}" class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" th:if="${device.status} == true">
-                                    <i class="fa fa-circle fa-fw"></i> <span th:text="'Device ' + ${device.id}"></span>
-                                </div>
-                                <div class="panel-heading" th:if="${device.status} == false">
-                                    <i class="fa fa-circle-o fa-fw"></i> <span th:text="'Device ' + ${device.id}"></span>
-                                </div>
-                                <!-- /.panel-heading -->
-                                <div class="panel-body">
-
-                                    <h2></h2>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Sensor ID</th>
-                                                    <th>Readouts</th>
-                                                    <th>Options</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr th:each="sensor : ${device.sensors}">
-                                                    <td th:text="${sensor.id}"></td>
-                                                    <td th:text="${sensor.getReadouts().size()}"></td>
-                                                    <td>
-                                                        <a type="button" class="btn btn-primary btn-xs" th:href="@{/readouts/{deviceid}/{sensorid}/view(deviceid = ${device.id}, sensorid = ${sensor.id})}">Readouts</a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
+            </div>
+        </div>
+    </div>
