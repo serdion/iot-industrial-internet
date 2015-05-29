@@ -6,10 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.restapi.filters.Equals;
-import fi.iot.iiframework.restapi.filters.LessThan;
-import fi.iot.iiframework.restapi.filters.MoreThan;
-import fi.iot.iiframework.restapi.filters.ReadoutFilter;
+import fi.iot.iiframework.restapi.filters.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,8 +32,8 @@ public class CriterionFactory {
         acceptedReadoutFilters.put("moretthan", new MoreThan("value"));
         acceptedReadoutFilters.put("lessthan", new LessThan("value"));
         
-        acceptedReadoutFilters.put("after", new MoreThan("time"));
-        acceptedReadoutFilters.put("before", new LessThan("time"));
+        acceptedReadoutFilters.put("after", new After("time"));
+        acceptedReadoutFilters.put("before", new Before("time"));
     }
 
     public List<Criterion> getReadoutCriterion(Map<String, String> params) {
