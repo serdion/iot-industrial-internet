@@ -20,7 +20,7 @@ public class SysError implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int id;
+    private String id;
 
     @Column(name = "type")
     private ErrorType type;
@@ -63,11 +63,11 @@ public class SysError implements Serializable {
         // Hibernate requires an empty constructor
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
