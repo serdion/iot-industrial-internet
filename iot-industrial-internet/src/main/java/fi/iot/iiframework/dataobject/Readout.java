@@ -67,6 +67,7 @@ public class Readout implements Saveable<Long> {
      *
      * @return Date
      */
+    @JsonIgnore
     public Date getTimeAsDate() {
         return new Date(time);
     }

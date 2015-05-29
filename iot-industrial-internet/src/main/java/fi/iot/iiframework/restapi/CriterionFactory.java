@@ -34,6 +34,9 @@ public class CriterionFactory {
         
         acceptedReadoutFilters.put("moretthan", new MoreThan("value"));
         acceptedReadoutFilters.put("lessthan", new LessThan("value"));
+        
+        acceptedReadoutFilters.put("after", new MoreThan("time"));
+        acceptedReadoutFilters.put("before", new LessThan("time"));
     }
 
     public List<Criterion> getReadoutCriterion(Map<String, String> params) {
