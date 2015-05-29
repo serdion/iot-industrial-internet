@@ -13,6 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringApplicationConfiguration(classes = {TestConfig.class})
 public class InformationSourceManagerTest {
 
+    @Autowired
     InformationSourceManager manager;
 
     @Before
