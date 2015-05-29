@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -26,12 +27,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "readout")
 @Data
-@EqualsAndHashCode(exclude = {"sensor"})
+@EqualsAndHashCode(exclude = {"id", "value"})
 @ToString(exclude = {"sensor"})
 public class Readout implements Saveable<Long> {
 
@@ -57,7 +60,8 @@ public class Readout implements Saveable<Long> {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sensor")
+    @JoinColumn(name = "sensor", nullable = false, updatable = false)
+    @Cascade({CascadeType.SAVE_UPDATE})
     protected Sensor sensor;
 
     public Readout() {
@@ -79,4 +83,9 @@ public class Readout implements Saveable<Long> {
         long timestamp = Long.parseLong(time);
         return new Date(timestamp);
     }
+
+    public void afterUnmarshal(Unmarshaller u, Object parent) {
+        this.sensor = (Sensor) parent;
+    }
+
 }

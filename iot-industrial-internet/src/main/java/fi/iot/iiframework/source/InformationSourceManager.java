@@ -8,7 +8,6 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

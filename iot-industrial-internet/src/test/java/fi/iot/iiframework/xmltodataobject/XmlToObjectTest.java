@@ -11,6 +11,7 @@ import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.dataobject.Sensor;
 import static fi.iot.iiframework.xmltodataobject.XmlToObject.convertXml;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 import org.junit.After;
@@ -30,7 +31,7 @@ public class XmlToObjectTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws JAXBException, MalformedURLException {
+    public static void setUpClass() throws JAXBException, MalformedURLException, IOException {
         data = convertXml("http://ptpihlaj.users.cs.helsinki.fi/test.xml");
     }
 
@@ -52,7 +53,33 @@ public class XmlToObjectTest {
     }
 
     @Test
-    public void firstReadoutUnitReadCorrectly() {
+    public void childrenReadCorrectlyToObject() {
+        assertFalse(data.getDevices().isEmpty());
+
+        Device device = (Device) data.getDevices().toArray()[0];
+        assertFalse(device.getSensors().isEmpty());
+
+        Sensor sensor = (Sensor) device.getSensors().toArray()[0];
+        assertFalse(sensor.getReadouts().isEmpty());
+
+        Readout readout = (Readout) sensor.getReadouts().toArray()[0];
+        assertNotNull(readout);
+    }
+
+    @Test
+    public void parentsAddedAfterUnmarshalling() {
+        Device device = (Device) data.getDevices().toArray()[0];
+        assertNotNull(device.getSource());
+
+        Sensor sensor = (Sensor) device.getSensors().toArray()[0];
+        assertNotNull(sensor.getDevice());
+
+        Readout readout = (Readout) sensor.getReadouts().toArray()[0];
+        assertNotNull(readout.getSensor());
+    }
+
+    @Test
+    public void Correctly() {
         assertFalse(data.getDevices().isEmpty());
         Device device = (Device) data.getDevices().toArray()[0];
         assertFalse(device.getSensors().isEmpty());
@@ -66,7 +93,7 @@ public class XmlToObjectTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void malformedUrlThrown() throws JAXBException, MalformedURLException {
+    public void malformedUrlThrown() throws JAXBException, MalformedURLException, IOException {
         exception.expect(MalformedURLException.class);
         DataSourceObject malformed = convertXml("h://ptpihlaj.users.cs.helsinki.fi/test.xml");
 

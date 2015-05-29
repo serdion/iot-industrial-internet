@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
     "fi.iot.iiframework.daos",
     "fi.iot.iiframework.services",
     "fi.iot.iiframework.database",
-    "fi.iot.iiframework.errors"
-        
+    "fi.iot.iiframework.errors",
+    "fi.iot.iiframework.testclasses"
 })
 public class TestConfig {
     

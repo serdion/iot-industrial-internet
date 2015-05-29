@@ -7,10 +7,10 @@ package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.iot.iiframework.database.Saveable;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +22,7 @@ import org.hibernate.annotations.CascadeType;
 @XmlRootElement(name = "device")
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"status", "sensors", "source"})
+@EqualsAndHashCode(exclude = {"status", "sensors"})
 @ToString(exclude = {"status", "sensors", "source"})
 public class Device implements Saveable<String> {
 
@@ -39,14 +39,15 @@ public class Device implements Saveable<String> {
     @JsonIgnore
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
     @JoinColumn(name = "device")
     protected Set<Sensor> sensors;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "source")
+    @JoinColumn(name = "source", nullable = false, updatable = false)
+    @Cascade({CascadeType.SAVE_UPDATE})
     protected DataSourceObject source;
 
     public Device() {
@@ -54,5 +55,9 @@ public class Device implements Saveable<String> {
 
     public Device(String id) {
         this.id = id;
+    }
+
+    public void afterUnmarshal(Unmarshaller u, Object parent) {
+        this.source = (DataSourceObject) parent;
     }
 }

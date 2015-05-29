@@ -47,7 +47,6 @@ public class DataObjectFactory {
         Device device = new Device();
 
         device.setId(getUUID());
-        device.setDeviceid(getUUID());
         device.setStatus(true);
         device.setSensors(new HashSet<>());
 
@@ -61,7 +60,6 @@ public class DataObjectFactory {
     private static Sensor getSensor() {
         Sensor sensor = new Sensor();
         sensor.setId(getUUID());
-        sensor.setSensorid(getUUID());
         sensor.setReadouts(new HashSet<>());
 
         long currtime = System.currentTimeMillis();
