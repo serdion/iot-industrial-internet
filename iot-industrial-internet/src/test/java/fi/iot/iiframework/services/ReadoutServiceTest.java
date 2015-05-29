@@ -14,9 +14,11 @@ import fi.iot.iiframework.services.dataobject.SensorService;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -45,9 +47,9 @@ public class ReadoutServiceTest extends GenericServiceTest<Readout, Long> {
     @Before
     public void setUp() {
         super.service = readoutService;
-        s1 = r1 = new Readout("134214158", 20.2, "C", "Temperature");
-        s2 = r2 = new Readout("134214858", 19.8, "C", "Temperature");
-        s3 = r3 = new Readout("13184174a", 7.8, "C", "Temperature");
+        s1 = r1 = new Readout(134214158, 20.2, "C", "Temperature");
+        s2 = r2 = new Readout(134214858, 19.8, "C", "Temperature");
+        s3 = r3 = new Readout(13184174, 7.8, "C", "Temperature");
 
         readouts = new HashSet<>();
         readouts.add(s1);
