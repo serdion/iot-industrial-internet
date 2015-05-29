@@ -6,25 +6,27 @@
  */
 package fi.iot.iiframework.dataobject;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.iot.iiframework.database.Saveable;
+import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "datasource")
 @Entity
 @Table(name = "datasource")
-public class DataSourceObject implements Serializable {    
+@Data
+@EqualsAndHashCode(exclude = {"devices", "header"})
+@ToString(exclude = {"devices", "header"})
+public class DataSourceObject implements Saveable<String> {    
     @XmlAttribute
     @Id
     protected String id;
@@ -35,43 +37,11 @@ public class DataSourceObject implements Serializable {
     @Transient
     protected Header header;
     
+    @JsonIgnore
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "source_id")
-    protected Set<Device> devices;
-    
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDatasourceid() {
-        return datasourceid;
-    }
-
-    public void setDatasourceid(String datasourceid) {
-        this.datasourceid = datasourceid;
-    }
-
-    public Header getHeader() {
-        return header;
-    }
-
-    public void setHeader(Header header) {
-        this.header = header;
-    }
-
-    public Set<Device> getDevices() {
-        return devices;
-    }
-
-    public void setDevices(Set<Device> devices) {
-        this.devices = devices;
-    }
-
+    @JoinColumn(name = "source")
+    protected Set<Device> devices;    
 }

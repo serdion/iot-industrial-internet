@@ -6,16 +6,9 @@
  */
 package fi.iot.iiframework.services;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author atte
- * @param <T>
- * @param <ID>
- */
 public interface GenericService<T, ID extends Serializable> {
     public void save(T t);
 

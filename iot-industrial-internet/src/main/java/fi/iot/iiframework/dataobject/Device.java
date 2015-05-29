@@ -5,18 +5,26 @@
  */
 package fi.iot.iiframework.dataobject;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.iot.iiframework.database.Saveable;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "device")
 @Entity
-public class Device implements Serializable {
+@Data
+@EqualsAndHashCode(exclude = {"status", "sensors", "source"})
+@ToString(exclude = {"status", "sensors", "source"})
+public class Device implements Saveable<String> {
 
     @XmlAttribute
     @Id
@@ -28,58 +36,23 @@ public class Device implements Serializable {
     @NotNull
     protected boolean status;
 
+    @JsonIgnore
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "device")
     protected Set<Sensor> sensors;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "source_id")
-    protected DataSourceObject dataSourceObject;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "source")
+    protected DataSourceObject source;
 
     public Device() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public Device(String id) {
         this.id = id;
     }
-
-    public String getDeviceid() {
-        return deviceid;
-    }
-
-    public void setDeviceid(String deviceid) {
-        this.deviceid = deviceid;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Set<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public void setSensors(Set<Sensor> sensors) {
-        this.sensors = sensors;
-    }
-
-    public DataSourceObject getDataSourceObject() {
-        return dataSourceObject;
-    }
-
-    public void setDataSourceObject(DataSourceObject dataSourceObject) {
-        this.dataSourceObject = dataSourceObject;
-    }
-
 }

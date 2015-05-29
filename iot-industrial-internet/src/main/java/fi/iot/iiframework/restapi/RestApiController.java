@@ -17,12 +17,12 @@ import fi.iot.iiframework.services.dataobject.ReadoutService;
 import fi.iot.iiframework.services.dataobject.SensorService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @RestController
 @RequestMapping("1.0")
@@ -49,12 +49,27 @@ public class RestApiController {
     @Autowired
     InformationSourceConfigurationService informationsourceservice;
 
+    @Autowired
+    private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
     @RequestMapping(value = "/test", produces = "application/json")
     @ResponseBody
     public List<Device> test(
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         return deviceservice.getAll();
+    }
+
+    @RequestMapping(value = "/", produces = "application/json")
+    @ResponseBody
+    public Object[] index() {
+        Set<String> links = new HashSet<>();
+
+        requestMappingHandlerMapping.getHandlerMethods().entrySet().stream().forEach((entrySet)->{
+            links.addAll(entrySet.getKey().getPatternsCondition().getPatterns());
+        });
+
+        return links.stream().filter((p)->p.contains("1.0")).toArray();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -157,7 +172,7 @@ public class RestApiController {
         return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), device);
     }
 
-    @RequestMapping(value = "/sensors/{deviceid}/list/{amont}", produces = "application/json")
+    @RequestMapping(value = "/sensors/{deviceid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensorsAmount(
             @PathVariable String deviceid,
@@ -290,6 +305,22 @@ public class RestApiController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @RequestMapping(
+            value = "/configurations/informationsources/{configid}/delete",
+            method = RequestMethod.DELETE,
+            produces = "application/json"
+    )
+    @ResponseBody
+    public ResponseEntity<InformationSourceConfiguration> deleteInformationSource(
+            @PathVariable String configid,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException {
+        InformationSourceConfiguration configuration
+                = (InformationSourceConfiguration) returnOrException(informationsourceservice.get(configid));
+        informationsourceservice.delete(configuration);
+        return new ResponseEntity<>(configuration, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/configurations/informationsources/list", produces = "application/json")
     @ResponseBody
     public List<InformationSourceConfiguration> listInformationSourcesList(
@@ -358,7 +389,7 @@ public class RestApiController {
      * {to} cannot be negative
      * {to} cannot be equal to {from}
      * {to} cannot be smaller than {from}
-     * from-to cannot be bigger than
+     * from-to cannot be bigger than default max objects retrieved
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if(from<0||to<=0||to==from||from>to
@@ -367,6 +398,16 @@ public class RestApiController {
         }
     }
 
+    /**
+     * Returns the object it was given, if the object is null
+     * ResourceNotFoundException will be thrown.
+     *
+     * @param object Object to check for null
+     *
+     * @return Object it was given
+     *
+     * @throws ResourceNotFoundException if the object is null
+     */
     public Object returnOrException(Object object) throws ResourceNotFoundException {
         if(object==null) {
             throw new ResourceNotFoundException();

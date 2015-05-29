@@ -7,22 +7,14 @@
 package fi.iot.iiframework.services;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.dataobject.DataSourceObject;
 import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
 
-/**
- *
- * @author atte
- * @param <T>
- * @param <ID>
- */
 @Transactional
 public class GenericHibernateService<T, ID extends Serializable>
-    implements GenericService<T, ID> {
-    
-    
+        implements GenericService<T, ID> {
+
     protected GenericDAO dao;
 
     @Override
@@ -34,7 +26,7 @@ public class GenericHibernateService<T, ID extends Serializable>
     public T get(ID id) {
         return (T) dao.get(id);
     }
-    
+
     @Override
     public List<T> get(int from, int to) {
         return dao.get(from, to);
@@ -49,5 +41,5 @@ public class GenericHibernateService<T, ID extends Serializable>
     public List<T> getAll() {
         return dao.getAll();
     }
-    
+
 }

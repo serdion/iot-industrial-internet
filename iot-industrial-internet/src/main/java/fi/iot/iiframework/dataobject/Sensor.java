@@ -6,27 +6,26 @@
  */
 package fi.iot.iiframework.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.iot.iiframework.database.Saveable;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
-public class Sensor implements Serializable {
+@Data
+@EqualsAndHashCode(exclude = {"readouts", "device"})
+@ToString(exclude = {"readouts", "device"})
+public class Sensor implements Saveable<String> {
 
     @Id
     @XmlAttribute
@@ -34,56 +33,25 @@ public class Sensor implements Serializable {
 
     protected String sensorid;
 
+    @JsonIgnore
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name="sensor_id")
+    @JoinColumn(name = "sensor")
     protected Set<Readout> readouts;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "device_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="device")
     protected Device device;
 
     public Sensor() {
     }
 
-    public Sensor(String id, String sensorid, Set<Readout> readouts) {
+    public Sensor(String id,  Set<Readout> readouts) {
         this.id = id;
-        this.sensorid = sensorid;
         this.readouts = readouts;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSensorid() {
-        return sensorid;
-    }
-
-    public void setSensorid(String sensorid) {
-        this.sensorid = sensorid;
-    }
-
-    public Set<Readout> getReadouts() {
-        return readouts;
-    }
-
-    public void setReadouts(Set<Readout> readouts) {
-        this.readouts = readouts;
-    }
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
     }
 
 }
