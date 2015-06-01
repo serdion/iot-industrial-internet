@@ -8,7 +8,6 @@ package fi.iot.iiframework.services.dataobject;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Header;
 import fi.iot.iiframework.dataobject.Readout;
 import fi.iot.iiframework.dataobject.Sensor;
 import java.text.DecimalFormat;
@@ -37,7 +36,7 @@ public class DataObjectProvider {
     public static Device provideDevice() {
         Device device = new Device();
 
-        device.setId(getUUID());
+        device.setDeviceId(getUUID());
         device.setStatus(true);
         device.setSensors(new HashSet<>());
 
@@ -46,7 +45,7 @@ public class DataObjectProvider {
 
     public static Sensor provideSensor() {
         Sensor sensor = new Sensor();
-        sensor.setId(getUUID());
+        sensor.setSensorId(getUUID());
         sensor.setReadouts(new HashSet<>());
 
         return sensor;
@@ -54,7 +53,7 @@ public class DataObjectProvider {
 
     public static Readout provideReadout() {
         Readout readout = new Readout();
-        readout.setTime(System.currentTimeMillis() - 1);
+        readout.setTime(System.currentTimeMillis() + randInt(-100, 100));
         readout.setQuantity("Temperature");
         readout.setUnit("°C"); // Celsius
 

@@ -5,7 +5,7 @@
             <div class="panel-heading">Add new Datasource</div>
             <div class="panel-body">
 
-                <form role="form">
+                <form role="form" ng-form="ds_form">
                     <div class="form-group">
                         <label>Name</label>
                         <input class="form-control" name="ds_name" ng-model="ds_name" placeholder="Enter name" />
@@ -15,16 +15,25 @@
                     <div class="form-group">
                         <label>Selects</label>
                         <select class="form-control" name="ds_type" ng-model="ds_type" />
-                            <option>XML</option>
+                        <option>XML</option>
                         </select>
                         <p class="help-block">Type of the Datasource</p>
                     </div>
 
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input class="form-control" name="ds_url" ng-model="ds_url" placeholder="Enter URL" />
+                        <p class="help-block">Datasource URL</p>
+                    </div>
+
                     <div class="form-group input-group">
                         <label>Read frequency</label>
-                        <input type="text" class="form-control" name="ds_freq" ng-model="ds_freq" placeholder="Enter read frequency" />
+                        <input type="text" class="form-control" name="ds_freq" ng-model="ds_freq" />
                         <span class="input-group-addon">seconds</span>
                     </div>
+
+                    <button type="button" class="btn btn-info btn-circle btn-xl" ng-click="addDS()"><i class="fa fa-check"></i>
+                    </button>
                 </form>
             </div>
         </div>

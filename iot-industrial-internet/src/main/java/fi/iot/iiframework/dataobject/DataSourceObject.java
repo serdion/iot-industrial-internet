@@ -7,8 +7,7 @@
 package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.database.Saveable;
-import java.util.Objects;
+import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
@@ -26,7 +25,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(exclude = {"devices", "header"})
 @ToString(exclude = {"devices", "header"})
-public class DataSourceObject implements Saveable<String> {    
+public class DataSourceObject implements Serializable {    
     @XmlAttribute
     @Id
     protected String id;
