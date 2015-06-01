@@ -157,6 +157,15 @@ public class RestApiController {
     ) throws ResourceNotFoundException {
         return (Device) returnOrException(deviceservice.get(deviceid));
     }
+    
+    @RequestMapping(value = "/sensors/{sensorid}/view", produces = "application/json")
+    @ResponseBody
+    public Sensor getSensor(
+            @PathVariable String sensorid,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws ResourceNotFoundException {
+        return (Sensor) returnOrException(sensorservice.get(sensorid));
+    }
 
     @RequestMapping(value = "/sensors/{deviceid}/list", produces = "application/json")
     @ResponseBody
