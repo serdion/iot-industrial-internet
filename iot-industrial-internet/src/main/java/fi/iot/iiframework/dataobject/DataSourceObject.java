@@ -30,7 +30,7 @@ public class DataSourceObject implements Serializable {
     @Id
     protected String id;
     
-    protected String datasourceid;
+    protected String name;
     
     @XmlElement
     @Transient

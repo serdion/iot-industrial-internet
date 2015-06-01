@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class DeviceServiceImpl
-        extends GenericHibernateService<Device, String>
+        extends GenericHibernateService<Device, Long>
         implements DeviceService {
 
     DeviceDAO deviceDAO;
