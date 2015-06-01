@@ -96,4 +96,14 @@ public class SysError implements Serializable {
         return description;
     }
 
+    public ErrorSeverity getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(ErrorSeverity severity) {
+        this.severity = severity;
+    }
+    
+    
+
 }
