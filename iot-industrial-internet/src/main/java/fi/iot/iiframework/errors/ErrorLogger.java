@@ -44,6 +44,7 @@ public class ErrorLogger {
      */
     public static void newError(ErrorType e, ErrorSeverity es, String desc) {
         SysError error = new SysError(e, es, desc);
+        saveError(error);
     }
 
     /**
