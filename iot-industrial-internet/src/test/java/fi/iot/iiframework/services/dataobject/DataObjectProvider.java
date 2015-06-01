@@ -4,76 +4,57 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.dataobject;
+package fi.iot.iiframework.services.dataobject;
 
+import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.dataobject.Device;
+import fi.iot.iiframework.dataobject.Header;
+import fi.iot.iiframework.dataobject.Readout;
+import fi.iot.iiframework.dataobject.Sensor;
 import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
-public class DataObjectFactory {
+/**
+ *
+ * @author atte
+ */
+public class DataObjectProvider {
 
-    /**
-     * Returns a randomly generated DataObject
-     *
-     * @return DataObject
-     */
-    public static DataSourceObject getRandomDataObject() {
+    public static DataSourceObject provideDataObject() {
         java.util.Locale.setDefault(Locale.ENGLISH);
         DataSourceObject obj = new DataSourceObject();
 
         obj.setId(getUUID());
-        obj.setHeader(getHeader());
         obj.setDevices(new HashSet<>());
-
-        for (int i = 0; i < 10; i++) {
-            obj.getDevices().add(getDevice());
-        }
 
         return obj;
     }
 
-    private static Header getHeader() {
-        Header header = new Header();
 
-        header.setResponse("success");
-        header.setUptime(randInt(1000, 10000));
-
-        return header;
-    }
-
-    private static Device getDevice() {
+    public static Device provideDevice() {
         Device device = new Device();
 
         device.setId(getUUID());
         device.setStatus(true);
         device.setSensors(new HashSet<>());
 
-        for (int i = 0; i < 10; i++) {
-            device.getSensors().add(getSensor());
-        }
-
         return device;
     }
 
-    private static Sensor getSensor() {
+    public static Sensor provideSensor() {
         Sensor sensor = new Sensor();
         sensor.setId(getUUID());
         sensor.setReadouts(new HashSet<>());
 
-        long currtime = System.currentTimeMillis();
-
-        for (int i = 0; i < 25; i++) {
-            sensor.getReadouts().add(getReadout(currtime - i));
-        }
-
         return sensor;
     }
 
-    private static Readout getReadout(long currentTime) {
+    public static Readout provideReadout() {
         Readout readout = new Readout();
-        readout.setTime((currentTime - 1));
+        readout.setTime(System.currentTimeMillis() - 1);
         readout.setQuantity("Temperature");
         readout.setUnit("°C"); // Celsius
 
@@ -98,4 +79,5 @@ public class DataObjectFactory {
     private static String getUUID() {
         return UUID.randomUUID().toString();
     }
+
 }

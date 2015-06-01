@@ -13,6 +13,7 @@ import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,9 +29,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("fi.iot.iiframework")
 public class Application {
 
-    private static final Logger logger = Logger.getLogger(Application.class.getName());
+    public static final Logger logger = Logger.getLogger(Application.class.getName());
 
-    public static void main(String[] args) throws JAXBException, MalformedURLException {
+    public static void main(String[] args) throws JAXBException, MalformedURLException, IOException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
 
@@ -38,15 +39,27 @@ public class Application {
 
         InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
         infSourceConfiguration.setName("Example Config");
-        //infSourceConfiguration.setReadFrequency(1000);
         infSourceConfiguration.setType(InformationSourceType.XML);
         infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         infSourceManager.createSource(infSourceConfiguration);
+        InformationSourceConfiguration infSourceConfiguration2 = new InformationSourceConfiguration();
+        infSourceConfiguration2.setName("Example Config");
+        infSourceConfiguration2.setType(InformationSourceType.XML);
+        infSourceConfiguration2.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
+        infSourceManager.createSource(infSourceConfiguration2);
         infSourceManager.getSources().get(0).readAndWrite();
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(1).getUrl());
+        infSourceManager.removeSource(infSourceConfiguration.getId());
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
+        infSourceConfiguration2.setUrl("updated url");
+        infSourceManager.updateSource(infSourceConfiguration2.getId(), infSourceConfiguration2);
+        System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
         
         SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "This is a test error");
         ErrorLogger.newError(e);
-
+        
+        
 
     }
 

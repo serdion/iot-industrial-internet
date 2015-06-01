@@ -11,6 +11,7 @@ import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
 import java.io.Serializable;
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -76,6 +77,8 @@ public class InformationSourceImpl implements InformationSource {
                     readAndWrite();
                 } catch (JAXBException | MalformedURLException ex) {
                     Logger.getLogger(InformationSource.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(InformationSourceImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -83,13 +86,13 @@ public class InformationSourceImpl implements InformationSource {
     }
 
     @Override
-    public void readAndWrite() throws JAXBException, MalformedURLException {
+    public void readAndWrite() throws JAXBException, MalformedURLException, IOException {
         DataSourceObject dso = read();
         service.save(dso);
     }
 
     @Override
-    public DataSourceObject read() throws JAXBException, MalformedURLException {
+    public DataSourceObject read() throws JAXBException, MalformedURLException, IOException {
         DataSourceObject dobj = reader.read();
         return dobj;
     }

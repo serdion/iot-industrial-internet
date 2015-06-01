@@ -7,6 +7,7 @@
 package fi.iot.iiframework.datasourcereaders;
 
 import fi.iot.iiframework.dataobject.DataSourceObject;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 
@@ -15,5 +16,5 @@ import javax.xml.bind.JAXBException;
  * 
  */
 public interface InformationSourceReader {
-    public DataSourceObject read() throws JAXBException, MalformedURLException;
+    public DataSourceObject read() throws JAXBException, MalformedURLException, IOException;
 }

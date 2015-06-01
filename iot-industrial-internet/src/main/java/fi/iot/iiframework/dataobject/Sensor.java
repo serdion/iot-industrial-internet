@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,15 +24,13 @@ import org.hibernate.annotations.CascadeType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 @Data
-@EqualsAndHashCode(exclude = {"readouts", "device"})
+@EqualsAndHashCode(exclude = {"readouts"})
 @ToString(exclude = {"readouts", "device"})
 public class Sensor implements Saveable<String> {
 
     @Id
     @XmlAttribute
     protected String id;
-
-    protected String sensorid;
 
     @JsonIgnore
     @XmlElement(name = "readout")
@@ -42,16 +41,19 @@ public class Sensor implements Saveable<String> {
     protected Set<Readout> readouts;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="device")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "device", nullable = false, updatable = false)
+    @Cascade({CascadeType.SAVE_UPDATE})
     protected Device device;
 
     public Sensor() {
     }
 
-    public Sensor(String id,  Set<Readout> readouts) {
+    public Sensor(String id) {
         this.id = id;
-        this.readouts = readouts;
     }
 
+    public void afterUnmarshal(Unmarshaller u, Object parent) {
+        this.device = (Device) parent;
+    }
 }

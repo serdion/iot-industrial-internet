@@ -4,15 +4,14 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services;
+package fi.iot.iiframework.services.dataobject;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.services.dataobject.DeviceService;
-import java.util.UUID;
-import static org.junit.Assert.assertEquals;
+import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -24,21 +23,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-public class DeviceServiceTest extends GenericServiceTest<Device, String> {
+public class DataSourceObjectServiceTest {
 
-    Device d1;
-    Device d2;
-    Device d3;
+    DataSourceObject dso1;
+    DataSourceObject dso2;
 
     @Autowired
-    private DeviceService deviceService;
+    private DataSourceObjectService service;
 
     @Before
     public void setUp() {
-        service = deviceService;
-        s1 = d1 = new Device(UUID.randomUUID().toString());
-        s2 = d2 = new Device(UUID.randomUUID().toString());
-        s3 = d3 = new Device(UUID.randomUUID().toString());
+        dso1 = new DataSourceObject();
+        dso1.setId("ssds");
+    }
+
+    @Test
+    public void aDataSourceObjectCanBeSavedAndRetrievedFromDatabase() {
+        service.save(dso1);
+        DataSourceObject dso2 = service.get(dso1.getId());
+        assertEquals(dso1.getId(), dso2.getId());
     }
 
 }
