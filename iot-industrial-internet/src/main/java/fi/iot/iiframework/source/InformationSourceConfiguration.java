@@ -6,7 +6,12 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.restapi.Validatable;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.*;
 
 
@@ -17,7 +22,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "infosourceconfigs")
-public class InformationSourceConfiguration implements Serializable {
+public class InformationSourceConfiguration implements Serializable, Validatable {
 
     /**
      * Information source id
@@ -85,6 +90,21 @@ public class InformationSourceConfiguration implements Serializable {
 
     public void setReadFrequency(int readFrequency) {
         this.readFrequency = readFrequency;
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            new URL(url);
+        } catch (MalformedURLException ex) {
+            return false;
+        }
+        
+        if(readFrequency<=0){
+            return false;
+        }
+        
+        return true;
     }
 
 }

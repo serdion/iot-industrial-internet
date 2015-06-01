@@ -52,7 +52,7 @@ public class RestApiController {
 
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
-    
+
     @Autowired
     private CriterionFactory criterionfactory;
 
@@ -61,11 +61,11 @@ public class RestApiController {
     public Object[] index() {
         Set<String> links = new HashSet<>();
 
-        requestMappingHandlerMapping.getHandlerMethods().entrySet().stream().forEach((entrySet)->{
+        requestMappingHandlerMapping.getHandlerMethods().entrySet().stream().forEach((entrySet) -> {
             links.addAll(entrySet.getKey().getPatternsCondition().getPatterns());
         });
 
-        return links.stream().filter((p)->p.contains("1.0")).toArray();
+        return links.stream().filter((p) -> p.contains("1.0")).toArray();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -157,7 +157,7 @@ public class RestApiController {
     ) throws ResourceNotFoundException {
         return (Device) returnOrException(deviceservice.get(deviceid));
     }
-    
+
     @RequestMapping(value = "/sensors/{sensorid}/view", produces = "application/json")
     @ResponseBody
     public Sensor getSensor(
@@ -221,9 +221,9 @@ public class RestApiController {
     ) throws ResourceNotFoundException, InvalidParametersException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
         exceptionIfWrongLimits(0, amount);
-        
+
         List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
-        
+
         return readoutservice.getBy(0, amount, sensor);
     }
 
@@ -308,7 +308,8 @@ public class RestApiController {
     public ResponseEntity<InformationSourceConfiguration> addInformationSource(
             @RequestBody InformationSourceConfiguration configuration,
             @RequestParam(required = false) Map<String, String> params
-    ) throws InvalidParametersException, ResourceNotFoundException {
+    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
+        checkIfObjectIsValid(configuration);
         informationsourceservice.save(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
@@ -392,6 +393,23 @@ public class RestApiController {
                 ), HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Catches InvalidParametersException created by RestAPI and notifies the
+     * user with RestAPIError object that contains an ErrorType and a message.
+     *
+     * @return ResponseEntity with RestAPIError object
+     */
+    @RequestMapping(value = "/error/invalidobject", produces = "application/json")
+    @ExceptionHandler(InvalidObjectException.class)
+    @ResponseBody
+    public ResponseEntity<RestAPIError> invalidObjectException() {
+        return new ResponseEntity<>(
+                new RestAPIError(
+                        ErrorType.PARSE_ERROR,
+                        "Invalid object found in your request."
+                ), HttpStatus.NOT_ACCEPTABLE);
+    }
+
     /*
      * {from} cannot be negative
      * {to} cannot be negative
@@ -400,8 +418,8 @@ public class RestApiController {
      * {from} minus {to} cannot be bigger than default max objects retrieved
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
-        if(from<0||to<=0||to==from||from>to
-                ||(from-to)>settings.getMaxObjectsRetrievedFromDatabase()) {
+        if (from < 0 || to <= 0 || to == from || from > to
+                || (from - to) > settings.getMaxObjectsRetrievedFromDatabase()) {
             throw new InvalidParametersException();
         }
     }
@@ -417,11 +435,23 @@ public class RestApiController {
      * @throws ResourceNotFoundException if the object is null
      */
     public Object returnOrException(Object object) throws ResourceNotFoundException {
-        if(object==null) {
+        if (object == null) {
             throw new ResourceNotFoundException();
         }
 
         return object;
+    }
+
+    /**
+     * Checks if Validatable object is valid and throws exception if not.
+     *
+     * @param validatable Validatable object
+     * @throws InvalidObjectException if not valid
+     */
+    public void checkIfObjectIsValid(Validatable validatable) throws InvalidObjectException {
+        if (validatable.isValid()) {
+            throw new InvalidObjectException();
+        }
     }
 
 }
