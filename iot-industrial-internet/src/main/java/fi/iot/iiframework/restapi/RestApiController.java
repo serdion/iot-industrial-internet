@@ -45,10 +45,10 @@ public class RestApiController {
     private ErrorService errorservice;
 
     @Autowired
-    ApplicationSettings settings;
+    private ApplicationSettings settings;
 
     @Autowired
-    InformationSourceConfigurationService informationsourceservice;
+    private InformationSourceConfigurationService informationsourceservice;
 
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
@@ -405,8 +405,8 @@ public class RestApiController {
     public ResponseEntity<RestAPIError> invalidObjectException() {
         return new ResponseEntity<>(
                 new RestAPIError(
-                        ErrorType.PARSE_ERROR,
-                        "Invalid object found in your request."
+                        ErrorType.INVALID_OBJECT,
+                        "Object was invalid or wrong type."
                 ), HttpStatus.NOT_ACCEPTABLE);
     }
 

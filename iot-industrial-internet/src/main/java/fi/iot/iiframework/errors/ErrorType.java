@@ -21,8 +21,9 @@ public enum ErrorType {
     PARSE_ERROR("Parse error", "parseerror"),
     READ_ERROR("Read error", "readerror"),
     TEST_ERROR("Error for testing", "testerror"),
+    INVALID_OBJECT("Object was invalid or wrong type", "invalidobject"),
     UNKNOWN_ERROR("Unknown error", "unknown");
-    
+
     private final String name;
     private final String id;
 
@@ -66,6 +67,11 @@ public enum ErrorType {
 
         return ErrorType.UNKNOWN_ERROR;
 
+    }
+
+    @Override
+    public String toString() {
+        return getId();
     }
 
 }
