@@ -17,6 +17,7 @@ import fi.iot.iiframework.services.dataobject.ReadoutService;
 import fi.iot.iiframework.services.dataobject.SensorService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
+import fi.iot.iiframework.source.InformationSourceManager;
 import java.util.*;
 import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +53,12 @@ public class RestApiController {
 
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
-    
+
     @Autowired
     private CriterionFactory criterionfactory;
+
+    @Autowired
+    private InformationSourceManager informationsourcemanager;
 
     @RequestMapping(value = "/", produces = "application/json")
     @ResponseBody
@@ -157,7 +161,7 @@ public class RestApiController {
     ) throws ResourceNotFoundException {
         return (Device) returnOrException(deviceservice.get(deviceid));
     }
-    
+
     @RequestMapping(value = "/sensors/{sensorid}/view", produces = "application/json")
     @ResponseBody
     public Sensor getSensor(
@@ -221,9 +225,9 @@ public class RestApiController {
     ) throws ResourceNotFoundException, InvalidParametersException {
         Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
         exceptionIfWrongLimits(0, amount);
-        
+
         List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
-        
+
         return readoutservice.getBy(0, amount, sensor);
     }
 
@@ -310,6 +314,7 @@ public class RestApiController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
         informationsourceservice.save(configuration);
+        informationsourcemanager.createSource(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
