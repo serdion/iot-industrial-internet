@@ -64,5 +64,17 @@ public class ErrorLoggerTest {
         List<SysError> allErrors = ErrorLogger.getAllErrors();
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("I was added directly..."));
     }
+    
+    @Test
+    public void newErrorTimeIsSaved() {
+        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
+        assertNotNull(ErrorLogger.getAllErrors().get(0).getDate());
+        
+        Date now = new Date();
+        ErrorLogger.getAllErrors().get(0).setDate(now);
+        Date nowtest = ErrorLogger.getAllErrors().get(0).getDate();
+        System.out.println("Now: " + now + " Now in db: " + nowtest);
+
+    }
 
 }

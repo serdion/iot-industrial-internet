@@ -16,11 +16,9 @@ import org.junit.Test;
 public class SysErrorTest {
 
     private static SysError[] testErrors;
-    private static Date now;
 
     @BeforeClass
     public static void setUpClass() {
-        now = new Date();
         testErrors = new SysError[3];
 
     }
