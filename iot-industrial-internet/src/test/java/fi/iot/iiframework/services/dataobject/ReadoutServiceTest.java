@@ -78,7 +78,7 @@ public class ReadoutServiceTest {
     @Test
     public void allReadoutsCanBeRetrieved() {
         List<Readout> readouts = service.getAll();
-        
+
         assertTrue(readouts.contains(r1));
         assertTrue(readouts.contains(r2));
         assertTrue(readouts.contains(r3));
@@ -87,16 +87,14 @@ public class ReadoutServiceTest {
     @Test
     public void readoutsCanBeFoundFromIndexToIndex() {
         List<Readout> readouts = service.get(1, 2);
-        
-        assertFalse(readouts.contains(r1));
-        assertTrue(readouts.contains(r2));
-        assertTrue(readouts.contains(r3));
+
+        assertEquals(2, readouts.size());
     }
 
     @Test
     public void readoutsCanBeFoundBySensor() {
         List<Readout> readReadouts = service.getBy(s1);
-        
+
         System.out.println(Arrays.toString(readReadouts.toArray()));
         System.out.println(r1);
         System.out.println(r2);

@@ -8,6 +8,8 @@ package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.dataobject.*;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.errors.service.ErrorService;
@@ -46,10 +48,10 @@ public class RestApiController {
     private ErrorService errorservice;
 
     @Autowired
-    ApplicationSettings settings;
+    private ApplicationSettings settings;
 
     @Autowired
-    InformationSourceConfigurationService informationsourceservice;
+    private InformationSourceConfigurationService informationsourceservice;
 
     @Autowired
     private RequestMappingHandlerMapping requestMappingHandlerMapping;
@@ -65,11 +67,11 @@ public class RestApiController {
     public Object[] index() {
         Set<String> links = new HashSet<>();
 
-        requestMappingHandlerMapping.getHandlerMethods().entrySet().stream().forEach((entrySet)->{
+        requestMappingHandlerMapping.getHandlerMethods().entrySet().stream().forEach((entrySet) -> {
             links.addAll(entrySet.getKey().getPatternsCondition().getPatterns());
         });
 
-        return links.stream().filter((p)->p.contains("1.0")).toArray();
+        return links.stream().filter((p) -> p.contains("1.0")).toArray();
     }
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
@@ -312,7 +314,8 @@ public class RestApiController {
     public ResponseEntity<InformationSourceConfiguration> addInformationSource(
             @RequestBody InformationSourceConfiguration configuration,
             @RequestParam(required = false) Map<String, String> params
-    ) throws InvalidParametersException, ResourceNotFoundException {
+    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
+        checkIfObjectIsValid(configuration);
         informationsourceservice.save(configuration);
         informationsourcemanager.createSource(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
@@ -397,6 +400,23 @@ public class RestApiController {
                 ), HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Catches InvalidParametersException created by RestAPI and notifies the
+     * user with RestAPIError object that contains an ErrorType and a message.
+     *
+     * @return ResponseEntity with RestAPIError object
+     */
+    @RequestMapping(value = "/error/invalidobject", produces = "application/json")
+    @ExceptionHandler(InvalidObjectException.class)
+    @ResponseBody
+    public ResponseEntity<RestAPIError> invalidObjectException() {
+        return new ResponseEntity<>(
+                new RestAPIError(
+                        ErrorType.INVALID_OBJECT,
+                        "Object was invalid or wrong type."
+                ), HttpStatus.NOT_ACCEPTABLE);
+    }
+
     /*
      * {from} cannot be negative
      * {to} cannot be negative
@@ -405,8 +425,9 @@ public class RestApiController {
      * {from} minus {to} cannot be bigger than default max objects retrieved
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
-        if(from<0||to<=0||to==from||from>to
-                ||(from-to)>settings.getMaxObjectsRetrievedFromDatabase()) {
+        if (from < 0 || to <= 0 || to == from || from > to
+                || (from - to) > settings.getMaxObjectsRetrievedFromDatabase()) {
+            ErrorLogger.newError(ErrorType.BAD_REQUEST, ErrorSeverity.LOW, "Invalid parameters given for limits (" + from + ", " + to + ") in RestAPI.");
             throw new InvalidParametersException();
         }
     }
@@ -422,11 +443,25 @@ public class RestApiController {
      * @throws ResourceNotFoundException if the object is null
      */
     public Object returnOrException(Object object) throws ResourceNotFoundException {
-        if(object==null) {
+        if (object == null) {
+            ErrorLogger.newError(ErrorType.NOT_FOUND, ErrorSeverity.LOW, "Resource request could not be found in RestAPI.");
             throw new ResourceNotFoundException();
         }
 
         return object;
+    }
+
+    /**
+     * Checks if Validatable object is valid and throws exception if not.
+     *
+     * @param validatable Validatable object
+     * @throws InvalidObjectException if not valid
+     */
+    public void checkIfObjectIsValid(Validatable validatable) throws InvalidObjectException {
+        if (validatable.isValid()) {
+            ErrorLogger.newError(ErrorType.IO_ERROR, ErrorSeverity.LOW, "Object recieved was invalid or wrong type in RestAPI.");
+            throw new InvalidObjectException();
+        }
     }
 
 }

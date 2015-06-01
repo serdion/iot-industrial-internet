@@ -47,19 +47,9 @@ public class ErrorLoggerTest {
     }
 
     @Test
-    public void newErrorsAreCreatedWithAllParameters() {
-
-        ErrorLogger.newError(ErrorType.TEST_ERROR, new Date(), test1);
-        ErrorLogger.newError(ErrorType.TEST_ERROR, new Date(), test2);
-        List<SysError> allErrors = ErrorLogger.getAllErrors();
-        assertTrue(allErrors.get(0).getDescription().equals(test1));
-        assertTrue(allErrors.get(1).getDescription().equals(test2));
-    }
-
-    @Test
     public void newErrorISCreatedWithoutDescription() {
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
-        ErrorLogger.newError(ErrorType.TEST_ERROR, new Date());
+        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
         List<SysError> allErrors = ErrorLogger.getAllErrors();
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("no description"));
     }
@@ -68,11 +58,23 @@ public class ErrorLoggerTest {
     public void newErrorISCreatedWithPresetError() {
 
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
-        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "I was added directly...");
+        SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "I was added directly...");
         ErrorLogger.newError(e);
 
         List<SysError> allErrors = ErrorLogger.getAllErrors();
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("I was added directly..."));
+    }
+    
+    @Test
+    public void newErrorTimeIsSaved() {
+        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
+        assertNotNull(ErrorLogger.getAllErrors().get(0).getDate());
+        
+        Date now = new Date();
+        ErrorLogger.getAllErrors().get(0).setDate(now);
+        Date nowtest = ErrorLogger.getAllErrors().get(0).getDate();
+        System.out.println("Now: " + now + " Now in db: " + nowtest);
+
     }
 
 }
