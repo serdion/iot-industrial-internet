@@ -453,7 +453,7 @@ public class RestApiController {
      * @throws InvalidObjectException if not valid
      */
     public void checkIfObjectIsValid(Validatable validatable) throws InvalidObjectException {
-        if (validatable.isValid()) {
+        if (!validatable.isValid()) {
             ErrorLogger.newError(ErrorType.IO_ERROR, ErrorSeverity.LOW, "Object recieved was invalid or wrong type in RestAPI.");
             throw new InvalidObjectException();
         }
