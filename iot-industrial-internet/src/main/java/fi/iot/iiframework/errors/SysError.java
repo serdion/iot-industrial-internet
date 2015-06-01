@@ -26,7 +26,7 @@ public class SysError implements Serializable {
     private ErrorType type;
 
     @Column(name = "errordate")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date time;
 
     @Column(name = "description")
@@ -95,5 +95,15 @@ public class SysError implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    public ErrorSeverity getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(ErrorSeverity severity) {
+        this.severity = severity;
+    }
+    
+    
 
 }
