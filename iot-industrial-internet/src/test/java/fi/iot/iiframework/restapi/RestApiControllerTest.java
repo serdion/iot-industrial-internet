@@ -8,6 +8,7 @@ package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.Application;
 import fi.iot.iiframework.application.ApplicationSettings;
+import fi.iot.iiframework.application.TestConfig;
 import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@SpringApplicationConfiguration(classes = {TestConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
 @Ignore
 public class RestApiControllerTest {
 
