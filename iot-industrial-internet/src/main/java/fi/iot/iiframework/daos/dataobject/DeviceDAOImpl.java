@@ -10,6 +10,7 @@ import fi.iot.iiframework.daos.GenericHibernateDAO;
 import fi.iot.iiframework.dataobject.DataSourceObject;
 import fi.iot.iiframework.dataobject.Device;
 import java.util.List;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,11 @@ import org.springframework.stereotype.Repository;
 public class DeviceDAOImpl
         extends GenericHibernateDAO<Device, String>
         implements DeviceDAO {
+
+    public DeviceDAOImpl() {
+        super();
+        defaultOrder.add(Order.asc("source"));
+    }
 
     @Override
     public List<Device> getBy(DataSourceObject dso) {

@@ -7,7 +7,7 @@
 package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.database.Saveable;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ import org.hibernate.annotations.CascadeType;
 @Data
 @EqualsAndHashCode(exclude = {"id", "value"})
 @ToString(exclude = {"sensor"})
-public class Readout implements Saveable<Long> {
+public class Readout implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

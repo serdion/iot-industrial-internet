@@ -17,9 +17,7 @@ import org.springframework.context.annotation.Configuration;
     "fi.iot.iiframework.database",
     "fi.iot.iiframework.errors",
     "fi.iot.iiframework.testclasses",
-    "fi.iot.iiframework.errors.service",
-    "fi.iot.iiframework.restapi",
-    "fi.iot.iiframework.application"
+    "fi.iot.iiframework.errors.service"
 })
 public class TestConfig {
     
