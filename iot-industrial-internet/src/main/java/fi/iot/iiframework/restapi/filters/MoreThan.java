@@ -7,6 +7,9 @@
 package fi.iot.iiframework.restapi.filters;
 
 import fi.iot.iiframework.application.Application;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
+import fi.iot.iiframework.errors.ErrorType;
 import java.util.logging.Level;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -23,7 +26,7 @@ public class MoreThan extends ReadoutFilter {
         try {
             bound = Double.parseDouble(filters[0]);
         } catch(NumberFormatException ex) {
-            Application.logger.log(Level.WARNING, "Could not parse double given as a parameter in filter.");
+            ErrorLogger.newError(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
         }
         
         return Restrictions.gt(getField(), bound);
