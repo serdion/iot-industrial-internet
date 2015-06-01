@@ -10,6 +10,7 @@ import fi.iot.iiframework.daos.GenericHibernateDAO;
 import fi.iot.iiframework.dataobject.Device;
 import fi.iot.iiframework.dataobject.Sensor;
 import java.util.List;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,11 @@ import org.springframework.stereotype.Repository;
 public class SensorDAOImpl
         extends GenericHibernateDAO<Sensor, String>
         implements SensorDAO {
+
+    public SensorDAOImpl() {
+        super();
+        defaultOrder.add(Order.asc("device"));
+    }
 
     @Override
     public List<Sensor> getBy(Device device) {

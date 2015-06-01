@@ -8,11 +8,13 @@ package fi.iot.iiframework.daos;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Repository;
 public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDAO<T, ID> {
 
     private final Class<T> persistentClass;
+    protected final List<Order> defaultOrder = new ArrayList<>();
 
     public GenericHibernateDAO() {
         this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
@@ -58,8 +61,11 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
                 .setFirstResult(from)
                 .setMaxResults((to + 1) - from);
         for (Criterion c : criterion) {
-            crit.add(c);
+                    crit.add(c);
         }
+        defaultOrder.stream().forEach(c -> {
+            crit.addOrder(c);
+        });
         return crit.list();
     }
 
