@@ -8,10 +8,10 @@ package fi.iot.iiframework.errors;
 
 public enum ErrorSeverity {
 
-    ENDOFTHEWORLD(1000),
-    HIGH(10),
-    MEDIUM(8),
-    LOW(6),
+    FATAL(10),
+    HIGH(7),
+    MEDIUM(5),
+    LOW(3),
     NOTIFICATION(1);
 
     private final int severity;
@@ -23,5 +23,6 @@ public enum ErrorSeverity {
     public int getSeverity() {
         return this.severity;
     }
-
+    
+    
 }
