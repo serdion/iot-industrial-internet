@@ -20,17 +20,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ErrorLogger {
-    
+
     private static ErrorService gService;
 
     @Autowired
     private ErrorService gServiceAW;
 
-    
     /**
-     * Class needed to allow using Autowired-annotation in a static class 
+     * Class needed to allow using Autowired-annotation in a static class
      */
-    
     @PostConstruct
     public void ErrorLogger() {
         gService = this.gServiceAW;
@@ -39,24 +37,24 @@ public class ErrorLogger {
     /**
      * Creates a new error and calls newError to save it to database
      *
-     * @param e ErrorType
-     * @param d Date
+     * @param e ErrorType of error
+     * @param es ErrorSeverity of error
+     * 
      * @param desc Optional description
      */
-    public static void newError(ErrorType e, Date d, String desc) {
-        SysError error = new SysError(e, d, desc);
-        saveError(error);
-
+    public static void newError(ErrorType e, ErrorSeverity es, String desc) {
+        SysError error = new SysError(e, es, desc);
     }
 
     /**
      * Creates a new error and calls newError to save it to database
      *
-     * @param e ErrorType
-     * @param d Date
+     * @param e ErrorType of error
+     * @param es ErrorSeverity of error
+     * 
      */
-    public static void newError(ErrorType e, Date d) {
-        SysError error = new SysError(e, d);
+    public static void newError(ErrorType e, ErrorSeverity es) {
+        SysError error = new SysError(e, es, "no description");
         saveError(error);
 
     }
@@ -77,14 +75,12 @@ public class ErrorLogger {
      * @param error SysError to be saved
      */
     private static void saveError(SysError error) {
-       gService.save(error);
+        gService.save(error);
 
     }
-    
+
     public static List<SysError> getAllErrors() {
         return gService.getAll();
     }
-    
-    
 
 }

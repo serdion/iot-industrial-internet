@@ -31,33 +31,26 @@ public class SysError implements Serializable {
 
     @Column(name = "description")
     private String description;
+    
+    @Column(name = "severity")
+    private ErrorSeverity severity;
 
     /**
      *
      * @param type ErrorType of error
-     * @param date Date of error
-     * @param desc Description of error, optional.
+     * @param severity ErrorSeverity of the error
+     * @param desc Description of error
      */
-    public SysError(ErrorType type, Date date, String desc) {
+    public SysError(ErrorType type, ErrorSeverity severity, String desc) {
         this.type = type;
-        this.time = date;
         this.description = desc;
+        this.severity = severity;
+        
+        this.time = new Date();
 
     }
 
-     /**
-     *
-     * @param type ErrorType of error
-     * @param date Date of error
-     * 
-     */
-    
-    public SysError(ErrorType type, Date date) {
-        this.type = type;
-        this.time = date;
-        this.description = "No description";
 
-    }
 
     public SysError() {
         // Hibernate requires an empty constructor

@@ -7,6 +7,7 @@ package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.iot.iiframework.database.Saveable;
+import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -24,13 +25,14 @@ import org.hibernate.annotations.CascadeType;
 @Data
 @EqualsAndHashCode(exclude = {"status", "sensors"})
 @ToString(exclude = {"status", "sensors", "source"})
-public class Device implements Saveable<String> {
+public class Device implements Serializable {
 
-    @XmlAttribute
     @Id
-    protected String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
-    protected String deviceid;
+    @XmlAttribute(name = "id")
+    protected String deviceId;
 
     @XmlAttribute
     @NotNull
@@ -53,8 +55,8 @@ public class Device implements Saveable<String> {
     public Device() {
     }
 
-    public Device(String id) {
-        this.id = id;
+    public Device(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public void afterUnmarshal(Unmarshaller u, Object parent) {

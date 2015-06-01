@@ -7,9 +7,7 @@
 package fi.iot.iiframework.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.database.Saveable;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.Unmarshaller;
@@ -26,11 +24,14 @@ import org.hibernate.annotations.CascadeType;
 @Data
 @EqualsAndHashCode(exclude = {"readouts"})
 @ToString(exclude = {"readouts", "device"})
-public class Sensor implements Saveable<String> {
-
+public class Sensor implements Serializable {
+    
     @Id
-    @XmlAttribute
-    protected String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+
+    @XmlAttribute(name = "id")
+    protected String sensorId;
 
     @JsonIgnore
     @XmlElement(name = "readout")
@@ -50,7 +51,7 @@ public class Sensor implements Saveable<String> {
     }
 
     public Sensor(String id) {
-        this.id = id;
+        this.sensorId = id;
     }
 
     public void afterUnmarshal(Unmarshaller u, Object parent) {
