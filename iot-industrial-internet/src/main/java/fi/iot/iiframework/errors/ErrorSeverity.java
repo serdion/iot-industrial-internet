@@ -20,4 +20,8 @@ public enum ErrorSeverity {
         this.severity = severity;
     }
 
+    public int getSeverity() {
+        return this.severity;
+    }
+
 }

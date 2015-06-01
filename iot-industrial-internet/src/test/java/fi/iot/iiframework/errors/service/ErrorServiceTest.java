@@ -7,6 +7,7 @@
 package fi.iot.iiframework.errors.service;
 
 import fi.iot.iiframework.application.TestConfig;
+import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import java.util.Date;
@@ -50,9 +51,9 @@ public class ErrorServiceTest {
 
     @Before
     public void setUp() {
-        e1 = new SysError(ErrorType.TEST_ERROR, new Date(), "aaaa");
-        e2 = new SysError(ErrorType.TEST_ERROR, new Date(), "bbbbbbbbbb 31231");
-        e3 = new SysError(ErrorType.TEST_ERROR, new Date(), "cccc cccc");
+        e1 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "aaaa");
+        e2 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "bbbbbbbbbb 31231");
+        e3 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "cccc cccc");
         es.save(e1);
         es.save(e2);
         es.save(e3);
@@ -73,7 +74,7 @@ public class ErrorServiceTest {
             if (e.getDescription().equals("bbbbbbbbbb 31231")) {
                 found = true;
             }
-            
+
             calc++;
         }
         assertTrue("Could not find searched error message, "

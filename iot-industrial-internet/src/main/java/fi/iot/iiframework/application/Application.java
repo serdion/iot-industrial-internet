@@ -6,8 +6,8 @@
  */
 package fi.iot.iiframework.application;
 
-
 import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
@@ -55,11 +55,9 @@ public class Application {
         infSourceConfiguration2.setUrl("updated url");
         infSourceManager.updateSource(infSourceConfiguration2.getId(), infSourceConfiguration2);
         System.out.println(infSourceManager.getAllSourceConfigsFromDB().get(0).getUrl());
-        
-        SysError e = new SysError(ErrorType.TEST_ERROR, new Date(), "This is a test error");
+
+        SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
         ErrorLogger.newError(e);
-        
-        
 
     }
 
