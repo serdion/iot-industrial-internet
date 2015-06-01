@@ -7,9 +7,9 @@
 
 var configurations = angular.module('configurations', ['ngResource']);
 
-configurations.factory('DsConfiguration', ['$resource',
+configurations.factory('InformationSourceConfiguration', ['$resource',
   function ($resource) {
-    return $resource('1.0/configurations/datasources/:configid/:action', {}, {
+    return $resource('1.0/configurations/infortionsources/:configid/:action', {}, {
       get: {method: 'GET', params: {action: 'view'}},
       query: {method: 'GET', params: {action: 'list'}},
       save: {method: 'POST', params: {action: 'add'}}
