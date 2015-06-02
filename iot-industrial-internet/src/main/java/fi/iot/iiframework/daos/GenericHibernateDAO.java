@@ -44,7 +44,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
      * @return 
      */
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteria(Criterion... criterion) {
+    protected List<T> findByCriteria(List<Criterion> criterion) {
+        
         return findByCriteriaFromTo(0, Integer.MAX_VALUE, criterion);
     }
     
@@ -56,7 +57,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
      * @return 
      */
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteriaFromTo(int from, int to, Criterion... criterion) {
+    @Override
+    public List<T> findByCriteriaFromTo(int from, int to, List<Criterion> criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setFirstResult(from)
                 .setMaxResults((to + 1) - from);
@@ -86,7 +88,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
      */
     @Override
     public List<T> getAll() {
-        return findByCriteria();
+        return findByCriteria(new ArrayList<>());
     }
     
     /**
@@ -97,8 +99,10 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
      */
     @Override
     public List<T> get(int from, int to) {
-        return findByCriteriaFromTo(from, to);
+        return findByCriteriaFromTo(from, to, new ArrayList<>());
     }
+    
+    
 
     /**
      * Removes an object from the database.

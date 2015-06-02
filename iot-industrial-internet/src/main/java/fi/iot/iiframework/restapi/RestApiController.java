@@ -10,13 +10,12 @@ import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.dataobject.*;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.errors.service.ErrorService;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
-import fi.iot.iiframework.services.dataobject.DeviceService;
-import fi.iot.iiframework.services.dataobject.ReadoutService;
-import fi.iot.iiframework.services.dataobject.SensorService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
+import fi.iot.iiframework.services.domain.DeviceService;
+import fi.iot.iiframework.services.domain.ReadoutService;
+import fi.iot.iiframework.services.domain.SensorService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.*;
@@ -29,7 +28,12 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @RestController
 @RequestMapping("1.0")
 public class RestApiController {
-    
+
+    @Autowired
+    private InformationSourceObjectService datasourceservice;
+
+    @Autowired
+    private DeviceService deviceservice;
 
     @Autowired
     private ReadoutService readoutservice;

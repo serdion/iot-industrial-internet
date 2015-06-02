@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.dataobject;
+package fi.iot.iiframework.domain;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

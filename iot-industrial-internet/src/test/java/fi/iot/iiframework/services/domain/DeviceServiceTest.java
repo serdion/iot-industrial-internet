@@ -4,14 +4,12 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.services.dataobject.DeviceService;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Device;
 import java.util.List;
-import java.util.UUID;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -34,28 +32,39 @@ public class DeviceServiceTest {
 
     Device d1;
     Device d2;
+    Device d3;
 
     @Autowired
     private DeviceService service;
 
     @Before
     public void setUp() {
-        dso1 = DataObjectProvider.provideDataObject();
-        dso2 = DataObjectProvider.provideDataObject();
+        dso1 = InformationSourceObjectProvider.provideDataObject();
+        dso2 = InformationSourceObjectProvider.provideDataObject();
 
-        d1 = DataObjectProvider.provideDevice();
-        d2 = DataObjectProvider.provideDevice();
+        d1 = InformationSourceObjectProvider.provideDevice();
+        d2 = InformationSourceObjectProvider.provideDevice();
+        d3 = InformationSourceObjectProvider.provideDevice();
+        
         d1.setSource(dso1);
-        d2.setSource(dso2);
+        d2.setSource(dso1);
+        d3.setSource(dso2);
         
         service.save(d1);
         service.save(d2);
+        service.save(d3);
     }
 
     @Test
     public void devicesCanBeFoundByDataSourceObject() {
         List<Device> devices = service.getBy(dso1);
         assertTrue(devices.contains(d1));
+        assertTrue(devices.contains(d2));
+        assertFalse(devices.contains(d3));
+        
+        devices = service.getBy(dso2);
+        assertTrue(devices.contains(d3));
+        assertFalse(devices.contains(d1));
         assertFalse(devices.contains(d2));
     }
 }

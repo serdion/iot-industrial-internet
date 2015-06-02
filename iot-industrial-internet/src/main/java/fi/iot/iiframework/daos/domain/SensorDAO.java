@@ -4,14 +4,17 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.daos.domain;
 
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Sensor;
-import fi.iot.iiframework.services.GenericService;
+import fi.iot.iiframework.daos.GenericDAO;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 
-public interface SensorService extends GenericService<Sensor, Long> {
+/**
+ * DAO for Sensor
+ */
+public interface SensorDAO extends GenericDAO<Sensor, Long> {
 
     public List<Sensor> getBy(Device device);
 

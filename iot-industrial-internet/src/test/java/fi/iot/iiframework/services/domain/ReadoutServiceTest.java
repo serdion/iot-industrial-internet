@@ -4,13 +4,13 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Before;
@@ -41,19 +41,19 @@ public class ReadoutServiceTest {
 
     @Before
     public void setUp() {
-        DataSourceObject dso = DataObjectProvider.provideDataObject();
+        DataSourceObject dso = InformationSourceObjectProvider.provideDataObject();
 
-        Device dev = DataObjectProvider.provideDevice();
+        Device dev = InformationSourceObjectProvider.provideDevice();
         dev.setSource(dso);
 
-        s1 = DataObjectProvider.provideSensor();
-        s2 = DataObjectProvider.provideSensor();
+        s1 = InformationSourceObjectProvider.provideSensor();
+        s2 = InformationSourceObjectProvider.provideSensor();
         s1.setDevice(dev);
         s2.setDevice(dev);
 
-        r1 = DataObjectProvider.provideReadout();
-        r2 = DataObjectProvider.provideReadout();
-        r3 = DataObjectProvider.provideReadout();
+        r1 = InformationSourceObjectProvider.provideReadout();
+        r2 = InformationSourceObjectProvider.provideReadout();
+        r3 = InformationSourceObjectProvider.provideReadout();
         r1.setSensor(s1);
         r2.setSensor(s1);
         r3.setSensor(s2);

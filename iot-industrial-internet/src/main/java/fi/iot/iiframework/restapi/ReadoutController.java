@@ -7,12 +7,12 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.services.dataobject.ReadoutService;
-import fi.iot.iiframework.services.dataobject.SensorService;
+import fi.iot.iiframework.services.domain.ReadoutService;
+import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.criterion.Criterion;

@@ -4,11 +4,11 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.daos.dataobject;
+package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 
 /**

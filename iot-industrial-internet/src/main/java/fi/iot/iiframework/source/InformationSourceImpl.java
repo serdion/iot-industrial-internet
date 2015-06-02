@@ -6,10 +6,10 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Timer;
@@ -38,9 +38,9 @@ public class InformationSourceImpl implements InformationSource {
 
     private Timer scheduler;
     @Autowired
-    private DataSourceObjectService service;
+    private InformationSourceObjectService service;
 
-    public InformationSourceImpl(InformationSourceConfiguration config, DataSourceObjectService service) {
+    public InformationSourceImpl(InformationSourceConfiguration config, InformationSourceObjectService service) {
         this.config = config;
         this.service = service;
         createReader();

@@ -7,11 +7,11 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Header;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Header;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InformationSourceController {
 
     @Autowired
-    private DataSourceObjectService datasourceservice;
+    private InformationSourceObjectService informtionSourceService;
 
     @Autowired
     private ApplicationSettings settings;
@@ -39,7 +39,7 @@ public class InformationSourceController {
     public List<DataSourceObject> listDatasources(
             @RequestParam(required = false) Map<String, String> params
     ) {
-        return datasourceservice.get(0, settings.getDefaultAmountOfDataSourcesRetrievedFromDatabase());
+        return informtionSourceService.get(0, settings.getDefaultAmountOfDataSourcesRetrievedFromDatabase());
     }
 
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
@@ -49,7 +49,7 @@ public class InformationSourceController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(0, amount);
-        return datasourceservice.get(0, amount);
+        return informtionSourceService.get(0, amount);
     }
 
     @RequestMapping(value = "/list/{from}/{to}", produces = "application/json")
@@ -60,7 +60,7 @@ public class InformationSourceController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(to, from);
-        return datasourceservice.get(to, from);
+        return informtionSourceService.get(to, from);
     }
 
     @RequestMapping(value = "/{datasourceid}/view", produces = "application/json")
@@ -69,7 +69,7 @@ public class InformationSourceController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (DataSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        return (DataSourceObject) helper.returnOrException(informtionSourceService.get(datasourceid));
     }
 
     @RequestMapping(value = "/{datasourceid}/header", produces = "application/json")
@@ -77,7 +77,7 @@ public class InformationSourceController {
     public Header getDatasourceHeader(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params) throws ResourceNotFoundException {
-        return (Header) helper.returnOrException(datasourceservice.get(datasourceid).getHeader());
+        return (Header) helper.returnOrException(informtionSourceService.get(datasourceid).getHeader());
     }
 
 }

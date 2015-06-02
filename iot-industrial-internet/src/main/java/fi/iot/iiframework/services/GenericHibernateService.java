@@ -10,6 +10,7 @@ import fi.iot.iiframework.daos.GenericDAO;
 import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.hibernate.criterion.Criterion;
 
 @Transactional
 public class GenericHibernateService<T, ID extends Serializable>
@@ -40,6 +41,11 @@ public class GenericHibernateService<T, ID extends Serializable>
     @Override
     public List<T> getAll() {
         return dao.getAll();
+    }
+
+    @Override
+    public List<T> getBy(int from, int to, List<Criterion> criterion) {
+        return dao.findByCriteriaFromTo(from, to, criterion);
     }
 
 }
