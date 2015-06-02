@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.domain.Validatable;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;

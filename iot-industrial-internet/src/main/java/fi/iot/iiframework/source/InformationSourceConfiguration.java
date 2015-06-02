@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.restapi.Validatable;
+import fi.iot.iiframework.domain.Validatable;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
