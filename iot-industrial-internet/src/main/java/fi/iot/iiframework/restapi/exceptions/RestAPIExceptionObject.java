@@ -4,11 +4,11 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.restapi;
+package fi.iot.iiframework.restapi.exceptions;
 
 import fi.iot.iiframework.errors.ErrorType;
 
-public class RestAPIError {
+public class RestAPIExceptionObject {
 
     protected ErrorType type;
 
@@ -17,7 +17,7 @@ public class RestAPIError {
     /**
      * Defines the object that is returned from RestAPI in case of an error.
      */
-    public RestAPIError() {
+    public RestAPIExceptionObject() {
         setType(ErrorType.UNKNOWN_ERROR);
         setMessage("Unknown error has occured.");
     }
@@ -28,7 +28,7 @@ public class RestAPIError {
      * @param type Type of the error
      * @param message Message included in the error
      */
-    public RestAPIError(ErrorType type, String message) {
+    public RestAPIExceptionObject(ErrorType type, String message) {
         this.type = type;
         this.message = message;
     }
