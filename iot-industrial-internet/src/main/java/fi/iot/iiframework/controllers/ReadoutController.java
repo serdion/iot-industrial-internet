@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.controllers;
 
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
@@ -41,7 +41,7 @@ public class ReadoutController {
 
         ViewUtils.addViewParamsToModel(model, params);
 
-        List<DataSourceObject> datasources = service.getAll();
+        List<InformationSourceObject> datasources = service.getAll();
 
         Set<Device> devices = datasources.get(0).getDevices();
 

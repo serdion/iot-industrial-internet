@@ -6,30 +6,46 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.Application;
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.application.TestConfig;
-import static org.junit.Assert.assertTrue;
-import org.junit.Ignore;
+import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import static org.junit.Assert.*;
+import org.junit.Ignore;
 
-@SpringApplicationConfiguration(classes = {TestConfig.class})
-@RunWith(SpringJUnit4ClassRunner.class)
 @Ignore
-public class RestApiControllerTest {
+public class RestAPIHelperTest {
+    
+    private int maxObjects;
+    private RestAPIHelper helper;
+    
+    public RestAPIHelperTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+        ApplicationSettings settings = new ApplicationSettings();
+        maxObjects = settings.getMaxObjectsRetrievedFromDatabase();
+        helper = new RestAPIHelper();
+    }
+    
+    @After
+    public void tearDown() {
+    }
 
-    @Autowired
-    private RestApiController api;
-    
-    @Autowired
-    private ApplicationSettings settings;
-    
     private boolean testLimits(int from, int to) throws InvalidParametersException{
-        api.exceptionIfWrongLimits(from, to);
+        helper.exceptionIfWrongLimits(from, to);
         
         return true;
     }
@@ -66,12 +82,13 @@ public class RestApiControllerTest {
     
     @Test(expected=InvalidParametersException.class)
     public void testExceptionIfWrongLimitsWhenTooHighAmount() throws InvalidParametersException {
-        assertTrue(testLimits(0, settings.getMaxObjectsRetrievedFromDatabase()+1));
+        assertTrue(testLimits(0, maxObjects+1));
     }
     
     @Test(expected=InvalidParametersException.class)
     public void testExceptionIfWrongLimitsWhenTooHighAmountAndAlreadyHigh() throws InvalidParametersException {
-        assertTrue(testLimits(100000, settings.getMaxObjectsRetrievedFromDatabase()+100001));
+        int amountToAdd = 100000;
+        assertTrue(testLimits(amountToAdd, maxObjects+amountToAdd+1));
     }
     
 }

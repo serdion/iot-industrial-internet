@@ -7,7 +7,7 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,22 +24,22 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringApplicationConfiguration(classes = {TestConfig.class})
 public class InformationSourceObjectServiceTest {
 
-    DataSourceObject dso1;
-    DataSourceObject dso2;
+    InformationSourceObject dso1;
+    InformationSourceObject dso2;
 
     @Autowired
     private InformationSourceObjectService service;
 
     @Before
     public void setUp() {
-        dso1 = new DataSourceObject();
+        dso1 = new InformationSourceObject();
         dso1.setId("ssds");
     }
 
     @Test
     public void aDataSourceObjectCanBeSavedAndRetrievedFromDatabase() {
         service.save(dso1);
-        DataSourceObject dso2 = service.get(dso1.getId());
+        InformationSourceObject dso2 = service.get(dso1.getId());
         assertEquals(dso1.getId(), dso2.getId());
     }
 

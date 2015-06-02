@@ -7,7 +7,7 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
@@ -41,7 +41,7 @@ public class ReadoutServiceTest {
 
     @Before
     public void setUp() {
-        DataSourceObject dso = InformationSourceObjectProvider.provideDataObject();
+        InformationSourceObject dso = InformationSourceObjectProvider.provideDataObject();
 
         Device dev = InformationSourceObjectProvider.provideDevice();
         dev.setSource(dso);

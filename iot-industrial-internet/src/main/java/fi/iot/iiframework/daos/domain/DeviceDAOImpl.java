@@ -7,7 +7,7 @@
 package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericHibernateDAO;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +28,12 @@ public class DeviceDAOImpl
     }
 
     @Override
-    public List<Device> getBy(DataSourceObject dso) {
+    public List<Device> getBy(InformationSourceObject dso) {
         return getBy(0, Integer.MAX_VALUE, dso);
     }
 
     @Override
-    public List<Device> getBy(int from, int to, DataSourceObject dso) {
+    public List<Device> getBy(int from, int to, InformationSourceObject dso) {
         List<Criterion> criterion = new ArrayList<>();
         criterion.add(Restrictions.eq("source", dso));
         return findByCriteriaFromTo(from, to, criterion);
