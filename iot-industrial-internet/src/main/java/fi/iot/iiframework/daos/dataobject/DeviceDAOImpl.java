@@ -22,6 +22,7 @@ public class DeviceDAOImpl
     public DeviceDAOImpl() {
         super();
         defaultOrder.add(Order.asc("source"));
+        defaultOrder.add(Order.asc("id"));
     }
 
     @Override
@@ -32,7 +33,8 @@ public class DeviceDAOImpl
     @Override
     public List<Device> getBy(int from, int to, DataSourceObject dso) {
         return findByCriteriaFromTo(from, to,
-                Restrictions.eq("source", dso));
+                Restrictions.eq("source", dso)
+        );
     }
 
 }
