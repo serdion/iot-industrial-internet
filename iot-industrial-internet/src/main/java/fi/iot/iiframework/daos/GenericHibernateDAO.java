@@ -82,9 +82,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
         criterion.stream().forEach((c) -> {
             crit.add(c);
         });
-        defaultOrder.stream().forEach(c -> {
-            crit.addOrder(c);
-        });
         return (int) crit.uniqueResult();
     }
 
