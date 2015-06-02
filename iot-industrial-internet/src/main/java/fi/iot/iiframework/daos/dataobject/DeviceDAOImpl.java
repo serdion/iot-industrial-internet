@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class DeviceDAOImpl
-        extends GenericHibernateDAO<Device, String>
+        extends GenericHibernateDAO<Device, Long>
         implements DeviceDAO {
 
     public DeviceDAOImpl() {

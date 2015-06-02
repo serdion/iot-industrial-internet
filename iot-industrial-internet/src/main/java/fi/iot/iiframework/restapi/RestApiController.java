@@ -161,7 +161,7 @@ public class RestApiController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (Device) returnOrException(deviceservice.get(deviceid));
+        return (Device) returnOrException(deviceservice.get(Long.parseLong(deviceid)));
     }
 
     @RequestMapping(value = "/sensors/{sensorid}/view", produces = "application/json")
@@ -170,7 +170,7 @@ public class RestApiController {
             @PathVariable String sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (Sensor) returnOrException(sensorservice.get(sensorid));
+        return (Sensor) returnOrException(sensorservice.get(Long.parseLong(sensorid)));
     }
 
     @RequestMapping(value = "/sensors/{deviceid}/list", produces = "application/json")
@@ -179,7 +179,7 @@ public class RestApiController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        Device device = (Device) returnOrException(deviceservice.get(deviceid));
+        Device device = (Device) returnOrException(deviceservice.get(Long.parseLong(deviceid)));
         return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), device);
     }
 
@@ -190,7 +190,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
-        Device device = (Device) returnOrException(deviceservice.get(deviceid));
+        Device device = (Device) returnOrException(deviceservice.get(Long.parseLong(deviceid)));
         exceptionIfWrongLimits(0, amount);
         return sensorservice.getBy(0, amount, device);
     }
@@ -203,7 +203,7 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        Device device = (Device) returnOrException(deviceservice.get(deviceid));
+        Device device = (Device) returnOrException(deviceservice.get(Long.parseLong(deviceid)));
         exceptionIfWrongLimits(to, from);
         return sensorservice.getBy(from, to, device);
     }
@@ -214,7 +214,7 @@ public class RestApiController {
             @PathVariable String sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
+        Sensor sensor = (Sensor) returnOrException(sensorservice.get(Long.parseLong(sensorid)));
         return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), sensor);
     }
 
@@ -225,7 +225,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
-        Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
+        Sensor sensor = (Sensor) returnOrException(sensorservice.get(Long.parseLong(sensorid)));
         exceptionIfWrongLimits(0, amount);
 
         List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
@@ -241,7 +241,7 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        Sensor sensor = (Sensor) returnOrException(sensorservice.get(sensorid));
+        Sensor sensor = (Sensor) returnOrException(sensorservice.get(Long.parseLong(sensorid)));
         exceptionIfWrongLimits(from, to);
         return readoutservice.getBy(from, to, sensor);
     }
