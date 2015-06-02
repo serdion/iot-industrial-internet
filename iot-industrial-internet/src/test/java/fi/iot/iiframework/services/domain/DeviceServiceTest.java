@@ -9,8 +9,6 @@ package fi.iot.iiframework.services.domain;
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.domain.Device;
-import fi.iot.iiframework.services.dataobject.DeviceService;
-import fi.iot.iiframework.services.dataobject.DeviceService;
 import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -41,12 +39,12 @@ public class DeviceServiceTest {
 
     @Before
     public void setUp() {
-        dso1 = DataObjectProvider.provideDataObject();
-        dso2 = DataObjectProvider.provideDataObject();
+        dso1 = InformationSourceObjectProvider.provideDataObject();
+        dso2 = InformationSourceObjectProvider.provideDataObject();
 
-        d1 = DataObjectProvider.provideDevice();
-        d2 = DataObjectProvider.provideDevice();
-        d3 = DataObjectProvider.provideDevice();
+        d1 = InformationSourceObjectProvider.provideDevice();
+        d2 = InformationSourceObjectProvider.provideDevice();
+        d3 = InformationSourceObjectProvider.provideDevice();
         
         d1.setSource(dso1);
         d2.setSource(dso1);

@@ -4,14 +4,18 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.daos.domain;
 
+import fi.iot.iiframework.daos.GenericDAO;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
-public interface ReadoutService extends GenericService<Readout, Long> {
+/**
+ * DAO for Readout
+ */
+public interface ReadoutDAO extends GenericDAO<Readout, Long> {
     public List<Readout> getBy(Sensor sensor);
     public List<Readout> getBy(int from, int to, Sensor sensor);
+    public List<Readout> getBy(int amount, Sensor sensor);
 }

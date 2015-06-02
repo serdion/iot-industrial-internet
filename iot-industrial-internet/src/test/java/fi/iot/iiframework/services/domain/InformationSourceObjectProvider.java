@@ -20,7 +20,7 @@ import java.util.UUID;
  *
  * @author atte
  */
-public class DataObjectProvider {
+public class InformationSourceObjectProvider {
 
     public static DataSourceObject provideDataObject() {
         java.util.Locale.setDefault(Locale.ENGLISH);
