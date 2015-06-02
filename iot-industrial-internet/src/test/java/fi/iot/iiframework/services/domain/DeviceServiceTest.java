@@ -4,14 +4,14 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.services.dataobject.DeviceService;
+import fi.iot.iiframework.services.dataobject.DeviceService;
 import java.util.List;
-import java.util.UUID;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
