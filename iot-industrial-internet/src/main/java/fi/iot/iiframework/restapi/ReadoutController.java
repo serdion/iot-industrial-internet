@@ -16,6 +16,7 @@ import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +50,7 @@ public class ReadoutController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
-        return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), sensor);
+        return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), createCriterion(sensor, params));
     }
 
     @RequestMapping(value = "/{sensorid}/list/{amount}", produces = "application/json")
@@ -62,9 +63,9 @@ public class ReadoutController {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
         helper.exceptionIfWrongLimits(0, amount);
 
-        List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
-
-        return readoutservice.getBy(0, amount, sensor);
+        
+        
+        return readoutservice.getBy(0, amount, createCriterion(sensor, params));
     }
 
     @RequestMapping(value = "/{sensorid}/list/{from}/{to}", produces = "application/json")
@@ -77,7 +78,7 @@ public class ReadoutController {
     ) throws InvalidParametersException, ResourceNotFoundException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
         helper.exceptionIfWrongLimits(from, to);
-        return readoutservice.getBy(from, to, sensor);
+        return readoutservice.getBy(from, to, createCriterion(sensor, params));
     }
 
     @RequestMapping(value = "/{readoutid}/view", produces = "application/json")
@@ -87,5 +88,11 @@ public class ReadoutController {
             @RequestParam(required = false) Map<String, String> params
     ) {
         return readoutservice.get(readoutid);
+    }
+    
+    private List<Criterion> createCriterion(Sensor sensor, Map<String, String> params){
+        List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
+        readoutCriterion.add(Restrictions.eq("sensor", sensor));
+        return readoutCriterion;
     }
 }
