@@ -34,4 +34,5 @@ public class IndexController {
         ViewUtils.addViewParamsToModel(model, params);
         return "ng";
     }
+    
 }
