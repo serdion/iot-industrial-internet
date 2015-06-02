@@ -6,10 +6,10 @@
  */
 package fi.iot.iiframework.xmltodataobject;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import static fi.iot.iiframework.xmltodataobject.XmlToObject.convertXml;
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.services.dataobject;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.services.GenericService;
 
 public interface DataSourceObjectService 
