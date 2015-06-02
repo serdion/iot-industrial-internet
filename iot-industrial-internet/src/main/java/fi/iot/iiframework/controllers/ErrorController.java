@@ -39,6 +39,8 @@ public class ErrorController {
                     + error.getSeverity() + " " + error.getDescription() + " " + error.getTime());
 
         }
+        model.addAllAttributes(errors);
+        
 
         params.setContent(print.toString());
 
