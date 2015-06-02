@@ -35,10 +35,4 @@ public interface SensorService extends GenericService<Sensor, Long> {
      * @return 
      */
     public int countBy(Device dev);
-    
-    /**
-     * Returns number of sensors
-     * @return 
-     */
-    public int count();
 }

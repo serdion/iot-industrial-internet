@@ -63,21 +63,21 @@ public class InformationSourceController {
         return informtionSourceService.get(to, from);
     }
 
-    @RequestMapping(value = "/{datasourceid}/view", produces = "application/json")
+    @RequestMapping(value = "/{informationsourceid}/view", produces = "application/json")
     @ResponseBody
     public InformationSourceObject getDatasource(
-            @PathVariable String datasourceid,
+            @PathVariable String informationsourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (InformationSourceObject) helper.returnOrException(informtionSourceService.get(datasourceid));
+        return (InformationSourceObject) helper.returnOrException(informtionSourceService.get(informationsourceid));
     }
 
-    @RequestMapping(value = "/{datasourceid}/header", produces = "application/json")
+    @RequestMapping(value = "/{informationsourceid}/header", produces = "application/json")
     @ResponseBody
     public Header getDatasourceHeader(
-            @PathVariable String datasourceid,
+            @PathVariable String informationsourceid,
             @RequestParam(required = false) Map<String, String> params) throws ResourceNotFoundException {
-        return (Header) helper.returnOrException(informtionSourceService.get(datasourceid).getHeader());
+        return (Header) helper.returnOrException(informtionSourceService.get(informationsourceid).getHeader());
     }
 
 }

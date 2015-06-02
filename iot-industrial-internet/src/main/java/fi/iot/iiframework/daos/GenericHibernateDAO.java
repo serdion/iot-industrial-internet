@@ -75,14 +75,12 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public int countByCriteria(List<Criterion> criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setProjection(Projections.rowCount());
         criterion.stream().forEach((c) -> {
             crit.add(c);
-        });
-        defaultOrder.stream().forEach(c -> {
-            crit.addOrder(c);
         });
         return (int) crit.uniqueResult();
     }

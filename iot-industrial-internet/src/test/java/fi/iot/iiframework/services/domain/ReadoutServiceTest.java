@@ -107,5 +107,10 @@ public class ReadoutServiceTest {
         List<Readout> readReadouts = service.getBy(s1);
         assertFalse(readReadouts.contains(r3));
     }
+    
+    @Test
+    public void readoutsCanBeCounted() {
+//        assertEquals(3, service.)
+    }
 
 }

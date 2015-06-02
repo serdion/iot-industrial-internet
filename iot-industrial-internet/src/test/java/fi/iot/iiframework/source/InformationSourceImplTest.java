@@ -13,12 +13,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class InformationSourceImplTest {
-
+    
     private InformationSourceImpl impl;
     private InformationSourceConfiguration config;
     private InformationSourceReader reader;
     private InformationSourceObjectService service;
-
+    
 
     @Before
     public void setUp() {
@@ -29,7 +29,7 @@ public class InformationSourceImplTest {
         config.type = InformationSourceType.XML;
         config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
         impl = new InformationSourceImpl(config, service);
-
+        
     }
 
     @Test

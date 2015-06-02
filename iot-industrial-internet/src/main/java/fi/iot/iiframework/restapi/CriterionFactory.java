@@ -31,8 +31,11 @@ public class CriterionFactory {
         acceptedReadoutFilters.put("unit", new Equals("unit"));
         acceptedReadoutFilters.put("quantity", new Equals("quantity"));
 
-        acceptedReadoutFilters.put("moretthan", new MoreThan("value"));
+        acceptedReadoutFilters.put("morethan", new MoreThan("value"));
         acceptedReadoutFilters.put("lessthan", new LessThan("value"));
+        
+        acceptedReadoutFilters.put("more", new MoreThan("value"));
+        acceptedReadoutFilters.put("less", new LessThan("value"));
 
         acceptedReadoutFilters.put("after", new After("time"));
         acceptedReadoutFilters.put("before", new Before("time"));
@@ -42,15 +45,20 @@ public class CriterionFactory {
         ArrayList<Criterion> crits = new ArrayList<>();
 
         for (Map.Entry<String, String> entrySet : params.entrySet()) {
-            String key = entrySet.getKey();
+            String name = entrySet.getKey();
             String value = entrySet.getValue();
 
-            ReadoutFilter readoutFilter = acceptedReadoutFilters.get(key);
-
             try {
-                crits.add(readoutFilter.createCriterion(value));
+                ReadoutFilter readoutFilter = acceptedReadoutFilters.get(name);
+                Criterion criterion = readoutFilter.createCriterion(value);
+
+                if(criterion!=null){
+                    crits.add(criterion);
+                }
             } catch (ArrayIndexOutOfBoundsException exp) {
                 ErrorLogger.newError(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
+            } catch (NullPointerException exp){
+                // No filters
             }
         }
 

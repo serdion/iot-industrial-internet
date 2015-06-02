@@ -38,37 +38,37 @@ public class DeviceController {
     @Autowired
     private InformationSourceObjectService datasourceservice;
     
-    @RequestMapping(value = "/{datasourceid}/list", produces = "application/json")
+    @RequestMapping(value = "/{informationsourceid}/list", produces = "application/json")
     @ResponseBody
     public List<Device> listDevices(
-            @PathVariable String datasourceid,
+            @PathVariable String informationsourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(informationsourceid));
         return deviceservice.getBy(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase(), source);
     }
 
-    @RequestMapping(value = "/{datasourceid}/list/{amount}", produces = "application/json")
+    @RequestMapping(value = "/{informationsourceid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Device> listDevicesAmount(
-            @PathVariable String datasourceid,
+            @PathVariable String informationsourceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(informationsourceid));
         helper.exceptionIfWrongLimits(0, amount);
         return deviceservice.getBy(0, amount, source);
     }
 
-    @RequestMapping(value = "/{datasourceid}/list/{from}/{to}", produces = "application/json")
+    @RequestMapping(value = "/{informationsourceid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<Device> listDevicesFromTo(
-            @PathVariable String datasourceid,
+            @PathVariable String informationsourceid,
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(informationsourceid));
         helper.exceptionIfWrongLimits(from, to);
         return deviceservice.getBy(to, from, source);
     }
