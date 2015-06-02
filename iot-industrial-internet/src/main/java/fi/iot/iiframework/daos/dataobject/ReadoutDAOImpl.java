@@ -7,9 +7,11 @@
 package fi.iot.iiframework.daos.dataobject;
 
 import fi.iot.iiframework.daos.GenericHibernateDAO;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -32,8 +34,9 @@ public class ReadoutDAOImpl
 
     @Override
     public List<Readout> getBy(int from, int to, Sensor sensor) {
-        return findByCriteriaFromTo(from, to,
-                Restrictions.eq("sensor", sensor));
+        List<Criterion> criterion = new ArrayList<>();
+        criterion.add(Restrictions.eq("sensor", sensor));
+        return findByCriteriaFromTo(from, to, criterion);
     }
 
     @Override

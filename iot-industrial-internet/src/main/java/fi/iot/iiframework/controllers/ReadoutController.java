@@ -6,9 +6,9 @@
  */
 package fi.iot.iiframework.controllers;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;

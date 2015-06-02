@@ -6,10 +6,10 @@
  */
 package fi.iot.iiframework.services.dataobject;
 
-import fi.iot.iiframework.dataobject.Device;
+import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.daos.dataobject.DeviceDAO;
 import fi.iot.iiframework.daos.dataobject.ReadoutDAO;
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.List;
 import javax.transaction.Transactional;

@@ -7,8 +7,8 @@
 package fi.iot.iiframework.daos.dataobject;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 
 /**
