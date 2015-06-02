@@ -64,13 +64,13 @@ public class SensorServiceTest {
     }
     
     @Test
-    public void readoutsCanBeCounted() {
-        assertEquals(3, service.count());
+    public void sensorsCanBeCounted() {
+        assertEquals(2, (long) service.count());
     }
     
     @Test
-    public void readoutsCanBeCountedBySensor() {
-//        assertEquals(2, service.countBy(s1));
+    public void sensorsCanBeCountedByDevice() {
+        assertEquals(1, (long) service.countBy(d1));
     }
 
 }

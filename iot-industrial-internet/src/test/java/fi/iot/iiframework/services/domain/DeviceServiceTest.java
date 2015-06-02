@@ -10,6 +10,7 @@ import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -66,5 +67,15 @@ public class DeviceServiceTest {
         assertTrue(devices.contains(d3));
         assertFalse(devices.contains(d1));
         assertFalse(devices.contains(d2));
+    }
+    
+    @Test
+    public void devicesCanBeCounted() {
+        assertEquals(3, (long) service.count());
+    }
+    
+    @Test
+    public void devicesCanBeCountedBySource() {
+        assertEquals(2, (long) service.countBy(dso1));
     }
 }

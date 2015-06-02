@@ -43,7 +43,7 @@ public class DeviceServiceImpl
     }
     
     @Override
-    public int countBy(InformationSourceObject source) {
+    public Long countBy(InformationSourceObject source) {
         return countByCriteria(
                 buildCriterionList(Restrictions.eq("source", source))
         );

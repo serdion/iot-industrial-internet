@@ -34,5 +34,5 @@ public interface SensorService extends GenericService<Sensor, Long> {
      * @param dev
      * @return 
      */
-    public int countBy(Device dev);
+    public Long countBy(Device dev);
 }

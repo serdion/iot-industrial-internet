@@ -18,5 +18,5 @@ public interface DeviceService
 
     public List<Device> getBy(int from, int to, InformationSourceObject dso);
 
-    public int countBy(InformationSourceObject source);
+    public Long countBy(InformationSourceObject source);
 }

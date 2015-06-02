@@ -51,12 +51,12 @@ public class GenericHibernateService<T, ID extends Serializable>
     }
 
     @Override
-    public int countByCriteria(List<Criterion> criterion) {
+    public Long countByCriteria(List<Criterion> criterion) {
         return dao.countByCriteria(criterion);
     }
 
     @Override
-    public int count() {
+    public Long count() {
         return countByCriteria(new ArrayList<>());
     }
     
