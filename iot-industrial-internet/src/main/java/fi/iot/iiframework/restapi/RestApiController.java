@@ -361,57 +361,6 @@ public class RestApiController {
         return informationsourceservice.get(to, from);
     }
 
-    /**
-     * Catches ResourceNotFoundExceptions created by RestAPI and notifies the
-     * user with RestAPIError object that contains an ErrorType and a message.
-     *
-     * @return ResponseEntity with RestAPIError object
-     */
-    @RequestMapping(value = "/error/resourcenotfound", produces = "application/json")
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseBody
-    public ResponseEntity<RestAPIError> resourceNotFoundException() {
-        return new ResponseEntity<>(
-                new RestAPIError(
-                        ErrorType.NOT_FOUND,
-                        "The object you tried to retrieve could not be found."
-                ), HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     * Catches InvalidParametersException created by RestAPI and notifies the
-     * user with RestAPIError object that contains an ErrorType and a message.
-     *
-     * @return ResponseEntity with RestAPIError object
-     */
-    @RequestMapping(value = "/error/invalidparameters", produces = "application/json")
-    @ExceptionHandler(InvalidParametersException.class)
-    @ResponseBody
-    public ResponseEntity<RestAPIError> invalidParametersException() {
-        return new ResponseEntity<>(
-                new RestAPIError(
-                        ErrorType.BAD_REQUEST,
-                        "Invalid parameters found in your request."
-                ), HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Catches InvalidParametersException created by RestAPI and notifies the
-     * user with RestAPIError object that contains an ErrorType and a message.
-     *
-     * @return ResponseEntity with RestAPIError object
-     */
-    @RequestMapping(value = "/error/invalidobject", produces = "application/json")
-    @ExceptionHandler(InvalidObjectException.class)
-    @ResponseBody
-    public ResponseEntity<RestAPIError> invalidObjectException() {
-        return new ResponseEntity<>(
-                new RestAPIError(
-                        ErrorType.INVALID_OBJECT,
-                        "Object was invalid or wrong type."
-                ), HttpStatus.NOT_ACCEPTABLE);
-    }
-
     /*
      * {from} cannot be negative
      * {to} cannot be negative
