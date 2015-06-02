@@ -24,4 +24,6 @@ public interface GenericService<T, ID extends Serializable> {
     public List<T> getAll();
     
     public int countByCriteria(List<Criterion> criterion);
+    
+    public int count();
 }

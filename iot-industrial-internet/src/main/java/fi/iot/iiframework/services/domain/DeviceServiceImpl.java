@@ -14,7 +14,6 @@ import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,9 +44,9 @@ public class DeviceServiceImpl
     
     @Override
     public int countBy(InformationSourceObject source) {
-        List<Criterion> criterion = new ArrayList<>();
-        criterion.add(Restrictions.eq("source", source));
-        return countByCriteria(criterion);
+        return countByCriteria(
+                buildCriterionList(Restrictions.eq("source", source))
+        );
     }
 
 }

@@ -45,14 +45,9 @@ public class SensorServiceImpl
 
     @Override
     public int countBy(Device device) {
-        List<Criterion> criterion = new ArrayList<>();
-        criterion.add(Restrictions.eq("device", device));
-        return sensorDAO.countByCriteria(criterion);
-    }
-
-    @Override
-    public int count() {
-        return sensorDAO.countByCriteria(new ArrayList<>());
+        return sensorDAO.countByCriteria(
+                buildCriterionList(Restrictions.eq("device", device))
+        );
     }
 
 }
