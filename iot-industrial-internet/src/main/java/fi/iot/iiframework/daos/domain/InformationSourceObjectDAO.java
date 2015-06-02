@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.daos.dataobject;
+package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericDAO;
 import fi.iot.iiframework.domain.DataSourceObject;
@@ -12,6 +12,6 @@ import fi.iot.iiframework.domain.DataSourceObject;
 /**
  * DAO for DataSourceObject
  */
-public interface DataSourceObjectDAO extends GenericDAO<DataSourceObject, String>{
+public interface InformationSourceObjectDAO extends GenericDAO<DataSourceObject, String>{
 
 }

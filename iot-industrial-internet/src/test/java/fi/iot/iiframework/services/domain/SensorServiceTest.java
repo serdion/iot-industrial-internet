@@ -10,7 +10,6 @@ import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.services.dataobject.SensorService;
 import java.util.List;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -40,15 +39,15 @@ public class SensorServiceTest {
 
     @Before
     public void setUp() {
-        DataSourceObject dso = DataObjectProvider.provideDataObject();
+        DataSourceObject dso = InformationSourceObjectProvider.provideDataObject();
 
-        d1 = DataObjectProvider.provideDevice();
-        d2 = DataObjectProvider.provideDevice();
+        d1 = InformationSourceObjectProvider.provideDevice();
+        d2 = InformationSourceObjectProvider.provideDevice();
         d1.setSource(dso);
         d2.setSource(dso);
 
-        s1 = DataObjectProvider.provideSensor();
-        s2 = DataObjectProvider.provideSensor();
+        s1 = InformationSourceObjectProvider.provideSensor();
+        s2 = InformationSourceObjectProvider.provideSensor();
         s1.setDevice(d1);
         s2.setDevice(d2);
 

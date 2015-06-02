@@ -40,6 +40,6 @@ IIFramework.config(function ($routeProvider) {
                 templateUrl: 'ngviews/sensor.html'})
             .when('/configurations/add', {
                 controller: 'AddInformationSourceController',
-                templateUrl: 'ngviews/add_datasource.html'
+                templateUrl: 'ngviews/add_information_source.html'
             });
 });

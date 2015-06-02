@@ -9,7 +9,7 @@ package fi.iot.iiframework.controllers;
 import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ReadoutController {
     
     @Autowired
-    private DataSourceObjectService service;
+    private InformationSourceObjectService service;
 
     @RequestMapping("*")
     public String index(Model model) {
@@ -44,20 +44,20 @@ public class ReadoutController {
         List<DataSourceObject> datasources = service.getAll();
 
         Set<Device> devices = datasources.get(0).getDevices();
-        
+
         // Purkkapallo
         for (Device device : devices) {
             Set<Sensor> sensors = device.getSensors();
-            
+
             for (Sensor sensor : sensors) {
                 if(sensor.getId().equals(sensorid)){
                     model.addAttribute("sensor", sensor);
                 }
             }
-            
+
         }
-        
-        
+
+
 
         return "default";
     }
