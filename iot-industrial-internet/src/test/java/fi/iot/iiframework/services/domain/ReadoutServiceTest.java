@@ -110,7 +110,12 @@ public class ReadoutServiceTest {
     
     @Test
     public void readoutsCanBeCounted() {
-//        assertEquals(3, service.)
+        assertEquals(3, service.count());
+    }
+    
+    @Test
+    public void readoutsCanBeCountedBySensor() {
+        assertEquals(2, service.countBy(s1));
     }
 
 }

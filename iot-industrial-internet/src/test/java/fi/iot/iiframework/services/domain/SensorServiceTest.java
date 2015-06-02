@@ -11,6 +11,7 @@ import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -60,6 +61,16 @@ public class SensorServiceTest {
         List<Sensor> sensors = service.getBy(d1);
         assertTrue(sensors.contains(s1));
         assertFalse(sensors.contains(s2));
+    }
+    
+    @Test
+    public void readoutsCanBeCounted() {
+        assertEquals(3, service.count());
+    }
+    
+    @Test
+    public void readoutsCanBeCountedBySensor() {
+//        assertEquals(2, service.countBy(s1));
     }
 
 }
