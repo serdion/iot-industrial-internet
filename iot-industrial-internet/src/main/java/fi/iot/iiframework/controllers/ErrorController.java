@@ -34,19 +34,13 @@ public class ErrorController {
         params.setContent("print");
 
         List<SysError> errors = ErrorLogger.getAllErrors();
-        for (SysError error : errors) {
-            print.append("\n" + error.getType().getName() + " "
-                    + error.getSeverity() + " " + error.getDescription() + " " + error.getTime());
-
-        }
-        model.addAllAttributes(errors);
-        
+        model.addAttribute("errorlist", errors);
 
         params.setContent(print.toString());
 
         ViewUtils.addViewParamsToModel(model, params);
         params.setNavtype("loggedin");
-        return "default";
+        return "errorview";
     }
 
 }
