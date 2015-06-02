@@ -41,7 +41,7 @@ public class ReadoutServiceImpl
     }
 
     @Override
-    public int countBy(Sensor sensor) {
+    public Long countBy(Sensor sensor) {
         return countByCriteria(
                 buildCriterionList(Restrictions.eq("sensor", sensor))
         );
