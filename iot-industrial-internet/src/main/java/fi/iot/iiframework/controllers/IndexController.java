@@ -30,7 +30,7 @@ public class IndexController {
 
     @RequestMapping("/ng")
     public String ng(Model model) {
-        ViewParams params = new ViewParams("Hello world!", "Tervetuloa Springiin!");
+        ViewParams params = new ViewParams("IIFramework", "Tervetuloa Angulariin!");
         ViewUtils.addViewParamsToModel(model, params);
         return "ng";
     }
