@@ -6,9 +6,9 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.GenericService;
 
 public interface InformationSourceObjectService 
-    extends GenericService<DataSourceObject, String>{
+    extends GenericService<InformationSourceObject, String>{
 }

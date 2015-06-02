@@ -25,7 +25,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(exclude = {"devices", "header"})
 @ToString(exclude = {"devices", "header"})
-public class DataSourceObject implements Serializable {    
+public class InformationSourceObject implements Serializable {    
     @XmlAttribute
     @Id
     protected String id;

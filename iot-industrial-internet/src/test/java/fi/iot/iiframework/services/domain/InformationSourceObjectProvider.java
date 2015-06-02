@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
@@ -22,9 +22,9 @@ import java.util.UUID;
  */
 public class InformationSourceObjectProvider {
 
-    public static DataSourceObject provideDataObject() {
+    public static InformationSourceObject provideDataObject() {
         java.util.Locale.setDefault(Locale.ENGLISH);
-        DataSourceObject obj = new DataSourceObject();
+        InformationSourceObject obj = new InformationSourceObject();
 
         obj.setId(getUUID());
         obj.setDevices(new HashSet<>());

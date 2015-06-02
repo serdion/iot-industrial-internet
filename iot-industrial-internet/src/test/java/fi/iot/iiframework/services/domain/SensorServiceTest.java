@@ -7,7 +7,7 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
@@ -39,7 +39,7 @@ public class SensorServiceTest {
 
     @Before
     public void setUp() {
-        DataSourceObject dso = InformationSourceObjectProvider.provideDataObject();
+        InformationSourceObject dso = InformationSourceObjectProvider.provideDataObject();
 
         d1 = InformationSourceObjectProvider.provideDevice();
         d2 = InformationSourceObjectProvider.provideDevice();

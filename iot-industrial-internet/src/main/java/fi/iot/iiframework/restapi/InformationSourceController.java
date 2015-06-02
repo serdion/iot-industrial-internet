@@ -7,7 +7,7 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Header;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
@@ -36,7 +36,7 @@ public class InformationSourceController {
 
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> listDatasources(
+    public List<InformationSourceObject> listDatasources(
             @RequestParam(required = false) Map<String, String> params
     ) {
         return informtionSourceService.get(0, settings.getDefaultAmountOfDataSourcesRetrievedFromDatabase());
@@ -44,7 +44,7 @@ public class InformationSourceController {
 
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> listDatasourcesAmount(
+    public List<InformationSourceObject> listDatasourcesAmount(
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
@@ -54,7 +54,7 @@ public class InformationSourceController {
 
     @RequestMapping(value = "/list/{from}/{to}", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> listDatasourcesFromTo(
+    public List<InformationSourceObject> listDatasourcesFromTo(
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
@@ -65,11 +65,11 @@ public class InformationSourceController {
 
     @RequestMapping(value = "/{datasourceid}/view", produces = "application/json")
     @ResponseBody
-    public DataSourceObject getDatasource(
+    public InformationSourceObject getDatasource(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (DataSourceObject) helper.returnOrException(informtionSourceService.get(datasourceid));
+        return (InformationSourceObject) helper.returnOrException(informtionSourceService.get(datasourceid));
     }
 
     @RequestMapping(value = "/{datasourceid}/header", produces = "application/json")

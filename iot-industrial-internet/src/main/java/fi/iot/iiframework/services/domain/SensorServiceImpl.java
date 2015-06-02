@@ -40,4 +40,14 @@ public class SensorServiceImpl
         return sensorDAO.getBy(from, to, device);
     }
 
+    @Override
+    public int countBy(Device dev) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int count() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

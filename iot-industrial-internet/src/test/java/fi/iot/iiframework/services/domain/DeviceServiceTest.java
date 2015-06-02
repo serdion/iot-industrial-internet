@@ -7,7 +7,7 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import java.util.List;
 import static org.junit.Assert.assertFalse;
@@ -27,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DeviceServiceTest {
 
-    DataSourceObject dso1;
-    DataSourceObject dso2;
+    InformationSourceObject dso1;
+    InformationSourceObject dso2;
 
     Device d1;
     Device d2;

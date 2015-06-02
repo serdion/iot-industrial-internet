@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
@@ -24,7 +24,7 @@ public interface InformationSource {
      * @throws JAXBException
      * @throws MalformedURLException
      */
-    public DataSourceObject read() throws JAXBException, MalformedURLException, IOException;
+    public InformationSourceObject read() throws JAXBException, MalformedURLException, IOException;
 
     /**
      * Reads an DataSourceObject and writes it to database

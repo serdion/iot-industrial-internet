@@ -7,7 +7,7 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
@@ -44,7 +44,7 @@ public class DeviceController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        DataSourceObject source = (DataSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
         return deviceservice.getBy(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase(), source);
     }
 
@@ -55,7 +55,7 @@ public class DeviceController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        DataSourceObject source = (DataSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
         helper.exceptionIfWrongLimits(0, amount);
         return deviceservice.getBy(0, amount, source);
     }
@@ -68,7 +68,7 @@ public class DeviceController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        DataSourceObject source = (DataSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) helper.returnOrException(datasourceservice.get(datasourceid));
         helper.exceptionIfWrongLimits(from, to);
         return deviceservice.getBy(to, from, source);
     }

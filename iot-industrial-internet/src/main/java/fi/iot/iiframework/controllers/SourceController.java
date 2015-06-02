@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.controllers;
 
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.views.ViewParams;
 import fi.iot.iiframework.views.ViewUtils;
@@ -38,7 +38,7 @@ public class SourceController {
 
         ViewUtils.addViewParamsToModel(model, params);
         
-        List<DataSourceObject> datasources = service.getAll();
+        List<InformationSourceObject> datasources = service.getAll();
 
         model.addAttribute("source", datasources.get(0));
         

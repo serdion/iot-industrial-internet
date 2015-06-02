@@ -49,7 +49,7 @@ public class Device implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "source", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
-    protected DataSourceObject source;
+    protected InformationSourceObject source;
 
     public Device() {
     }
@@ -59,6 +59,6 @@ public class Device implements Serializable {
     }
 
     public void afterUnmarshal(Unmarshaller u, Object parent) {
-        this.source = (DataSourceObject) parent;
+        this.source = (InformationSourceObject) parent;
     }
 }
