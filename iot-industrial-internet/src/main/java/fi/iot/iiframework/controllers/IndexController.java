@@ -17,22 +17,11 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        ViewParams params = new ViewParams("Hello world!", "Tervetuloa Springiin!");
-
-        if (true) { // if user logged in etc...
-            params.setNavtype("loggedin");
-        }
-
-        ViewUtils.addViewParamsToModel(model, params);
-
-        return "default";
-    }
-
-    @RequestMapping("/ng")
-    public String ng(Model model) {
-        ViewParams params = new ViewParams("Hello world!", "Tervetuloa Springiin!");
+        ViewParams params = new ViewParams("Hello world!", "Tervetuloa ng-Springiin!");
         ViewUtils.addViewParamsToModel(model, params);
         return "ng";
     }
-    
+
+
+
 }

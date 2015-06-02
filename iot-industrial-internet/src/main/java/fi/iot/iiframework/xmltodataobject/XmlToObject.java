@@ -1,9 +1,9 @@
 package fi.iot.iiframework.xmltodataobject;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -24,12 +24,12 @@ public class XmlToObject {
      * @throws javax.xml.bind.JAXBException
      * @throws java.net.MalformedURLException
      */
-    public static DataSourceObject convertXml(String url) throws JAXBException, MalformedURLException, IOException {
-        DataSourceObject dso = null;
-        JAXBContext jaxbc = JAXBContext.newInstance(DataSourceObject.class, Device.class, Sensor.class, Readout.class);
+    public static InformationSourceObject convertXml(String url) throws JAXBException, MalformedURLException, IOException {
+        InformationSourceObject dso = null;
+        JAXBContext jaxbc = JAXBContext.newInstance(InformationSourceObject.class, Device.class, Sensor.class, Readout.class);
         Unmarshaller marshaller = jaxbc.createUnmarshaller();
         InputStream input = new URL(url).openStream();
-        dso = (DataSourceObject) marshaller.unmarshal(input);
+        dso = (InformationSourceObject) marshaller.unmarshal(input);
 
         return dso;
     }

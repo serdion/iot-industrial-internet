@@ -6,10 +6,10 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Timer;
@@ -38,9 +38,9 @@ public class InformationSourceImpl implements InformationSource {
 
     private Timer scheduler;
     @Autowired
-    private DataSourceObjectService service;
+    private InformationSourceObjectService service;
 
-    public InformationSourceImpl(InformationSourceConfiguration config, DataSourceObjectService service) {
+    public InformationSourceImpl(InformationSourceConfiguration config, InformationSourceObjectService service) {
         this.config = config;
         this.service = service;
         createReader();
@@ -86,13 +86,13 @@ public class InformationSourceImpl implements InformationSource {
 
     @Override
     public void readAndWrite() throws JAXBException, MalformedURLException, IOException {
-        DataSourceObject dso = read();
+        InformationSourceObject dso = read();
         service.save(dso);
     }
 
     @Override
-    public DataSourceObject read() throws JAXBException, MalformedURLException, IOException {
-        DataSourceObject dobj = reader.read();
+    public InformationSourceObject read() throws JAXBException, MalformedURLException, IOException {
+        InformationSourceObject dobj = reader.read();
         return dobj;
     }
 

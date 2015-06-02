@@ -6,10 +6,10 @@
  */
 package fi.iot.iiframework.xmltodataobject;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import static fi.iot.iiframework.xmltodataobject.XmlToObject.convertXml;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -25,7 +25,7 @@ import org.junit.rules.ExpectedException;
 
 public class XmlToObjectTest {
 
-    static DataSourceObject data;
+    static InformationSourceObject data;
 
     public XmlToObjectTest() {
     }
@@ -95,7 +95,7 @@ public class XmlToObjectTest {
     @Test
     public void malformedUrlThrown() throws JAXBException, MalformedURLException, IOException {
         exception.expect(MalformedURLException.class);
-        DataSourceObject malformed = convertXml("h://ptpihlaj.users.cs.helsinki.fi/test.xml");
+        InformationSourceObject malformed = convertXml("h://ptpihlaj.users.cs.helsinki.fi/test.xml");
 
     }
 

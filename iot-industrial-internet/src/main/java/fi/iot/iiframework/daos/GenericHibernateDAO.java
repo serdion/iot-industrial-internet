@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -40,40 +41,55 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 
     /**
      * Read all objects that fulfill the criteria
+     *
      * @param criterion
-     * @return 
+     * @return
      */
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteria(Criterion... criterion) {
+    protected List<T> findByCriteria(List<Criterion> criterion) {
+
         return findByCriteriaFromTo(0, Integer.MAX_VALUE, criterion);
     }
-    
+
     /**
      * Read all objects that fulfill the criteria from index from to index to
+     *
      * @param from
      * @param to
      * @param criterion
-     * @return 
+     * @return
      */
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteriaFromTo(int from, int to, Criterion... criterion) {
+    @Override
+    public List<T> findByCriteriaFromTo(int from, int to, List<Criterion> criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setFirstResult(from)
                 .setMaxResults((to + 1) - from);
-        for (Criterion c : criterion) {
-                    crit.add(c);
-        }
+        criterion.stream().forEach((c) -> {
+            crit.add(c);
+        });
         defaultOrder.stream().forEach(c -> {
             crit.addOrder(c);
         });
         return crit.list();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Long countByCriteria(List<Criterion> criterion) {
+        Criteria crit = getSession().createCriteria(getPersistentClass())
+                .setProjection(Projections.rowCount());
+        criterion.stream().forEach((c) -> {
+            crit.add(c);
+        });
+        return (Long) crit.uniqueResult();
+    }
 
     /**
      * Get an object of type T with the given id.
+     *
      * @param id
-     * @return 
+     * @return
      */
     @Override
     public T get(ID id) {
@@ -82,37 +98,40 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 
     /**
      * Get all objects of type T
-     * @return 
+     *
+     * @return
      */
     @Override
     public List<T> getAll() {
-        return findByCriteria();
+        return findByCriteria(new ArrayList<>());
     }
-    
+
     /**
      * Get all objects of type T from index from to index to.
+     *
      * @param from
      * @param to
-     * @return 
+     * @return
      */
     @Override
     public List<T> get(int from, int to) {
-        return findByCriteriaFromTo(from, to);
+        return findByCriteriaFromTo(from, to, new ArrayList<>());
     }
 
     /**
      * Removes an object from the database.
-     * @param t 
+     *
+     * @param t
      */
     @Override
     public void remove(T t) {
         getSession().delete(t);
     }
-    
+
     public void flush() {
         getSession().flush();
     }
-    
+
     public void clear() {
         getSession().clear();
     }
