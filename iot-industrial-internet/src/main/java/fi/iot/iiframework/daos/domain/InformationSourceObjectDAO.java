@@ -7,11 +7,11 @@
 package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 
 /**
  * DAO for DataSourceObject
  */
-public interface InformationSourceObjectDAO extends GenericDAO<DataSourceObject, String>{
+public interface InformationSourceObjectDAO extends GenericDAO<InformationSourceObject, String>{
 
 }

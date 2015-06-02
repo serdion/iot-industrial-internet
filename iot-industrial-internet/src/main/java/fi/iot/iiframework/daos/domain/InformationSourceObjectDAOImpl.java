@@ -7,13 +7,13 @@
 package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericHibernateDAO;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class InformationSourceObjectDAOImpl
-        extends GenericHibernateDAO<DataSourceObject, String>
+        extends GenericHibernateDAO<InformationSourceObject, String>
         implements InformationSourceObjectDAO {
 
     public InformationSourceObjectDAOImpl() {

@@ -9,7 +9,7 @@ package fi.iot.iiframework.restapi;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.domain.Header;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.errors.ErrorLogger;
@@ -76,7 +76,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/datasources/list", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> listDatasources(
+    public List<InformationSourceObject> listDatasources(
             @RequestParam(required = false) Map<String, String> params
     ) {
         return datasourceservice.get(0, settings.getDefaultAmountOfDataSourcesRetrievedFromDatabase());
@@ -84,7 +84,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/datasources/list/{amount}", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> listDatasourcesAmount(
+    public List<InformationSourceObject> listDatasourcesAmount(
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
@@ -94,7 +94,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/datasources/list/{from}/{to}", produces = "application/json")
     @ResponseBody
-    public List<DataSourceObject> listDatasourcesFromTo(
+    public List<InformationSourceObject> listDatasourcesFromTo(
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
@@ -105,11 +105,11 @@ public class RestApiController {
 
     @RequestMapping(value = "/datasources/{datasourceid}/view", produces = "application/json")
     @ResponseBody
-    public DataSourceObject getDatasource(
+    public InformationSourceObject getDatasource(
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
+        return (InformationSourceObject) returnOrException(datasourceservice.get(datasourceid));
     }
 
     @RequestMapping(value = "/datasources/{datasourceid}/header", produces = "application/json")
@@ -126,7 +126,7 @@ public class RestApiController {
             @PathVariable String datasourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) returnOrException(datasourceservice.get(datasourceid));
         return deviceservice.getBy(0, settings.getDefaultAmountOfDevicesRetrievedFromDatabase(), source);
     }
 
@@ -137,7 +137,7 @@ public class RestApiController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) returnOrException(datasourceservice.get(datasourceid));
         exceptionIfWrongLimits(0, amount);
         return deviceservice.getBy(0, amount, source);
     }
@@ -150,7 +150,7 @@ public class RestApiController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        DataSourceObject source = (DataSourceObject) returnOrException(datasourceservice.get(datasourceid));
+        InformationSourceObject source = (InformationSourceObject) returnOrException(datasourceservice.get(datasourceid));
         exceptionIfWrongLimits(from, to);
         return deviceservice.getBy(to, from, source);
     }

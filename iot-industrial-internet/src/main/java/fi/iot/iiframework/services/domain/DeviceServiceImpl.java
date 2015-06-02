@@ -9,7 +9,7 @@ package fi.iot.iiframework.services.domain;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.daos.domain.DeviceDAO;
 import fi.iot.iiframework.daos.domain.ReadoutDAO;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -31,12 +31,12 @@ public class DeviceServiceImpl
     }
 
     @Override
-    public List<Device> getBy(DataSourceObject dso) {
+    public List<Device> getBy(InformationSourceObject dso) {
         return getBy(0, Integer.MAX_VALUE, dso);
     }
 
     @Override
-    public List<Device> getBy(int from, int to, DataSourceObject dso) {
+    public List<Device> getBy(int from, int to, InformationSourceObject dso) {
         return deviceDAO.getBy(from, to, dso);
     }
 
