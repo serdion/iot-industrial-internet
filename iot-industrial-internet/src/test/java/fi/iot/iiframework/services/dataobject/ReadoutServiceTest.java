@@ -7,10 +7,10 @@
 package fi.iot.iiframework.services.dataobject;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.DataSourceObject;
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Readout;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.Sensor;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Before;

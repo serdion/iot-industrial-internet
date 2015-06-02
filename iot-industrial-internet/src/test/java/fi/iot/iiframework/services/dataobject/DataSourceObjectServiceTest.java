@@ -7,7 +7,7 @@
 package fi.iot.iiframework.services.dataobject;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import org.junit.Before;
 import org.junit.Test;

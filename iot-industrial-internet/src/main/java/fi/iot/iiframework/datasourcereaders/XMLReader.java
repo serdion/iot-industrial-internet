@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.datasourcereaders;
 
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.xmltodataobject.XmlToObject;
 import java.io.IOException;
 import java.net.MalformedURLException;

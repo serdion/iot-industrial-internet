@@ -6,8 +6,12 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.domain.Header;
+import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.dataobject.*;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;

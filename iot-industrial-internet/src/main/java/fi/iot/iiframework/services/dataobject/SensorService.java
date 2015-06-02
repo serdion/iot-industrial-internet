@@ -6,8 +6,8 @@
  */
 package fi.iot.iiframework.services.dataobject;
 
-import fi.iot.iiframework.dataobject.Device;
-import fi.iot.iiframework.dataobject.Sensor;
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 

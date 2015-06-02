@@ -7,7 +7,7 @@
 package fi.iot.iiframework.daos.dataobject;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.dataobject.DataSourceObject;
+import fi.iot.iiframework.domain.DataSourceObject;
 
 /**
  * DAO for DataSourceObject
