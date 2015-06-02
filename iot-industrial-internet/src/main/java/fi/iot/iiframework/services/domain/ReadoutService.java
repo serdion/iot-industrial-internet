@@ -4,16 +4,14 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
-public interface SensorService extends GenericService<Sensor, Long> {
-
-    public List<Sensor> getBy(Device device);
-
-    public List<Sensor> getBy(int from, int to, Device device);
+public interface ReadoutService extends GenericService<Readout, Long> {
+    public List<Readout> getBy(Sensor sensor);
+    public List<Readout> getBy(int from, int to, Sensor sensor);
 }

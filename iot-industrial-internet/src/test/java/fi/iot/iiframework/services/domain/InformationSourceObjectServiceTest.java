@@ -8,8 +8,6 @@ package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.DataSourceObject;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,13 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-public class DataSourceObjectServiceTest {
+public class InformationSourceObjectServiceTest {
 
     DataSourceObject dso1;
     DataSourceObject dso2;
 
     @Autowired
-    private DataSourceObjectService service;
+    private InformationSourceObjectService service;
 
     @Before
     public void setUp() {

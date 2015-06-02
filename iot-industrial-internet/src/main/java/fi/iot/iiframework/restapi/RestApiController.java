@@ -17,10 +17,10 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.errors.service.ErrorService;
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
-import fi.iot.iiframework.services.dataobject.DeviceService;
-import fi.iot.iiframework.services.dataobject.ReadoutService;
-import fi.iot.iiframework.services.dataobject.SensorService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
+import fi.iot.iiframework.services.domain.DeviceService;
+import fi.iot.iiframework.services.domain.ReadoutService;
+import fi.iot.iiframework.services.domain.SensorService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.*;
@@ -36,7 +36,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 public class RestApiController {
 
     @Autowired
-    private DataSourceObjectService datasourceservice;
+    private InformationSourceObjectService datasourceservice;
 
     @Autowired
     private DeviceService deviceservice;

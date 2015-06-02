@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class InformationSourceManager {
     private List<InformationSource> sources;
     
     @Autowired
-    private DataSourceObjectService service;
+    private InformationSourceObjectService service;
     @Autowired
     private InformationSourceConfigurationService configService;
     

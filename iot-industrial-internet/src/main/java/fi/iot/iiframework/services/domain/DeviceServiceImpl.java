@@ -4,11 +4,11 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.services.dataobject;
+package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.domain.Device;
-import fi.iot.iiframework.daos.dataobject.DeviceDAO;
-import fi.iot.iiframework.daos.dataobject.ReadoutDAO;
+import fi.iot.iiframework.daos.domain.DeviceDAO;
+import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.DataSourceObject;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.List;
