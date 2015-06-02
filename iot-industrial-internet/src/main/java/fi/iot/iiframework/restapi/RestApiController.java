@@ -258,6 +258,7 @@ public class RestApiController {
     @RequestMapping(value = "/errors/{errorid}/view", produces = "application/json")
     @ResponseBody
     public SysError getError(
+
             @PathVariable String errorid,
             @RequestParam(required = false) Map<String, String> params
     ) {
@@ -267,10 +268,11 @@ public class RestApiController {
     @RequestMapping(value = "/errors/list", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrors(
-            @PathVariable String sensorid,
-            @PathVariable String timestamp,
+//            @PathVariable String sensorid,
+//            @PathVariable String timestamp,
             @RequestParam(required = false) Map<String, String> params
     ) {
+        System.out.println("Getting errors!");
         return errorservice.get(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase());
     }
 

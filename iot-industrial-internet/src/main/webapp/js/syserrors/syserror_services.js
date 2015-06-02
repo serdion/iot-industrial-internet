@@ -10,8 +10,7 @@ var sysErrors = angular.module('sysErrors', ['ngResource']);
 
 sysErrors.factory('SysError', ['$resource',
     function($resource) {
-        return $resource('1.0/datasources/:datasourceid/:action', {}, {
-            get: {method: 'GET', params: {action: 'view'}},
-            query: {method: 'GET', params: {datasourceid: 'list'}, isArray: true}
+        return $resource('1.0/errors/list', {}, {
+            query: {method: 'GET', isArray: true}
         });
     }]);

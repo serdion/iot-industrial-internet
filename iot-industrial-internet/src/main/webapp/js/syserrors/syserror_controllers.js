@@ -5,8 +5,11 @@
  * Software Engineering Lab in summer 2015
  */
 
-sysErrors.controller('SysErrorsController', ['$scope', 'SysError', function ($scope, SysError) {
-        $scope.sources = SysError.query({}, function (value, headers) {
-            console.log(value);
-        });
-    }]);
+sysErrors.controller('SysErrorsController', function($scope, SysError) {
+    $scope.errors = SysError.query(function(data) {
+        console.log("Bleeh");
+        console.log(data);
+    });
+
+
+});
