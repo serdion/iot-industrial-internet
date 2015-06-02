@@ -11,6 +11,7 @@ import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,9 @@ public class ConfigurationController {
     
     @Autowired
     private ApplicationSettings settings;
+    
+    @Autowired
+    private InformationSourceManager informationSourceManager;
     
     @Autowired
     private InformationSourceConfigurationService informationSourceConfigurationService;
@@ -60,6 +64,22 @@ public class ConfigurationController {
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(configuration);
         informationSourceConfigurationService.save(configuration);
+        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+    }
+    
+    @RequestMapping(
+            value = "/informationsources/edit",
+            method = RequestMethod.POST,
+            produces = "application/json",
+            consumes = "application/json"
+    )
+    @ResponseBody
+    public ResponseEntity<InformationSourceConfiguration> editInformationSource(
+            @RequestBody InformationSourceConfiguration configuration,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
+        helper.checkIfObjectIsValid(configuration);
+        informationSourceManager.updateSource(configuration.getId(), configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 

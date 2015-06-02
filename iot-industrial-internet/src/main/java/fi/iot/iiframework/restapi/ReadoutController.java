@@ -62,9 +62,6 @@ public class ReadoutController {
     ) throws ResourceNotFoundException, InvalidParametersException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
         helper.exceptionIfWrongLimits(0, amount);
-
-        
-        
         return readoutservice.getBy(0, amount, createCriterion(sensor, params));
     }
 
@@ -89,8 +86,8 @@ public class ReadoutController {
     ) {
         return readoutservice.get(readoutid);
     }
-    
-    private List<Criterion> createCriterion(Sensor sensor, Map<String, String> params){
+
+    private List<Criterion> createCriterion(Sensor sensor, Map<String, String> params) {
         List<Criterion> readoutCriterion = criterionfactory.getReadoutCriterion(params);
         readoutCriterion.add(Restrictions.eq("sensor", sensor));
         return readoutCriterion;
