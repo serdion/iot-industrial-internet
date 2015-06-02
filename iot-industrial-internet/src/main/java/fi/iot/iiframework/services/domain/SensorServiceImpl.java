@@ -11,8 +11,11 @@ import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.daos.domain.SensorDAO;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.services.GenericHibernateService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,13 +44,10 @@ public class SensorServiceImpl
     }
 
     @Override
-    public int countBy(Device dev) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int countBy(Device device) {
+        return sensorDAO.countByCriteria(
+                buildCriterionList(Restrictions.eq("device", device))
+        );
     }
 
 }
