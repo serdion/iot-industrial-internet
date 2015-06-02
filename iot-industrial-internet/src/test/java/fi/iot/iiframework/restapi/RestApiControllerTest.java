@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.application.Application;
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.application.TestConfig;
