@@ -9,7 +9,8 @@
 var IIFramework = angular.module('IIFramework', [
     'ngRoute',
     'angular-flot',
-    'informationSources'
+    'informationSources',
+    'configurations'
 ]);
 
 
@@ -36,5 +37,9 @@ IIFramework.config(function ($routeProvider) {
             })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
-                templateUrl: 'ngviews/sensor.html'});
+                templateUrl: 'ngviews/sensor.html'})
+            .when('/configurations/add', {
+                controller: 'AddInformationSourceController',
+                templateUrl: 'ngviews/add_datasource.html'
+            });
 });
