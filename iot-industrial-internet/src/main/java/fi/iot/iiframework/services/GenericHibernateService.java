@@ -48,4 +48,9 @@ public class GenericHibernateService<T, ID extends Serializable>
         return dao.findByCriteriaFromTo(from, to, criterion);
     }
 
+    @Override
+    public int countByCriteria(List<Criterion> criterion) {
+        return dao.countByCriteria(criterion);
+    }
+
 }

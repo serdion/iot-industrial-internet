@@ -11,8 +11,11 @@ import fi.iot.iiframework.daos.domain.DeviceDAO;
 import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.GenericHibernateService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +41,13 @@ public class DeviceServiceImpl
     @Override
     public List<Device> getBy(int from, int to, InformationSourceObject dso) {
         return deviceDAO.getBy(from, to, dso);
+    }
+    
+    @Override
+    public int countBy(InformationSourceObject source) {
+        List<Criterion> criterion = new ArrayList<>();
+        criterion.add(Restrictions.eq("source", source));
+        return countByCriteria(criterion);
     }
 
 }

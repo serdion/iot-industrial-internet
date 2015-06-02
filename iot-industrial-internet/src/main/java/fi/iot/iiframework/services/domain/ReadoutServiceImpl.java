@@ -10,8 +10,11 @@ import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.GenericHibernateService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,13 @@ public class ReadoutServiceImpl
     @Override
     public List<Readout> getBy(Sensor sensor) {
         return readoutDAO.getBy(sensor);
+    }
+    
+    @Override
+    public int countBy(Sensor sensor) {
+        List<Criterion> criterion = new ArrayList<>();
+        criterion.add(Restrictions.eq("sensor", sensor));
+        return countByCriteria(criterion);
     }
 
 }
