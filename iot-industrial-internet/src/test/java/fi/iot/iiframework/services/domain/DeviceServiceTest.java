@@ -9,9 +9,14 @@ package fi.iot.iiframework.services.domain;
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.Device;
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +56,10 @@ public class DeviceServiceTest {
         d2.setSource(dso1);
         d3.setSource(dso2);
         
+        d1.setStatus(true);
+        d2.setStatus(true);
+        d3.setStatus(false);
+        
         service.save(d1);
         service.save(d2);
         service.save(d3);
@@ -70,6 +79,33 @@ public class DeviceServiceTest {
     }
     
     @Test
+    public void anIdIsGeneratedAutomaticallyWhenSaved() {
+        service.save(d1);
+        assertNotNull(d1.getId());
+    }
+
+    @Test
+    public void deviceCanBeSavedAndRetrieved() {
+        service.save(d1);
+        assertEquals(d1, service.get(d1.getId()));
+    }
+
+    @Test
+    public void allDevicesCanBeRetrieved() {
+        List<Device> devices = service.getAll();
+
+        assertTrue(devices.contains(d1));
+        assertTrue(devices.contains(d2));
+    }
+
+    @Test
+    public void devicesCanBeFoundFromIndexToIndex() {
+        List<Device> devices = service.get(0, 1);
+
+        assertEquals(2, devices.size());
+    }
+    
+    @Test
     public void devicesCanBeCounted() {
         assertEquals(3, (long) service.count());
     }
@@ -77,5 +113,13 @@ public class DeviceServiceTest {
     @Test
     public void devicesCanBeCountedBySource() {
         assertEquals(2, (long) service.countBy(dso1));
+    }
+    
+    @Test
+    public void devicesCanBeFiltered() {
+        List<Criterion> criterions = new ArrayList<>();
+        Criterion c1 = Restrictions.eq("status", false);
+        criterions.add(c1);
+        assertEquals(1, (long) service.getBy(0, 2, criterions).size());
     }
 }

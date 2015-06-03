@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class MoreThan extends ReadoutFilter {
+public class MoreThan extends GeneralFilter {
 
     public MoreThan(String field) {
         super(field);
@@ -26,7 +26,7 @@ public class MoreThan extends ReadoutFilter {
         try {
             bound = Double.parseDouble(filters[0]);
         } catch(NumberFormatException ex) {
-            ErrorLogger.newError(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
         }
         
         return Restrictions.gt(getField(), bound);

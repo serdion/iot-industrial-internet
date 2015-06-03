@@ -37,7 +37,7 @@ public class ErrorLoggerTest {
     @Test
     public void newErrorISCreatedWithoutDescription() {
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
-        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
+        ErrorLogger.log(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "TEST_ERROR");
         List<SysError> allErrors = ErrorLogger.getAllErrors();
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("no description"));
     }
@@ -47,7 +47,7 @@ public class ErrorLoggerTest {
 
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
         SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "I was added directly...");
-        ErrorLogger.newError(e);
+        ErrorLogger.log(e);
 
         List<SysError> allErrors = ErrorLogger.getAllErrors();
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("I was added directly..."));
@@ -55,7 +55,7 @@ public class ErrorLoggerTest {
     
     @Test
     public void newErrorTimeIsSaved() {
-        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
+        ErrorLogger.log(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "TEST_ERROR");
         assertNotNull(ErrorLogger.getAllErrors().get(0).getTime());
         
         Date now = new Date();

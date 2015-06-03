@@ -119,4 +119,14 @@ public class SysError implements Serializable {
         this.severity = severity;
     }
 
+    @Override
+    public String toString() {
+        return "\tid: "+ this.id +
+                "\ttype: " + this.type.toString() +
+                "\ttime: " + this.time.toString() +
+                "\tdesc: " + this.description +
+                "\tlocation: " + this.location +
+                "\tseverity: " + this.severity.toString();
+    }
+
 }
