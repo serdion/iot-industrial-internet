@@ -12,7 +12,7 @@ import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
 public interface DeviceService
-        extends GenericService<Device, Long> {
+        extends GenericService<Device, String> {
 
     public List<Device> getBy(InformationSourceObject dso);
 
