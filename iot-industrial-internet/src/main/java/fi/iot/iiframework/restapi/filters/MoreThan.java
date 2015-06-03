@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class MoreThan extends ReadoutFilter {
+public class MoreThan extends GeneralFilter {
 
     public MoreThan(String field) {
         super(field);

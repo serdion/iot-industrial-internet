@@ -20,25 +20,36 @@ import org.springframework.stereotype.Component;
 @Component
 public class CriterionFactory {
 
-    private HashMap<String, ReadoutFilter> acceptedReadoutFilters;
-
+    private HashMap<String, GeneralFilter> acceptedReadoutFilters;
+    private HashMap<String, GeneralFilter> acceptedSysErrorFilters;
+    
     public CriterionFactory() {
         acceptedReadoutFilters = new HashMap<>();
+        acceptedSysErrorFilters = new HashMap<>();
         initAcceptedReadoutFilters();
+        initAcceptedSysErrorFilters();
     }
 
     public void initAcceptedReadoutFilters() {
         acceptedReadoutFilters.put("unit", new Equals("unit"));
         acceptedReadoutFilters.put("quantity", new Equals("quantity"));
 
-        acceptedReadoutFilters.put("morethan", new MoreThan("value"));
-        acceptedReadoutFilters.put("lessthan", new LessThan("value"));
-        
         acceptedReadoutFilters.put("more", new MoreThan("value"));
         acceptedReadoutFilters.put("less", new LessThan("value"));
 
         acceptedReadoutFilters.put("after", new After("time"));
         acceptedReadoutFilters.put("before", new Before("time"));
+    }
+    
+    public void initAcceptedSysErrorFilters(){
+        acceptedReadoutFilters.put("type", new Equals("type"));
+        
+        acceptedReadoutFilters.put("after", new After("errordate"));
+        acceptedReadoutFilters.put("before", new Before("errordate"));
+        
+        acceptedReadoutFilters.put("higher", new MoreThan("severity"));
+        acceptedReadoutFilters.put("lower", new LessThan("severity"));
+        acceptedReadoutFilters.put("severity", new Equals("severity"));
     }
 
     public List<Criterion> getReadoutCriterion(Map<String, String> params) {
@@ -49,7 +60,7 @@ public class CriterionFactory {
             String value = entrySet.getValue();
 
             try {
-                ReadoutFilter readoutFilter = acceptedReadoutFilters.get(name);
+                GeneralFilter readoutFilter = acceptedReadoutFilters.get(name);
                 Criterion criterion = readoutFilter.createCriterion(value);
 
                 if(criterion!=null){
@@ -63,6 +74,10 @@ public class CriterionFactory {
         }
 
         return crits;
+    }
+    
+    public List<Criterion> getSysErrorCriterion(Map<String, String> params){
+        
     }
 
 }

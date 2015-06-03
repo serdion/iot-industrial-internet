@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class After extends ReadoutFilter {
+public class After extends GeneralFilter {
 
     public After(String field) {
         super(field);

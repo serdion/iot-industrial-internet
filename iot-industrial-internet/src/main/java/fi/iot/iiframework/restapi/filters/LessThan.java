@@ -12,7 +12,7 @@ import fi.iot.iiframework.errors.ErrorType;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class LessThan extends ReadoutFilter {
+public class LessThan extends GeneralFilter {
 
     public LessThan(String field) {
         super(field);

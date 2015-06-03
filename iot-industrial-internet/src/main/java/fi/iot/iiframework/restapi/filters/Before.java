@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class Before extends ReadoutFilter {
+public class Before extends GeneralFilter {
 
     public Before(String field) {
         super(field);
