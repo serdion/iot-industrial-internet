@@ -43,7 +43,7 @@ public class CriterionFactory {
     }
 
     private void initAcceptedSysErrorFilters() {
-        acceptedReadoutFilters.put("type", new Equals("type"));
+        acceptedReadoutFilters.put("type", new EqualsErrorType("type"));
 
         acceptedReadoutFilters.put("after", new After("errordate"));
         acceptedReadoutFilters.put("before", new Before("errordate"));
