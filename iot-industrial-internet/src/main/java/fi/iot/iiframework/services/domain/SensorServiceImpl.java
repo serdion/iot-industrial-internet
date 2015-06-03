@@ -44,7 +44,7 @@ public class SensorServiceImpl
     }
 
     @Override
-    public int countBy(Device device) {
+    public Long countBy(Device device) {
         return sensorDAO.countByCriteria(
                 buildCriterionList(Restrictions.eq("device", device))
         );

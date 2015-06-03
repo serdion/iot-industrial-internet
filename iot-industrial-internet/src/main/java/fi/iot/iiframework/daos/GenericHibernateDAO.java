@@ -76,13 +76,13 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public int countByCriteria(List<Criterion> criterion) {
+    public Long countByCriteria(List<Criterion> criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setProjection(Projections.rowCount());
         criterion.stream().forEach((c) -> {
             crit.add(c);
         });
-        return (int) crit.uniqueResult();
+        return (Long) crit.uniqueResult();
     }
 
     /**

@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("1.0/errors")
 public class SysErrorController {
-    
+
     @Autowired
     private ErrorService errorservice;
-    
+
     @Autowired
     private RestAPIHelper helper;
-    
+
     @Autowired
     private ApplicationSettings settings;
-    
+
     @RequestMapping(value = "/{errorid}/view", produces = "application/json")
     @ResponseBody
     public SysError getError(
@@ -44,8 +44,6 @@ public class SysErrorController {
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrors(
-            @PathVariable String sensorid,
-            @PathVariable String timestamp,
             @RequestParam(required = false) Map<String, String> params
     ) {
         return errorservice.get(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase());

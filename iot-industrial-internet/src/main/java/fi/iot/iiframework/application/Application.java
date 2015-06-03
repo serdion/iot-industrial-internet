@@ -46,6 +46,15 @@ public class Application {
         SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
         ErrorLogger.newError(e);
 
+        SysError e2 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
+        ErrorLogger.newError(e2);
+
+        SysError e3 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
+        ErrorLogger.newError(e3);
+
+        SysError e4 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
+        ErrorLogger.newError(e4);
+
     }
 
 }

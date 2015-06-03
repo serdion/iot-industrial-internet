@@ -20,6 +20,7 @@ public class InformationSourceImplTest {
     private InformationSourceObjectService service;
     
 
+
     @Before
     public void setUp() {
         config = new InformationSourceConfiguration();
