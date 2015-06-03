@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1>Add new Datasource</h1>
+        <h1>Add new Information source</h1>
         <div class="panel panel-default">
-            <div class="panel-heading">Add new Datasource</div>
+            <div class="panel-heading">Add new Information source</div>
             <div class="panel-body">
 
                 <form role="form" ng-controller="AddInformationSourceController">
                     <div class="form-group">
                         <label>Name</label>
                         <input class="form-control" name="is_name" ng-model="is_name" placeholder="Enter name" />
-                        <p class="help-block">Name of the Datasource</p>
+                        <p class="help-block">Name of the Information source</p>
                     </div>
 
                         <label>Selects</label>
@@ -17,12 +17,12 @@
                         <select class="form-control" name="is_type" ng-model="is_type" ng-options="type for type in types"/>
                         </select>
                     </div>
-                        <p class="help-block">Type of the Datasource</p>
+                        <p class="help-block">Type of the Information source</p>
 
                     <div class="form-group">
                         <label>URL</label>
                         <input class="form-control" name="is_url" ng-model="is_url" placeholder="Enter URL" />
-                        <p class="help-block">Datasource URL</p>
+                        <p class="help-block">Information source URL</p>
                     </div>
 
                     <label>Read frequency</label>
