@@ -43,8 +43,14 @@ IIFramework.config(function($routeProvider) {
                 controller: 'AddInformationSourceController',
                 templateUrl: 'ngviews/add_information_source.html'
             })
-            .when('/syserrors', {
-                controller: 'SysErrorsController',
+            
+            // Controllers for SysErrors
+            .when('/syserrors/:errorid', {
+                controller: 'SysErrorDetailsController',
+                templateUrl: 'ngviews/syserrordetails.html'
+            })
+            .when('/syserrors/', {
+                controller: 'SysErrorsListController',
                 templateUrl: 'ngviews/syserrors.html'
             });
 });

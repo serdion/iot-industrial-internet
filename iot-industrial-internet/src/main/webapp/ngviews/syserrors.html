@@ -12,14 +12,30 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Errors</th>
+                            <th>Type</th>
+                            <th>Severity</th>
+                            <th>Time</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr ng-repeat="error in errors" >
-                            <td>{{error.description}}</td>
-                        </tr>
-                    </tbody>
+
+                    <tr ng-repeat="error in errorlist" >
+                        <td>{{error.type}} </td>
+
+                        <td>
+                            <div ng-if="error.severity == 'FATAL'">
+                                <font color="red"><b>{{error.severity}}</b></font>
+                            </div>
+                            <div ng-if="error.severity != 'FATAL'">
+                                {{error.severity}} 
+                            </div>
+                        </td>
+
+                        <td>{{error.time| date: 'yyyy-MM-dd HH:mm:ss:sss'}} </td>
+                        <td>{{error.description}} </td>
+                        <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/syserrors/{{error.id}}">Details</a></td>
+                    </tr>
+
                 </table>
             </div>
 

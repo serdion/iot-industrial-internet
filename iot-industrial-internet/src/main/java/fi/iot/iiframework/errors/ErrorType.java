@@ -11,18 +11,17 @@ package fi.iot.iiframework.errors;
  */
 public enum ErrorType {
 
-    NOT_FOUND("Not found", "notfound"),
-    IO_ERROR("IO Error", "ioerror"),
-    BAD_REQUEST("Bad request", "badrequest"),
-    BAD_CONFIGURATION("Bad configuration", "badconfig"),
-    NOT_ACCEPTED("Not accepted", "notaccepted"),
-    TIMEOUT_ERROR("Request timeout", "timeout"),
-    CONFLICT_ERROR("Conflict", "conflict"),
-    PARSE_ERROR("Parse error", "parseerror"),
-    READ_ERROR("Read error", "readerror"),
-    TEST_ERROR("Error for testing", "testerror"),
-    INVALID_OBJECT("Object was invalid or wrong type", "invalidobject"),
-    UNKNOWN_ERROR("Unknown error", "unknown");
+    NOT_FOUND("Not found", "NOT_FOUND"),
+    IO_ERROR("IO Error", "IO_ERROR"),
+    BAD_REQUEST("Bad request", "BAD_REQUEST"),
+    BAD_CONFIGURATION("Bad configuration", "BAD_CONFIGURATION"),
+    NOT_ACCEPTED("Not accepted", "NOT_ACCEPTED"),
+    TIMEOUT_ERROR("Request timeout", "TIMEOUT_ERROR"),
+    CONFLICT_ERROR("Conflict", "CONFLICT_ERROR"),
+    PARSE_ERROR("Parse error", "PARSE_ERROR"),
+    READ_ERROR("Read error", "READ_ERROR"),
+    INVALID_OBJECT("Invalid Object", "INVALID_OBJECT"),
+    UNKNOWN_ERROR("Unknown error", "UNKNOWN_ERROR");
 
     private final String name;
     private final String id;
@@ -66,7 +65,6 @@ public enum ErrorType {
         }
 
         return ErrorType.UNKNOWN_ERROR;
-
     }
 
     @Override
