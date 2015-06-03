@@ -8,21 +8,39 @@ package fi.iot.iiframework.errors;
 
 public enum ErrorSeverity {
 
-    FATAL(10),
-    HIGH(7),
-    MEDIUM(5),
-    LOW(3),
-    NOTIFICATION(1);
+    NONE(0, "NONE"),
+    NOTIFICATION(1, "NOTIFICATION"),
+    LOW(2, "LOW"),
+    MEDIUM(3, "MEDIUM"),
+    HIGH(4, "HIGH"),
+    FATAL(5, "FATAL");
 
     private final int severity;
+    private final String id;
 
-    ErrorSeverity(int severity) {
+    ErrorSeverity(int severity, String id) {
         this.severity = severity;
+        this.id = id;
     }
 
     public int getSeverity() {
         return this.severity;
     }
-    
-    
+
+    public String getId() {
+        return id;
+    }
+
+    public static ErrorSeverity getType(String id) {
+        ErrorSeverity[] values = ErrorSeverity.values();
+
+        for (ErrorSeverity value : values) {
+            if (value.getId().equals(id)) {
+                return value;
+            }
+        }
+
+        return ErrorSeverity.NONE;
+    }
+
 }

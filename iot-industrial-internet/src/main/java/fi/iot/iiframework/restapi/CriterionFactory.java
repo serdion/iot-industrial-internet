@@ -50,7 +50,7 @@ public class CriterionFactory {
 
         acceptedReadoutFilters.put("higher", new MoreThan("severity"));
         acceptedReadoutFilters.put("lower", new LessThan("severity"));
-        acceptedReadoutFilters.put("severity", new Equals("severity"));
+        acceptedReadoutFilters.put("severity", new EqualsErrorSeverity("severity"));
     }
 
     /**
