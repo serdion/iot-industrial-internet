@@ -26,7 +26,7 @@ public class After extends GeneralFilter {
         try {
             bound = Long.parseLong(filters[0]);
         } catch(NumberFormatException ex) {
-            ErrorLogger.newError(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse long given as a parameter in filter.");
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse long given as a parameter in filter.");
         }
         
         return Restrictions.gt(getField(), bound);

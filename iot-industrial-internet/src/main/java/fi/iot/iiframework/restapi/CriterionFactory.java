@@ -89,7 +89,7 @@ public class CriterionFactory {
                 }
 
             } catch (ArrayIndexOutOfBoundsException exp) {
-                ErrorLogger.newError(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
+                ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
             } catch (NullPointerException exp) {
                 // No filters
             }

@@ -44,16 +44,16 @@ public class Application {
         infSourceManager.getSources().get(0).readAndWrite();
 
         SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
-        ErrorLogger.newError(e);
+        ErrorLogger.log(e);
 
         SysError e2 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
-        ErrorLogger.newError(e2);
+        ErrorLogger.log(e2);
 
         SysError e3 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
-        ErrorLogger.newError(e3);
+        ErrorLogger.log(e3);
 
         SysError e4 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
-        ErrorLogger.newError(e4);
+        ErrorLogger.log(e4);
 
     }
 

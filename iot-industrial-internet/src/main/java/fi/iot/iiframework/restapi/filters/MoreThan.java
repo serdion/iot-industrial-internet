@@ -26,7 +26,7 @@ public class MoreThan extends GeneralFilter {
         try {
             bound = Double.parseDouble(filters[0]);
         } catch(NumberFormatException ex) {
-            ErrorLogger.newError(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
         }
         
         return Restrictions.gt(getField(), bound);
