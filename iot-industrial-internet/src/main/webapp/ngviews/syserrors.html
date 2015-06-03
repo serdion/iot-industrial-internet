@@ -12,17 +12,21 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Errors</th>
+                            <th>Type</th>
+                            <th>Severity</th>
+                            <th>Time</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr ng-repeat="error in errorlist" >
-                            <td>{{error.type}} </td>
-                            <td>{{error.severity}} </td>
-                            <td>{{error.description}} </td>
-                            <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/errors/{{error.id}}">Error</a></td>
-                        </tr>
-                    </tbody>
+
+                    <tr ng-repeat="error in errorlist" >
+                        <td>{{error.type}} </td>
+                        <td>{{error.severity}} </td>
+                        <td>{{error.time | date: 'G yyyy-MM-dd HH:mm:ss:sss'}} </td>
+                        <td>{{error.description}} </td>
+                        <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/errors/{{error.id}}">Error</a></td>
+                    </tr>
+
                 </table>
             </div>
 

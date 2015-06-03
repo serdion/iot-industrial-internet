@@ -7,9 +7,14 @@
 
 sysErrors.controller('SysErrorsController', function($scope, SysErrorList) {
     $scope.errorlist = SysErrorList.query(function(data) {
-        console.log("Bleeh");
+        console.log("Get all errors");
         console.log(data);
     });
+})
 
-
+sysErrors.controller('SysErrorsController', function($scope, SysErrorList) {
+    $scope.errorlist = SysErrorList.query(function(data) {
+        console.log("Get all errors");
+        console.log(data);
+    });
 });
