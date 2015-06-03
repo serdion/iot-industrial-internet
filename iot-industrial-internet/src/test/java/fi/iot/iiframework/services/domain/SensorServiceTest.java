@@ -13,6 +13,7 @@ import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,7 @@ public class SensorServiceTest {
 
     Device d1;
     Device d2;
-    
+
     Sensor s1;
     Sensor s2;
 
@@ -55,22 +56,48 @@ public class SensorServiceTest {
         service.save(s1);
         service.save(s2);
     }
-    
+
     @Test
     public void sensorsCanBeFoundByDevice() {
         List<Sensor> sensors = service.getBy(d1);
         assertTrue(sensors.contains(s1));
         assertFalse(sensors.contains(s2));
     }
-    
+
+    @Test
+    public void anIdIsGeneratedAutomaticallyWhenSaved() {
+        service.save(s1);
+        assertNotNull(s1.getId());
+    }
+
+    @Test
+    public void sensorCanBeSavedAndRetrieved() {
+        service.save(s1);
+        assertEquals(s1, service.get(s1.getId()));
+    }
+
+    @Test
+    public void allSensorsCanBeRetrieved() {
+        List<Sensor> sensors = service.getAll();
+
+        assertTrue(sensors.contains(s1));
+        assertTrue(sensors.contains(s2));
+    }
+
+    @Test
+    public void sensorsCanBeFoundFromIndexToIndex() {
+        List<Sensor> sensors = service.get(0, 0);
+
+        assertEquals(1, sensors.size());
+    }
+
     @Test
     public void sensorsCanBeCounted() {
         assertEquals(2, (long) service.count());
     }
-    
+
     @Test
     public void sensorsCanBeCountedByDevice() {
         assertEquals(1, (long) service.countBy(d1));
     }
-
 }
