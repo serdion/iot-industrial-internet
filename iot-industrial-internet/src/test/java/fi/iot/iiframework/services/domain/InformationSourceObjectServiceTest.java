@@ -8,6 +8,10 @@ package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.InformationSourceObject;
+import java.util.ArrayList;
+import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -34,13 +38,56 @@ public class InformationSourceObjectServiceTest {
     public void setUp() {
         dso1 = new InformationSourceObject();
         dso1.setId("ssds");
+        dso2 = new InformationSourceObject();
+        dso2.setId("ssds2");
+        
+        dso1.setName("test");
+        
+        service.save(dso1);
+        service.save(dso2);
     }
 
     @Test
     public void aDataSourceObjectCanBeSavedAndRetrievedFromDatabase() {
-        service.save(dso1);
-        InformationSourceObject dso2 = service.get(dso1.getId());
-        assertEquals(dso1.getId(), dso2.getId());
+        InformationSourceObject dso3 = service.get(dso1.getId());
+        assertEquals(dso1.getId(), dso3.getId());
+    }
+    
+    @Test
+    public void anIdIsGeneratedAutomaticallyWhenSaved() {
+        assertNotNull(dso1.getId());
     }
 
+    @Test
+    public void sourceCanBeSavedAndRetrieved() {
+        assertEquals(dso1, service.get(dso1.getId()));
+    }
+
+    @Test
+    public void allInformationSourceObjectsCanBeRetrieved() {
+        List<InformationSourceObject> sources = service.getAll();
+
+        assertTrue(sources.contains(dso1));
+        assertTrue(sources.contains(dso2));
+    }
+
+    @Test
+    public void sourcesCanBeFoundFromIndexToIndex() {
+        List<InformationSourceObject> sources = service.get(0, 0);
+
+        assertEquals(1, sources.size());
+    }
+    
+    @Test
+    public void sourcesCanBeCounted() {
+        assertEquals(2, (long) service.count());
+    }
+    
+    @Test
+    public void sourcesCanBeFiltered() {
+        List<Criterion> criterions = new ArrayList<>();
+        Criterion c1 = Restrictions.eq("name", "test");
+        criterions.add(c1);
+        assertEquals(1, (long) service.getBy(0, 1, criterions).size());
+    }
 }

@@ -11,8 +11,11 @@ import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -57,6 +60,10 @@ public class ReadoutServiceTest {
         r1.setSensor(s1);
         r2.setSensor(s1);
         r3.setSensor(s2);
+        
+        r1.setValue(21.0);
+        r2.setValue(23.0);
+        r3.setValue(22.1);
 
         service.save(r1);
         service.save(r2);
@@ -117,5 +124,26 @@ public class ReadoutServiceTest {
     public void readoutsCanBeCountedBySensor() {
         assertEquals(2, (long) service.countBy(s1));
     }
-
+    
+    @Test
+    public void readoutsCanBeFiltered() {
+        List<Criterion> criterions = new ArrayList<>();
+        Criterion c1 = Restrictions.ge("value", 22.0);
+        criterions.add(c1);
+        assertEquals(2, (long) service.getBy(0, 2, criterions).size());
+    }
+    
+    @Test
+    public void readoutsCanBeUpdatedProperly() {
+        Readout r4 = new Readout();
+        r4.setId(r1.getId());
+        r4.setValue(22.2);
+        service.save(r4);
+        assertEquals(3, (long) service.count());
+        
+        List<Criterion> criterions = new ArrayList<>();
+        Criterion c1 = Restrictions.ge("value", 22.0);
+        criterions.add(c1);
+        assertEquals(3, (long) service.getBy(0, 2, criterions).size());
+    }
 }
