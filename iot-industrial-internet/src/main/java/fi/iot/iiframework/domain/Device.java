@@ -53,9 +53,8 @@ public class Device implements Serializable {
     @JsonIgnore
     @XmlElement(name = "sensor")
     @XmlElementWrapper(name = "sensors")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "device", fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "device")
     protected Set<Sensor> sensors;
 
     @JsonIgnore

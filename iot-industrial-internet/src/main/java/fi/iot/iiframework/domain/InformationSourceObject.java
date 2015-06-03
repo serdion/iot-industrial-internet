@@ -39,8 +39,7 @@ public class InformationSourceObject implements Serializable {
     @JsonIgnore
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    @JoinColumn(name = "source")
     protected Set<Device> devices;    
 }
