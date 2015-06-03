@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1>Sensor {{sensor.sensorId}}</h1>
+        <h1>Sensor {{sensor.id}}</h1>
         <div class="panel panel-default">
             <div class="panel-heading">Listing {{readouts.length}} readouts</div>
             <div class="panel-body">
@@ -18,7 +18,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="readout in readouts">
-                                <td>{{readout.time}}</td>
+                                <td>{{readout.time | date: 'G yyyy-MM-dd HH:mm:ss:sss'}}</td>
                                 <td>{{readout.quantity}}</td>
                                 <td>{{readout.value}}</td>
                                 <td>{{readout.unit}}</td>
