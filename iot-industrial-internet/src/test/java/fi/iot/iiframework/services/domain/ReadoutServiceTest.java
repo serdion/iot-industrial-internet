@@ -60,7 +60,7 @@ public class ReadoutServiceTest {
         r1.setSensor(s1);
         r2.setSensor(s1);
         r3.setSensor(s2);
-        
+
         r1.setValue(21.0);
         r2.setValue(23.0);
         r3.setValue(22.1);
@@ -114,17 +114,17 @@ public class ReadoutServiceTest {
         List<Readout> readReadouts = service.getBy(s1);
         assertFalse(readReadouts.contains(r3));
     }
-    
+
     @Test
     public void readoutsCanBeCounted() {
         assertEquals(3, (long) service.count());
     }
-    
+
     @Test
     public void readoutsCanBeCountedBySensor() {
         assertEquals(2, (long) service.countBy(s1));
     }
-    
+
     @Test
     public void readoutsCanBeFiltered() {
         List<Criterion> criterions = new ArrayList<>();
@@ -132,15 +132,14 @@ public class ReadoutServiceTest {
         criterions.add(c1);
         assertEquals(2, (long) service.getBy(0, 2, criterions).size());
     }
-    
+
     @Test
     public void readoutsCanBeUpdatedProperly() {
-        Readout r4 = new Readout();
-        r4.setId(r1.getId());
+        Readout r4 = r1;
         r4.setValue(22.2);
         service.save(r4);
         assertEquals(3, (long) service.count());
-        
+
         List<Criterion> criterions = new ArrayList<>();
         Criterion c1 = Restrictions.ge("value", 22.0);
         criterions.add(c1);
