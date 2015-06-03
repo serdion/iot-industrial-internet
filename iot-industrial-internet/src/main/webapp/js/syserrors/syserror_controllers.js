@@ -16,7 +16,7 @@ sysErrors.controller('SysErrorsListController', function($scope, SysErrorList) {
 //Get one syserro based on id
 sysErrors.controller('SysErrorDetailsController', function($scope, SysError, $routeParams) {
     console.log("Get single error!");
-    $scope.errorlist = SysError.query({errorid: $routeParams.errorid}, function(data) {
+    $scope.errordetails = SysError.query({errorid: $routeParams.errorid}, function(data) {
         console.log(data);
     });
 });
