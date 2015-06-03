@@ -37,9 +37,9 @@ public class ErrorLoggerTest {
     @Test
     public void newErrorISCreatedWithoutDescription() {
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
-        ErrorLogger.log(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "TEST_ERROR");
+        ErrorLogger.log(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "");
         List<SysError> allErrors = ErrorLogger.getAllErrors();
-        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("no description"));
+        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("NaN"));
     }
 
     @Test
