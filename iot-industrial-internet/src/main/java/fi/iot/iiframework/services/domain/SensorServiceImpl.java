@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class SensorServiceImpl
-        extends GenericHibernateService<Sensor, Long>
+        extends GenericHibernateService<Sensor, String>
         implements SensorService {
 
     SensorDAO sensorDAO;
