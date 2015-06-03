@@ -31,7 +31,7 @@ IIFramework.config(function ($routeProvider) {
                 controller: 'InformationSourcesController',
                 templateUrl: 'ngviews/information_sources.html'
             })
-            .when('/sources/:datasourceid', {
+            .when('/sources/:informationsourceid', {
                 controller: 'InformationSourceController',
                 templateUrl: 'ngviews/information_source.html'
             })
