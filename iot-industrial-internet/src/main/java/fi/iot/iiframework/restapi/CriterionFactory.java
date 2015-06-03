@@ -22,15 +22,16 @@ public class CriterionFactory {
 
     private HashMap<String, GeneralFilter> acceptedReadoutFilters;
     private HashMap<String, GeneralFilter> acceptedSysErrorFilters;
-    
+
     public CriterionFactory() {
         acceptedReadoutFilters = new HashMap<>();
         acceptedSysErrorFilters = new HashMap<>();
+
         initAcceptedReadoutFilters();
         initAcceptedSysErrorFilters();
     }
 
-    public void initAcceptedReadoutFilters() {
+    private void initAcceptedReadoutFilters() {
         acceptedReadoutFilters.put("unit", new Equals("unit"));
         acceptedReadoutFilters.put("quantity", new Equals("quantity"));
 
@@ -40,19 +41,39 @@ public class CriterionFactory {
         acceptedReadoutFilters.put("after", new After("time"));
         acceptedReadoutFilters.put("before", new Before("time"));
     }
-    
-    public void initAcceptedSysErrorFilters(){
+
+    private void initAcceptedSysErrorFilters() {
         acceptedReadoutFilters.put("type", new Equals("type"));
-        
+
         acceptedReadoutFilters.put("after", new After("errordate"));
         acceptedReadoutFilters.put("before", new Before("errordate"));
-        
+
         acceptedReadoutFilters.put("higher", new MoreThan("severity"));
         acceptedReadoutFilters.put("lower", new LessThan("severity"));
         acceptedReadoutFilters.put("severity", new Equals("severity"));
     }
 
+    /**
+     * Returns a matching list of Readout Criterion based on given params.
+     *
+     * @param params List of filters as parameters
+     * @return List of Readout Criterion
+     */
     public List<Criterion> getReadoutCriterion(Map<String, String> params) {
+        return getCriterion(params, acceptedReadoutFilters);
+    }
+
+    /**
+     * Returns a matching list of SysError Criterion based on given params.
+     *
+     * @param params List of filters as parameters
+     * @return List of SysError Criterion
+     */
+    public List<Criterion> getSysErrorCriterion(Map<String, String> params) {
+        return getCriterion(params, acceptedSysErrorFilters);
+    }
+
+    private List<Criterion> getCriterion(Map<String, String> params, HashMap<String, GeneralFilter> filters) {
         ArrayList<Criterion> crits = new ArrayList<>();
 
         for (Map.Entry<String, String> entrySet : params.entrySet()) {
@@ -60,24 +81,21 @@ public class CriterionFactory {
             String value = entrySet.getValue();
 
             try {
-                GeneralFilter readoutFilter = acceptedReadoutFilters.get(name);
-                Criterion criterion = readoutFilter.createCriterion(value);
+                GeneralFilter filter = acceptedReadoutFilters.get(name);
+                Criterion criterion = filter.createCriterion(value);
 
-                if(criterion!=null){
+                if (criterion != null) {
                     crits.add(criterion);
                 }
+
             } catch (ArrayIndexOutOfBoundsException exp) {
                 ErrorLogger.newError(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
-            } catch (NullPointerException exp){
+            } catch (NullPointerException exp) {
                 // No filters
             }
         }
 
         return crits;
-    }
-    
-    public List<Criterion> getSysErrorCriterion(Map<String, String> params){
-        
     }
 
 }
