@@ -18,7 +18,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="readout in readouts">
-                                <td>{{readout.time}}</td>
+                                <td>{{readout.time | date: 'yyyy-MM-dd HH:mm:ss:sss'}}</td>
                                 <td>{{readout.quantity}}</td>
                                 <td>{{readout.value}}</td>
                                 <td>{{readout.unit}}</td>

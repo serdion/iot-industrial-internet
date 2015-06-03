@@ -17,7 +17,7 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        ViewParams params = new ViewParams("Hello world!", "Tervetuloa ng-Springiin!");
+        ViewParams params = new ViewParams("IIFramework", "Tervetuloa ng-Springiin!");
         ViewUtils.addViewParamsToModel(model, params);
         return "ng";
     }
