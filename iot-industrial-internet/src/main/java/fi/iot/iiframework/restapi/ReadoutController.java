@@ -49,7 +49,7 @@ public class ReadoutController {
             @PathVariable String sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
+        Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(sensorid));
         return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), createCriterion(sensor, params));
     }
 
@@ -60,7 +60,7 @@ public class ReadoutController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
-        Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
+        Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(sensorid));
         helper.exceptionIfWrongLimits(0, amount);
         return readoutservice.getBy(0, amount, createCriterion(sensor, params));
     }
@@ -73,7 +73,7 @@ public class ReadoutController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
+        Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(sensorid));
         helper.exceptionIfWrongLimits(from, to);
         return readoutservice.getBy(from, to, createCriterion(sensor, params));
     }

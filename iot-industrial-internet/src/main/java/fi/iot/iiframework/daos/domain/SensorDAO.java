@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * DAO for Sensor
  */
-public interface SensorDAO extends GenericDAO<Sensor, Long> {
+public interface SensorDAO extends GenericDAO<Sensor, String> {
 
     public List<Sensor> getBy(Device device);
 

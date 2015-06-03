@@ -79,6 +79,6 @@ public class DeviceController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (Device) helper.returnOrException(deviceservice.get(Long.parseLong(deviceid)));
+        return (Device) helper.returnOrException(deviceservice.get(deviceid));
     }
 }
