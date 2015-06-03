@@ -44,9 +44,6 @@ public class SysErrorController {
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrors(
-            // Are these needed for just a simple list?
-            //            @PathVariable String sensorid,
-            //            @PathVariable String timestamp,
             @RequestParam(required = false) Map<String, String> params
     ) {
         return errorservice.get(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase());
