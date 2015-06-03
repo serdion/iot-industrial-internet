@@ -8,7 +8,7 @@ package fi.iot.iiframework.restapi.filters;
 
 import org.hibernate.criterion.Criterion;
 
-public abstract class ReadoutFilter {
+public abstract class GeneralFilter {
 
     private final String field;
 
@@ -17,7 +17,7 @@ public abstract class ReadoutFilter {
      *
      * @param field Name of the field this filter is attached to
      */
-    public ReadoutFilter(String field) {
+    public GeneralFilter(String field) {
         this.field = field;
     }
 

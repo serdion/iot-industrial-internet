@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class After extends ReadoutFilter {
+public class After extends GeneralFilter {
 
     public After(String field) {
         super(field);
@@ -26,7 +26,7 @@ public class After extends ReadoutFilter {
         try {
             bound = Long.parseLong(filters[0]);
         } catch(NumberFormatException ex) {
-            ErrorLogger.newError(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse long given as a parameter in filter.");
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse long given as a parameter in filter.");
         }
         
         return Restrictions.gt(getField(), bound);

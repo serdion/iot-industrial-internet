@@ -12,7 +12,7 @@ import fi.iot.iiframework.errors.ErrorType;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class LessThan extends ReadoutFilter {
+public class LessThan extends GeneralFilter {
 
     public LessThan(String field) {
         super(field);
@@ -24,7 +24,7 @@ public class LessThan extends ReadoutFilter {
         try {
             bound = Double.parseDouble(filters[0]);
         } catch (NumberFormatException ex) {
-            ErrorLogger.newError(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Could not parse double given as a parameter in filter.");
         }
 
         return Restrictions.lt(getField(), bound);

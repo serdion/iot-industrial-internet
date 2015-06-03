@@ -9,7 +9,7 @@ package fi.iot.iiframework.restapi.filters;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class Equals extends ReadoutFilter {
+public class Equals extends GeneralFilter {
 
     public Equals(String field) {
         super(field);

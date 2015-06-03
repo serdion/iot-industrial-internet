@@ -34,7 +34,7 @@ public class RestAPIHelper {
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if (from < 0 || to <= 0 || to == from || from > to
                 || (from - to) > settings.getMaxObjectsRetrievedFromDatabase()) {
-            ErrorLogger.newError(ErrorType.BAD_REQUEST, ErrorSeverity.LOW, "Invalid parameters given for limits (" + from + ", " + to + ") in RestAPI.");
+            ErrorLogger.log(ErrorType.BAD_REQUEST, ErrorSeverity.LOW, "Invalid parameters given for limits (" + from + ", " + to + ") in RestAPI.");
             throw new InvalidParametersException();
         }
     }
@@ -51,7 +51,7 @@ public class RestAPIHelper {
      */
     public Object returnOrException(Object object) throws ResourceNotFoundException {
         if (object == null) {
-            ErrorLogger.newError(ErrorType.NOT_FOUND, ErrorSeverity.LOW, "Resource request could not be found in RestAPI.");
+            ErrorLogger.log(ErrorType.NOT_FOUND, ErrorSeverity.LOW, "Resource request could not be found in RestAPI.");
             throw new ResourceNotFoundException();
         }
 
@@ -66,7 +66,7 @@ public class RestAPIHelper {
      */
     public void checkIfObjectIsValid(Validatable validatable) throws InvalidObjectException {
         if (!validatable.isValid()) {
-            ErrorLogger.newError(ErrorType.IO_ERROR, ErrorSeverity.LOW, "Object recieved was invalid or wrong type in RestAPI.");
+            ErrorLogger.log(ErrorType.IO_ERROR, ErrorSeverity.LOW, "Object recieved was invalid or wrong type in RestAPI.");
             throw new InvalidObjectException();
         }
     }
