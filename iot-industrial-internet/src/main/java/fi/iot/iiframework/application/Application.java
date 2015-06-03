@@ -43,7 +43,7 @@ public class Application {
 //        infSourceManager.createSource(infSourceConfiguration);
 //        infSourceManager.getSources().get(0).readAndWrite();
 
-        SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
+        SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
         ErrorLogger.log(e);
 
         SysError e2 = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.HIGH, "This is an another test error");
@@ -52,7 +52,7 @@ public class Application {
         SysError e3 = new SysError(ErrorType.TIMEOUT_ERROR, ErrorSeverity.FATAL, "This is an another test error");
         ErrorLogger.log(e3);
 
-        SysError e4 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is an another test error");
+        SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
         ErrorLogger.log(e4);
 
     }

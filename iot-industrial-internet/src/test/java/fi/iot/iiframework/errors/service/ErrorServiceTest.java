@@ -51,9 +51,9 @@ public class ErrorServiceTest {
 
     @Before
     public void setUp() {
-        e1 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "aaaa");
-        e2 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "bbbbbbbbbb 31231");
-        e3 = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "cccc cccc");
+        e1 = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "aaaa");
+        e2 = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "bbbbbbbbbb 31231");
+        e3 = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "cccc cccc");
         es.save(e1);
         es.save(e2);
         es.save(e3);
