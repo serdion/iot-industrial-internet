@@ -44,7 +44,7 @@ public class SensorController {
             @PathVariable String sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (Sensor) helper.returnOrException(sensorservice.get(Long.parseLong(sensorid)));
+        return (Sensor) helper.returnOrException(sensorservice.get(sensorid));
     }
 
     @RequestMapping(value = "/{deviceid}/list", produces = "application/json")
@@ -53,7 +53,7 @@ public class SensorController {
             @PathVariable String deviceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        Device device = (Device) helper.returnOrException(deviceservice.get(Long.parseLong(deviceid)));
+        Device device = (Device) helper.returnOrException(deviceservice.get(deviceid));
         return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), device);
     }
 
@@ -64,7 +64,7 @@ public class SensorController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
-        Device device = (Device) helper.returnOrException(deviceservice.get(Long.parseLong(deviceid)));
+        Device device = (Device) helper.returnOrException(deviceservice.get(deviceid));
         helper.exceptionIfWrongLimits(0, amount);
         return sensorservice.getBy(0, amount, device);
     }
@@ -77,7 +77,7 @@ public class SensorController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        Device device = (Device) helper.returnOrException(deviceservice.get(Long.parseLong(deviceid)));
+        Device device = (Device) helper.returnOrException(deviceservice.get(deviceid));
         helper.exceptionIfWrongLimits(to, from);
         return sensorservice.getBy(from, to, device);
     }

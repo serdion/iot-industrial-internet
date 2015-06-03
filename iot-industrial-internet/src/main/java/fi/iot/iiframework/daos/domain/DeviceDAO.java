@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * DAO for Device
  */
-public interface DeviceDAO extends GenericDAO<Device, Long> {
+public interface DeviceDAO extends GenericDAO<Device, String> {
 
     public List<Device> getBy(InformationSourceObject dso);
 

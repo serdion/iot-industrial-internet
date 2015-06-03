@@ -8,10 +8,8 @@ package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.daos.domain.DeviceDAO;
-import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.GenericHibernateService;
-import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.hibernate.criterion.Restrictions;
@@ -21,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class DeviceServiceImpl
-        extends GenericHibernateService<Device, Long>
+        extends GenericHibernateService<Device, String>
         implements DeviceService {
 
     DeviceDAO deviceDAO;
