@@ -5,16 +5,18 @@
  * Software Engineering Lab in summer 2015
  */
 
-sysErrors.controller('SysErrorsController', function($scope, SysErrorList) {
+// Get all syserrors in a list
+sysErrors.controller('SysErrorsListController', function($scope, SysErrorList) {
+    console.log("Get all errors");
     $scope.errorlist = SysErrorList.query(function(data) {
-        console.log("Get all errors");
         console.log(data);
     });
 })
 
-sysErrors.controller('SysErrorsController', function($scope, SysErrorList) {
-    $scope.errorlist = SysErrorList.query(function(data) {
-        console.log("Get all errors");
+//Get one syserro based on id
+sysErrors.controller('SysErrorDetailsController', function($scope, SysError, $routeParams) {
+    console.log("Get single error!");
+    $scope.errorlist = SysError.query({errorid: $routeParams.errorid}, function(data) {
         console.log(data);
     });
 });
