@@ -25,22 +25,22 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(exclude = {"devices", "header"})
 @ToString(exclude = {"devices", "header"})
-public class InformationSourceObject implements Serializable {    
+public class InformationSourceObject implements Serializable {
     @XmlAttribute
     @Id
     protected String id;
-    
+
     protected String name;
-    
+
     @XmlElement
     @Transient
     protected Header header;
-    
+
     @JsonIgnore
     @XmlElementWrapper(name = "devices")
     @XmlElement(name = "device")
     @OneToMany(fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
     @JoinColumn(name = "source")
-    protected Set<Device> devices;    
+    protected Set<Device> devices;
 }

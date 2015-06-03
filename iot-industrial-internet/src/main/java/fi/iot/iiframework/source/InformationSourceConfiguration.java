@@ -99,11 +99,11 @@ public class InformationSourceConfiguration implements Serializable, Validatable
         } catch (MalformedURLException ex) {
             return false;
         }
-        
+
         if(readFrequency<=0){
             return false;
         }
-        
+
         return true;
     }
 

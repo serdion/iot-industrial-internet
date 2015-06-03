@@ -33,7 +33,7 @@ public class CriterionFactory {
 
         acceptedReadoutFilters.put("morethan", new MoreThan("value"));
         acceptedReadoutFilters.put("lessthan", new LessThan("value"));
-        
+
         acceptedReadoutFilters.put("more", new MoreThan("value"));
         acceptedReadoutFilters.put("less", new LessThan("value"));
 
