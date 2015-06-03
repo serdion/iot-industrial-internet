@@ -31,6 +31,12 @@ public enum ErrorSeverity {
         return id;
     }
 
+    /**
+     * Returns ErrorSeverity from the given ID.
+     * 
+     * @param id Severity identifier
+     * @return ErrorSeverity
+     */
     public static ErrorSeverity getType(String id) {
         ErrorSeverity[] values = ErrorSeverity.values();
 
