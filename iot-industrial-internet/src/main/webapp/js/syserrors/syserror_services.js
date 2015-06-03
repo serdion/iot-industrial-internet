@@ -14,3 +14,10 @@ sysErrors.factory('SysError', ['$resource',
             query: {method: 'GET', isArray: true}
         });
     }]);
+
+sysErrors.factory('SysErrorList', ['$resource',
+    function($resource) {
+        return $resource('1.0/errors/list', {}, {
+            query: {method: 'GET', isArray: true}
+        });
+    }]);

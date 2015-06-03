@@ -16,8 +16,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="error in errors" >
-                            <td>{{error.description}}</td>
+                        <tr ng-repeat="error in errorlist" >
+                            <td>{{error.type}} </td>
+                            <td>{{error.severity}} </td>
+                            <td>{{error.description}} </td>
+                            <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/errors/{{error.id}}">Error</a></td>
                         </tr>
                     </tbody>
                 </table>
