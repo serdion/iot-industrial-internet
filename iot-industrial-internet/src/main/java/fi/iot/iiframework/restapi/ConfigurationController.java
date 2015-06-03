@@ -63,7 +63,7 @@ public class ConfigurationController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.updateSource(configuration.getId(), configuration);
+        informationSourceManager.createSource(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
     

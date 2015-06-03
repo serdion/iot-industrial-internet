@@ -17,6 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,8 +28,9 @@ import org.hibernate.annotations.CascadeType;
 public class Sensor implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    protected String id;
 
     @XmlAttribute(name = "id")
     protected String sensorId;
