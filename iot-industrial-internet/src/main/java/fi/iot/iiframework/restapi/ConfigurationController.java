@@ -29,19 +29,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("1.0/configurations")
 public class ConfigurationController {
-    
+
     @Autowired
     private RestAPIHelper helper;
-    
+
     @Autowired
     private ApplicationSettings settings;
-    
+
     @Autowired
     private InformationSourceManager informationSourceManager;
-    
+
     @Autowired
     private InformationSourceConfigurationService informationSourceConfigurationService;
-    
+
     @RequestMapping(value = "/informationsources/{configid}/view", produces = "application/json")
     @ResponseBody
     public InformationSourceConfiguration getInformationSource(
@@ -66,7 +66,7 @@ public class ConfigurationController {
         informationSourceManager.createSource(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
-    
+
     @RequestMapping(
             value = "/informationsources/edit",
             method = RequestMethod.POST,

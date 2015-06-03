@@ -10,9 +10,9 @@ import fi.iot.iiframework.domain.Validatable;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -22,6 +22,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "infosourceconfigs")
+@Data
+@EqualsAndHashCode(exclude = {"id", "name", "type", "url"})
 public class InformationSourceConfiguration implements Serializable, Validatable {
 
     /**
@@ -52,46 +54,7 @@ public class InformationSourceConfiguration implements Serializable, Validatable
     @Column(name = "readfrequency")
     protected int readFrequency;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public InformationSourceType getType() {
-        return type;
-    }
-
-    public void setType(InformationSourceType type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getReadFrequency() {
-        return readFrequency;
-    }
-
-    public void setReadFrequency(int readFrequency) {
-        this.readFrequency = readFrequency;
-    }
-
+    
     @Override
     public boolean isValid() {
         try {
@@ -99,11 +62,11 @@ public class InformationSourceConfiguration implements Serializable, Validatable
         } catch (MalformedURLException ex) {
             return false;
         }
-        
+
         if(readFrequency<=0){
             return false;
         }
-        
+
         return true;
     }
 
