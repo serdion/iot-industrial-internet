@@ -51,7 +51,21 @@ public class SysError implements Serializable {
         this.severity = severity;
 
         this.time = new Date();
+    }
 
+    /**
+     * Creates a new SysError
+     *
+     * @param type ErrorType of error
+     * @param desc Description of error
+     * @param location Location of where the error occurred
+     * @param severity ErrorSeverity of the error
+     */
+    public SysError(ErrorType type, ErrorSeverity severity, String desc, String location) {
+        this.type = type;
+        this.description = desc;
+        this.location = location;
+        this.severity = severity;
     }
 
     public SysError() {
