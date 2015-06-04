@@ -46,8 +46,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
         },
         xaxis: {
             mode: "time",
-            timeformat: "%d/%m.%y %H:%M:%S"
-            //timeformat: "%Y/%m/%d"
+            timeformat: "%d.%m.%y %H:%M:%S"
         },
         yaxis: {
             min: $scope.number[0],
