@@ -11,7 +11,8 @@ var IIFramework = angular.module('IIFramework', [
     'angular-flot',
     'informationSources',
     'configurations',
-    'sysErrors'
+    'sysErrors',
+    'angularMoment'
 ]);
 
 
