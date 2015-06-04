@@ -21,4 +21,13 @@ sysErrors.controller('SysErrorDetailsController', function($scope, SysError, $ro
     });
 });
 
+//Get errors of severity equal or higher than high
+
+sysErrors.controller('ErrorNotificationController', function($scope, SysError, $routeParams) {
+    console.log("Get all errors to alarmlist without any filtering yet!");
+    $scope.alarmlist = SysError.getHighAndFatal({errorid: $routeParams.errorid}, function(data) {
+        console.log(data);
+    });
+});
+
 

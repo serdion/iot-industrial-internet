@@ -14,8 +14,9 @@ var sysErrors = angular.module('sysErrors', ['ngResource']);
 
 sysErrors.factory('SysError', ['$resource',
     function($resource) {
-        return $resource('1.0/errors/:errorid/:action', {}, {
+        return $resource('1.0/errors/:errorid/:action/:filter', {}, {
             get: {method: 'GET', params: {action: 'list'}, isArray: true},
-            query: {method: 'GET', params: {action: 'view'}, isArray: false}
+            query: {method: 'GET', params: {action: 'view'}, isArray: false},
+            getHighAndFatal: {method: 'GET', params: {action: 'list'}, isArray: true}
         });
     }]);
