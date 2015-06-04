@@ -6,7 +6,6 @@
     Software Engineering Lab in summer 2015
 -->
 
-<!-- TODO: Convert this to use Angular -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
@@ -23,6 +22,8 @@
         <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     </head>
 
     <body ng-app="IIFramework">
@@ -38,73 +39,56 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" th:href="@{#/}">Industrial Internet Framework</a>
+                        <a class="navbar-brand">Industrial Internet Framework</a>
                     </div>
                     <!-- /.navbar-header -->
 
                     <ul class="nav navbar-top-links navbar-right">
+
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+
+
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-exclamation-triangle"></i>  <i class="fa fa-caret-down"></i>
                             </a>
-                            <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="#">
-                                        <div>
-                                            <i class="fa fa-exclamation-triangle fa-fw"></i> Could not find sensor!
-                                            <span class="pull-right text-muted small">2 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">
-                                        <div>
-                                            <i class="fa fa-flag fa-fw"></i> Event triggered!
-                                            <span class="pull-right text-muted small">12 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">
-                                        <div>
-                                            <i class="fa fa-exclamation-triangle fa-fw"></i> Incorrect data recieved!
-                                            <span class="pull-right text-muted small">54 minutes ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">
-                                        <div>
-                                            <i class="fa fa-lock fa-fw"></i> Failed login attempt
-                                            <span class="pull-right text-muted small">4 hours ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="#">
-                                        <div>
-                                            <i class="fa fa-upload fa-fw"></i> Server Shutdown
-                                            <span class="pull-right text-muted small">7 hours ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a class="text-center" th:href="@{/alerts/list}">
-                                        <strong>See All Alerts</strong>
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </li>
+
+
+                            <ul class="dropdown-menu dropdown-alerts" ng-controller="ErrorNotificationController">
+
+                                <p ng-repeat="error in alarmlist" >
+                                    <li ng-repeat="error in alarmlist">
+                                        <a href="#/syserrors/{{error.id}}">
+                                            <div>
+                                                <div ng-if="error.severity == 'FATAL'">
+                                                    <font color="red">
+                                                        <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.type}}</font>
+                                                </div>
+                                                <div ng-if="error.severity != 'FATAL'">
+                                                    <i class="fa fa-bell fa-fw"></i>{{error.type}} 
+                                                </div>
+                                                <span class="pull-right text-muted small" am-time-ago=error.time></span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="text-center" th:href="@{#/syserrors/}">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+
+                                </p>
+
+
                             </ul>
+
+
                             <!-- /.dropdown-alerts -->
                         </li>
                         <!-- /.dropdown -->
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
@@ -147,6 +131,9 @@
                                             <a th:href="@{#/sources/}"><i class="fa fa-upload fa-fw"></i> Information Sources</a>
                                         </li>
                                         <li>
+                                            <a th:href="@{#/configurations/}"><i class="fa fa-upload fa-fw"></i> Configurations</a>
+                                        </li>
+                                        <li>
                                             <a th:href="@{#}"><i class="fa fa-database fa-fw"></i> Database</a>
                                         </li>
                                         <li>
@@ -173,6 +160,7 @@
             </div>
             <div id="page-wrapper">
                 <div class="container-fluid">
+					<div id="error_container"></div>
                     <div ng-view></div>
                 </div>
             </div>
@@ -180,6 +168,7 @@
         </div>
 
         <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
         <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular/angular.js}"></script>
@@ -191,6 +180,7 @@
         <script th:attr="src=@{/bower_components/flot/jquery.flot.pie.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.resize.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.time.js}"></script>
+        <script th:attr="src=@{/bower_components/flot/jquery.flot.navigate.js}"></script>
         <script th:attr="src=@{/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular-flot/angular-flot.js}"></script>
 
@@ -206,6 +196,11 @@
         <script th:attr="src=@{/js/syserrors/syserror_services.js}"></script>
         <script th:attr="src=@{/js/syserrors/syserror_controllers.js}"></script>
 
+        <script th:attr="src=@{/js/directives/slider.js}"></script>
+
+<!--        Angular Moment-->
+        <script th:attr="src=@{/bower_components/moment/moment.js}"></script>
+        <script th:attr="src=@{/bower_components/angular-moment/angular-moment.js}"></script>
 
     </body>
 

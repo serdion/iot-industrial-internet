@@ -11,7 +11,7 @@ configurations.factory('InformationSourceConfiguration', ['$resource',
   function ($resource) {
     return $resource('1.0/configurations/informationsources/:configid/:action', {}, {
       get: {method: 'GET', params: {action: 'view'}},
-      query: {method: 'GET', params: {action: 'list'}},
+      query: {method: 'GET', params: {action: 'list'}, isArray: true},
       save: {method: 'POST', params: {action: 'add'}},
       delete: {method: 'DELETE', params: {action: 'delete'}}
     });

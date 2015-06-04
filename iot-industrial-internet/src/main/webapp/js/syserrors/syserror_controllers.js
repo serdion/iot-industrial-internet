@@ -6,9 +6,9 @@
  */
 
 // Get all syserrors in a list
-sysErrors.controller('SysErrorsListController', function($scope, SysErrorList) {
+sysErrors.controller('SysErrorsListController', function($scope, SysError, $routeParams) {
     console.log("Get all errors");
-    $scope.errorlist = SysErrorList.query(function(data) {
+    $scope.errorlist = SysError.get(function(data) {
         console.log(data);
     });
 });
@@ -20,3 +20,14 @@ sysErrors.controller('SysErrorDetailsController', function($scope, SysError, $ro
         console.log(data);
     });
 });
+
+//Get errors of severity equal or higher than high
+
+sysErrors.controller('ErrorNotificationController', function($scope, SysError, $routeParams) {
+    console.log("Get all errors to alarmlist without any filtering yet!");
+    $scope.alarmlist = SysError.getHighAndFatal({errorid: $routeParams.errorid}, function(data) {
+        console.log(data);
+    });
+});
+
+

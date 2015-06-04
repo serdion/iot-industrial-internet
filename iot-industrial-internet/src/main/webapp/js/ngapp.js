@@ -11,7 +11,8 @@ var IIFramework = angular.module('IIFramework', [
     'angular-flot',
     'informationSources',
     'configurations',
-    'sysErrors'
+    'sysErrors',
+    'angularMoment'
 ]);
 
 
@@ -20,7 +21,7 @@ IIFramework.config(function($routeProvider) {
         controller: 'FrontController',
         templateUrl: 'ngviews/front.html'
     })
-            .when('/visual/now', {
+            .when('/visual/now/:sensorid', {
                 controller: 'VisualRealtimeController',
                 templateUrl: 'ngviews/visual_realtime.html'
             })
@@ -38,12 +39,17 @@ IIFramework.config(function($routeProvider) {
             })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
-                templateUrl: 'ngviews/sensor.html'})
+                templateUrl: 'ngviews/sensor.html'
+            })
+            .when('/configurations', {
+                controller: 'InformationSourceConfigurationsController',
+                templateUrl: 'ngviews/configurations.html'
+            })
             .when('/configurations/add', {
                 controller: 'AddInformationSourceController',
                 templateUrl: 'ngviews/add_information_source.html'
             })
-            
+
             // Controllers for SysErrors
             .when('/syserrors/:errorid', {
                 controller: 'SysErrorDetailsController',

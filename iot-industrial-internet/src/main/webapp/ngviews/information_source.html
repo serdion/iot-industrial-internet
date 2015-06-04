@@ -20,17 +20,20 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Sensor ID</th>
+                                <th>Amount</th>
                                 <th>Readouts</th>
-                                <th>Options</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="sensor in device.sensors">
                                 <td>{{sensor.id}}</td>
                                 <td>{{sensor.sensorId}}</td>
-                                <td></td>
                                 <td>
-                                    <a type="button" class="btn btn-primary btn-xs" ng-href="#/sensors/{{sensor.id}}">Readouts</a>
+                                    25
+                                </td>
+                                <td>
+                                    <a type="button" class="btn btn-info btn-xs" ng-href="#/visual/now/{{sensor.id}}">Graph</a>
+                                    <a type="button" class="btn btn-primary btn-xs" ng-href="#/sensors/{{sensor.id}}">List</a>
                                 </td>
                             </tr>
                         </tbody>
