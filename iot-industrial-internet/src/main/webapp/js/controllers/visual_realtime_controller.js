@@ -6,17 +6,63 @@
  */
 
 
-IIFramework.controller('VisualRealtimeController', function ($scope, InformationSource) {
-
-    $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
-    $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
-
+IIFramework.controller('VisualRealtimeController', function ($scope, InformationSource, Readout, $routeParams) {
     var dataToDisplay = [];
 
-    $scope.data = [{
-            data: dataToDisplay,
-            label: "NaN"
-        }];
+    $scope.number = [0, 80];
+    $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
+    $scope.id = $routeParams.sensorid;
+
+        var highestValue = Number.MIN_VALUE;
+        var lowestValue = Number.MAX_VALUE;
+
+        for (var i = 0; i < $scope.readouts.length; i++) {
+            var time = $scope.readouts[i].time;
+            var value = $scope.readouts[i].value;
+            
+            dataToDisplay[i] = [time, value];
+        }
+        
+        console.log(highestValue +" is bigger than "+ lowestValue);
+
+        $scope.flotData = [{
+                data: dataToDisplay,
+                label: " " + ($scope.readouts[0].quantity) + " (" + $scope.readouts[0].unit + ")"
+            }];
+    });
+
+    $scope.change = function () {
+        $scope.dataOptions.yaxis.min = $scope.number[0];
+        $scope.dataOptions.yaxis.max = $scope.number[1];
+    };
+
+    $scope.doit = function () {
+        $scope.dataOptions = {
+            series: {
+                lines: {
+                    show: true
+                },
+                points: {
+                    show: true
+                }
+            },
+            grid: {
+                hoverable: true // needed for tooltip to work
+            },
+            yaxis: {
+                min: $scope.number[0],
+                max: $scope.number[1]
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "'%s' of %x.1 is %y.4",
+                shifts: {
+                    x: -60,
+                    y: 25
+                }
+            }
+        };
+    };
 
     $scope.dataOptions = {
         series: {
@@ -31,42 +77,8 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
             hoverable: true // needed for tooltip to work
         },
         yaxis: {
-            min: -1.2,
-            max: 1.2
-        },
-        tooltip: true,
-        tooltipOpts: {
-            content: "'%s' of %x.1 is %y.4",
-            shifts: {
-                x: -60,
-                y: 25
-            }
-        }
-    }
-
-    $scope.sincosData = [{
-            data: sin,
-            label: "sin(x)"
-        }, {
-            data: cos,
-            label: "cos(x)"
-        }];
-
-    $scope.sincosOptions = {
-        series: {
-            lines: {
-                show: true
-            },
-            points: {
-                show: true
-            }
-        },
-        grid: {
-            hoverable: true //IMPORTANT! this is needed for tooltip to work
-        },
-        yaxis: {
-            min: -1.2,
-            max: 1.2
+            min: $scope.number[0],
+            max: $scope.number[1]
         },
         tooltip: true,
         tooltipOpts: {
@@ -78,40 +90,6 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
         }
     };
 
-    $scope.oilData = [{
-            data: oilprices,
-            label: "Oil price ($)"
-        }, {
-            data: exchangerates,
-            label: "USD/EUR exchange rate",
-            yaxis: 2
-        }];
-    $scope.oilOptions = {
-        xaxes: [{
-                mode: 'time'
-            }],
-        yaxes: [{
-                min: 0
-            }, {
-                // align if we are to the right
-                alignTicksWithAxis: 1,
-                position: "right",
-                tickFormatter: euroFormatter
-            }],
-        legend: {
-            position: 'sw'
-        },
-        grid: {
-            hoverable: true //IMPORTANT! this is needed for tooltip to work
-        },
-        tooltip: true,
-        tooltipOpts: {
-            content: "%s for %x was %y",
-            xDateFormat: "%y-%0m-%0d",
-            onHover: function (flotItem, $tooltipEl) {
-                // console.log(flotItem, $tooltipEl);
-            }
-        }
+}
+);
 
-    };
-});
