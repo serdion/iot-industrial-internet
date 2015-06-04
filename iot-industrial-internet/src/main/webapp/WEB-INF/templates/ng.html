@@ -6,7 +6,6 @@
     Software Engineering Lab in summer 2015
 -->
 
-<!-- TODO: Convert this to use Angular -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
@@ -132,6 +131,9 @@
                                             <a th:href="@{#/sources/}"><i class="fa fa-upload fa-fw"></i> Information Sources</a>
                                         </li>
                                         <li>
+                                            <a th:href="@{#/configurations/}"><i class="fa fa-upload fa-fw"></i> Configurations</a>
+                                        </li>
+                                        <li>
                                             <a th:href="@{#}"><i class="fa fa-database fa-fw"></i> Database</a>
                                         </li>
                                         <li>
@@ -158,6 +160,7 @@
             </div>
             <div id="page-wrapper">
                 <div class="container-fluid">
+					<div id="error_container"></div>
                     <div ng-view></div>
                 </div>
             </div>
