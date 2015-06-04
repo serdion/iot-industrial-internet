@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.services.dataobject.DataSourceObjectService;
+import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class InformationSourceManager {
-    
+
     private List<InformationSource> sources;
-    
+
     @Autowired
-    private DataSourceObjectService service;
+    private InformationSourceObjectService service;
     @Autowired
     private InformationSourceConfigurationService configService;
-    
+
     public InformationSourceManager() {
         this.sources = new ArrayList<>();
     }
@@ -42,7 +42,7 @@ public class InformationSourceManager {
         sources.add(source);
         configService.save(config);
     }
-    
+
     /**
      *
      * Deletes an object that represents an external data source
@@ -53,7 +53,7 @@ public class InformationSourceManager {
         sources.removeIf(p -> id.equals(p.getId()));
         configService.delete(configService.get(id));
     }
-    
+
     /**
      *
      * Updates the configuration information of an object that represents an external data source
@@ -68,17 +68,17 @@ public class InformationSourceManager {
         newConfig.setId(id);
         createSource(newConfig);
     }
-    
+
     public List<InformationSource> getSources() {
         return sources;
     }
-    
+
     public InformationSourceConfiguration getSourceConfigFromDB(String id) {
         return configService.get(id);
     }
-    
+
     public List<InformationSourceConfiguration> getAllSourceConfigsFromDB() {
         return configService.getAll();
     }
-    
+
 }

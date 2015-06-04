@@ -52,5 +52,6 @@ public interface GenericDAO<T, ID extends Serializable> {
     public void remove(T t);
 
     public List<T> findByCriteriaFromTo(int from, int to, List<Criterion> list);
-    
+
+    public Long countByCriteria(List<Criterion> list);
 }

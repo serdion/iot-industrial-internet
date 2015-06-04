@@ -7,10 +7,10 @@
 package fi.iot.iiframework.errors;
 
 import fi.iot.iiframework.errors.service.ErrorService;
-import fi.iot.iiframework.services.GenericService;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +27,7 @@ public class ErrorLogger {
     private ErrorService gServiceAW;
 
     /**
-     * Class needed to allow using Autowired-annotation in a static class
+     * Class needed to allow using Autowired -annotation in a static class
      */
     @PostConstruct
     public void ErrorLogger() {
@@ -37,37 +37,46 @@ public class ErrorLogger {
     /**
      * Creates a new error and calls newError to save it to database
      *
-     * @param e ErrorType of error
-     * @param es ErrorSeverity of error
-     * 
-     * @param desc Optional description
+     * @param type ErrorType of error
+     * @param severity ErrorSeverity of error
+     * @param desc Description of error
+     * @param location Location of the error
      */
-    public static void newError(ErrorType e, ErrorSeverity es, String desc) {
-        SysError error = new SysError(e, es, desc);
+    public static void log(ErrorType type, ErrorSeverity severity, String desc, String location) {
+        SysError error = new SysError(type, severity, sanitizeString(desc), sanitizeString(location));
         saveError(error);
     }
 
     /**
-     * Creates a new error and calls newError to save it to database
+     * Creates a new error and calls newError to save it to database with
+     * location obtained from the stack trace.
      *
-     * @param e ErrorType of error
-     * @param es ErrorSeverity of error
-     * 
+     * @param type ErrorType of error
+     * @param severity ErrorSeverity of error
+     *
+     * @param desc Optional description
      */
-    public static void newError(ErrorType e, ErrorSeverity es) {
-        SysError error = new SysError(e, es, "no description");
-        saveError(error);
+    public static void log(ErrorType type, ErrorSeverity severity, String desc) {
+        SysError error = new SysError(type, severity, sanitizeString(desc));
 
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        error.setLocation(stackTraceElements[2].toString());
+
+        saveError(error);
     }
+
 
     /**
      * Saves a predefined SysError to the database
      *
      * @param error
      */
-    public static void newError(SysError error) {
+    public static void log(SysError error) {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        error.setLocation(stackTraceElements[2].toString());
+        error.setDescription(sanitizeString(error.getDescription()));
+        
         saveError(error);
-
     }
 
     /**
@@ -77,11 +86,19 @@ public class ErrorLogger {
      */
     private static void saveError(SysError error) {
         gService.save(error);
-
+        System.out.println("Error:\t --- "+ error);
     }
 
     public static List<SysError> getAllErrors() {
         return gService.getAll();
+    }
+    
+    private static String sanitizeString(String string){
+        if(string==null||string.length()<2){
+            string = "NaN";
+        }
+        
+        return StringEscapeUtils.escapeHtml4(string);
     }
 
 }

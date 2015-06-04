@@ -23,21 +23,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = {TestConfig.class})
 public class ErrorLoggerTest {
 
-    private String test1 = "This is just a test error";
-    private String test2 = "Hey, this is just a second test error";
-
     public ErrorLoggerTest() {
     }
-
-    @BeforeClass
-    public static void setUpClass() {
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
+    
     @Before
     public void setUp() {
     }
@@ -49,17 +37,17 @@ public class ErrorLoggerTest {
     @Test
     public void newErrorISCreatedWithoutDescription() {
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
-        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
+        ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "");
         List<SysError> allErrors = ErrorLogger.getAllErrors();
-        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("no description"));
+        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("NaN"));
     }
 
     @Test
     public void newErrorISCreatedWithPresetError() {
 
         int sizeOfErrorList = ErrorLogger.getAllErrors().size();
-        SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "I was added directly...");
-        ErrorLogger.newError(e);
+        SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "I was added directly...");
+        ErrorLogger.log(e);
 
         List<SysError> allErrors = ErrorLogger.getAllErrors();
         assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("I was added directly..."));
@@ -67,12 +55,12 @@ public class ErrorLoggerTest {
     
     @Test
     public void newErrorTimeIsSaved() {
-        ErrorLogger.newError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION);
-        assertNotNull(ErrorLogger.getAllErrors().get(0).getDate());
+        ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "UNKNOWN_ERROR");
+        assertNotNull(ErrorLogger.getAllErrors().get(0).getTime());
         
         Date now = new Date();
-        ErrorLogger.getAllErrors().get(0).setDate(now);
-        Date nowtest = ErrorLogger.getAllErrors().get(0).getDate();
+        ErrorLogger.getAllErrors().get(0).setTime(now);
+        Date nowtest = ErrorLogger.getAllErrors().get(0).getTime();
         System.out.println("Now: " + now + " Now in db: " + nowtest);
 
     }

@@ -9,11 +9,13 @@
 var IIFramework = angular.module('IIFramework', [
     'ngRoute',
     'angular-flot',
-    'informationSources'
+    'informationSources',
+    'configurations',
+    'sysErrors'
 ]);
 
 
-IIFramework.config(function ($routeProvider) {
+IIFramework.config(function($routeProvider) {
     $routeProvider.when('/', {
         controller: 'FrontController',
         templateUrl: 'ngviews/front.html'
@@ -30,11 +32,25 @@ IIFramework.config(function ($routeProvider) {
                 controller: 'InformationSourcesController',
                 templateUrl: 'ngviews/information_sources.html'
             })
-            .when('/sources/:datasourceid', {
+            .when('/sources/:informationsourceid', {
                 controller: 'InformationSourceController',
                 templateUrl: 'ngviews/information_source.html'
             })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
-                templateUrl: 'ngviews/sensor.html'});
+                templateUrl: 'ngviews/sensor.html'})
+            .when('/configurations/add', {
+                controller: 'AddInformationSourceController',
+                templateUrl: 'ngviews/add_information_source.html'
+            })
+            
+            // Controllers for SysErrors
+            .when('/syserrors/:errorid', {
+                controller: 'SysErrorDetailsController',
+                templateUrl: 'ngviews/syserrordetails.html'
+            })
+            .when('/syserrors/', {
+                controller: 'SysErrorsListController',
+                templateUrl: 'ngviews/syserrors.html'
+            });
 });

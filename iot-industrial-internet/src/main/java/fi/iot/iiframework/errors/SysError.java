@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- * Contains information about an error
+ * Contains information about an error in the system
  */
 @Entity
 @Table(name = "Errors")
@@ -31,11 +31,15 @@ public class SysError implements Serializable {
 
     @Column(name = "description")
     private String description;
-    
+
+    @Column(name = "location")
+    private String location;
+
     @Column(name = "severity")
     private ErrorSeverity severity;
 
     /**
+     * Creates a new SysError
      *
      * @param type ErrorType of error
      * @param severity ErrorSeverity of the error
@@ -45,15 +49,26 @@ public class SysError implements Serializable {
         this.type = type;
         this.description = desc;
         this.severity = severity;
-        
-        this.time = new Date();
 
+        this.time = new Date();
     }
 
-
+    /**
+     * Creates a new SysError
+     *
+     * @param type ErrorType of error
+     * @param desc Description of error
+     * @param location Location of where the error occurred
+     * @param severity ErrorSeverity of the error
+     */
+    public SysError(ErrorType type, ErrorSeverity severity, String desc, String location) {
+        this.type = type;
+        this.description = desc;
+        this.location = location;
+        this.severity = severity;
+    }
 
     public SysError() {
-        // Hibernate requires an empty constructor
     }
 
     public String getId() {
@@ -64,6 +79,14 @@ public class SysError implements Serializable {
         this.id = id;
     }
 
+    public ErrorType getType() {
+        return type;
+    }
+
+    public void setType(ErrorType type) {
+        this.type = type;
+    }
+
     public Date getTime() {
         return time;
     }
@@ -72,28 +95,20 @@ public class SysError implements Serializable {
         this.time = time;
     }
 
-    public void setType(ErrorType type) {
-        this.type = type;
-    }
-
-    public void setDate(Date newtime) {
-        this.time = newtime;
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public ErrorType getType() {
-        return type;
+    public String getLocation() {
+        return location;
     }
 
-    public Date getDate() {
-        return time;
-    }
-
-    public String getDescription() {
-        return description;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public ErrorSeverity getSeverity() {
@@ -103,7 +118,15 @@ public class SysError implements Serializable {
     public void setSeverity(ErrorSeverity severity) {
         this.severity = severity;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "\tid: "+ this.id +
+                "\ttype: " + this.type.toString() +
+                "\ttime: " + this.time.toString() +
+                "\tdesc: " + this.description +
+                "\tlocation: " + this.location +
+                "\tseverity: " + this.severity.toString();
+    }
 
 }

@@ -22,4 +22,8 @@ public interface GenericService<T, ID extends Serializable> {
     public void delete(T t);
 
     public List<T> getAll();
+    
+    public Long countByCriteria(List<Criterion> criterion);
+    
+    public Long count();
 }

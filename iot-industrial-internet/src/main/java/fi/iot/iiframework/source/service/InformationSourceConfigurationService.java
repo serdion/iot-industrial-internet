@@ -11,5 +11,5 @@ import fi.iot.iiframework.services.GenericService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
 
 public interface InformationSourceConfigurationService extends GenericService<InformationSourceConfiguration, String>{
-    
+
 }

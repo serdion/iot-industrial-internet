@@ -34,17 +34,26 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
 
-        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
+//        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
+//
+//        InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
+//        infSourceConfiguration.setName("Example Config");
+//        infSourceConfiguration.setType(InformationSourceType.XML);
+//        infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
+//        infSourceManager.createSource(infSourceConfiguration);
+//        infSourceManager.getSources().get(0).readAndWrite();
 
-        InformationSourceConfiguration infSourceConfiguration = new InformationSourceConfiguration();
-        infSourceConfiguration.setName("Example Config");
-        infSourceConfiguration.setType(InformationSourceType.XML);
-        infSourceConfiguration.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
-        infSourceManager.createSource(infSourceConfiguration);
-        infSourceManager.getSources().get(0).readAndWrite();
+        SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
+        ErrorLogger.log(e);
 
-        SysError e = new SysError(ErrorType.TEST_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
-        ErrorLogger.newError(e);
+        SysError e2 = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.HIGH, "This is an another test error");
+        ErrorLogger.log(e2);
+
+        SysError e3 = new SysError(ErrorType.TIMEOUT_ERROR, ErrorSeverity.FATAL, "This is an another test error");
+        ErrorLogger.log(e3);
+
+        SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
+        ErrorLogger.log(e4);
 
     }
 

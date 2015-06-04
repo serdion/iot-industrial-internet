@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Add new Information source</h1>
+        <div class="panel panel-default">
+            <div class="panel-heading">Add new Information source</div>
+            <div class="panel-body">
+
+                <form role="form" ng-controller="AddInformationSourceController">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" name="is_name" ng-model="is_name" placeholder="Enter name" />
+                        <p class="help-block">Name of the Information source</p>
+                    </div>
+
+                        <label>Selects</label>
+                    <div class="form-group">
+                        <select class="form-control" name="is_type" ng-model="is_type" ng-options="type for type in types"/>
+                        </select>
+                    </div>
+                        <p class="help-block">Type of the Information source</p>
+
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input class="form-control" name="is_url" ng-model="is_url" placeholder="Enter URL" />
+                        <p class="help-block">Information source URL</p>
+                    </div>
+
+                    <label>Read frequency</label>
+                    <div class="form-group input-group">
+                        <input type="text" class="form-control" name="is_freq" ng-model="is_freq" />
+                        <span class="input-group-addon">seconds</span>
+                    </div>
+
+                    <button type="button" class="btn btn-info btn-circle btn-xl" ng-click="addIS()"><i class="fa fa-check"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

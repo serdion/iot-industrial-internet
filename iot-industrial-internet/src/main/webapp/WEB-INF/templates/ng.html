@@ -155,6 +155,9 @@
                                         <li>
                                             <a th:href="@{#}"><i class="fa fa-group fa-fw"></i> Users</a>
                                         </li>
+                                        <li>
+                                            <a th:href="@{#/syserrors/}"><i class="fa fa-exclamation-triangle"></i> Errors </a>
+                                        </li>
                                     </ul>
                                     <!-- /.nav-second-level -->
                                 </li>
@@ -198,6 +201,11 @@
         <script th:attr="src=@{/js/controllers/visual_realtime_controller.js}"></script>
         <script th:attr="src=@{/js/information_sources/information_source_services.js}"></script>
         <script th:attr="src=@{/js/information_sources/information_source_controllers.js}"></script>
+        <script th:attr="src=@{/js/configurations/configuration_services.js}"></script>
+        <script th:attr="src=@{/js/configurations/configuration_controllers.js}"></script>
+        <script th:attr="src=@{/js/syserrors/syserror_services.js}"></script>
+        <script th:attr="src=@{/js/syserrors/syserror_controllers.js}"></script>
+
 
     </body>
 

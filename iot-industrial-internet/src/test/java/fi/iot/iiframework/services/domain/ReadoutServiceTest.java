@@ -7,13 +7,15 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.DataSourceObject;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.services.dataobject.ReadoutService;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -42,22 +44,26 @@ public class ReadoutServiceTest {
 
     @Before
     public void setUp() {
-        DataSourceObject dso = DataObjectProvider.provideDataObject();
+        InformationSourceObject dso = InformationSourceObjectProvider.provideDataObject();
 
-        Device dev = DataObjectProvider.provideDevice();
+        Device dev = InformationSourceObjectProvider.provideDevice();
         dev.setSource(dso);
 
-        s1 = DataObjectProvider.provideSensor();
-        s2 = DataObjectProvider.provideSensor();
+        s1 = InformationSourceObjectProvider.provideSensor();
+        s2 = InformationSourceObjectProvider.provideSensor();
         s1.setDevice(dev);
         s2.setDevice(dev);
 
-        r1 = DataObjectProvider.provideReadout();
-        r2 = DataObjectProvider.provideReadout();
-        r3 = DataObjectProvider.provideReadout();
+        r1 = InformationSourceObjectProvider.provideReadout();
+        r2 = InformationSourceObjectProvider.provideReadout();
+        r3 = InformationSourceObjectProvider.provideReadout();
         r1.setSensor(s1);
         r2.setSensor(s1);
         r3.setSensor(s2);
+
+        r1.setValue(21.0);
+        r2.setValue(23.0);
+        r3.setValue(22.1);
 
         service.save(r1);
         service.save(r2);
@@ -109,4 +115,34 @@ public class ReadoutServiceTest {
         assertFalse(readReadouts.contains(r3));
     }
 
+    @Test
+    public void readoutsCanBeCounted() {
+        assertEquals(3, (long) service.count());
+    }
+
+    @Test
+    public void readoutsCanBeCountedBySensor() {
+        assertEquals(2, (long) service.countBy(s1));
+    }
+
+    @Test
+    public void readoutsCanBeFiltered() {
+        List<Criterion> criterions = new ArrayList<>();
+        Criterion c1 = Restrictions.ge("value", 22.0);
+        criterions.add(c1);
+        assertEquals(2, (long) service.getBy(0, 2, criterions).size());
+    }
+
+    @Test
+    public void readoutsCanBeUpdatedProperly() {
+        Readout r4 = r1;
+        r4.setValue(22.2);
+        service.save(r4);
+        assertEquals(3, (long) service.count());
+
+        List<Criterion> criterions = new ArrayList<>();
+        Criterion c1 = Restrictions.ge("value", 22.0);
+        criterions.add(c1);
+        assertEquals(3, (long) service.getBy(0, 2, criterions).size());
+    }
 }
