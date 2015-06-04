@@ -43,14 +43,14 @@ public class CriterionFactory {
     }
 
     private void initAcceptedSysErrorFilters() {
-        acceptedReadoutFilters.put("type", new EqualsErrorType("type"));
+        acceptedSysErrorFilters.put("type", new EqualsErrorType("type"));
 
-        acceptedReadoutFilters.put("after", new After("errordate"));
-        acceptedReadoutFilters.put("before", new Before("errordate"));
+        acceptedSysErrorFilters.put("after", new After("errordate"));
+        acceptedSysErrorFilters.put("before", new Before("errordate"));
 
-        acceptedReadoutFilters.put("higher", new MoreThan("severity"));
-        acceptedReadoutFilters.put("lower", new LessThan("severity"));
-        acceptedReadoutFilters.put("severity", new EqualsErrorSeverity("severity"));
+        acceptedSysErrorFilters.put("higher", new MoreThan("severity"));
+        acceptedSysErrorFilters.put("lower", new LessThan("severity"));
+        acceptedSysErrorFilters.put("severity", new EqualsErrorSeverity("severity"));
     }
 
     /**
