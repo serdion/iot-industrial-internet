@@ -9,8 +9,12 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
   $scope.types = ['XML'];
   $scope.addIS = function() {
     var ISConfig = new InformationSourceConfiguration({name: $scope.is_name,
-      type: 'XML', url: $scope.is_url, readFrequency: $scope.is_freq});
+      type: $scope.is_type, url: $scope.is_url, readFrequency: $scope.is_freq});
       ISConfig.$save();
       $location.path('/sources');
     };
+  }]);
+
+  configurations.controller('InformationSourceConfigurationsController', ['$scope', 'InformationSourceConfiguration','$location', function($scope, InformationSourceConfiguration, $location) {
+    $scope.configurations = InformationSourceConfiguration.query();
   }]);
