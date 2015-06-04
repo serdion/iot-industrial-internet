@@ -5,9 +5,7 @@
  * Software Engineering Lab in summer 2015
  */
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function ($scope, InformationSource) {
-        $scope.sources = InformationSource.query({}, function (value, headers) {
-            console.log(value);
-        });
+        $scope.sources = InformationSource.query();
     }]);
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'Device', 'InformationSource', 'Sensor',
