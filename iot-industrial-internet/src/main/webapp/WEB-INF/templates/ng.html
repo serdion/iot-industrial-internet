@@ -53,15 +53,30 @@
 
 
                             <ul class="dropdown-menu dropdown-alerts" ng-controller="ErrorNotificationController">
+
                                 <p ng-repeat="error in alarmlist" >
                                     <li ng-repeat="error in alarmlist">
                                         <a href="#/syserrors/{{error.id}}">
                                             <div>
-                                                <i class="fa fa-exclamation-triangle fa-fw"></i> {{error.type}}
-                                                <span class="pull-right text-muted small"> {{error.time}} </span>
+                                                <div ng-if="error.severity == 'FATAL'">
+                                                    <font color="red"><b>
+                                                    {{error.type}}</b></font>
+                                                </div>
+                                                <div ng-if="error.severity != 'FATAL'">
+                                                    {{error.type}} 
+                                                </div>
+                                                <span class="pull-right text-muted small"> {{error.time| date: 'yyyy-MM-dd HH:mm'}} </span>
                                             </div>
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a class="text-center" th:href="@{#/syserrors/}">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+
                                 </p>
 
 
