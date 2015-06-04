@@ -11,7 +11,7 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
     var ISConfig = new InformationSourceConfiguration({name: $scope.is_name,
       type: $scope.is_type, url: $scope.is_url, readFrequency: $scope.is_freq});
       ISConfig.$save();
-      $location.path('/sources');
+      $location.path('/configurations');
     };
   }]);
 
