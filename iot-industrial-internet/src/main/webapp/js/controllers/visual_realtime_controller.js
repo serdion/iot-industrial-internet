@@ -11,13 +11,13 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
 
     $scope.number = [0, 80];
     $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
-    $scope.id = $routeParams.sensorid;
+        $scope.id = $routeParams.sensorid;
 
         for (var i = 0; i < $scope.readouts.length; i++) {
             var time = $scope.readouts[i].time;
             var value = $scope.readouts[i].value;
-            
-            dataToDisplay[i] = [time, value];
+
+            dataToDisplay[i] = [(time*1000), value];
         }
 
         $scope.flotData = [{
@@ -34,14 +34,20 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
     $scope.dataOptions = {
         series: {
             lines: {
-                show: true
+                show: true,
             },
             points: {
                 show: true
-            }
+            },
+            color: 3
         },
         grid: {
             hoverable: true // needed for tooltip to work
+        },
+        xaxis: {
+            mode: "time",
+            timeformat: "%d/%m.%y %H:%M:%S"
+            //timeformat: "%Y/%m/%d"
         },
         yaxis: {
             min: $scope.number[0],
@@ -49,11 +55,17 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
         },
         tooltip: true,
         tooltipOpts: {
-            content: "'%s' of %x.1 is %y.4",
+            content: "'%y",
             shifts: {
                 x: -60,
                 y: 25
             }
+        },
+        zoom: {
+            interactive: true
+        },
+        pan: {
+            interactive: true
         }
     };
 
