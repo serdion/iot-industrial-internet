@@ -23,6 +23,8 @@
         <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+        
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     </head>
 
     <body ng-app="IIFramework">
@@ -163,6 +165,7 @@
         </div>
 
         <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
         <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular/angular.js}"></script>
@@ -189,7 +192,7 @@
         <script th:attr="src=@{/js/syserrors/syserror_services.js}"></script>
         <script th:attr="src=@{/js/syserrors/syserror_controllers.js}"></script>
 
-
+        <script th:attr="src=@{/js/directives/slider.js}"></script>
     </body>
 
 </html>
