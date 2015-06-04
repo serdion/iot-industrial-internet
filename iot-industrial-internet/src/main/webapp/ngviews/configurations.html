@@ -22,8 +22,8 @@
                             <td>{{c.url}}</td>
                             <td>{{c.readFrequency}}</td>
                             <td>
-                              <a type="button" class="btn btn-primary btn-xs" ng-href="#">Edit</a>
-                              <a type="button" class="btn btn-danger btn-xs" ng-href="#">Delete</a>
+                              <a type="button" class="btn btn-primary btn-xs">Edit</a>
+                              <a type="button" class="btn btn-danger btn-xs" ng-click="deleteConfiguration(c.id)">Delete</a>
                             </td>
                         </tr>
                     </tbody>

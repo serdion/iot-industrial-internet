@@ -17,4 +17,8 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
 
   configurations.controller('InformationSourceConfigurationsController', ['$scope', 'InformationSourceConfiguration','$location', function($scope, InformationSourceConfiguration, $location) {
     $scope.configurations = InformationSourceConfiguration.query();
+
+    $scope.deleteConfiguration = function (id) {
+      InformationSourceConfiguration.delete({configid: id});
+    };
   }]);
