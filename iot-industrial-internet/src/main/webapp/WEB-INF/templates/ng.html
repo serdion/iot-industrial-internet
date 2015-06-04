@@ -55,7 +55,7 @@
                             <ul class="dropdown-menu dropdown-alerts" ng-controller="ErrorNotificationController">
                                 <p ng-repeat="error in alarmlist" >
                                     <li ng-repeat="error in alarmlist">
-                                        <a href="#">
+                                        <a href="#/syserrors/{{error.id}}">
                                             <div>
                                                 <i class="fa fa-exclamation-triangle fa-fw"></i> {{error.type}}
                                                 <span class="pull-right text-muted small"> {{error.time}} </span>
