@@ -20,7 +20,7 @@ IIFramework.config(function($routeProvider) {
         controller: 'FrontController',
         templateUrl: 'ngviews/front.html'
     })
-            .when('/visual/now', {
+            .when('/visual/now/:sensorid', {
                 controller: 'VisualRealtimeController',
                 templateUrl: 'ngviews/visual_realtime.html'
             })
