@@ -46,15 +46,15 @@
 
                     <ul class="nav navbar-top-links navbar-right">
 
-                        <li class="dropdown">
+                        <li class="dropdown" ng-controller="ErrorNotificationController" ng-click="reloadErrors()" >
 
 
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-exclamation-triangle"></i>  <i class="fa fa-caret-down"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" >
+                                <i class="fa fa-exclamation-triangle" ></i>  <i class="fa fa-caret-down"></i>
                             </a>
 
 
-                            <ul class="dropdown-menu dropdown-alerts" ng-controller="ErrorNotificationController">
+                            <ul class="dropdown-menu dropdown-alerts" >
 
                                 <p ng-repeat="error in alarmlist" >
                                     <li ng-repeat="error in alarmlist">
@@ -194,7 +194,7 @@
 
         <script th:attr="src=@{/js/directives/slider.js}"></script>
 
-<!--        Angular Moment-->
+        <!--        Angular Moment-->
         <script th:attr="src=@{/bower_components/moment/moment.js}"></script>
         <script th:attr="src=@{/bower_components/angular-moment/angular-moment.js}"></script>
 
