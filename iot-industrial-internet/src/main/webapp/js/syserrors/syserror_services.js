@@ -9,20 +9,13 @@
 var sysErrors = angular.module('sysErrors', ['ngResource']);
 
 
-// Get all syserrors in a list
-sysErrors.factory('SysErrorList', ['$resource',
-    function($resource) {
-        return $resource('1.0/errors/list', {}, {
-            query: {method: 'GET', isArray: true}
-        });
-    }]);
 
-//Get one syserror based on id
+// Sends requests to RestAPI, get gets all, query gets one based on errorid.
 
 sysErrors.factory('SysError', ['$resource',
     function($resource) {
-        return $resource('1.0/errors/:errorid/view', {}, {
-            query: {method: 'GET'}
-
+        return $resource('1.0/errors/:errorid/:action', {}, {
+            get: {method: 'GET', params: {action: 'list'}, isArray: true},
+            query: {method: 'GET', params: {action: 'view'}, isArray: false}
         });
     }]);
