@@ -59,11 +59,11 @@
                                         <a href="#/syserrors/{{error.id}}">
                                             <div>
                                                 <div ng-if="error.severity == 'FATAL'">
-                                                    <font color="red"><b>
-                                                    {{error.type}}</b></font>
+                                                    <font color="red">
+                                                    <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.type}}</font>
                                                 </div>
                                                 <div ng-if="error.severity != 'FATAL'">
-                                                    {{error.type}} 
+                                                    <i class="fa fa-bell fa-fw"></i>{{error.type}} 
                                                 </div>
                                                 <span class="pull-right text-muted small"> {{error.time| date: 'yyyy-MM-dd HH:mm'}} </span>
                                             </div>
