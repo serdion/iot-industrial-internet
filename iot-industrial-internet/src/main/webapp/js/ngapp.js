@@ -39,12 +39,17 @@ IIFramework.config(function($routeProvider) {
             })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
-                templateUrl: 'ngviews/sensor.html'})
+                templateUrl: 'ngviews/sensor.html'
+            })
+            .when('/configurations', {
+                controller: 'InformationSourceConfigurationsController',
+                templateUrl: 'ngviews/configurations.html'
+            })
             .when('/configurations/add', {
                 controller: 'AddInformationSourceController',
                 templateUrl: 'ngviews/add_information_source.html'
             })
-            
+
             // Controllers for SysErrors
             .when('/syserrors/:errorid', {
                 controller: 'SysErrorDetailsController',
