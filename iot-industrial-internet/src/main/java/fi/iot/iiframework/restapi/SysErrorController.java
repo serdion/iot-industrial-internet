@@ -9,7 +9,7 @@ package fi.iot.iiframework.restapi;
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.errors.service.ErrorService;
+import fi.iot.iiframework.services.errors.ErrorService;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import java.util.List;
 import java.util.Map;

@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.errors.service;
 
+import fi.iot.iiframework.services.errors.ErrorService;
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;

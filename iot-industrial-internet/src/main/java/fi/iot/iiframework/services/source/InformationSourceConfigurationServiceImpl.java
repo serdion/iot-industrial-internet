@@ -4,11 +4,11 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.source.service;
+package fi.iot.iiframework.services.source;
 
 import fi.iot.iiframework.services.GenericHibernateService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
-import fi.iot.iiframework.source.dao.InformationSourceConfigurationDAO;
+import fi.iot.iiframework.daos.source.InformationSourceConfigurationDAO;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
