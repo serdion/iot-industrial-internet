@@ -9,7 +9,12 @@
 IIFramework.controller('VisualRealtimeController', function ($scope, InformationSource, Readout, $routeParams) {
     var dataToDisplay = [];
 
+    $scope.from = 0;
+    $scope.to = 100;
+
     $scope.number = [0, 80];
+    $scope.threshold = 22.5;
+    
     $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
         $scope.id = $routeParams.sensorid;
 
@@ -17,7 +22,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
             var time = $scope.readouts[i].time;
             var value = $scope.readouts[i].value;
 
-            dataToDisplay[i] = [(time*1000), value];
+            dataToDisplay[i] = [(time * 1000), value];
         }
 
         $scope.flotData = [{
@@ -30,6 +35,43 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
         $scope.dataOptions.yaxis.min = $scope.number[0];
         $scope.dataOptions.yaxis.max = $scope.number[1];
     };
+    
+    $scope.setMode = function (parameters) {
+        console.log(parameters);
+        if(parameters==1){
+            $scope.dataOptions.xaxis.minTickSize = [1, "hour"];
+            // todo from to
+        }
+        if(parameters==7){
+            $scope.dataOptions.xaxis.minTickSize = [1, "day"];
+            // todo from to
+        }
+        if(parameters==31){
+            $scope.dataOptions.xaxis.minTickSize = [1, "month"];
+            // todo from to
+        }
+        if(parameters==365){
+            $scope.dataOptions.xaxis.minTickSize = [1, "month"];
+            // todo from to
+        }
+    }
+
+    $scope.setThreshold = function () {
+        $scope.dataOptions.series = {
+            lines: {
+                show: true,
+            },
+            points: {
+                show: true
+            },
+            color: "rgb(30, 180, 20)",
+            threshold: {
+                below: $scope.threshold,
+                color: "rgb(200, 20, 30)"
+            }
+        }
+
+    }
 
     $scope.dataOptions = {
         series: {
@@ -38,8 +80,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
             },
             points: {
                 show: true
-            },
-            color: 3
+            }
         },
         grid: {
             hoverable: true // needed for tooltip to work
