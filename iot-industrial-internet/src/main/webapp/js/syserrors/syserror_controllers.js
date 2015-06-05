@@ -26,7 +26,7 @@ sysErrors.controller('ErrorNotificationController', function($scope, SysError, $
 //        console.log(data);
     });
     $scope.reloadErrors = function () {
-        $scope.alarmlist =  SysError.getHighAndFatal({errorid: $routeParams.errorid});
+        $scope.alarmlist =  SysError.getHighAndFatal();
     };
 });
 
