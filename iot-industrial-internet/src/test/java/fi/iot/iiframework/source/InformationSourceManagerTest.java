@@ -54,5 +54,6 @@ public class InformationSourceManagerTest {
         manager.updateSource(config2.getId(), config2);
         assertEquals("updated url", manager.getSources().get(1).getConfig().getUrl());
         assertEquals("updated url", manager.getAllSourceConfigsFromDB().get(1).getUrl());
+        assertEquals(config2.getId(), manager.getAllSourceConfigsFromDB().get(1).getId());
     }
 }
