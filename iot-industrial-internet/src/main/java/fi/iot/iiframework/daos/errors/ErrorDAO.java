@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.errors.dao;
+package fi.iot.iiframework.daos.errors;
 
 import fi.iot.iiframework.daos.GenericDAO;
 import fi.iot.iiframework.errors.SysError;

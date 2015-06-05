@@ -7,7 +7,7 @@
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head id="iothead">
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,8 +22,8 @@
         <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
     </head>
 
     <body ng-app="IIFramework">
@@ -45,15 +45,15 @@
 
                     <ul class="nav navbar-top-links navbar-right">
 
-                        <li class="dropdown">
+                        <li class="dropdown" ng-controller="ErrorNotificationController" ng-click="reloadErrors()" >
 
 
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-exclamation-triangle"></i>  <i class="fa fa-caret-down"></i>
+                            <a class="dropdown-toggle" data-toggle="dropdown" >
+                                <i class="fa fa-exclamation-triangle" ></i>  <i class="fa fa-caret-down"></i>
                             </a>
 
 
-                            <ul class="dropdown-menu dropdown-alerts" ng-controller="ErrorNotificationController">
+                            <ul class="dropdown-menu dropdown-alerts" >
 
                                 <p ng-repeat="error in alarmlist" >
                                     <li ng-repeat="error in alarmlist">
@@ -131,7 +131,7 @@
                                             <a th:href="@{#/sources/}"><i class="fa fa-upload fa-fw"></i> Information Sources</a>
                                         </li>
                                         <li>
-                                            <a th:href="@{#/configurations/}"><i class="fa fa-upload fa-fw"></i> Configurations</a>
+                                            <a th:href="@{#/configurations/}"><i class="fa fa-cogs fa-fw"></i> Configurations</a>
                                         </li>
                                         <li>
                                             <a th:href="@{#}"><i class="fa fa-database fa-fw"></i> Database</a>
@@ -181,6 +181,7 @@
         <script th:attr="src=@{/bower_components/flot/jquery.flot.resize.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.time.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.navigate.js}"></script>
+        <script th:attr="src=@{/bower_components/flot/jquery.flot.threshold.js}"></script>
         <script th:attr="src=@{/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular-flot/angular-flot.js}"></script>
 
@@ -195,10 +196,11 @@
         <script th:attr="src=@{/js/configurations/configuration_controllers.js}"></script>
         <script th:attr="src=@{/js/syserrors/syserror_services.js}"></script>
         <script th:attr="src=@{/js/syserrors/syserror_controllers.js}"></script>
-
+        <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap.min.js}"></script>
+        <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js}"></script>
         <script th:attr="src=@{/js/directives/slider.js}"></script>
 
-<!--        Angular Moment-->
+        <!--        Angular Moment-->
         <script th:attr="src=@{/bower_components/moment/moment.js}"></script>
         <script th:attr="src=@{/bower_components/angular-moment/angular-moment.js}"></script>
 

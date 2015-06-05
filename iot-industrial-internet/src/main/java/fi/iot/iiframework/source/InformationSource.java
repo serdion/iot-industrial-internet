@@ -24,28 +24,30 @@ public interface InformationSource {
      * @throws JAXBException
      * @throws MalformedURLException
      */
-    public InformationSourceObject read() throws JAXBException, MalformedURLException, IOException;
+    public InformationSourceObject read();
 
     /**
      * Reads an DataSourceObject and writes it to database
      *
-     * @throws JAXBException
-     * @throws MalformedURLException
      */
-    public void readAndWrite() throws JAXBException, MalformedURLException, IOException;
+    public void readAndWrite();
 
     /**
-     * Set the frequency of reads and writes
+     * Set configuration for this instance and update the readers and
+     * schedulers, if they have changed.
      *
-     * @param seconds frequency in seconds
+     * @param config
      */
-    public void setReadFrequency(int seconds);
+    public void setConfig(InformationSourceConfiguration config);
 
-    public int getReadFrequency();
-    
-    public int getId();
-
+    /**
+     * Get the configuration.
+     * @return 
+     */
     public InformationSourceConfiguration getConfig();
-
-    public void setConfig(InformationSourceConfiguration newConfig);
+    
+    /**
+     * Cancel the scheduled task.
+     */
+    public void cancel();
 }

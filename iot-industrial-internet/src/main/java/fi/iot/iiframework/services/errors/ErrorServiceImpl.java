@@ -4,11 +4,11 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.errors.service;
+package fi.iot.iiframework.services.errors;
 
 import fi.iot.iiframework.daos.GenericDAO;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.errors.dao.ErrorDAO;
+import fi.iot.iiframework.daos.errors.ErrorDAO;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.List;
 import javax.transaction.Transactional;

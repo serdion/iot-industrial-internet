@@ -7,6 +7,8 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.Validatable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -21,9 +23,9 @@ import lombok.EqualsAndHashCode;
  */
 
 @Entity
-@Table(name = "infosourceconfigs")
+@Table(name = "informationsources")
 @Data
-@EqualsAndHashCode(exclude = {"id", "name", "type", "url"})
+@EqualsAndHashCode(exclude = {"id", "readFrequency"})
 public class InformationSourceConfiguration implements Serializable, Validatable {
 
     /**
@@ -31,27 +33,27 @@ public class InformationSourceConfiguration implements Serializable, Validatable
      */
     @Id
     @GeneratedValue
-    @Column(name = "id")
     protected String id;
     /**
      * Information source name
      */
-    @Column(name = "name")
     protected String name;
     /**
      * Information source type xml/mbus/etc
      */
-    @Column(name = "type")
     protected InformationSourceType type;
     /**
      * Url read from
      */
-    @Column(name = "url")
     protected String url;
+    /**
+     * Read in intervals
+     * TODO: handle this intelligently
+     */
+    protected boolean active = true;
     /**
      * How often read (in seconds)
      */
-    @Column(name = "readfrequency")
     protected int readFrequency;
 
     

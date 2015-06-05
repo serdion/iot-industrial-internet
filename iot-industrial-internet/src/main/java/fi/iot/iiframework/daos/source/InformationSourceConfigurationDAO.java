@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.source.dao;
+package fi.iot.iiframework.daos.source;
 
 import fi.iot.iiframework.daos.GenericDAO;
 import fi.iot.iiframework.source.InformationSourceConfiguration;

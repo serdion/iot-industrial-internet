@@ -7,6 +7,7 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.iot.iiframework.source.InformationSourceConfiguration;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
@@ -21,10 +22,10 @@ import lombok.ToString;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "datasource")
 @Entity
-@Table(name = "datasource")
+@Table(name = "informationsourceobject")
 @Data
 @EqualsAndHashCode(exclude = {"devices", "header"})
-@ToString(exclude = {"devices", "header"})
+@ToString(exclude = {"devices", "header", "informationSource"})
 public class InformationSourceObject implements Serializable {
     @XmlAttribute
     @Id
@@ -41,5 +42,9 @@ public class InformationSourceObject implements Serializable {
     @XmlElement(name = "device")
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    protected Set<Device> devices;    
+    protected Set<Device> devices; 
+    
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
+    protected InformationSourceConfiguration informationSource;
 }
