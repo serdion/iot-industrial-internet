@@ -12,15 +12,33 @@ function showError(error) {
 
 configurations.controller('AddInformationSourceController', ['$scope', 'InformationSourceConfiguration', '$location', function ($scope, InformationSourceConfiguration, $location) {
         $scope.types = ['XML'];
-        
+
+        $scope.is = new InformationSourceConfiguration();
+
         $scope.back = function () {
             window.history.back();
         };
-        
-        $scope.addIS = function () {
-            var ISConfig = new InformationSourceConfiguration({name: $scope.is_name,
-                type: $scope.is_type, url: $scope.is_url, readFrequency: $scope.is_freq});
-            ISConfig.$save({}, function () {
+
+        $scope.submit = function () {
+            $scope.is.$save({}, function () {
+                $location.path('/configurations');
+            },
+                    function (error) {
+                        showError(error.data.message);
+                    });
+        };
+    }]);
+
+configurations.controller('EditInformationSourceController', ['$scope', 'InformationSourceConfiguration', '$location', '$routeParams', function ($scope, InformationSourceConfiguration, $location, $routeParams) {
+        $scope.types = ['XML'];
+
+        $scope.is = InformationSourceConfiguration.get({configid: $routeParams.configid});
+
+        $scope.back = function () {
+            window.history.back();
+        };
+        $scope.submit = function () {
+            $scope.is.$edit({}, function () {
                 $location.path('/configurations');
             },
                     function (error) {
@@ -34,5 +52,6 @@ configurations.controller('InformationSourceConfigurationsController', ['$scope'
 
         $scope.deleteConfiguration = function (id) {
             InformationSourceConfiguration.delete({configid: id});
+            $scope.configurations = InformationSourceConfiguration.query();
         };
     }]);
