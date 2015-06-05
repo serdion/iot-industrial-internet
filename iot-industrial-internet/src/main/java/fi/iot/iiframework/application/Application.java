@@ -34,6 +34,19 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
 
+        initTestData(ctx);
+    }
+
+    private static void initTestData(ApplicationContext ctx) throws JAXBException, IOException {
+        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
+
+        InformationSourceConfiguration config = new InformationSourceConfiguration();
+        config.setName("Example Config");
+        config.setType(InformationSourceType.XML);
+        config.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
+        infSourceManager.createSource(config);
+        infSourceManager.getSources().get(config.getId()).readAndWrite();
+        
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
         ErrorLogger.log(e);
 
@@ -45,7 +58,5 @@ public class Application {
 
         SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
         ErrorLogger.log(e4);
-
     }
-
 }
