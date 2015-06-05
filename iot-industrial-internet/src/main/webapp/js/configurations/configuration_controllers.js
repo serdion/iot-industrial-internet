@@ -28,5 +28,6 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
 
     $scope.deleteConfiguration = function (id) {
       InformationSourceConfiguration.delete({configid: id});
+      $scope.configurations = InformationSourceConfiguration.query();
     };
   }]);
