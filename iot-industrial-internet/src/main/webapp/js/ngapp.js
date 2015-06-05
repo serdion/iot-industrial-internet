@@ -12,7 +12,8 @@ var IIFramework = angular.module('IIFramework', [
     'informationSources',
     'configurations',
     'sysErrors',
-    'angularMoment'
+    'angularMoment',
+    'ui.bootstrap'
 ]);
 
 
