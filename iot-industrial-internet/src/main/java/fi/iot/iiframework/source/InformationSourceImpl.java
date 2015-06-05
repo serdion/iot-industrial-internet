@@ -108,4 +108,9 @@ public final class InformationSourceImpl implements InformationSource {
         initReader();
         schedule();
     }
+
+    @Override
+    public void cancel() {
+        scheduler.cancel();
+    }
 }

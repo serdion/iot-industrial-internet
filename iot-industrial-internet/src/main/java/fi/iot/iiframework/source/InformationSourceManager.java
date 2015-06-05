@@ -58,6 +58,7 @@ public class InformationSourceManager {
      * @param id the id of the data source representation to be deleted
      */
     public void removeSource(String id) {
+        sources.get(id).cancel();
         sources.remove(id);
         configService.delete(configService.get(id));
     }

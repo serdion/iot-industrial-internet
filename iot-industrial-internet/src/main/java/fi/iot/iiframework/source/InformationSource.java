@@ -45,4 +45,9 @@ public interface InformationSource {
      * @return 
      */
     public InformationSourceConfiguration getConfig();
+    
+    /**
+     * Cancel the scheduled task.
+     */
+    public void cancel();
 }
