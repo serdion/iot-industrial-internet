@@ -23,7 +23,7 @@ IIFramework.directive('slider', function () {
  
     
             $(elem).slider({
-                min: -100,
+                min: -50,
                 max: 100,
                 values: [scope.number[0], scope.number[1]],
                 slide: function (event, ui) {

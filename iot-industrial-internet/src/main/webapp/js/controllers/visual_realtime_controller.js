@@ -14,7 +14,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
 
     $scope.number = [0, 80];
     $scope.threshold = 22.5;
-    
+
     $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
         $scope.id = $routeParams.sensorid;
 
@@ -35,26 +35,30 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
         $scope.dataOptions.yaxis.min = $scope.number[0];
         $scope.dataOptions.yaxis.max = $scope.number[1];
     };
-    
+
     $scope.setMode = function (parameters) {
         console.log(parameters);
-        if(parameters==1){
+        if (parameters === 1) {
             $scope.dataOptions.xaxis.minTickSize = [1, "hour"];
-            // todo from to
-        }
-        if(parameters==7){
+            
+
+        };
+        if (parameters === 7) {
             $scope.dataOptions.xaxis.minTickSize = [1, "day"];
-            // todo from to
-        }
-        if(parameters==31){
+
+
+        };
+        if (parameters === 31) {
             $scope.dataOptions.xaxis.minTickSize = [1, "month"];
-            // todo from to
-        }
-        if(parameters==365){
+
+
+        };
+        if (parameters === 365) {
             $scope.dataOptions.xaxis.minTickSize = [1, "month"];
-            // todo from to
-        }
-    }
+
+
+        };
+    };
 
     $scope.setThreshold = function () {
         $scope.dataOptions.series = {
