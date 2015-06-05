@@ -24,17 +24,25 @@ public interface InformationSource {
      * @throws JAXBException
      * @throws MalformedURLException
      */
-    public InformationSourceObject read() throws JAXBException, MalformedURLException, IOException;
+    public InformationSourceObject read();
 
     /**
      * Reads an DataSourceObject and writes it to database
      *
-     * @throws JAXBException
-     * @throws MalformedURLException
      */
-    public void readAndWrite() throws JAXBException, MalformedURLException, IOException;
+    public void readAndWrite();
 
+    /**
+     * Set configuration for this instance and update the readers and
+     * schedulers, if they have changed.
+     *
+     * @param config
+     */
     public void setConfig(InformationSourceConfiguration config);
 
+    /**
+     * Get the configuration.
+     * @return 
+     */
     public InformationSourceConfiguration getConfig();
 }

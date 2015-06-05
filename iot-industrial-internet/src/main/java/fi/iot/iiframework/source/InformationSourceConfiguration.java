@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
  */
 
 @Entity
-@Table(name = "infosourceconfigs")
+@Table(name = "informationsources")
 @Data
 @EqualsAndHashCode(exclude = {"id", "readFrequency"})
 public class InformationSourceConfiguration implements Serializable, Validatable {
