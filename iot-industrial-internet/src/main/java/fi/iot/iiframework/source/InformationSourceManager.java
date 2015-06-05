@@ -11,6 +11,7 @@ import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,12 @@ public class InformationSourceManager {
 
     public InformationSourceManager() {
         this.sources = new HashMap<>();
+    }
+    
+    @PostConstruct
+    public void loadConfigFromDB() {
+        List<InformationSourceConfiguration> configs = configService.getAll();
+        configs.forEach(c -> createSource(c));
     }
 
     /**
