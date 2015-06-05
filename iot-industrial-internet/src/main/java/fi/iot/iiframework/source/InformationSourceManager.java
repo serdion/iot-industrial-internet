@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InformationSourceManager {
 
-    private Map<String, InformationSource> sources;
+    private final Map<String, InformationSource> sources;
 
     @Autowired
     private InformationSourceObjectService service;

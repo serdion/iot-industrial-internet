@@ -21,10 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public final class InformationSourceImpl implements InformationSource {
 
     /**
-     * Config for this source.
+     * Configuration for this source.
      */
     private InformationSourceConfiguration config;
-
     /**
      * Reader used to read the server information.
      */
@@ -32,12 +31,12 @@ public final class InformationSourceImpl implements InformationSource {
     /**
      * Scheduler that schedules the read operation based on config.
      */
-    private ReadScheduler scheduler;
+    private final ReadScheduler scheduler;
     /**
      * Service for database transactions.
      */
     @Autowired
-    private InformationSourceObjectService service;
+    private final InformationSourceObjectService service;
 
     public InformationSourceImpl(InformationSourceConfiguration config, InformationSourceObjectService service) {
         this.config = config;
@@ -47,6 +46,9 @@ public final class InformationSourceImpl implements InformationSource {
         schedule();
     }
 
+    /**
+     * Initialize the type of reader this class will use.
+     */
     private void initReader() {
         switch (config.type) {
             case XML:
@@ -58,7 +60,10 @@ public final class InformationSourceImpl implements InformationSource {
 
     }
     
-    public void schedule() {
+    /**
+     * Initialize scheduler.
+     */
+    private void schedule() {
         scheduler.cancel();
         if (config.active && config.readFrequency > 0) {
             scheduler.schedule(config.readFrequency, this::readAndWrite);
@@ -67,21 +72,22 @@ public final class InformationSourceImpl implements InformationSource {
     
     @Override
     public void readAndWrite() {
-        InformationSourceObject dso = null;
+        InformationSourceObject isobj = read();
+        isobj.setInformationSource(config);
+        service.save(isobj);
+    }
+
+    @Override
+    public InformationSourceObject read() {
+        InformationSourceObject isobj = null;
         try {
-            dso = read();
+            isobj = reader.read();
         } catch (JAXBException ex) {
             ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url, null);
         } catch (IOException ex) {
             ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url, null);
         }
-        service.save(dso);
-    }
-
-    @Override
-    public InformationSourceObject read() throws JAXBException, MalformedURLException, IOException {
-        InformationSourceObject dobj = reader.read();
-        return dobj;
+        return isobj;
     }
 
     @Override
@@ -92,5 +98,14 @@ public final class InformationSourceImpl implements InformationSource {
     @Override
     public void setConfig(InformationSourceConfiguration config) {
         this.config = config;
+        update();
+    }
+    
+    /**
+     * Ensure that scheduler and reader match the configuration.
+     */
+    private void update() {
+        initReader();
+        schedule();
     }
 }
