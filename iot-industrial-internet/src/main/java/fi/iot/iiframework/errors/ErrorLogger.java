@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.errors;
 
-import fi.iot.iiframework.errors.service.ErrorService;
+import fi.iot.iiframework.services.errors.ErrorService;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;

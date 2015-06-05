@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.errors.service;
+package fi.iot.iiframework.services.errors;
 
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.services.GenericService;

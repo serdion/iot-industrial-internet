@@ -51,7 +51,7 @@ public class InformationSourceManagerTest {
         assertEquals(2, manager.getSources().size());
         assertEquals("http://axwikstr.users.cs.helsinki.fi/data.xml", manager.getAllSourceConfigsFromDB().get(0).getUrl());
         config2.setUrl("updated url");
-        manager.updateSource(config2.getId(), config2);
+        manager.updateSource(config2);
         assertEquals("updated url", manager.getSources().get(1).getConfig().getUrl());
         assertEquals("updated url", manager.getAllSourceConfigsFromDB().get(1).getUrl());
         assertEquals(config2.getId(), manager.getAllSourceConfigsFromDB().get(1).getId());

@@ -5,7 +5,7 @@
  * Software Engineering Lab in summer 2015
  */
 
-package fi.iot.iiframework.source.service;
+package fi.iot.iiframework.services.source;
 
 import fi.iot.iiframework.services.GenericService;
 import fi.iot.iiframework.source.InformationSourceConfiguration;

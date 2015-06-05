@@ -7,7 +7,7 @@
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head id="iothead">
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,8 +22,8 @@
         <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
     </head>
 
     <body ng-app="IIFramework">
@@ -195,7 +195,8 @@
         <script th:attr="src=@{/js/configurations/configuration_controllers.js}"></script>
         <script th:attr="src=@{/js/syserrors/syserror_services.js}"></script>
         <script th:attr="src=@{/js/syserrors/syserror_controllers.js}"></script>
-
+        <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap.min.js}"></script>
+        <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js}"></script>
         <script th:attr="src=@{/js/directives/slider.js}"></script>
 
         <!--        Angular Moment-->
