@@ -40,7 +40,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         name.sendKeys('NewAcceptanceTestSource');
         element(by.cssContainingText('option', 'XML')).click();
         url.sendKeys('http://axwikstr.users.cs.helsinki.fi/data.xml');
-        frequency.sendKeys('154');
+        frequency.sendKeys('15400');
         element(by.id('roundbutton')).click();
         element(by.partialLinkText('Configurations')).click();
         expect(element.all(by.repeater('c in configurations')).count()).toEqual(2);
