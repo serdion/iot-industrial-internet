@@ -7,29 +7,29 @@
                 <form role="form">
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control" name="is_name" ng-model="is_name" placeholder="Enter name" />
+                        <input class="form-control" name="is_name" ng-model="is.name" placeholder="Enter name" />
                         <p class="help-block">Name of the Information source</p>
                     </div>
 
                         <label>Source Type</label>
                     <div class="form-group">
-                        <select class="form-control" name="is_type" ng-model="is_type" ng-options="type for type in types"/>
+                        <select class="form-control" name="is_type" ng-model="is.type" ng-options="type for type in types"/>
                         </select>
                         <p class="help-block">Type of the Information source</p>
                     </div>
                     <div class="form-group">
                         <label>Source URL</label>
-                        <input class="form-control" name="is_url" ng-model="is_url" placeholder="Enter URL" />
+                        <input class="form-control" name="is_url" ng-model="is.url" placeholder="Enter URL" />
                         <p class="help-block">Information source URL</p>
                     </div>
 
                     <label>Read frequency</label>
                     <div class="form-group input-group">
-                        <input type="text" class="form-control" name="is_freq" ng-model="is_freq" />
+                        <input type="text" class="form-control" name="is_freq" ng-model="is.readFrequency" />
                         <span class="input-group-addon">seconds</span>
                     </div>
 
-                    <button id="roundbutton" type="button" class="btn btn-info btn-circle btn-xl" ng-click="addIS()"><i class="fa fa-check"></i>
+                    <button id="roundbutton" type="button" class="btn btn-info btn-circle btn-xl" ng-click="submit()"><i class="fa fa-check"></i>
                     </button>
                     <button id="roundbutton" type="button" class="btn btn-danger btn-circle btn-xl" ng-click="back()"><i class="fa fa-mail-reply"></i>
                     </button>
