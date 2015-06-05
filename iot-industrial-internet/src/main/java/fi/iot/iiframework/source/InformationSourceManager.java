@@ -81,8 +81,4 @@ public class InformationSourceManager {
         return configService.get(id);
     }
 
-    public List<InformationSourceConfiguration> getAllSourceConfigsFromDB() {
-        return configService.getAll();
-    }
-
 }

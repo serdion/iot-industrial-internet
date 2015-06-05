@@ -34,18 +34,7 @@ public interface InformationSource {
      */
     public void readAndWrite() throws JAXBException, MalformedURLException, IOException;
 
-    /**
-     * Set the frequency of reads and writes
-     *
-     * @param seconds frequency in seconds
-     */
-    public void setReadFrequency(int seconds);
-
-    public int getReadFrequency();
-    
-    public int getId();
+    public void setConfig(InformationSourceConfiguration config);
 
     public InformationSourceConfiguration getConfig();
-
-    public void setConfig(InformationSourceConfiguration newConfig);
 }

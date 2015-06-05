@@ -44,8 +44,9 @@ public class Application {
         config.setName("Example Config");
         config.setType(InformationSourceType.XML);
         config.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
+        config.setActive(true);
+        config.setReadFrequency(100 * 1000);
         infSourceManager.createSource(config);
-        infSourceManager.getSources().get(config.getId()).readAndWrite();
         
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
         ErrorLogger.log(e);

@@ -9,45 +9,45 @@ package fi.iot.iiframework.source;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
 import fi.iot.iiframework.datasourcereaders.XMLReader;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
+import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class InformationSourceImpl implements InformationSource {
+public final class InformationSourceImpl implements InformationSource {
 
     /**
-     * Configuration
+     * Config for this source.
      */
-    private int id;
-
     private InformationSourceConfiguration config;
 
     /**
-     * Reader used to read the server information
+     * Reader used to read the server information.
      */
     private InformationSourceReader reader;
     /**
      * Scheduler that schedules the read operation based on config.
      */
-
-    private Timer scheduler;
+    private ReadScheduler scheduler;
+    /**
+     * Service for database transactions.
+     */
     @Autowired
     private InformationSourceObjectService service;
 
     public InformationSourceImpl(InformationSourceConfiguration config, InformationSourceObjectService service) {
         this.config = config;
         this.service = service;
-        createReader();
-        createOrUpdateScheduler();
+        this.scheduler = new ReadSchedulerImpl();
+        initReader();
+        schedule();
     }
 
-    private void createReader() {
+    private void initReader() {
         switch (config.type) {
             case XML:
                 this.reader = new XMLReader(config.url);
@@ -57,36 +57,24 @@ public class InformationSourceImpl implements InformationSource {
         }
 
     }
-
-    private void createOrUpdateScheduler() {
-        if (scheduler != null) {
-            scheduler.cancel();
-            scheduler = null;
+    
+    public void schedule() {
+        scheduler.cancel();
+        if (config.active && config.readFrequency > 0) {
+            scheduler.schedule(config.readFrequency, this::readAndWrite);
         }
-        if (config.readFrequency == 0) {
-            return;
-        }
-        scheduler = new Timer();
-
-        scheduler.scheduleAtFixedRate(new TimerTask() {
-
-            @Override
-            public void run() {
-                try {
-                    readAndWrite();
-                } catch (JAXBException | MalformedURLException ex) {
-                    Logger.getLogger(InformationSource.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(InformationSourceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        }, 0, config.readFrequency);
     }
-
+    
     @Override
-    public void readAndWrite() throws JAXBException, MalformedURLException, IOException {
-        InformationSourceObject dso = read();
+    public void readAndWrite() {
+        InformationSourceObject dso = null;
+        try {
+            dso = read();
+        } catch (JAXBException ex) {
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url, null);
+        } catch (IOException ex) {
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url, null);
+        }
         service.save(dso);
     }
 
@@ -105,49 +93,4 @@ public class InformationSourceImpl implements InformationSource {
     public void setConfig(InformationSourceConfiguration config) {
         this.config = config;
     }
-
-    public void setId(String id) {
-        config.id = id;
-    }
-
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return config.name;
-    }
-
-    public void setName(String name) {
-        config.name = name;
-    }
-
-    public InformationSourceType getType() {
-        return config.type;
-    }
-
-    public void setType(InformationSourceType type) {
-        config.type = type;
-    }
-
-    public String getUrl() {
-        return config.url;
-    }
-
-    public void setUrl(String url) {
-        config.url = url;
-    }
-
-    @Override
-    public void setReadFrequency(int readFrequency) {
-        config.readFrequency = readFrequency;
-        createOrUpdateScheduler();
-    }
-
-    @Override
-    public int getReadFrequency() {
-        return config.getReadFrequency();
-    }
-
 }
