@@ -20,8 +20,6 @@ public interface InformationSource {
      * Read a source from the reader
      *
      * @return DataSourceObject read from URL and parsed
-     * @throws JAXBException
-     * @throws MalformedURLException
      */
     public InformationSourceObject read();
 

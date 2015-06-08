@@ -20,6 +20,7 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
         };
 
         $scope.submit = function () {
+			$scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.$save({}, function () {
                 $location.path('/configurations');
             },
@@ -32,12 +33,15 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
 configurations.controller('EditInformationSourceController', ['$scope', 'InformationSourceConfiguration', '$location', '$routeParams', function ($scope, InformationSourceConfiguration, $location, $routeParams) {
         $scope.types = ['XML'];
 
-        $scope.is = InformationSourceConfiguration.get({configid: $routeParams.configid});
-
+        $scope.is = InformationSourceConfiguration.get({configid: $routeParams.configid}, function () {
+			$scope.readFrequency_s = $scope.is.readFrequency / 1000;
+		});
+        
         $scope.back = function () {
             window.history.back();
         };
         $scope.submit = function () {
+			$scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.$edit({}, function () {
                 $location.path('/configurations');
             },
@@ -51,7 +55,10 @@ configurations.controller('InformationSourceConfigurationsController', ['$scope'
         $scope.configurations = InformationSourceConfiguration.query();
 
         $scope.deleteConfiguration = function (id) {
-            InformationSourceConfiguration.delete({configid: id});
-            $scope.configurations = InformationSourceConfiguration.query();
+            InformationSourceConfiguration.delete({configid: id}, function () {
+				$scope.configurations = InformationSourceConfiguration.query();
+			}, function (error) {
+					showError(error.data.message);
+				});
         };
     }]);
