@@ -11,7 +11,7 @@ import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
-import fi.iot.iiframework.source.InformationSourceManager;
+import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class ConfigurationController {
     private ApplicationSettings settings;
 
     @Autowired
-    private InformationSourceManager informationSourceManager;
+    private InformationSourceManagerImpl informationSourceManager;
 
     @Autowired
     private InformationSourceConfigurationService informationSourceConfigurationService;

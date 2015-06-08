@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class InformationSourceManagerTest {
 
     @Autowired
-    private InformationSourceManager manager;
+    private InformationSourceManagerImpl manager;
 
     @Mock
     private InformationSourceConfigurationService mockConfigService;

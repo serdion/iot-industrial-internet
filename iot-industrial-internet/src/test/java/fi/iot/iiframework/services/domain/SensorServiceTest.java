@@ -41,7 +41,7 @@ public class SensorServiceTest {
 
     @Before
     public void setUp() {
-        InformationSourceObject dso = InformationSourceObjectProvider.provideDataObject();
+        InformationSourceObject dso = InformationSourceObjectProvider.provideInformationSourceObject();
 
         d1 = InformationSourceObjectProvider.provideDevice();
         d2 = InformationSourceObjectProvider.provideDevice();

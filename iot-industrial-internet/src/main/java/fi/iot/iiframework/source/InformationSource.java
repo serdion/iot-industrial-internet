@@ -24,10 +24,11 @@ public interface InformationSource {
     public InformationSourceObject read();
 
     /**
-     * Reads an DataSourceObject and writes it to database
+     * Reads an DataSourceObject and writes it to database.
      *
+     * @return true, if succesful, false if unsuccesful
      */
-    public void readAndWrite();
+    public boolean readAndWrite();
 
     /**
      * Set configuration for this instance and update the readers and

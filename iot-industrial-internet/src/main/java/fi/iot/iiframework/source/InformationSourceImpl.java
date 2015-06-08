@@ -58,7 +58,7 @@ public final class InformationSourceImpl implements InformationSource {
         }
 
     }
-    
+
     /**
      * Initialize scheduler.
      */
@@ -68,12 +68,23 @@ public final class InformationSourceImpl implements InformationSource {
             scheduler.schedule(config.readFrequency, this::readAndWrite);
         }
     }
-    
+
+    /**
+     * Ensure that scheduler and reader match the configuration.
+     */
+    private void update() {
+        initReader();
+        schedule();
+    }
+
     @Override
-    public void readAndWrite() {
+    public boolean readAndWrite() {
         InformationSourceObject isobj = read();
+        if (isobj == null)
+            return false;
         isobj.setInformationSource(config);
         service.save(isobj);
+        return true;
     }
 
     @Override
@@ -99,18 +110,10 @@ public final class InformationSourceImpl implements InformationSource {
         this.config = config;
         update();
     }
-    
+
     @Override
     public void close() {
         scheduler.cancel();
-    }
-    
-    /**
-     * Ensure that scheduler and reader match the configuration.
-     */
-    private void update() {
-        initReader();
-        schedule();
     }
 
 }

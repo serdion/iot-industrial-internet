@@ -6,15 +6,22 @@
  */
 package fi.iot.iiframework.source;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Validatable;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 /**
@@ -29,33 +36,37 @@ import lombok.EqualsAndHashCode;
 public class InformationSourceConfiguration implements Serializable, Validatable {
 
     /**
-     * Information source id
+     * Information source id.
      */
     @Id
     @GeneratedValue
     protected String id;
     /**
-     * Information source name
+     * Information source name.
      */
     protected String name;
     /**
-     * Information source type xml/mbus/etc
+     * Information source type xml/mbus/etc.
      */
     protected InformationSourceType type;
     /**
-     * Url read from
+     * URL read from.
      */
     protected String url;
     /**
      * Read in intervals
-     * TODO: handle this intelligently
+     * TODO: handle this intelligently.
      */
     protected boolean active = true;
     /**
-     * How often read (in seconds)
+     * How often read (in seconds).
      */
     protected int readFrequency;
 
+    @JsonIgnore
+    @OneToOne(fetch =  FetchType.LAZY, mappedBy = "informationSource", orphanRemoval = true)
+    @Cascade({CascadeType.DELETE})
+    protected InformationSourceObject dataObject;
     
     @Override
     public boolean isValid() {
@@ -65,11 +76,7 @@ public class InformationSourceConfiguration implements Serializable, Validatable
             return false;
         }
 
-        if(readFrequency<=0){
-            return false;
-        }
-
-        return true;
+        return readFrequency > 0;
     }
 
 }
