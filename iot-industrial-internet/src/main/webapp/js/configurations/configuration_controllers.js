@@ -51,7 +51,10 @@ configurations.controller('InformationSourceConfigurationsController', ['$scope'
         $scope.configurations = InformationSourceConfiguration.query();
 
         $scope.deleteConfiguration = function (id) {
-            InformationSourceConfiguration.delete({configid: id});
-            $scope.configurations = InformationSourceConfiguration.query();
+            InformationSourceConfiguration.delete({configid: id}, function () {
+				$scope.configurations = InformationSourceConfiguration.query();
+			}, function (error) {
+					showError(error.data.message);
+				});
         };
     }]);
