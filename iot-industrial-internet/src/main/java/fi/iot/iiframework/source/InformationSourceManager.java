@@ -7,9 +7,11 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
-import fi.iot.iiframework.source.service.InformationSourceConfigurationService;
-import java.util.ArrayList;
+import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InformationSourceManager {
 
-    private List<InformationSource> sources;
+    private final Map<String, InformationSource> sources;
 
     @Autowired
     private InformationSourceObjectService service;
@@ -28,7 +30,13 @@ public class InformationSourceManager {
     private InformationSourceConfigurationService configService;
 
     public InformationSourceManager() {
-        this.sources = new ArrayList<>();
+        this.sources = new HashMap<>();
+    }
+    
+    @PostConstruct
+    public void loadConfigFromDB() {
+        List<InformationSourceConfiguration> configs = configService.getAll();
+        configs.forEach(c -> createSource(c));
     }
 
     /**
@@ -39,7 +47,7 @@ public class InformationSourceManager {
      */
     public void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSourceImpl(config, service);
-        sources.add(source);
+        sources.put(config.id, source);
         configService.save(config);
     }
 
@@ -50,7 +58,8 @@ public class InformationSourceManager {
      * @param id the id of the data source representation to be deleted
      */
     public void removeSource(String id) {
-        sources.removeIf(p -> id.equals(p.getId()));
+        sources.get(id).cancel();
+        sources.remove(id);
         configService.delete(configService.get(id));
     }
 
@@ -58,27 +67,19 @@ public class InformationSourceManager {
      *
      * Updates the configuration information of an object that represents an external data source
      *
-     * @param id the id of the data source representation to be updated
      * @param config the new configuration that will replace the previous one
      */
-    public void updateSource(String id, InformationSourceConfiguration config) {
-        sources.removeIf(p -> id.equals(p.getId()));
-        sources.add(new InformationSourceImpl(config, service));
-        InformationSourceConfiguration newConfig = config;
-        newConfig.setId(id);
-        createSource(newConfig);
+    public void updateSource(InformationSourceConfiguration config) { 
+        sources.get(config.id).setConfig(config);
+        configService.save(config);
     }
 
-    public List<InformationSource> getSources() {
+    public Map<String, InformationSource> getSources() {
         return sources;
     }
 
     public InformationSourceConfiguration getSourceConfigFromDB(String id) {
         return configService.get(id);
-    }
-
-    public List<InformationSourceConfiguration> getAllSourceConfigsFromDB() {
-        return configService.getAll();
     }
 
 }
