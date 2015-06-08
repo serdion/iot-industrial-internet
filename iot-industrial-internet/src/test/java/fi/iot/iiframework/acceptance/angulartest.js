@@ -17,7 +17,15 @@ describe('Acceptance testing for the AngularJS web interface', function () {
     it('should be able to move to the sources list by clicking the sidebar button', function () {
         browser.get('http://localhost:8080/#/');
         element(by.partialLinkText('Information Sources')).click();
-        expect(element.all(by.repeater('ds in sources')).count()).toEqual(1);
+        expect(element(by.partialLinkText('Add New')).isPresent()).toBe(true);
+    });
+    
+    it('should be able to move to the errors list, view an error and then return to the errors list', function () {
+        browser.get('http://localhost:8080/#/');
+        element(by.partialLinkText('Errors')).click();
+        element(by.partialLinkText('Details')).click();
+        element(by.id('backbutton')).click();
+        expect(element(by.partialLinkText('Details')).isPresent()).toBe(true);
     });
     
     it('should be able view a sensor and filter its readouts', function () {
@@ -41,7 +49,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         element(by.cssContainingText('option', 'XML')).click();
         url.sendKeys('http://axwikstr.users.cs.helsinki.fi/data.xml');
         frequency.sendKeys('15400');
-        element(by.id('roundbutton')).click();
+        element(by.id('submitbutton')).click();
         element(by.partialLinkText('Configurations')).click();
         expect(element.all(by.repeater('c in configurations')).count()).toEqual(2);
     });
