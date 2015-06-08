@@ -14,7 +14,6 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -83,9 +82,9 @@ public final class InformationSourceImpl implements InformationSource {
         try {
             isobj = reader.read();
         } catch (JAXBException ex) {
-            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url, null);
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url);
         } catch (IOException ex) {
-            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url, null);
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url);
         }
         return isobj;
     }
@@ -101,6 +100,11 @@ public final class InformationSourceImpl implements InformationSource {
         update();
     }
     
+    @Override
+    public void close() {
+        scheduler.cancel();
+    }
+    
     /**
      * Ensure that scheduler and reader match the configuration.
      */
@@ -109,8 +113,4 @@ public final class InformationSourceImpl implements InformationSource {
         schedule();
     }
 
-    @Override
-    public void cancel() {
-        scheduler.cancel();
-    }
 }

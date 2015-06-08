@@ -7,7 +7,6 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceObject;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 
@@ -21,8 +20,6 @@ public interface InformationSource {
      * Read a source from the reader
      *
      * @return DataSourceObject read from URL and parsed
-     * @throws JAXBException
-     * @throws MalformedURLException
      */
     public InformationSourceObject read();
 
@@ -47,7 +44,7 @@ public interface InformationSource {
     public InformationSourceConfiguration getConfig();
     
     /**
-     * Cancel the scheduled task.
+     * Stop all read-operations.
      */
-    public void cancel();
+    public void close();
 }

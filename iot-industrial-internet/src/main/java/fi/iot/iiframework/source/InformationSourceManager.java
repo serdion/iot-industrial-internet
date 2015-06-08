@@ -32,7 +32,7 @@ public class InformationSourceManager {
     public InformationSourceManager() {
         this.sources = new HashMap<>();
     }
-    
+
     @PostConstruct
     public void loadConfigFromDB() {
         List<InformationSourceConfiguration> configs = configService.getAll();
@@ -55,23 +55,28 @@ public class InformationSourceManager {
      *
      * Deletes an object that represents an external data source
      *
-     * @param id the id of the data source representation to be deleted
+     * @param config
      */
-    public void removeSource(String id) {
-        sources.get(id).cancel();
-        sources.remove(id);
-        configService.delete(configService.get(id));
+    public void removeSource(InformationSourceConfiguration config) {
+        configService.delete(sources.get(config.id).getConfig());
+        sources.get(config.id).close();
+        sources.remove(config.id);
     }
 
     /**
      *
-     * Updates the configuration information of an object that represents an external data source
+     * Updates the configuration information of an object that represents an
+     * external data source
      *
      * @param config the new configuration that will replace the previous one
      */
-    public void updateSource(InformationSourceConfiguration config) { 
+    public void updateSource(InformationSourceConfiguration config) {
         sources.get(config.id).setConfig(config);
         configService.save(config);
+    }
+    
+    public void readSource(InformationSourceConfiguration config) {
+        
     }
 
     public Map<String, InformationSource> getSources() {
@@ -80,6 +85,14 @@ public class InformationSourceManager {
 
     public InformationSourceConfiguration getSourceConfigFromDB(String id) {
         return configService.get(id);
+    }
+
+    public void setService(InformationSourceObjectService service) {
+        this.service = service;
+    }
+
+    public void setConfigService(InformationSourceConfigurationService configService) {
+        this.configService = configService;
     }
 
 }
