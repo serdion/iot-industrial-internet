@@ -62,6 +62,8 @@ public class Device implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
     protected InformationSourceObject source;
+    
+    protected String customName;
 
     public Device() {
     }

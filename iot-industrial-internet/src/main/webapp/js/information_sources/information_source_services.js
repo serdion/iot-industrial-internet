@@ -11,15 +11,15 @@ informationSources.factory('InformationSource', ['$resource',
     function ($resource) {
         return $resource('1.0/informationsources/:informationsourceid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
-            query: {method: 'GET', params: {informationsourceid: 'list'}, isArray: true},
-            updateName: {method: 'POST', params: {informationsourceid: 'list'}, isArray: true}
+            query: {method: 'GET', params: {informationsourceid: 'list'}, isArray: true}
         });
     }]);
 
 informationSources.factory('Device', ['$resource',
     function ($resource) {
         return $resource('1.0/devices/:informationsourceid/:action', {}, {
-            query: {method: 'GET', params: {action: 'list'}, isArray: true}
+            query: {method: 'GET', params: {action: 'list'}, isArray: true},
+            rename: {method: 'GET', params: {action: 'rename'}, isArray: false}
         });
     }]);
 
