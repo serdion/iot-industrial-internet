@@ -55,7 +55,6 @@ public class InformationSourceConfiguration implements Serializable, Validatable
      * How often read (in seconds)
      */
     protected int readFrequency;
-
     
     @Override
     public boolean isValid() {

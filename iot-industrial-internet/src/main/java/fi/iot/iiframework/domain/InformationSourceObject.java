@@ -31,6 +31,7 @@ public class InformationSourceObject implements Serializable {
     @Id
     protected String id;
 
+    
     protected String name;
 
     @XmlElement
