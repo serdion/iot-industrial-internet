@@ -44,7 +44,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         var name = element(by.model("is.name"));
         var type = element(by.model("is.type"));
         var url = element(by.model("is.url"));
-        var frequency = element(by.model("is.readFrequency"));
+        var frequency = element(by.model("readFrequency_s"));
         name.sendKeys('NewAcceptanceTestSource');
         element(by.cssContainingText('option', 'XML')).click();
         url.sendKeys('http://axwikstr.users.cs.helsinki.fi/data.xml');
