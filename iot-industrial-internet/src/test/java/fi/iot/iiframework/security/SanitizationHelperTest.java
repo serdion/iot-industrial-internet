@@ -6,10 +6,6 @@
  */
 package fi.iot.iiframework.security;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.owasp.validator.html.PolicyException;
@@ -38,68 +34,41 @@ public class SanitizationHelperTest {
     public SanitizationHelperTest() {
     }
 
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
-    public void testSanitizeDefaultWithAcceptedInputs() throws Exception {
+    public void testSanitizeStrictWithAcceptedInputs() throws ScanException, PolicyException {
         for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
-            assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitize(alwaysAcceptedInputs[i], false));
+            assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeStrict(alwaysAcceptedInputs[i]));
         }
 
         for (int i = 0; i < sometimesAcceptedInputs.length; i++) {
-            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitize(sometimesAcceptedInputs[i], false));
-        }
-    }
-
-    @Test
-    public void testSanitizeDefaultWithNotAcceptedInputs() throws ScanException, PolicyException {
-        for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitize(testNotAcceptedInputs[i], false);
-            assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitize(testNotAcceptedInputs[i], false));
+            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeStrict(sometimesAcceptedInputs[i]));
         }
     }
     
     @Test
-    public void testSanitizeSlashdotWithAcceptedInputs() throws ScanException, PolicyException {
+    public void testSanitizeStrictWithNotAcceptedInputs() throws ScanException, PolicyException {
+        for (int i = 0; i < testNotAcceptedInputs.length; i++) {
+            SanitizationHelper.sanitizeStrict(testNotAcceptedInputs[i]);
+            assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeStrict(testNotAcceptedInputs[i]));
+        }
+    }
+    
+    @Test
+    public void testSanitizeLooseWithAcceptedInputs() throws ScanException, PolicyException {
         for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
-            assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeSlashdot(alwaysAcceptedInputs[i], false));
+            assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeLoose(alwaysAcceptedInputs[i]));
         }
 
         for (int i = 0; i < sometimesAcceptedInputs.length; i++) {
-            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeSlashdot(sometimesAcceptedInputs[i], false));
+            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeLoose(sometimesAcceptedInputs[i]));
         }
     }
     
     @Test
-    public void testSanitizeSlashdotWithNotAcceptedInputs() throws ScanException, PolicyException {
+    public void testSanitizeLooseWithNotAcceptedInputs() throws ScanException, PolicyException {
         for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitizeSlashdot(testNotAcceptedInputs[i], false);
-            assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitize(testNotAcceptedInputs[i], false));
-        }
-    }
-    
-    @Test
-    public void testSanitizeEbayWithAcceptedInputs() throws ScanException, PolicyException {
-        for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
-            assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeEbay(alwaysAcceptedInputs[i], false));
-        }
-
-        for (int i = 0; i < sometimesAcceptedInputs.length; i++) {
-            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeEbay(sometimesAcceptedInputs[i], false));
-        }
-    }
-    
-    @Test
-    public void testSanitizeEbayWithNotAcceptedInputs() throws ScanException, PolicyException {
-        for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitizeEbay(testNotAcceptedInputs[i], false);
-            assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitize(testNotAcceptedInputs[i], false));
+            SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]);
+            assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]));
         }
     }
 
