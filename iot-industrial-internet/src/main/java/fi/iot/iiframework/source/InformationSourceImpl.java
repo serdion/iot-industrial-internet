@@ -14,7 +14,6 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -99,6 +98,11 @@ public final class InformationSourceImpl implements InformationSource {
     public void setConfig(InformationSourceConfiguration config) {
         this.config = config;
         update();
+    }
+    
+    @Override
+    public void close() {
+        scheduler.cancel();
     }
     
     /**

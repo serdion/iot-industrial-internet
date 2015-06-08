@@ -45,4 +45,9 @@ public interface InformationSource {
      * @return 
      */
     public InformationSourceConfiguration getConfig();
+    
+    /**
+     * Stop all read-operations.
+     */
+    public void close();
 }

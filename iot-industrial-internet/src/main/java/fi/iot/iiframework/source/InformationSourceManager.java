@@ -32,7 +32,7 @@ public class InformationSourceManager {
     public InformationSourceManager() {
         this.sources = new HashMap<>();
     }
-    
+
     @PostConstruct
     public void loadConfigFromDB() {
         List<InformationSourceConfiguration> configs = configService.getAll();
@@ -58,17 +58,18 @@ public class InformationSourceManager {
      * @param id the id of the data source representation to be deleted
      */
     public void removeSource(String id) {
+        configService.delete(sources.get(id).getConfig());
         sources.remove(id);
-        configService.delete(configService.get(id));
     }
 
     /**
      *
-     * Updates the configuration information of an object that represents an external data source
+     * Updates the configuration information of an object that represents an
+     * external data source
      *
      * @param config the new configuration that will replace the previous one
      */
-    public void updateSource(InformationSourceConfiguration config) { 
+    public void updateSource(InformationSourceConfiguration config) {
         sources.get(config.id).setConfig(config);
         configService.save(config);
     }
@@ -79,6 +80,14 @@ public class InformationSourceManager {
 
     public InformationSourceConfiguration getSourceConfigFromDB(String id) {
         return configService.get(id);
+    }
+
+    public void setService(InformationSourceObjectService service) {
+        this.service = service;
+    }
+
+    public void setConfigService(InformationSourceConfigurationService configService) {
+        this.configService = configService;
     }
 
 }
