@@ -112,4 +112,5 @@ public final class InformationSourceImpl implements InformationSource {
         initReader();
         schedule();
     }
+
 }

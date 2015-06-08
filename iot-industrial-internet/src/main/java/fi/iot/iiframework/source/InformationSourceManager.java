@@ -59,6 +59,7 @@ public class InformationSourceManager {
      */
     public void removeSource(String id) {
         configService.delete(sources.get(id).getConfig());
+        sources.get(id).close();
         sources.remove(id);
     }
 
