@@ -95,7 +95,7 @@ public class ConfigurationController {
     ) throws InvalidParametersException, ResourceNotFoundException {
         InformationSourceConfiguration configuration
                 = (InformationSourceConfiguration) helper.returnOrException(informationSourceConfigurationService.get(configid));
-        informationSourceManager.removeSource(configuration.getId());
+        informationSourceManager.removeSource(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
 

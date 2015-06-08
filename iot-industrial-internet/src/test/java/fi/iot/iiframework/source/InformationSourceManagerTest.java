@@ -13,20 +13,16 @@ import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.mock;
+import static org.mockito.MockitoAnnotations.initMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {TestConfig.class})
-@Ignore
 public class InformationSourceManagerTest {
 
     @Autowired
@@ -39,10 +35,10 @@ public class InformationSourceManagerTest {
     private InformationSourceObjectService mockService;
 
     private InformationSourceConfiguration config;
-    private InformationSourceConfiguration config2;
 
     @Before
     public void setUp() {
+        initMocks(this);
         manager.setConfigService(mockConfigService);
         manager.setService(mockService);
 
@@ -54,14 +50,6 @@ public class InformationSourceManagerTest {
         config.setActive(false);
         config.setReadFrequency(0);
         manager.createSource(config);
-
-//        config2 = new InformationSourceConfiguration();
-//        config2.setId("2");
-//        config2.setName("Example Config");
-//        config2.setType(InformationSourceType.XML);
-//        config2.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
-//        config2.setActive(false);
-//        config2.setReadFrequency(0);
     }
 
     @Test
@@ -84,7 +72,9 @@ public class InformationSourceManagerTest {
     
     @Test
     public void removeRemovesTheConfiguration() {
-        
+        manager.removeSource(config);
+        assertTrue(manager.getSources().isEmpty());
+        Mockito.verify(mockConfigService, Mockito.times(1)).delete(config);
     }
 
 }

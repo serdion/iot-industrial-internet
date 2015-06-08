@@ -55,12 +55,12 @@ public class InformationSourceManager {
      *
      * Deletes an object that represents an external data source
      *
-     * @param id the id of the data source representation to be deleted
+     * @param config
      */
-    public void removeSource(String id) {
-        configService.delete(sources.get(id).getConfig());
-        sources.get(id).close();
-        sources.remove(id);
+    public void removeSource(InformationSourceConfiguration config) {
+        configService.delete(sources.get(config.id).getConfig());
+        sources.get(config.id).close();
+        sources.remove(config.id);
     }
 
     /**
@@ -73,6 +73,10 @@ public class InformationSourceManager {
     public void updateSource(InformationSourceConfiguration config) {
         sources.get(config.id).setConfig(config);
         configService.save(config);
+    }
+    
+    public void readSource(InformationSourceConfiguration config) {
+        
     }
 
     public Map<String, InformationSource> getSources() {

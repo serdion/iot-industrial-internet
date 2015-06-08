@@ -82,9 +82,9 @@ public final class InformationSourceImpl implements InformationSource {
         try {
             isobj = reader.read();
         } catch (JAXBException ex) {
-            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url, null);
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url);
         } catch (IOException ex) {
-            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url, null);
+            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url);
         }
         return isobj;
     }
