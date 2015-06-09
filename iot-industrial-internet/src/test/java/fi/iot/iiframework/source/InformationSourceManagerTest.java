@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class InformationSourceManagerTest {
 
     @Autowired
-    private InformationSourceManager manager;
+    private InformationSourceManagerImpl manager;
 
     @Mock
     private InformationSourceConfigurationService mockConfigService;
@@ -72,7 +72,7 @@ public class InformationSourceManagerTest {
     
     @Test
     public void removeRemovesTheConfiguration() {
-        manager.removeSource(config);
+        manager.removeSource(config.id);
         assertTrue(manager.getSources().isEmpty());
         Mockito.verify(mockConfigService, Mockito.times(1)).delete(config);
     }

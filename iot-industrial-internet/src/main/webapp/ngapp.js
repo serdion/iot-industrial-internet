@@ -20,48 +20,45 @@ var IIFramework = angular.module('IIFramework', [
 IIFramework.config(function ($routeProvider) {
     $routeProvider.when('/', {
         controller: 'FrontController',
-        templateUrl: 'ngviews/front.html'
+        templateUrl: 'front.html'
     })
             .when('/visual/now/:sensorid', {
                 controller: 'VisualRealtimeController',
-                templateUrl: 'ngviews/visual_realtime.html'
-            })
-            .when('/visual/history', {
-                controller: 'FrontController',
-                templateUrl: 'ngviews/visual_history.html'
+                templateUrl: 'information_sources/line_graph.html'
             })
             .when('/sources', {
                 controller: 'InformationSourcesController',
-                templateUrl: 'ngviews/information_sources.html'
+                templateUrl: 'information_sources/list.html'
             })
             .when('/sources/:informationsourceid', {
                 controller: 'InformationSourceController',
-                templateUrl: 'ngviews/information_source.html'
+                templateUrl: 'information_sources/view.html'
             })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
-                templateUrl: 'ngviews/sensor.html'
+                templateUrl: 'information_sources/sensor.html'
             })
             .when('/configurations', {
                 controller: 'InformationSourceConfigurationsController',
-                templateUrl: 'ngviews/configurations.html'
+                templateUrl: 'configurations/configurations.html'
             })
             .when('/configurations/add', {
                 controller: 'AddInformationSourceController',
-                templateUrl: 'ngviews/information_source_form.html'
+
+                templateUrl: 'configurations/information_source_form.html'
             })
             .when('/configurations/:configid/edit', {
                 controller: 'EditInformationSourceController',
-                templateUrl: 'ngviews/information_source_form.html'
+                templateUrl: 'configurations/information_source_form.html'
             })
 
             // Controllers for SysErrors
             .when('/syserrors/:errorid', {
                 controller: 'SysErrorDetailsController',
-                templateUrl: 'ngviews/syserrordetails.html'
+                templateUrl: 'syserrors/view.html'
             })
             .when('/syserrors/', {
                 controller: 'SysErrorsListController',
-                templateUrl: 'ngviews/syserrors.html'
+                templateUrl: 'syserrors/list.html'
             });
 });

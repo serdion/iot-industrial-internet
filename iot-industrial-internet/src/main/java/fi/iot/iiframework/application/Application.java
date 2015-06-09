@@ -11,7 +11,7 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.source.InformationSourceConfiguration;
-import fi.iot.iiframework.source.InformationSourceManager;
+import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -38,7 +38,7 @@ public class Application {
     }
 
     private static void initTestData(ApplicationContext ctx) throws JAXBException, IOException {
-        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
+        InformationSourceManagerImpl infSourceManager = ctx.getBean(InformationSourceManagerImpl.class);
 
         InformationSourceConfiguration config = new InformationSourceConfiguration();
         config.setName("Example Config");

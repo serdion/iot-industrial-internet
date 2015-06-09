@@ -22,7 +22,15 @@ import java.util.UUID;
  */
 public class InformationSourceObjectProvider {
 
-    public static InformationSourceObject provideDataObject() {
+    public static InformationSourceObject provideInformationSourceObjectWithChildren() {
+        InformationSourceObject o = provideInformationSourceObject();
+        for (int i = 0; i < 3; i++) {
+            o.getDevices().add(proviceDeviceWithChildren(o));
+        }
+        return o;
+    }
+
+    public static InformationSourceObject provideInformationSourceObject() {
         java.util.Locale.setDefault(Locale.ENGLISH);
         InformationSourceObject obj = new InformationSourceObject();
 
@@ -32,6 +40,23 @@ public class InformationSourceObjectProvider {
         return obj;
     }
 
+    private static Device proviceDeviceWithChildren(InformationSourceObject parent) {
+        Device d = provideDevice();
+        d.setSource(parent);
+        for (int i = 0; i < 3; i++) {
+            d.getSensors().add(provideSensorWithChildren(d));
+        }
+        return d;
+    }
+
+    private static Sensor provideSensorWithChildren(Device parent) {
+        Sensor s = provideSensor();
+        s.setDevice(parent);
+        for (int i = 0; i < 3; i++) {
+            s.getReadouts().add(provideReadout(s));
+        }
+        return s;
+    }
 
     public static Device provideDevice() {
         Device device = new Device();
@@ -49,6 +74,12 @@ public class InformationSourceObjectProvider {
         sensor.setReadouts(new HashSet<>());
 
         return sensor;
+    }
+    
+    private static Readout provideReadout(Sensor s) {
+        Readout r = provideReadout();
+        r.setSensor(s);
+        return r;
     }
 
     public static Readout provideReadout() {

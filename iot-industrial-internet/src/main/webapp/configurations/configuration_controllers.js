@@ -41,6 +41,7 @@ configurations.controller('EditInformationSourceController', ['$scope', 'Informa
             window.history.back();
         };
         $scope.submit = function () {
+			$scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.$edit({}, function () {
                 $location.path('/configurations');
             },

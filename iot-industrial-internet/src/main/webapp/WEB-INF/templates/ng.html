@@ -113,18 +113,6 @@
                                     <a th:href="@{#/}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Visualization<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-second-level">
-                                        <li>
-                                            <a th:href="@{#/visual/now}"><i class="fa fa-spinner fa-spin fa-fw"></i> Realtime</a>
-                                        </li>
-                                        <li>
-                                            <a th:href="@{#/visual/history}"><i class="fa fa-history fa-fw"></i> History</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-second-level -->
-                                </li>
-                                <li>
                                     <a href="#"><i class="fa fa-wrench fa-fw"></i> Management<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <li>
@@ -187,18 +175,18 @@
 
         <script th:attr="src=@{/dist/js/sb-admin-2.js}"></script>
 
-        <script th:attr="src=@{/js/ngapp.js}"></script>
-        <script th:attr="src=@{/js/controllers/front_controller.js}"></script>
-        <script th:attr="src=@{/js/controllers/visual_realtime_controller.js}"></script>
-        <script th:attr="src=@{/js/information_sources/information_source_services.js}"></script>
-        <script th:attr="src=@{/js/information_sources/information_source_controllers.js}"></script>
-        <script th:attr="src=@{/js/configurations/configuration_services.js}"></script>
-        <script th:attr="src=@{/js/configurations/configuration_controllers.js}"></script>
-        <script th:attr="src=@{/js/syserrors/syserror_services.js}"></script>
-        <script th:attr="src=@{/js/syserrors/syserror_controllers.js}"></script>
+        <script th:attr="src=@{/ngapp.js}"></script>
+        <script th:attr="src=@{/front_controller.js}"></script>
+        <script th:attr="src=@{/information_sources/visual_realtime_controller.js}"></script>
+        <script th:attr="src=@{/information_sources/information_source_services.js}"></script>
+        <script th:attr="src=@{/information_sources/information_source_controllers.js}"></script>
+        <script th:attr="src=@{/configurations/configuration_services.js}"></script>
+        <script th:attr="src=@{/configurations/configuration_controllers.js}"></script>
+        <script th:attr="src=@{/syserrors/syserror_services.js}"></script>
+        <script th:attr="src=@{/syserrors/syserror_controllers.js}"></script>
         <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js}"></script>
-        <script th:attr="src=@{/js/directives/slider.js}"></script>
+        <script th:attr="src=@{/directives/slider.js}"></script>
 
         <!--        Angular Moment-->
         <script th:attr="src=@{/bower_components/moment/moment.js}"></script>

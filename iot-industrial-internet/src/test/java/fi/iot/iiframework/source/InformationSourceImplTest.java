@@ -15,33 +15,26 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class InformationSourceImplTest {
 
-    private InformationSourceImpl impl;
+    private InformationSource source;
     private InformationSourceConfiguration config;
-    private InformationSourceReader reader;
+    @Mock
     private InformationSourceObjectService service;
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         config = new InformationSourceConfiguration();
         config.type = InformationSourceType.XML;
         config.readFrequency = 11;
         config.name = "test";
         config.type = InformationSourceType.XML;
         config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
-        impl = new InformationSourceImpl(config, service);
+        source = new InformationSourceImpl(config, service);
 
     }
 
