@@ -71,22 +71,5 @@ public class SanitizationHelperTest {
             assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]));
         }
     }
-    
-    @Test
-    public void testTest() throws ScanException, PolicyException{
-        for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
-            System.out.println(SanitizationHelper.sanitizeNoHTML(alwaysAcceptedInputs[i]));
-        }
-
-        for (int i = 0; i < sometimesAcceptedInputs.length; i++) {
-            System.out.println(SanitizationHelper.sanitizeNoHTML(sometimesAcceptedInputs[i]));
-        }
-        
-        for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            System.out.println(SanitizationHelper.sanitizeNoHTML(testNotAcceptedInputs[i]));
-        }
-        
-       assertTrue(true);
-    }
 
 }

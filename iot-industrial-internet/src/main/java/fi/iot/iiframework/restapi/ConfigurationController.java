@@ -12,7 +12,7 @@ import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
-import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

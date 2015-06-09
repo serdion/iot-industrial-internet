@@ -9,7 +9,7 @@ package fi.iot.iiframework.source;
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
-import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
 import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
