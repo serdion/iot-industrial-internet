@@ -10,7 +10,7 @@ import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
 import java.util.List;

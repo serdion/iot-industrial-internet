@@ -7,7 +7,7 @@
 package fi.iot.iiframework.daos.source;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import java.util.List;
 
 /**

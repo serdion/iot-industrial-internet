@@ -7,7 +7,7 @@
 package fi.iot.iiframework.daos.source;
 
 import fi.iot.iiframework.daos.GenericHibernateDAO;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.util.List;
 import org.hibernate.Criteria;

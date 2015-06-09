@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.XMLReader;
@@ -44,12 +45,12 @@ public final class InformationSourceImpl implements InformationSource {
      * Initialize the type of reader this class will use.
      */
     private void initReader() {
-        switch (config.type) {
+        switch (config.getType()) {
             case XML:
                 this.reader = new XMLReader();
                 break;
             default:
-                throw new AssertionError(config.type.name());
+                throw new AssertionError(config.getType().name());
         }
 
     }
@@ -59,8 +60,8 @@ public final class InformationSourceImpl implements InformationSource {
      */
     private void schedule() {
         scheduler.cancel();
-        if (config.active && config.readFrequency > 0) {
-            scheduler.schedule(config.readFrequency, this::readAndWrite);
+        if (config.isActive() && config.getReadFrequency() > 0) {
+            scheduler.schedule(config.getReadFrequency(), this::readAndWrite);
         }
     }
 
@@ -86,7 +87,7 @@ public final class InformationSourceImpl implements InformationSource {
     @Override
     public InformationSourceObject read() {
         InformationSourceObject isobj = null;
-        isobj = reader.read(config.url);
+        isobj = reader.read(config.getUrl());
         return isobj;
     }
 

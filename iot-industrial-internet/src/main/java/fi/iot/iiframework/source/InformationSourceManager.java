@@ -6,6 +6,8 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
+
 /**
  *
  * @author atte

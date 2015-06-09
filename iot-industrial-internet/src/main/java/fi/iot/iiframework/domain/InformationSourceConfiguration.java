@@ -4,11 +4,12 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.source;
+package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Validatable;
+import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;

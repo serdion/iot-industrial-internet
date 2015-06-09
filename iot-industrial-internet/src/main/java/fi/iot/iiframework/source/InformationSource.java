@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
