@@ -10,5 +10,12 @@ import fi.iot.iiframework.domain.InformationSourceObject;
 
 public interface Parser {
 
+    /**
+     * Attempts to parse data from given location to a InformationSourceObject.
+     *
+     * @param location Location of the data
+     * @return InformationSourceObject
+     */
     public InformationSourceObject parse(String location);
 }
+        

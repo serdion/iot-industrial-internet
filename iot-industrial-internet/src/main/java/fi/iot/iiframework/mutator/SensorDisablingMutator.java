@@ -7,8 +7,14 @@
 package fi.iot.iiframework.mutator;
 
 import fi.iot.iiframework.domain.InformationSourceObject;
+import org.springframework.stereotype.Component;
 
-public interface Mutator {
+@Component
+public class SensorDisablingMutator implements Mutator {
+
+    @Override
+    public void mutate(InformationSourceObject informationSourceObject) {
+        // Mutate dat shiii
+    }
     
-    public void mutate(InformationSourceObject informationSourceObject);
 }
