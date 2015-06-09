@@ -8,6 +8,7 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.readers.InformationSourceReader;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 
@@ -20,14 +21,14 @@ public interface InformationSource {
     /**
      * Read a source from the reader
      *
-     * @return DataSourceObject read from URL and parsed
+     * @return InformationSourceObject read from URL and parsed
      */
     public InformationSourceObject read();
 
     /**
-     * Reads an DataSourceObject and writes it to database.
+     * Reads an InformationSourceObject and writes it to database.
      *
-     * @return true, if succesful, false if unsuccesful
+     * @return true, if successful, false if unsuccessful
      */
     public boolean readAndWrite();
 
@@ -49,4 +50,12 @@ public interface InformationSource {
      * Stop all read-operations.
      */
     public void close();
+
+    /**
+     * Manually set 
+     * @param mockReader 
+     */
+    public void setReader(InformationSourceReader mockReader);
+    
+    public void setScheduler(ReadScheduler scheduler);
 }
