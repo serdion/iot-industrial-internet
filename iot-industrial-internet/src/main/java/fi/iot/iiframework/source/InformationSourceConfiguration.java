@@ -7,6 +7,7 @@
 package fi.iot.iiframework.source;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fi.iot.iiframework.datasourcereaders.XMLReader;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Validatable;
 import java.io.Serializable;

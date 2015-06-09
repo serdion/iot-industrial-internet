@@ -22,7 +22,7 @@
         <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-        
+
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
     </head>
 
@@ -55,30 +55,28 @@
 
                             <ul class="dropdown-menu dropdown-alerts" >
 
-                                <p ng-repeat="error in alarmlist" >
-                                    <li ng-repeat="error in alarmlist">
-                                        <a href="#/syserrors/{{error.id}}">
-                                            <div>
-                                                <div ng-if="error.severity == 'FATAL'">
-                                                    <font color="red">
-                                                        <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.type}}</font>
-                                                </div>
-                                                <div ng-if="error.severity != 'FATAL'">
-                                                    <i class="fa fa-bell fa-fw"></i>{{error.type}} 
-                                                </div>
-                                                <span class="pull-right text-muted small" am-time-ago=error.time></span>
+                                <li ng-repeat="error in alarmlist">
+                                    <a href="#/syserrors/{{error.id}}">
+                                        <div>
+                                            <div ng-if="error.severity == 'FATAL'">
+                                                <font color="red">
+                                                    <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.type}}</font>
                                             </div>
-                                        </a>
-                                    </li>
+                                            <div ng-if="error.severity != 'FATAL'">
+                                                <i class="fa fa-bell fa-fw"></i>{{error.type}} 
+                                            </div>
+                                            <span class="pull-right text-muted small" am-time-ago=error.time></span>
+                                        </div>
+                                    </a>
+                                </li>
 
-                                    <li>
-                                        <a class="text-center" th:href="@{#/syserrors/}">
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
+                                <li>
+                                    <a class="text-center" th:href="@{#/syserrors/}">
+                                        <strong>See All Alerts</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
 
-                                </p>
 
 
                             </ul>
@@ -148,7 +146,7 @@
             </div>
             <div id="page-wrapper">
                 <div class="container-fluid">
-					<div id="error_container"></div>
+                    <div id="error_container"></div>
                     <div ng-view></div>
                 </div>
             </div>
