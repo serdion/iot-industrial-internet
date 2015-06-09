@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
+import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import org.junit.After;

@@ -10,7 +10,7 @@ import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
-import static fi.iot.iiframework.xmltodataobject.XmlToObject.convertXml;
+import static fi.iot.iiframework.parsers.XmlParser.convertXml;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;

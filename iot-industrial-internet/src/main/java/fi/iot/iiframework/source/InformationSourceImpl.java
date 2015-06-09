@@ -7,14 +7,9 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceObject;
-import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
-import fi.iot.iiframework.datasourcereaders.XMLReader;
-import fi.iot.iiframework.errors.ErrorLogger;
-import fi.iot.iiframework.errors.ErrorSeverity;
-import fi.iot.iiframework.errors.ErrorType;
+import fi.iot.iiframework.readers.InformationSourceReader;
+import fi.iot.iiframework.readers.XMLReader;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
-import java.io.IOException;
-import javax.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public final class InformationSourceImpl implements InformationSource {
@@ -51,7 +46,7 @@ public final class InformationSourceImpl implements InformationSource {
     private void initReader() {
         switch (config.type) {
             case XML:
-                this.reader = new XMLReader(config.url);
+                this.reader = new XMLReader();
                 break;
             default:
                 throw new AssertionError(config.type.name());
@@ -80,8 +75,9 @@ public final class InformationSourceImpl implements InformationSource {
     @Override
     public boolean readAndWrite() {
         InformationSourceObject isobj = read();
-        if (isobj == null)
+        if (isobj == null){
             return false;
+        }
         isobj.setInformationSource(config);
         service.save(isobj);
         return true;
@@ -90,13 +86,7 @@ public final class InformationSourceImpl implements InformationSource {
     @Override
     public InformationSourceObject read() {
         InformationSourceObject isobj = null;
-        try {
-            isobj = reader.read();
-        } catch (JAXBException ex) {
-            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "XML returned could not be read for source: " + config.url);
-        } catch (IOException ex) {
-            ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "IOException reeading source: " + config.url);
-        }
+        isobj = reader.read(config.url);
         return isobj;
     }
 
