@@ -7,8 +7,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed">Device {{device.deviceId}} Name: {{device.customName}} </a>
-                        
+                        <a data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed">Device {{device.deviceId}} -- {{device.id}} </a>
+                        <a type="button" class="btn btn-warning btn-xs" ng-href="#/devices/{{device.id}}/edit">Edit</a>
+
                     </h4>
                 </div>
                 <div id="{{device.deviceId}}" class="panel-collapse collapse" collapse="isCollapsed">

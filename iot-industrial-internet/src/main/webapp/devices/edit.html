@@ -10,38 +10,18 @@
                     <tbody>
                         <tr>
                             <th>Device id</th>
-                            <td>{{device.id}}</td>
+                            <td>{{editdevice.id}}</td>
                             <td>     
                             </td>
                         </tr>
                         <tr>
                             <th>Custom name:</th>
-                            <td>{{device.customname}}</td>
+                            <td>{{editdevice.customname}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="sname" ng-model="ss.customname" placeholder="name"/>
+                                    <input class="form-control" name="name" ng-model="dv.customname" placeholder="name"/>
                                 </div>
                             </td>
-
-                        </tr>
-                        <tr>
-                            <th>Upper limit:</th>
-                            <td>{{device.upperlimit}}</td>
-                            <td>
-                                <div class="form-group">
-                                    <input class="form-control" name="supperlimit" ng-model="ss.upperlimit"/>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Lower limit:</th>
-                            <td>{{device.lowerlimit}}</td>
-                            <td>
-                                <div class="form-group">
-                                    <input class="form-control" name="slowerlimit" ng-model="ss.lowerlimit"/>
-                                </div>
-                            </td>
-                        </tr>
 
                 </table>
                 <button id="submitbutton" type="button" class="btn btn-info btn-circle btn-xl" ng-click="update()"><i class="fa fa-check"></i>

@@ -19,6 +19,7 @@ informationSources.factory('Device', ['$resource',
     function ($resource) {
         return $resource('1.0/devices/:informationsourceid/:action', {}, {
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
+            get: {method: 'GET', params: {action: 'view'}, isArray: false},
             rename: {method: 'POST', params: {action : "rename"}, isArray: false}
         });
     }]);

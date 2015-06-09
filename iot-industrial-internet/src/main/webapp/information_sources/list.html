@@ -16,7 +16,7 @@
                     <tbody>
                         <tr ng-repeat="ds in sources" >
                             <td ng-app="">{{ds.id}}</td>
-                            <td class="text-muted" ng-controller="InformationSourceConfigurationsController">Name: {{ds.name}} </td>
+                            <td>{{ds.name}}</td>
                             <td>
                                 <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>
                                 <a ng-href="#/sources/{{ds.id}}" class="btn btn-warning btn-xs">Edit</a>

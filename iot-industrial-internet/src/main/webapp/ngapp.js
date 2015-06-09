@@ -55,7 +55,7 @@ IIFramework.config(function($routeProvider) {
                 templateUrl: 'configurations/information_source_form.html'
             })
             .when('/devices/:deviceid/edit', {
-                controller: 'InformationSourceController',
+                controller: 'DeviceController',
                 templateUrl: 'devices/edit.html'
             })
 

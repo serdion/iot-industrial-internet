@@ -51,10 +51,14 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
             if ($scope.ss.customname.length < 1 || $scope.ss.customname.length > 20) {
                 console.log("Name too wrong sized!");
             }
-            
+
         }
 
 
 
     }]);
+
+informationSources.controller('DeviceController', function($scope, Device, $routeParams) {
+    $scope.editdevice = Device.get({informationsourceid: $routeParams.deviceid});
+});
 
