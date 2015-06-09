@@ -35,14 +35,6 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
             populateDevicesWithSensors();
         });
 
-        $scope.customName = function(id) {
-            console.log("Not implemented yet...");
-            var input = prompt("Enter custom name");
-            console.log(id + " " + input);
-
-            Device.rename();
-        };
-
     }]);
 
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function($scope, $routeParams, Sensor, Readout) {
