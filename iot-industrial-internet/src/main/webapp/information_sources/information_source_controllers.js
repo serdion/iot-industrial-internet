@@ -36,19 +36,33 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
         });
 
         $scope.customName = function(id) {
-//            console.log("test");
+            console.log("Not implemented yet...");
             var input = prompt("Enter custom name");
             console.log(id + " " + input);
-            Device.rename({informationsourceid : id});
+
+            Device.rename();
         };
 
     }]);
 
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function($scope, $routeParams, Sensor, Readout) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
-        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
+        $scope.sensordetails = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.filter = function() {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
+        };
+
+
+//      Checks that inputted values are valid and updates sensor in database
+        $scope.update = function() {
+            console.log($scope.sensor.id + " Name: " + $scope.ss.customname + " Limits: " + $scope.ss.upperlimit + "-" + $scope.ss.lowerlimit);
+            if ($scope.ss.customname.length < 1 || $scope.ss.customname.length > 20) {
+                console.log("Name too wrong sized!");
+            }
+            
         }
+
+
+
     }]);
 
