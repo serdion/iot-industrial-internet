@@ -29,12 +29,8 @@ sysErrors.controller('ErrorNotificationController', function ($scope, SysError, 
 //        console.log(data);
     });
     $scope.reloadErrors = function () {
-<<<<<<< HEAD:iot-industrial-internet/src/main/webapp/js/syserrors/syserror_controllers.js
         $scope.alarmlist =  SysError.getHighAndFatal();
 
-=======
-        $scope.alarmlist = SysError.getHighAndFatal({errorid: $routeParams.errorid});
->>>>>>> dev:iot-industrial-internet/src/main/webapp/syserrors/syserror_controllers.js
     };
 });
 
