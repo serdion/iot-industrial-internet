@@ -8,7 +8,7 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
-import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
