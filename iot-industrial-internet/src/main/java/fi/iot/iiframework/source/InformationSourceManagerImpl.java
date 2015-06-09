@@ -6,8 +6,9 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
-import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
     public void createSource(InformationSourceConfiguration config) {
         InformationSource source = new InformationSourceImpl(config, service);
         configService.save(config);
-        sources.put(config.id, source);
+        sources.put(config.getId(), source);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     @Override
     public void updateSource(InformationSourceConfiguration config) {
-        sources.get(config.id).setConfig(config);
+        sources.get(config.getId()).setConfig(config);
         configService.save(config);
     }
     

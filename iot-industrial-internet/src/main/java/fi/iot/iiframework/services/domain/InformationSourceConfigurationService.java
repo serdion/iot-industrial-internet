@@ -5,10 +5,10 @@
  * Software Engineering Lab in summer 2015
  */
 
-package fi.iot.iiframework.services.source;
+package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.services.GenericService;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 
 public interface InformationSourceConfigurationService extends GenericService<InformationSourceConfiguration, String>{
 

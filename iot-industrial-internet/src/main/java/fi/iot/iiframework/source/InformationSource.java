@@ -6,9 +6,9 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
-import fi.iot.iiframework.datasourcereaders.XMLReader;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.readers.InformationSourceReader;
 import java.net.MalformedURLException;
 import javax.xml.bind.JAXBException;
 
@@ -28,7 +28,7 @@ public interface InformationSource {
     /**
      * Reads an InformationSourceObject and writes it to database.
      *
-     * @return true, if succesful, false if unsuccesful
+     * @return true, if successful, false if unsuccessful
      */
     public boolean readAndWrite();
 

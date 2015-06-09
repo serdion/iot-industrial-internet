@@ -21,6 +21,7 @@ public class SanitizationHelper {
 
     private static final File slashdot = new File("src/main/resources/antisamy-slashdot-1.4.4.xml");
     private static final File ebay = new File("src/main/resources/antisamy-ebay-1.4.4.xml");
+    private static final File nothing = new File("src/main/resources/antisamy-nothing.xml");
 
     /**
      * Sanitizes the input using Slashdot policy, only following HTML tags and
@@ -46,6 +47,19 @@ public class SanitizationHelper {
      */
     public static String sanitizeLoose(String input) throws ScanException, PolicyException {
         return sanitize(input, ebay);
+    }
+
+    /**
+     * Sanitizes the input using custom policy that forbits everything HTML, JS
+     * and CSS.
+     *
+     * @param input Input String
+     * @return Sanitized String
+     * @throws ScanException
+     * @throws PolicyException
+     */
+    public static String sanitizeNoHTML(String input) throws ScanException, PolicyException {
+        return sanitize(input, nothing);
     }
 
     /*

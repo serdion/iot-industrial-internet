@@ -4,10 +4,10 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.daos.source;
+package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import java.util.List;
 
 /**

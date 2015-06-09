@@ -10,7 +10,7 @@ import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
