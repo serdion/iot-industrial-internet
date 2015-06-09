@@ -7,7 +7,6 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;

@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.services.source.InformationSourceConfigurationService;
@@ -72,7 +73,7 @@ public class InformationSourceManagerTest {
     
     @Test
     public void removeRemovesTheConfiguration() {
-        manager.removeSource(config.id);
+        manager.removeSource(config.getId());
         assertTrue(manager.getSources().isEmpty());
         Mockito.verify(mockConfigService, Mockito.times(1)).delete(config);
     }

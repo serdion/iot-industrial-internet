@@ -6,7 +6,8 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.datasourcereaders.InformationSourceReader;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import org.junit.After;
@@ -29,11 +30,10 @@ public class InformationSourceImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         config = new InformationSourceConfiguration();
-        config.type = InformationSourceType.XML;
-        config.readFrequency = 11;
-        config.name = "test";
-        config.type = InformationSourceType.XML;
-        config.url = "http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml";
+        config.setReadFrequency(11);
+        config.setName("test");
+        config.setType(InformationSourceType.XML);
+        config.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
         source = new InformationSourceImpl(config, service);
 
     }
