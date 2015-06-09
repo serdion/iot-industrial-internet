@@ -7,9 +7,6 @@
 package fi.iot.iiframework.readers;
 
 import fi.iot.iiframework.domain.InformationSourceObject;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import javax.xml.bind.JAXBException;
 
 /**
  * Defines reader for a InformationSource.

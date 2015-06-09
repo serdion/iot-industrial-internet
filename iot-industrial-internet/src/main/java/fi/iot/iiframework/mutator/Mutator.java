@@ -7,8 +7,13 @@
 package fi.iot.iiframework.mutator;
 
 import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
+import fi.iot.iiframework.errors.ErrorType;
 
-public interface Mutator {
-    
-    public void mutate(InformationSourceObject informationSourceObject);
+public abstract class Mutator {
+
+    public static void mutate(InformationSourceObject informationSourceObject){
+        ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "Tried to call abstract class Mutator and not extended classes.");
+    };
 }

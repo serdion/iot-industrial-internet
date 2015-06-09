@@ -16,11 +16,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import org.springframework.stereotype.Component;
 
-@Component
-public class XmlParser implements Parser {
+public class XmlParser extends Parser {
 
-    @Override
-    public InformationSourceObject parse(String location) {
+    public static InformationSourceObject parse(String location) {
         InformationSourceObject informationSourceObject = null;
         
         try {

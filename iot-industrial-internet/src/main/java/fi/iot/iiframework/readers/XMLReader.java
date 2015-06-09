@@ -14,25 +14,19 @@ import fi.iot.iiframework.mutator.DeviceDisablingMutator;
 import fi.iot.iiframework.mutator.SensorDisablingMutator;
 import fi.iot.iiframework.parsers.XmlParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class XMLReader implements InformationSourceReader {
-    
-    @Autowired
+
     private XmlParser parser;
-    
-    @Autowired
-    private DeviceDisablingMutator deviceDisablingMutator;
-    
-    @Autowired
-    private SensorDisablingMutator sensorDisablingMutator;
 
     @Override
     public InformationSourceObject read(String location) {
         InformationSourceObject object = parser.parse(location);
         
         if(object!=null){
-            deviceDisablingMutator.mutate(object);
-            sensorDisablingMutator.mutate(object);
+            DeviceDisablingMutator.mutate(object);
+            SensorDisablingMutator.mutate(object);
         } else {
             ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Attempted to mutate object that was null.");
         }

@@ -7,8 +7,6 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.domain.InformationSourceObject;
-import fi.iot.iiframework.domain.Validatable;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
 import java.net.MalformedURLException;

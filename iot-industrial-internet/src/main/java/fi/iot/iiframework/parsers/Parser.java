@@ -7,8 +7,11 @@
 package fi.iot.iiframework.parsers;
 
 import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
+import fi.iot.iiframework.errors.ErrorType;
 
-public interface Parser {
+public abstract class Parser {
 
     /**
      * Attempts to parse data from given location to a InformationSourceObject.
@@ -16,6 +19,9 @@ public interface Parser {
      * @param location Location of the data
      * @return InformationSourceObject
      */
-    public InformationSourceObject parse(String location);
+    public static InformationSourceObject parse(String location){
+        ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "Tried to call abstract class Parser and not extended classes.");
+        return null;
+    };
 }
         

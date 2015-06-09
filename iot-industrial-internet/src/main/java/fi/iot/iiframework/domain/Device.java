@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -62,6 +63,10 @@ public class Device implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
     protected InformationSourceObject source;
+    
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER)
+    protected DeviceConfiguration deviceConfiguration;
 
     public Device() {
     }
