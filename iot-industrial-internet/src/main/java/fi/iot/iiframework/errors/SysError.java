@@ -86,6 +86,10 @@ public class SysError implements Serializable {
     public void setType(ErrorType type) {
         this.type = type;
     }
+    
+    public String getName(){
+        return this.type.getName();
+    }
 
     public Date getTime() {
         return time;

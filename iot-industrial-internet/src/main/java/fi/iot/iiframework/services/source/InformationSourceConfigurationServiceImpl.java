@@ -8,7 +8,7 @@ package fi.iot.iiframework.services.source;
 
 import fi.iot.iiframework.services.GenericHibernateService;
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.daos.source.InformationSourceConfigurationDAO;
+import fi.iot.iiframework.daos.domain.InformationSourceConfigurationDAO;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
