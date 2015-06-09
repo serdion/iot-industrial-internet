@@ -11,6 +11,7 @@
                             <th>Type</th>
                             <th>URL</th>
                             <th>Read frequency</th>
+                            <th>Read date/time & interval</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -21,6 +22,7 @@
                             <td>{{c.type}}</td>
                             <td>{{c.url}}</td>
                             <td>{{c.readFrequency}}</td>
+                            <td>-placeholder-</td>
                             <td>
                                 <a type="button" class="btn btn-primary btn-xs" ng-href="#/configurations/{{c.id}}/edit">Edit</a>
                               <a type="button" class="btn btn-danger btn-xs" ng-click="deleteConfiguration(c.id)">Delete</a>
