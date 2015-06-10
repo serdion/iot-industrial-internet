@@ -7,13 +7,22 @@
 package fi.iot.iiframework.mutator;
 
 import fi.iot.iiframework.domain.Sensor;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SensorDisablingMutator extends Mutator {
+public class RemoveSensorIfNotActiveMutator extends Mutator {
 
     public static void mutate(List<Sensor> sensors){
+        Iterator<Sensor> iterator = sensors.iterator();
         
+        while(iterator.hasNext()){
+            Sensor sensor = iterator.next();
+            
+            if(!sensor.getSensorConfiguration().isActive()){
+                sensors.remove(sensor);
+            }
+        }
     };
 }
