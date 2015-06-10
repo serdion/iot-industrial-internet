@@ -8,8 +8,6 @@ package fi.iot.iiframework.security;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.owasp.validator.html.PolicyException;
-import org.owasp.validator.html.ScanException;
 
 public class SanitizationHelperTest {
 
@@ -22,10 +20,12 @@ public class SanitizationHelperTest {
     private static final String sometimesAcceptedInputs[] = {
         "<b>Bold text</b>",
         "<i>Italic text</i>",
-        "<a>link text</a>"
-    };
+        "<a href=\"#\">link text</a>",};
 
     private static final String testNotAcceptedInputs[] = {
+        "<a>link text</a>",
+        "<a style=\"display: none;\">link text</a>",
+        "<div>link text</div>",
         "<SCRIPT type=\"text/javascript\">Default Script-tag String</SCRIPT>",
         "<body onload=alert('Noob attack')>",
         "<b onmouseover=alert('Wufff!')>More complex JS Attack</b>",
@@ -35,26 +35,21 @@ public class SanitizationHelperTest {
     }
 
     @Test
-    public void testSanitizeStrictWithAcceptedInputs() throws ScanException, PolicyException {
+    public void testSanitizeStrictWithAcceptedInputs() {
         for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
             assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeStrict(alwaysAcceptedInputs[i]));
         }
-
-        for (int i = 0; i < sometimesAcceptedInputs.length; i++) {
-            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeStrict(sometimesAcceptedInputs[i]));
-        }
     }
-    
+
     @Test
-    public void testSanitizeStrictWithNotAcceptedInputs() throws ScanException, PolicyException {
+    public void testSanitizeStrictWithNotAcceptedInputs() {
         for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitizeStrict(testNotAcceptedInputs[i]);
             assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeStrict(testNotAcceptedInputs[i]));
         }
     }
-    
+
     @Test
-    public void testSanitizeLooseWithAcceptedInputs() throws ScanException, PolicyException {
+    public void testSanitizeLooseWithAcceptedInputs() {
         for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
             assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeLoose(alwaysAcceptedInputs[i]));
         }
@@ -63,11 +58,10 @@ public class SanitizationHelperTest {
             assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeLoose(sometimesAcceptedInputs[i]));
         }
     }
-    
+
     @Test
-    public void testSanitizeLooseWithNotAcceptedInputs() throws ScanException, PolicyException {
+    public void testSanitizeLooseWithNotAcceptedInputs() {
         for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]);
             assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]));
         }
     }
