@@ -8,8 +8,8 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.SensorService;
 import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -33,7 +33,7 @@ public class InformationSourceManagerTest {
     private InformationSourceConfigurationService mockConfigService;
 
     @Mock
-    private InformationSourceObjectService mockService;
+    private SensorService mockService;
 
     private InformationSourceConfiguration config;
 
@@ -41,7 +41,7 @@ public class InformationSourceManagerTest {
     public void setUp() {
         initMocks(this);
         manager.setConfigService(mockConfigService);
-        manager.setService(mockService);
+        manager.setSensorService(mockService);
 
         config = new InformationSourceConfiguration();
         config.setId("1");

@@ -7,7 +7,6 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.SensorConfiguration;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.domain.SensorConfiguration;
@@ -15,7 +14,6 @@ import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.services.domain.SensorConfigurationService;
-import fi.iot.iiframework.services.domain.DeviceService;
 import fi.iot.iiframework.services.domain.SensorConfigurationService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;

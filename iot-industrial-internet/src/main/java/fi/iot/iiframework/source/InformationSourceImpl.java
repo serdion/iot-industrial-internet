@@ -7,10 +7,11 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.XMLReader;
-import fi.iot.iiframework.services.domain.InformationSourceObjectService;
+import fi.iot.iiframework.services.domain.SensorService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public final class InformationSourceImpl implements InformationSource {
@@ -31,9 +32,9 @@ public final class InformationSourceImpl implements InformationSource {
      * Service for database transactions.
      */
     @Autowired
-    private final InformationSourceObjectService service;
+    private final SensorService service;
 
-    public InformationSourceImpl(InformationSourceConfiguration config, InformationSourceObjectService service) {
+    public InformationSourceImpl(InformationSourceConfiguration config, SensorService service) {
         this.config = config;
         this.service = service;
         this.scheduler = new ReadSchedulerImpl();
@@ -75,19 +76,18 @@ public final class InformationSourceImpl implements InformationSource {
 
     @Override
     public boolean readAndWrite() {
-        InformationSourceObject isobj = read();
-        if (isobj == null){
+        List<Sensor> sensors = read();
+        if (sensors == null){
             return false;
         }
-        isobj.setInformationSource(config);
-        service.save(isobj);
+        sensors.forEach(s -> s.setSource(config));
+        service.save(sensors);
         return true;
     }
 
     @Override
-    public InformationSourceObject read() {
-        InformationSourceObject isobj = null;
-        isobj = reader.read(config.getUrl());
+    public List<Sensor> read() {
+        List<Sensor> isobj = reader.read(config.getUrl());
         return isobj;
     }
 

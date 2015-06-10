@@ -7,35 +7,36 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.domain.InformationSourceObject;
-import fi.iot.iiframework.domain.Validatable;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 
 /**
  *
- * Configures a data source object based on database configuration information
+ * Configures a information source.
  */
-
 @Entity
 @Table(name = "informationsources")
 @Data
-@EqualsAndHashCode(exclude = {"id", "readFrequency"})
+@EqualsAndHashCode(exclude = {"id", "readFrequency", "sensors"})
+@ToString(exclude = {"sensors"})
 public class InformationSourceConfiguration implements Serializable, Validatable {
 
     /**
@@ -49,7 +50,7 @@ public class InformationSourceConfiguration implements Serializable, Validatable
      */
     protected String name;
     /**
-     * Information source type xml/mbus/etc.
+     * Information source type XML/MBus/JSon/etc.
      */
     protected InformationSourceType type;
     /**
@@ -81,9 +82,9 @@ public class InformationSourceConfiguration implements Serializable, Validatable
     protected Date endDate;
 
     @JsonIgnore
-    @OneToOne(fetch =  FetchType.LAZY)
-    @Cascade({CascadeType.DELETE})
-    protected InformationSourceObject informationSourceObject;
+    @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    protected Set<Sensor> sensors; 
     
     @Override
     public boolean isValid() {

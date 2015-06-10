@@ -7,11 +7,12 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
-import fi.iot.iiframework.domain.InformationSourceObject;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
-import fi.iot.iiframework.services.domain.InformationSourceObjectService;
+import fi.iot.iiframework.services.domain.SensorService;
 import java.io.IOException;
+import java.util.List;
 import javax.xml.bind.JAXBException;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,13 +27,13 @@ public class InformationSourceImplTest {
     private InformationSource source;
     private InformationSourceConfiguration config;
     @Mock
-    private InformationSourceObjectService mockService;
+    private SensorService mockService;
     @Mock
     private ReadScheduler mockScheduler;
     @Mock
     private InformationSourceReader mockReader;
     
-    private InformationSourceObject exampleObject;
+    private List<Sensor> examples;
 
     @Before
     public void setUp() throws JAXBException, IOException {
@@ -49,19 +50,21 @@ public class InformationSourceImplTest {
         source.setReader(mockReader);
         source.setScheduler(mockScheduler);
         
-        exampleObject = InformationSourceObjectProvider.provideInformationSourceObjectWithChildren();
+        examples = InformationSourceObjectProvider.provideSensorsWithChildren();
         
-        when(mockReader.read(Matchers.anyString())).thenReturn(exampleObject);
+        when(mockReader.read(Matchers.anyString())).thenReturn(examples);
     }
 
     @Test
     public void readReadsSuccesfullyFromReader() throws JAXBException, IOException {
-        assertEquals(exampleObject, mockReader.read(""));
+        examples.forEach(s ->{
+            assertTrue(source.read().contains(s));
+        });
     }
     
     @Test
     public void readAndWriteWritesTheReadObjectToDatabase() {
         source.readAndWrite();
-        verify(mockService).save(exampleObject);
+        verify(mockService).save(examples);
     }
 }
