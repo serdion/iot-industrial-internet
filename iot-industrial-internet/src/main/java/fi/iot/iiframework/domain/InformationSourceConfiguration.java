@@ -65,9 +65,9 @@ public class InformationSourceConfiguration implements Serializable, Validatable
     protected int readFrequency;
 
     @JsonIgnore
-    @OneToOne(fetch =  FetchType.LAZY, mappedBy = "informationSource", orphanRemoval = true)
+    @OneToOne(fetch =  FetchType.LAZY)
     @Cascade({CascadeType.DELETE})
-    protected InformationSourceObject dataObject;
+    protected InformationSourceObject informationSourceObject;
     
     @Override
     public boolean isValid() {

@@ -122,4 +122,18 @@ public class DeviceServiceTest {
         criterions.add(c1);
         assertEquals(1, (long) service.getBy(0, 2, criterions).size());
     }
+//    
+//    @Test
+//    public void devicesAreOverwrittenWhenADeviceThatIsDefinedEqualIsSaved() {
+//        Device d4 = new Device();
+//        d4.setDeviceId(d1.getDeviceId());
+//        d4.setSource(d1.getSource());
+//        d4.setStatus(false);
+//        d1.setStatus(true);
+//        assertEquals(d4, d1);
+//        
+//        service.save(d4);
+//        assertEquals(3, (long) service.count());
+//        assertFalse(service.get(d1.getId()).isStatus());
+//    }
 }

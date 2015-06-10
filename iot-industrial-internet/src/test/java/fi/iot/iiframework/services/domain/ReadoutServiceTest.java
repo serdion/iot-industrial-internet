@@ -134,15 +134,14 @@ public class ReadoutServiceTest {
     }
 
     @Test
-    public void readoutsCanBeUpdatedProperly() {
+    public void objectsThatAreEqualShouldBeOverwrittenInTheDatabase() {
         Readout r4 = r1;
-        r4.setValue(22.2);
+        r4.setUnit(r1.getUnit());
+        r4.setTime(r1.getTime());
+        r4.setQuantity(r1.getQuantity());
+        r4.setSensor(r1.getSensor());
+        r4.setValue(r1.getValue());
         service.save(r4);
         assertEquals(3, (long) service.count());
-
-        List<Criterion> criterions = new ArrayList<>();
-        Criterion c1 = Restrictions.ge("value", 22.0);
-        criterions.add(c1);
-        assertEquals(3, (long) service.getBy(0, 2, criterions).size());
     }
 }

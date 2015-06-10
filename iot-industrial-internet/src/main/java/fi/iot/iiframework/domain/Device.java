@@ -7,6 +7,7 @@ package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ import org.hibernate.annotations.GenericGenerator;
 @XmlRootElement(name = "device")
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"status", "sensors"})
+//@EqualsAndHashCode(of = {"deviceId", "source"})
 @ToString(exclude = {"status", "sensors", "source"})
 public class Device implements Serializable {
 
@@ -78,4 +79,28 @@ public class Device implements Serializable {
     public void afterUnmarshal(Unmarshaller u, Object parent) {
         this.source = (InformationSourceObject) parent;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.deviceId);
+        hash = 41 * hash + Objects.hashCode(this.source);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Device other = (Device) obj;
+        if (!other.deviceId.equals(deviceId))
+            return false;
+        return (source.id == null ? other.source.id == null : source.id.equals(other.source.id));
+    }
+    
+    
 }
