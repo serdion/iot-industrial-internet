@@ -30,9 +30,10 @@ informationSources.factory('DeviceConfig', ['$resource',
         });
     }]);
 
+
 informationSources.factory('Sensor', ['$resource',
-    function($resource) {
-        return $resource('1.0/sensors/:deviceid/:sensorid/:action', {}, {
+    function ($resource) {
+        return $resource('1.0/sensors/:informationsourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });

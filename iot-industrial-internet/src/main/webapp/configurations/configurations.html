@@ -11,7 +11,9 @@
                             <th>Type</th>
                             <th>URL</th>
                             <th>Read frequency</th>
-                            <th>Read date/time & interval</th>
+                            <th>Start date</th>
+                            <th>Read interval</th>
+                            <th>End date</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -22,7 +24,9 @@
                             <td>{{c.type}}</td>
                             <td>{{c.url}}</td>
                             <td>{{c.readFrequency}}</td>
-                            <td>-placeholder-</td>
+                            <td>{{c.startDate| date: 'dd.MM.yyyy HH:mm'}}</td>
+                            <td>(interval)</td>
+                            <td>{{c.endDate| date: 'dd.MM.yyyy HH:mm'}}</td>
                             <td>
                                 <a type="button" class="btn btn-primary btn-xs" ng-href="#/configurations/{{c.id}}/edit">Edit</a>
                               <a type="button" class="btn btn-danger btn-xs" ng-click="deleteConfiguration(c.id)">Delete</a>
