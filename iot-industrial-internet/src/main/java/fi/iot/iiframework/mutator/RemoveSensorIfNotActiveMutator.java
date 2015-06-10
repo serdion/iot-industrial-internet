@@ -19,7 +19,8 @@ public class RemoveSensorIfNotActiveMutator extends Mutator {
         
         while(iterator.hasNext()){
             Sensor sensor = iterator.next();
-            
+            if (sensor.getSensorConfiguration() == null)
+                continue;
             if(!sensor.getSensorConfiguration().isActive()){
                 sensors.remove(sensor);
             }
