@@ -8,11 +8,14 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 
+<<<<<<< HEAD
 /**
  *
  * @author atte
  */
 
+=======
+>>>>>>> dev
 public interface InformationSourceManager {
 
     /**
@@ -41,5 +44,11 @@ public interface InformationSourceManager {
 
     public void updateSource(InformationSourceConfiguration config);
 
+    /**
+     * Reads a source and returns true if the read succeeded.
+     *
+     * @param id Source id
+     * @return true if read succeeded
+     */
     public boolean readSource(String id);
 }

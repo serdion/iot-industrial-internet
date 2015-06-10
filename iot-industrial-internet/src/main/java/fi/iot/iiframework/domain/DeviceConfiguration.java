@@ -12,18 +12,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "deviceconfigurations")
 @Data
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(of = {"device"})
 public class DeviceConfiguration implements Serializable, Validatable {
 
     @Id
@@ -31,7 +28,7 @@ public class DeviceConfiguration implements Serializable, Validatable {
     protected String id;
 
     @JsonIgnore
-    @OneToOne(fetch =  FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(fetch =  FetchType.LAZY, orphanRemoval = true, mappedBy = "deviceConfiguration")
     protected Device device;
     
     /*
