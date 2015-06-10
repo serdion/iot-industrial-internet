@@ -6,7 +6,9 @@
  */
 package fi.iot.iiframework.readers;
 
-import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.domain.Sensor;
+import java.util.List;
+
 
 /**
  * Defines reader for a InformationSource.
@@ -19,5 +21,5 @@ public interface InformationSourceReader {
      * @param location Location of the data as a String
      * @return Correctly mutated InformationSourceObject
      */
-    public InformationSourceObject read(String location);
+    public List<Sensor> read(String location);
 }

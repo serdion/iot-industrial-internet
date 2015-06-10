@@ -6,12 +6,13 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.InformationSourceObject;
-import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
@@ -22,50 +23,17 @@ import java.util.UUID;
  */
 public class InformationSourceObjectProvider {
 
-    public static InformationSourceObject provideInformationSourceObjectWithChildren() {
-        InformationSourceObject o = provideInformationSourceObject();
+    public static List<Sensor> provideSensorsWithChildren() {
+        List<Sensor> sensors = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            o.getDevices().add(proviceDeviceWithChildren(o));
+            Sensor s = provideSensor();
+            for (int j = 0; j < 3; j++) {
+                s.getReadouts().add(provideReadout(s));
+            }
+            sensors.add(s);
         }
-        return o;
-    }
 
-    public static InformationSourceObject provideInformationSourceObject() {
-        java.util.Locale.setDefault(Locale.ENGLISH);
-        InformationSourceObject obj = new InformationSourceObject();
-
-        obj.setId(getUUID());
-        obj.setDevices(new HashSet<>());
-
-        return obj;
-    }
-
-    private static Device proviceDeviceWithChildren(InformationSourceObject parent) {
-        Device d = provideDevice();
-        d.setSource(parent);
-        for (int i = 0; i < 3; i++) {
-            d.getSensors().add(provideSensorWithChildren(d));
-        }
-        return d;
-    }
-
-    private static Sensor provideSensorWithChildren(Device parent) {
-        Sensor s = provideSensor();
-        s.setDevice(parent);
-        for (int i = 0; i < 3; i++) {
-            s.getReadouts().add(provideReadout(s));
-        }
-        return s;
-    }
-
-    public static Device provideDevice() {
-        Device device = new Device();
-
-        device.setDeviceId(getUUID());
-        device.setStatus(true);
-        device.setSensors(new HashSet<>());
-
-        return device;
+        return sensors;
     }
 
     public static Sensor provideSensor() {
@@ -75,7 +43,7 @@ public class InformationSourceObjectProvider {
 
         return sensor;
     }
-    
+
     private static Readout provideReadout(Sensor s) {
         Readout r = provideReadout();
         r.setSensor(s);

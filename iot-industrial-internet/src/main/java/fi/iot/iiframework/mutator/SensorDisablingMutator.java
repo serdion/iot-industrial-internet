@@ -6,13 +6,14 @@
  */
 package fi.iot.iiframework.mutator;
 
-import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.domain.Sensor;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SensorDisablingMutator extends Mutator {
 
-    public static void mutate(InformationSourceObject informationSourceObject){
+    public static void mutate(List<Sensor> sensors){
         
     };
 }
