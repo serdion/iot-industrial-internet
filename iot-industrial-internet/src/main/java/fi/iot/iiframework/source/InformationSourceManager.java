@@ -8,14 +8,6 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
 
-<<<<<<< HEAD
-/**
- *
- * @author atte
- */
-
-=======
->>>>>>> dev
 public interface InformationSourceManager {
 
     /**

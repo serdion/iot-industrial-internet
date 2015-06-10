@@ -36,6 +36,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
 informationSources.controller('DeviceController', ['$scope', '$routeParams', 'Device', 'DeviceConfig', function($scope, $routeParams, Device, DeviceConfig) {
         $scope.device = Device.get({informationsourceid: $routeParams.deviceid});
-        $scope.configs = DeviceConfig.query({deviceid : $routeParams.deviceid, action : 'view'});
+        $scope.configs = DeviceConfig.query({action : 'list'});
+        $scope.config = DeviceConfig.query({deviceid : $routeParams.deviceid, action : 'view'});
     }]);
 
