@@ -47,6 +47,12 @@ public class Sensor implements Serializable {
     @JoinColumn(name = "device", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
     protected Device device;
+    
+    @JsonIgnore
+    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.EAGER)
+    protected SensorConfiguration sensorConfiguration;
+    
+    protected String name;
 
     public Sensor() {
     }

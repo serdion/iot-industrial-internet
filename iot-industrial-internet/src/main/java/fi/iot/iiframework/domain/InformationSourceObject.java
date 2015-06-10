@@ -7,7 +7,6 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fi.iot.iiframework.source.InformationSourceConfiguration;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
@@ -31,6 +30,7 @@ public class InformationSourceObject implements Serializable {
     @Id
     protected String id;
 
+    
     protected String name;
 
     @XmlElement
@@ -45,6 +45,10 @@ public class InformationSourceObject implements Serializable {
     protected Set<Device> devices; 
     
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "informationSource_fk")
+    @OneToOne(targetEntity = InformationSourceConfiguration.class, fetch = FetchType.LAZY)
     protected InformationSourceConfiguration informationSource;
+    
+    @Column(name = "informationSource_fk", updatable=false, insertable=false)
+    protected String informationSource_fk;
 }

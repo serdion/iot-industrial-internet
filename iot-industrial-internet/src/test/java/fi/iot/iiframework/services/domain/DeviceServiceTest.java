@@ -45,8 +45,8 @@ public class DeviceServiceTest {
 
     @Before
     public void setUp() {
-        dso1 = InformationSourceObjectProvider.provideDataObject();
-        dso2 = InformationSourceObjectProvider.provideDataObject();
+        dso1 = InformationSourceObjectProvider.provideInformationSourceObject();
+        dso2 = InformationSourceObjectProvider.provideInformationSourceObject();
 
         d1 = InformationSourceObjectProvider.provideDevice();
         d2 = InformationSourceObjectProvider.provideDevice();

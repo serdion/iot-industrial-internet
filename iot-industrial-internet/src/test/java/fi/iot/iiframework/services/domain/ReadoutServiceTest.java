@@ -44,7 +44,7 @@ public class ReadoutServiceTest {
 
     @Before
     public void setUp() {
-        InformationSourceObject dso = InformationSourceObjectProvider.provideDataObject();
+        InformationSourceObject dso = InformationSourceObjectProvider.provideInformationSourceObject();
 
         Device dev = InformationSourceObjectProvider.provideDevice();
         dev.setSource(dso);

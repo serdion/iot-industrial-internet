@@ -27,6 +27,8 @@ public class ApplicationSettings {
     private int defautAmountOfErrorsRetrievedFromDatabase = 25;
 
     private int defaultInformationSourcesRetrievedFromDatabase = 10;
+    
+    private int defaultDeviceConfigurationsRetrievedFromDatabase = 10;
 
     public int getMaxObjectsRetrievedFromDatabase() {
         return maxObjectsRetrievedFromDatabase;
@@ -54,6 +56,10 @@ public class ApplicationSettings {
 
     public int getDefaultInformationSourcesRetrievedFromDatabase() {
         return defaultInformationSourcesRetrievedFromDatabase;
+    }
+
+    public int getDefaultDeviceConfigurationsRetrievedFromDatabase() {
+        return defaultDeviceConfigurationsRetrievedFromDatabase;
     }
 
 }
