@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "sensorconfigurations")
 @Data
 @EqualsAndHashCode(exclude = {"id"})
-public class SensorConfiguration implements Serializable {
+public class SensorConfiguration implements Serializable, Validatable {
 
     @Id
     @GeneratedValue
@@ -40,5 +40,10 @@ public class SensorConfiguration implements Serializable {
     protected int thresholdMin;
 
     protected int thresholdMax;
+
+    @Override
+    public boolean isValid() {
+        return sensor!=null;
+    }
 
 }

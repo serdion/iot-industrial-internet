@@ -29,8 +29,7 @@ sysErrors.controller('ErrorNotificationController', function ($scope, SysError, 
 //        console.log(data);
     });
     $scope.reloadErrors = function () {
-        $scope.alarmlist =  SysError.getHighAndFatal();
-
+        $scope.alarmlist = SysError.getHighAndFatal();
     };
 });
 

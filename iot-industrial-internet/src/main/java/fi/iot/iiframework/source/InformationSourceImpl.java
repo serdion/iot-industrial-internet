@@ -26,7 +26,7 @@ public final class InformationSourceImpl implements InformationSource {
     /**
      * Scheduler that schedules the read operation based on config.
      */
-    private final ReadScheduler scheduler;
+    private ReadScheduler scheduler;
     /**
      * Service for database transactions.
      */
@@ -76,7 +76,7 @@ public final class InformationSourceImpl implements InformationSource {
     @Override
     public boolean readAndWrite() {
         InformationSourceObject isobj = read();
-        if (isobj == null){
+        if (isobj == null) {
             return false;
         }
         isobj.setInformationSource(config);
@@ -102,11 +102,19 @@ public final class InformationSourceImpl implements InformationSource {
         update();
     }
 
-
     @Override
     public void close() {
         scheduler.cancel();
     }
 
+    @Override
+    public void setReader(InformationSourceReader reader) {
+        this.reader = reader;
+    }
+
+    @Override
+    public void setScheduler(ReadScheduler scheduler) {
+        this.scheduler = scheduler;
+    }
 
 }

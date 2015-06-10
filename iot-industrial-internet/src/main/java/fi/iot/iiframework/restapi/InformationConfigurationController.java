@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("1.0/configurations")
-public class ConfigurationController {
+@RequestMapping("1.0/configurations/informationsources")
+public class InformationConfigurationController {
 
     @Autowired
     private RestAPIHelper helper;
@@ -42,7 +42,7 @@ public class ConfigurationController {
     @Autowired
     private InformationSourceConfigurationService informationSourceConfigurationService;
 
-    @RequestMapping(value = "/informationsources/{configid}/view", produces = "application/json")
+    @RequestMapping(value = "/{configid}/view", produces = "application/json")
     @ResponseBody
     public InformationSourceConfiguration getInformationSource(
             @PathVariable String configid,
@@ -52,7 +52,7 @@ public class ConfigurationController {
     }
 
     @RequestMapping(
-            value = "/informationsources/add",
+            value = "/add",
             method = RequestMethod.POST,
             produces = "application/json",
             consumes = "application/json"
@@ -68,7 +68,7 @@ public class ConfigurationController {
     }
 
     @RequestMapping(
-            value = "/informationsources/edit",
+            value = "/edit",
             method = RequestMethod.POST,
             produces = "application/json",
             consumes = "application/json"
@@ -84,7 +84,7 @@ public class ConfigurationController {
     }
 
     @RequestMapping(
-            value = "/informationsources/{configid}/delete",
+            value = "/{configid}/delete",
             method = RequestMethod.DELETE,
             produces = "application/json"
     )
@@ -100,7 +100,7 @@ public class ConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/informationsources/list", produces = "application/json")
+    @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<InformationSourceConfiguration> listInformationSourcesList(
             @RequestParam(required = false) Map<String, String> params
@@ -108,7 +108,7 @@ public class ConfigurationController {
         return informationSourceConfigurationService.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
     }
 
-    @RequestMapping(value = "/informationsources/list/{amount}", produces = "application/json")
+    @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<InformationSourceConfiguration> listInformationSourcesListAmount(
             @PathVariable int amount,
@@ -118,7 +118,7 @@ public class ConfigurationController {
         return informationSourceConfigurationService.get(0, amount);
     }
 
-    @RequestMapping(value = "/informationsources/list/{to}/{from}", produces = "application/json")
+    @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
     public List<InformationSourceConfiguration> listInformationSourcesListFromTo(
             @PathVariable int from,

@@ -8,6 +8,8 @@ package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.domain.DeviceConfiguration;
 import fi.iot.iiframework.services.GenericService;
+import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 public interface DeviceConfigurationService extends GenericService<DeviceConfiguration, String> {
     

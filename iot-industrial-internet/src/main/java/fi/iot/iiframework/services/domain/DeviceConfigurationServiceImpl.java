@@ -6,11 +6,20 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.daos.GenericHibernateDAO;
 import fi.iot.iiframework.daos.domain.DeviceConfigurationDAO;
 import fi.iot.iiframework.domain.DeviceConfiguration;
+import fi.iot.iiframework.services.GenericHibernateService;
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
+@Transactional
+public class DeviceConfigurationServiceImpl extends GenericHibernateService<DeviceConfiguration, String> implements DeviceConfigurationService {
 
-public class DeviceConfigurationServiceImpl extends GenericHibernateDAO<DeviceConfiguration, String> implements DeviceConfigurationDAO {
-
+    @Autowired
+    public DeviceConfigurationServiceImpl(DeviceConfigurationDAO dao) {
+        super.dao = dao;
+    }
+    
 }
