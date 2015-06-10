@@ -54,10 +54,6 @@ IIFramework.config(function($routeProvider) {
                 controller: 'EditInformationSourceController',
                 templateUrl: 'configurations/information_source_form.html'
             })
-            .when('/devices/:deviceid/edit', {
-                controller: 'DeviceController',
-                templateUrl: 'devices/edit.html'
-            })
 
             // Controllers for SysErrors
             .when('/syserrors/:errorid', {

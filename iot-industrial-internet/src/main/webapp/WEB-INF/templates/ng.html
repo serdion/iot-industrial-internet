@@ -55,18 +55,17 @@
 
                             <ul class="dropdown-menu dropdown-alerts" >
 
-                                    <li ng-repeat="error in alarmlist">
-                                        <a href="#/syserrors/{{error.id}}">
-                                            <div>
-                                                <div ng-if="error.severity == 'FATAL'">
-                                                    <font color="red">
-                                                        <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.name}}</font>
-                                                </div>
-                                                <div ng-if="error.severity != 'FATAL'">
-                                                    <i class="fa fa-bell fa-fw"></i>{{error.name}} 
-                                                </div>
-                                                <span class="pull-right text-muted small" am-time-ago=error.time></span>
+                                <li ng-repeat="error in alarmlist">
+                                    <a href="#/syserrors/{{error.id}}">
+                                        <div>
+                                            <div ng-if="error.severity == 'FATAL'">
+                                                <font color="red">
+                                                    <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.type}}</font>
                                             </div>
+                                            <div ng-if="error.severity != 'FATAL'">
+                                                <i class="fa fa-bell fa-fw"></i>{{error.type}} 
+                                            </div>
+                                            <span class="pull-right text-muted small" am-time-ago=error.time></span>
                                         </div>
                                     </a>
                                 </li>

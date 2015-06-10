@@ -15,21 +15,6 @@ informationSources.factory('InformationSource', ['$resource',
         });
     }]);
 
-informationSources.factory('Device', ['$resource',
-    function($resource) {
-        return $resource('1.0/devices/:informationsourceid/:action', {}, {
-            query: {method: 'GET', params: {action: 'list'}, isArray: true},
-            get: {method: 'GET', params: {action: 'view'}, isArray: false},
-        });
-    }]);
-
-informationSources.factory('DeviceConfig', ['$resource',
-    function($resource) {
-        return $resource('1.0/configurations/devices/:deviceid/:action', {}, {
-             get: {method: 'GET', params: {action: 'list'}, isArray: true},
-        });
-    }]);
-
 
 informationSources.factory('Sensor', ['$resource',
     function ($resource) {
