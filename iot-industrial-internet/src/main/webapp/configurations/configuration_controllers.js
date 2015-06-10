@@ -69,7 +69,7 @@ configurations.controller('InformationSourceConfigurationsController', ['$scope'
 
 configurations.controller('StartDatePickerController', ['$scope', function ($scope) {
         $scope.today = function () {
-            $scope.startdate = new Date();
+            $scope.startDate = new Date();
         };
         $scope.today();
 
@@ -95,7 +95,7 @@ configurations.controller('StartDatePickerController', ['$scope', function ($sco
 
 configurations.controller('EndDatePickerController', ['$scope', function ($scope) {
         $scope.today = function () {
-            $scope.enddate = new Date();
+            $scope.endDate = new Date();
         };
         $scope.today();
 
