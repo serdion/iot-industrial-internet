@@ -6,9 +6,13 @@
  */
 package fi.iot.iiframework.services.domain;
 
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.domain.SensorConfiguration;
 import fi.iot.iiframework.services.GenericService;
+import java.util.List;
 
 public interface SensorConfigurationService extends GenericService<SensorConfiguration, String> {
+    
+    List<SensorConfiguration> getBy(Sensor sensor);
     
 }
