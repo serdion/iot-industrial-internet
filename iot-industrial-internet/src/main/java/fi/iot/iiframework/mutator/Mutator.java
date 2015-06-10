@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.mutator;
 
+import fi.iot.iiframework.mutator.cases.Case;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 

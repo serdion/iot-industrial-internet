@@ -4,8 +4,8 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.mutator;
+package fi.iot.iiframework.mutator.cases;
 
-public class ReadoutValueIsHigher {
-    
+public interface Case {
+    public boolean isTrue();
 }
