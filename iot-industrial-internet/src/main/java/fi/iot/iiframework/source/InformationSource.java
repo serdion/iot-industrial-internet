@@ -7,9 +7,10 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.domain.InformationSourceObject;
+import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import java.net.MalformedURLException;
+import java.util.List;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -23,7 +24,7 @@ public interface InformationSource {
      *
      * @return InformationSourceObject read from URL and parsed
      */
-    public InformationSourceObject read();
+    public List<Sensor> read();
 
     /**
      * Reads an InformationSourceObject and writes it to database.

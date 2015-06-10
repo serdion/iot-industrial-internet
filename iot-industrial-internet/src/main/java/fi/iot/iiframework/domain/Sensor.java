@@ -24,7 +24,7 @@ import org.hibernate.annotations.GenericGenerator;
 @XmlRootElement(name = "sensor")
 @Data
 @EqualsAndHashCode(exclude = {"readouts"})
-@ToString(exclude = {"readouts", "device"})
+@ToString(exclude = {"readouts"})
 public class Sensor implements Serializable {
     
     @Id
@@ -44,9 +44,9 @@ public class Sensor implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "device", nullable = false, updatable = false)
+    @JoinColumn(name = "source", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
-    protected Device device;
+    protected InformationSourceConfiguration source;
     
     @JsonIgnore
     @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.EAGER)
@@ -59,9 +59,5 @@ public class Sensor implements Serializable {
 
     public Sensor(String id) {
         this.sensorId = id;
-    }
-
-    public void afterUnmarshal(Unmarshaller u, Object parent) {
-        this.device = (Device) parent;
     }
 }

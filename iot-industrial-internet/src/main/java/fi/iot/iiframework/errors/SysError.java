@@ -29,7 +29,7 @@ public class SysError implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date time;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 10000)
     private String description;
 
     @Column(name = "location")

@@ -7,8 +7,8 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.services.domain.InformationSourceObjectService;
 import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.SensorService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +24,9 @@ import org.springframework.stereotype.Component;
 public class InformationSourceManagerImpl implements InformationSourceManager {
 
     private final Map<String, InformationSource> sources;
-
+    
     @Autowired
-    private InformationSourceObjectService service;
+    private SensorService sensorService;
     @Autowired
     private InformationSourceConfigurationService configService;
 
@@ -42,7 +42,7 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     @Override
     public void createSource(InformationSourceConfiguration config) {
-        InformationSource source = new InformationSourceImpl(config, service);
+        InformationSource source = new InformationSourceImpl(config, sensorService);
         configService.save(config);
         sources.put(config.getId(), source);
     }
@@ -70,8 +70,8 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
         return sources;
     }
 
-    public void setService(InformationSourceObjectService service) {
-        this.service = service;
+    public void setSensorService(SensorService sensorService) {
+        this.sensorService = sensorService;
     }
 
     public void setConfigService(InformationSourceConfigurationService configService) {
