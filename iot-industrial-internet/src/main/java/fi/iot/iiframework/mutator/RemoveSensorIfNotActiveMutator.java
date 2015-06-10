@@ -12,9 +12,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RemoveSensorIfNotActiveMutator extends Mutator {
+public class RemoveSensorIfNotActiveMutator implements Mutator {
 
-    public static void mutate(List<Sensor> sensors){
+    @Override
+    public void mutate(List<Sensor> sensors){
         Iterator<Sensor> iterator = sensors.iterator();
         
         while(iterator.hasNext()){
@@ -25,4 +26,9 @@ public class RemoveSensorIfNotActiveMutator extends Mutator {
             }
         }
     };
+
+    @Override
+    public void mutateIf(List<Sensor> sensor, Case mutateInCase) {
+        
+    }
 }
