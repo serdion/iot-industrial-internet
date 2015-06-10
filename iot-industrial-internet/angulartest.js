@@ -35,7 +35,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         element(by.model("more")).sendKeys("22.50");
         element(by.model("less")).sendKeys("22.80");
         element(by.id('filter')).click();
-        expect(element.all(by.repeater('readout in readouts')).count()).toEqual(10);
+        expect(element.all(by.repeater('readout in readouts')).count()).toEqual(4);
     });
 
     it('should be able create a new information source', function () {
