@@ -17,13 +17,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-
+/**
+ *
+ * 
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "datasource")
 @Entity
 @Table(name = "informationsourceobject")
 @Data
-@EqualsAndHashCode(exclude = {"devices", "header"})
+@EqualsAndHashCode(of = {"name", "informationSource"})
 @ToString(exclude = {"devices", "header", "informationSource"})
 public class InformationSourceObject implements Serializable {
     @XmlAttribute
@@ -44,10 +47,6 @@ public class InformationSourceObject implements Serializable {
     protected Set<Device> devices; 
     
     @JsonIgnore
-    @JoinColumn(name = "informationSource_fk")
-    @OneToOne(targetEntity = InformationSourceConfiguration.class, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     protected InformationSourceConfiguration informationSource;
-    
-    @Column(name = "informationSource_fk", updatable=false, insertable=false)
-    protected String informationSource_fk;
 }

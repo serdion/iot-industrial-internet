@@ -31,13 +31,13 @@ public class DeviceServiceImpl
     }
 
     @Override
-    public List<Device> getBy(InformationSourceObject dso) {
-        return getBy(0, Integer.MAX_VALUE, dso);
+    public List<Device> getBy(InformationSourceObject iso) {
+        return getBy(0, Integer.MAX_VALUE, iso);
     }
 
     @Override
-    public List<Device> getBy(int from, int to, InformationSourceObject dso) {
-        return deviceDAO.getBy(from, to, dso);
+    public List<Device> getBy(int from, int to, InformationSourceObject iso) {
+        return deviceDAO.getBy(from, to, iso);
     }
     
     @Override
