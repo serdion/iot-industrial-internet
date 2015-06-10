@@ -6,11 +6,17 @@
  */
 package fi.iot.iiframework.application;
 
+import fi.iot.iiframework.domain.Device;
+import fi.iot.iiframework.domain.DeviceConfiguration;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.services.domain.DeviceConfigurationService;
+import fi.iot.iiframework.services.domain.DeviceConfigurationServiceImpl;
+import fi.iot.iiframework.services.domain.DeviceService;
+import fi.iot.iiframework.services.domain.DeviceServiceImpl;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
@@ -47,7 +53,7 @@ public class Application {
         config.setActive(true);
         config.setReadFrequency(100 * 1000);
         infSourceManager.createSource(config);
-        
+
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
         ErrorLogger.log(e);
 
@@ -59,5 +65,19 @@ public class Application {
 
         SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
         ErrorLogger.log(e4);
+
+        /*        
+        DeviceConfigurationService deviceConfService = ctx.getBean(DeviceConfigurationService.class);
+        DeviceService seviceServiceImpl = ctx.getBean(DeviceService.class);
+        
+        Device device = seviceServiceImpl.getAll().get(0);
+        
+        DeviceConfiguration conf = new DeviceConfiguration();
+        conf.setDevice(device);
+        conf.setActive(false);
+        
+        deviceConfService.save(conf);
+        */
+
     }
 }

@@ -24,7 +24,7 @@ import org.hibernate.annotations.CascadeType;
 @Table(name = "deviceconfigurations")
 @Data
 @EqualsAndHashCode(exclude = {"id"})
-public class DeviceConfiguration implements Serializable {
+public class DeviceConfiguration implements Serializable, Validatable {
 
     @Id
     @GeneratedValue
@@ -39,6 +39,11 @@ public class DeviceConfiguration implements Serializable {
     */
     
     protected boolean active = true;
+
+    @Override
+    public boolean isValid() {
+        return device!=null;
+    }
     
     
     

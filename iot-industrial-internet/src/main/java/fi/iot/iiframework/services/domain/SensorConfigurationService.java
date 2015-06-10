@@ -6,9 +6,9 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.DeviceConfiguration;
+import fi.iot.iiframework.domain.SensorConfiguration;
 import fi.iot.iiframework.services.GenericService;
 
-public interface SensorConfigurationService extends GenericService<DeviceConfiguration, String> {
+public interface SensorConfigurationService extends GenericService<SensorConfiguration, String> {
     
 }

@@ -13,8 +13,6 @@ import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.mutator.DeviceDisablingMutator;
 import fi.iot.iiframework.mutator.SensorDisablingMutator;
 import fi.iot.iiframework.parsers.XmlParser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class XMLReader implements InformationSourceReader {
 

@@ -7,12 +7,11 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
+import fi.iot.iiframework.domain.DeviceConfiguration;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.source.InformationSourceManagerImpl;
-import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.DeviceConfigurationService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,30 +26,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("1.0/configurations/informationsources")
-public class InformationConfigurationController {
-
+@RequestMapping("1.0/configurations/devices")
+public class DeviceConfigurationController {
+    
     @Autowired
     private RestAPIHelper helper;
 
     @Autowired
     private ApplicationSettings settings;
-
+    
     @Autowired
-    private InformationSourceManagerImpl informationSourceManager;
-
-    @Autowired
-    private InformationSourceConfigurationService informationSourceConfigurationService;
-
+    private DeviceConfigurationService deviceConfigurationService;
+    
     @RequestMapping(value = "/{configid}/view", produces = "application/json")
     @ResponseBody
-    public InformationSourceConfiguration getInformationSource(
+    public DeviceConfiguration getDeviceConfiguration(
             @PathVariable String configid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        return (InformationSourceConfiguration) helper.returnOrException(informationSourceConfigurationService.get(configid));
+        return (DeviceConfiguration) helper.returnOrException(deviceConfigurationService.get(configid));
     }
-
+    
     @RequestMapping(
             value = "/add",
             method = RequestMethod.POST,
@@ -58,12 +54,15 @@ public class InformationConfigurationController {
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<InformationSourceConfiguration> addInformationSource(
-            @RequestBody InformationSourceConfiguration configuration,
+    public ResponseEntity<DeviceConfiguration> addDeviceConfiguration(
+            @RequestBody DeviceConfiguration configuration,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.createSource(configuration);
+        
+        // TODO?
+        deviceConfigurationService.save(configuration);
+        
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
@@ -74,12 +73,15 @@ public class InformationConfigurationController {
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<InformationSourceConfiguration> editInformationSource(
-            @RequestBody InformationSourceConfiguration configuration,
+    public ResponseEntity<DeviceConfiguration> editDeviceConfiguration(
+            @RequestBody DeviceConfiguration configuration,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.updateSource(configuration);
+        
+        // TODO ?
+        deviceConfigurationService.save(configuration);
+        
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
@@ -89,42 +91,43 @@ public class InformationConfigurationController {
             produces = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<InformationSourceConfiguration> deleteInformationSource(
+    public ResponseEntity<DeviceConfiguration> deleteDeviceConfiguration(
             @PathVariable String configid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        InformationSourceConfiguration configuration
-                = (InformationSourceConfiguration) helper.returnOrException(informationSourceConfigurationService.get(configid));
-        informationSourceManager.removeSource(configid);
+        DeviceConfiguration configuration
+                = (DeviceConfiguration) helper.returnOrException(deviceConfigurationService.get(configid));
+        deviceConfigurationService.delete(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
-    public List<InformationSourceConfiguration> listInformationSourcesList(
+    public List<DeviceConfiguration> listDeviceConfigurationsList(
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-        return informationSourceConfigurationService.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
+        return deviceConfigurationService.get(0, settings.getDefaultDeviceConfigurationsRetrievedFromDatabase());
     }
 
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
-    public List<InformationSourceConfiguration> listInformationSourcesListAmount(
+    public List<DeviceConfiguration> listDeviceConfigurationsListAmount(
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(0, amount);
-        return informationSourceConfigurationService.get(0, amount);
+        return deviceConfigurationService.get(0, amount);
     }
 
     @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
-    public List<InformationSourceConfiguration> listInformationSourcesListFromTo(
+    public List<DeviceConfiguration> listDeviceConfigurationsListFromTo(
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(to, from);
-        return informationSourceConfigurationService.get(to, from);
+        return deviceConfigurationService.get(to, from);
     }
+    
 }
