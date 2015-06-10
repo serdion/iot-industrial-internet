@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "sensorconfigurations")
 @Data
-@EqualsAndHashCode(exclude = {"id"})
+@EqualsAndHashCode(of = {"device"})
 public class SensorConfiguration implements Serializable, Validatable {
 
     @Id
@@ -28,7 +28,7 @@ public class SensorConfiguration implements Serializable, Validatable {
     protected String id;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "sensorConfiguration")
     protected Sensor sensor;
 
     /*
