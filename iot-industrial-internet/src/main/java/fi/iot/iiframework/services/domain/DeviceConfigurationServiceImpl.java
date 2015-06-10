@@ -31,5 +31,15 @@ public class DeviceConfigurationServiceImpl extends GenericHibernateService<Devi
     public List<DeviceConfiguration> getBy(Device device) {
         return configurationDAO.getBy(device);
     }
+
+    @Override
+    public List<DeviceConfiguration> getBy(int from, int to) {
+        return configurationDAO.get(from, to);
+    }
+
+    @Override
+    public List<DeviceConfiguration> getBy(int amount) {
+        return configurationDAO.get(0, amount);
+    }
     
 }

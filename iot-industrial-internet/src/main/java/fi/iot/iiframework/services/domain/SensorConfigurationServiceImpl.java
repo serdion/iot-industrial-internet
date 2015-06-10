@@ -31,4 +31,14 @@ public class SensorConfigurationServiceImpl extends GenericHibernateService<Sens
     public List<SensorConfiguration> getBy(Sensor sensor) {
         return configurationDAO.getBy(sensor);
     }
+
+    @Override
+    public List<SensorConfiguration> getBy(int from, int to) {
+        return configurationDAO.get(from, to);
+    }
+
+    @Override
+    public List<SensorConfiguration> getBy(int amount) {
+        return configurationDAO.get(0, amount);
+    }
 }

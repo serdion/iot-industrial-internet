@@ -12,7 +12,10 @@ import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
 public interface SensorConfigurationService extends GenericService<SensorConfiguration, String> {
-    
+
     List<SensorConfiguration> getBy(Sensor sensor);
-    
+
+    List<SensorConfiguration> getBy(int from, int to);
+
+    List<SensorConfiguration> getBy(int amount);
 }

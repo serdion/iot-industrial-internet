@@ -15,4 +15,8 @@ public interface DeviceConfigurationService extends GenericService<DeviceConfigu
     
     List<DeviceConfiguration> getBy(Device device);
     
+    List<DeviceConfiguration> getBy(int from, int to);
+    
+    List<DeviceConfiguration> getBy(int amount);
+    
 }
