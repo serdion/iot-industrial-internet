@@ -8,14 +8,17 @@ package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.Device;
-import fi.iot.iiframework.domain.DeviceConfiguration;
+import fi.iot.iiframework.domain.SensorConfiguration;
+import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.domain.SensorConfiguration;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.services.domain.DeviceConfigurationService;
+import fi.iot.iiframework.services.domain.SensorConfigurationService;
 import fi.iot.iiframework.services.domain.DeviceService;
+import fi.iot.iiframework.services.domain.SensorConfigurationService;
+import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +26,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("1.0/configurations/devices")
-public class DeviceConfigurationController {
-    
+@RequestMapping("1.0/configurations/sensors")
+public class SensorConfigurationController {
     @Autowired
     private RestAPIHelper helper;
 
@@ -38,100 +39,99 @@ public class DeviceConfigurationController {
     private ApplicationSettings settings;
     
     @Autowired
-    private DeviceConfigurationService deviceConfigurationService;
+    private SensorConfigurationService sensorConfigurationService;
     
     @Autowired
-    private DeviceService deviceService;
+    private SensorService sensorService;
     
-    @RequestMapping(value = "/{deviceid}/view", produces = "application/json")
+    @RequestMapping(value = "/{sensorid}/view", produces = "application/json")
     @ResponseBody
-    public DeviceConfiguration getDeviceConfiguration(
-            @PathVariable String deviceid
+    public SensorConfiguration getSensorConfiguration(
+            @PathVariable String sensorid
     ) throws InvalidParametersException, ResourceNotFoundException {
-        Device device = (Device) helper.returnOrException(deviceService.get(deviceid));
-        return (DeviceConfiguration) helper.returnOrException(deviceConfigurationService.getBy(device));
+        Sensor sensor = (Sensor) helper.returnOrException(sensorService.get(sensorid));
+        return (SensorConfiguration) helper.returnOrException(sensorConfigurationService.getBy(sensor));
     }
     
     @RequestMapping(
-            value = "/{deviceid}/add",
+            value = "/{sensorid}/add",
             method = RequestMethod.POST,
             produces = "application/json",
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<DeviceConfiguration> addDeviceConfiguration(
-            @PathVariable String deviceid,
-            @RequestBody DeviceConfiguration configuration
+    public ResponseEntity<SensorConfiguration> addSensorConfiguration(
+            @PathVariable String sensorid,
+            @RequestBody SensorConfiguration configuration
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        Device device = (Device) helper.returnOrException(deviceService.get(deviceid));
-        configuration.setDevice(device);
+        Sensor sensor = (Sensor) helper.returnOrException(sensorService.get(sensorid));
+        configuration.setSensor(sensor);
         helper.checkIfObjectIsValid(configuration);
-        deviceConfigurationService.save(configuration);
+        sensorConfigurationService.save(configuration);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
     @RequestMapping(
-            value = "/{deviceid}/edit",
+            value = "/{sensorid}/edit",
             method = RequestMethod.POST,
             produces = "application/json",
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<DeviceConfiguration> editDeviceConfiguration(
-            @PathVariable String deviceid,
-            @RequestBody DeviceConfiguration configuration
+    public ResponseEntity<SensorConfiguration> editSensorConfiguration(
+            @PathVariable String sensorid,
+            @RequestBody SensorConfiguration configuration
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        Device device = (Device) helper.returnOrException(deviceService.get(deviceid));
-        configuration.setDevice(device);
-        device.setDeviceConfiguration(configuration);
+        Sensor sensor = (Sensor) helper.returnOrException(sensorService.get(sensorid));
+        configuration.setSensor(sensor);
+        sensor.setSensorConfiguration(configuration);
         
-        deviceConfigurationService.save(configuration);
-        deviceService.save(device);
+        sensorConfigurationService.save(configuration);
+        sensorService.save(sensor);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
     @RequestMapping(
-            value = "/{deviceid}/delete",
+            value = "/{sensorid}/delete",
             method = RequestMethod.DELETE,
             produces = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<DeviceConfiguration> deleteDeviceConfiguration(
-            @PathVariable String deviceid
+    public ResponseEntity<SensorConfiguration> deleteSensorConfiguration(
+            @PathVariable String sensorid
     ) throws InvalidParametersException, ResourceNotFoundException {
-        Device device = (Device) helper.returnOrException(deviceService.get(deviceid));
+        Sensor sensor = (Sensor) helper.returnOrException(sensorService.get(sensorid));
         
-        DeviceConfiguration configuration = (DeviceConfiguration) helper.returnOrException(device.getDeviceConfiguration());
+        SensorConfiguration configuration = (SensorConfiguration) helper.returnOrException(sensor.getSensorConfiguration());
         
-        deviceConfigurationService.delete(device.getDeviceConfiguration());
+        sensorConfigurationService.delete(sensor.getSensorConfiguration());
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
-    public List<DeviceConfiguration> listDeviceConfigurationsList(
+    public List<SensorConfiguration> listSensorConfigurationsList(
             
     ) throws InvalidParametersException {
-        return deviceConfigurationService.get(0, settings.getDefaultDeviceConfigurationsRetrievedFromDatabase());
+        return sensorConfigurationService.get(0, settings.getDefaultSensorConfigurationsRetrievedFromDatabase());
     }
 
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
-    public List<DeviceConfiguration> listDeviceConfigurationsListAmount(
+    public List<SensorConfiguration> listSensorConfigurationsListAmount(
             @PathVariable int amount
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(0, amount);
-        return deviceConfigurationService.get(0, amount);
+        return sensorConfigurationService.get(0, amount);
     }
 
     @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
-    public List<DeviceConfiguration> listDeviceConfigurationsListFromTo(
+    public List<SensorConfiguration> listSensorConfigurationsListFromTo(
             @PathVariable int from,
             @PathVariable int to
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(to, from);
-        return deviceConfigurationService.get(to, from);
+        return sensorConfigurationService.get(to, from);
     }
-    
 }

@@ -14,7 +14,6 @@ import java.net.URL;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import org.springframework.stereotype.Component;
 
 public class XmlParser extends Parser {
 

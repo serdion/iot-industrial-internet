@@ -6,11 +6,17 @@
  */
 package fi.iot.iiframework.services.domain;
 
+import fi.iot.iiframework.domain.Device;
 import fi.iot.iiframework.domain.DeviceConfiguration;
 import fi.iot.iiframework.services.GenericService;
-import javax.transaction.Transactional;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 public interface DeviceConfigurationService extends GenericService<DeviceConfiguration, String> {
+    
+    List<DeviceConfiguration> getBy(Device device);
+    
+    List<DeviceConfiguration> getBy(int from, int to);
+    
+    List<DeviceConfiguration> getBy(int amount);
     
 }
