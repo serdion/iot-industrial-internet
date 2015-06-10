@@ -10,6 +10,10 @@ function showError(error) {
     el.append('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + error + '</div>');
 }
 
+function comicMe(){
+    $('body').css("font-family", "Comic Sans MS, cursive, sans-serif");
+}
+
 configurations.controller('AddInformationSourceController', ['$scope', 'InformationSourceConfiguration', '$location', function ($scope, InformationSourceConfiguration, $location) {
         $scope.types = ['XML'];
 
