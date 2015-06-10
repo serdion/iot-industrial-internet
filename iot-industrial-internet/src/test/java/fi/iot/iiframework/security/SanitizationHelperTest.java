@@ -6,10 +6,10 @@
  */
 package fi.iot.iiframework.security;
 
+import ch.qos.logback.core.spi.ScanException;
+import com.sun.xml.internal.ws.policy.PolicyException;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.owasp.validator.html.PolicyException;
-import org.owasp.validator.html.ScanException;
 
 public class SanitizationHelperTest {
 
