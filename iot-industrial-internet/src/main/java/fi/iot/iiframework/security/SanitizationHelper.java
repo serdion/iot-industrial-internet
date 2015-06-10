@@ -6,57 +6,65 @@
  */
 package fi.iot.iiframework.security;
 
-import ch.qos.logback.core.spi.ScanException;
-import com.sun.xml.internal.ws.policy.PolicyException;
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.PolicyFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SanitizationHelper {
 
+    private static final PolicyFactory noHTML = new HtmlPolicyBuilder().toFactory();
+
+    private static final PolicyFactory strict = new HtmlPolicyBuilder()
+            .allowElements("strong", "b", "i", "u")
+            .toFactory();
+
+    private static final PolicyFactory loose = new HtmlPolicyBuilder()
+            .allowElements("a")
+            .disallowWithoutAttributes("a")
+            .allowAttributes("href").onElements("a")
+            .allowAttributes("title").onElements("a")
+            .allowElements("h1", "h2", "h3", "h4", "h5", "h6")
+            .allowElements("b", "strong", "u", "i", "p")
+            .toFactory();
+
     /**
-     * Sanitizes the input using Slashdot policy, only following HTML tags and
-     * no CSS: b, i, a, and blockquote.
+     * Sanitizes the input using a Strict policy, only following HTML tags:
+     * strong, b, i and u.
      *
      * @param input Input String
      * @return Sanitized String
-     * @throws ScanException
-     * @throws PolicyException
      */
     public static String sanitizeStrict(String input) {
-        return sanitize(input);
+        return sanitize(input, strict);
     }
 
     /**
-     * Sanitizes the input using Slashdot policy, allows colors and semi-rich
-     * variations in HTML.
+     * Sanitizes the input using a Loose policy, only following HTML tags: a
+     * (with attributes href and title), h1-h6, b, strong, u, i and p.
      *
      * @param input Input String
      * @return Sanitized String
-     * @throws ScanException
-     * @throws PolicyException
      */
-    public static String sanitizeLoose(String input) throws ScanException, PolicyException {
-        return sanitize(input);
+    public static String sanitizeLoose(String input) {
+        return sanitize(input, loose);
     }
 
     /**
-     * Sanitizes the input using custom policy that forbits everything HTML, JS
-     * and CSS.
+     * Sanitizes the input using a No HTML policy.
      *
      * @param input Input String
      * @return Sanitized String
-     * @throws ScanException
-     * @throws PolicyException
      */
-    public static String sanitizeNoHTML(String input) throws ScanException, PolicyException {
-        return sanitize(input);
+    public static String sanitizeNoHTML(String input) {
+        return sanitize(input, noHTML);
     }
 
     /*
      * Sanitizes a String using given policy.
      */
-    private static String sanitize(String input) {
-        return input;
+    private static String sanitize(String input, PolicyFactory policy) {
+        return policy.sanitize(input);
     }
 
 }

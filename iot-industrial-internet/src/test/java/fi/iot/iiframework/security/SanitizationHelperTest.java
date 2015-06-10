@@ -22,10 +22,11 @@ public class SanitizationHelperTest {
     private static final String sometimesAcceptedInputs[] = {
         "<b>Bold text</b>",
         "<i>Italic text</i>",
-        "<a>link text</a>"
+        "<a href=\"#\">link text</a>",
     };
 
     private static final String testNotAcceptedInputs[] = {
+        "<a>link text</a>",
         "<SCRIPT type=\"text/javascript\">Default Script-tag String</SCRIPT>",
         "<body onload=alert('Noob attack')>",
         "<b onmouseover=alert('Wufff!')>More complex JS Attack</b>",
@@ -39,16 +40,11 @@ public class SanitizationHelperTest {
         for (int i = 0; i < alwaysAcceptedInputs.length; i++) {
             assertEquals(alwaysAcceptedInputs[i], SanitizationHelper.sanitizeStrict(alwaysAcceptedInputs[i]));
         }
-
-        for (int i = 0; i < sometimesAcceptedInputs.length; i++) {
-            assertEquals(sometimesAcceptedInputs[i], SanitizationHelper.sanitizeStrict(sometimesAcceptedInputs[i]));
-        }
     }
     
     @Test
     public void testSanitizeStrictWithNotAcceptedInputs() throws ScanException, PolicyException {
         for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitizeStrict(testNotAcceptedInputs[i]);
             assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeStrict(testNotAcceptedInputs[i]));
         }
     }
@@ -67,7 +63,6 @@ public class SanitizationHelperTest {
     @Test
     public void testSanitizeLooseWithNotAcceptedInputs() throws ScanException, PolicyException {
         for (int i = 0; i < testNotAcceptedInputs.length; i++) {
-            SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]);
             assertNotEquals(testNotAcceptedInputs[i], SanitizationHelper.sanitizeLoose(testNotAcceptedInputs[i]));
         }
     }
