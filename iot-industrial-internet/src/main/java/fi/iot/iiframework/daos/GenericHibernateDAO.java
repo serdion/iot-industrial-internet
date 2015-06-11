@@ -46,8 +46,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
     }
     
     @Override
-    public T persist(T t) {
-        getSession().persist(t);
+    public T merge(T t) {
+        getSession().merge(t);
         return t;
     }
 

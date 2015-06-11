@@ -45,7 +45,7 @@ public class Application {
         config.setType(InformationSourceType.XML);
         config.setUrl("http://serd.io/dan/data.xml");
         config.setActive(true);
-        config.setReadFrequency(100 * 1000);
+        config.setReadFrequency(10 * 1000);
         infSourceManager.createSource(config);
 
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");

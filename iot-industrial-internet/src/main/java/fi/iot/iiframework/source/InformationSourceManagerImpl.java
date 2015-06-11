@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class InformationSourceManagerImpl implements InformationSourceManager {
 
     private final Map<String, InformationSourceHandler> sources;
-    
+
     @Autowired
     private InformationSourcePersistence persistence;
 
@@ -40,8 +40,8 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     @Override
     public void createSource(InformationSource config) {
+        config = persistence.addSource(config);
         InformationSourceHandler source = new InformationSourceHandlerImpl(config, persistence);
-        persistence.addSource(config);
         sources.put(config.getId(), source);
     }
 
@@ -54,10 +54,10 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     @Override
     public void updateSource(InformationSource config) {
+        config = persistence.updateSource(config);
         sources.get(config.getId()).setConfig(config);
-        persistence.updateSource(config);
     }
-    
+
     @Override
     public boolean readSource(String id) {
         InformationSourceHandler source = sources.get(id);
@@ -66,7 +66,8 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     /**
      * Returns map of sources.
-     * @return 
+     *
+     * @return
      */
     public Map<String, InformationSourceHandler> getSources() {
         return sources;
@@ -74,7 +75,8 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     /**
      * Sets the class for persistence.
-     * @param persistence 
+     *
+     * @param persistence
      */
     public void setPersistence(InformationSourcePersistence persistence) {
         this.persistence = persistence;

@@ -10,7 +10,11 @@ import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
+import java.util.HashSet;
 import java.util.List;
+import javax.transaction.Transactional;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,49 +36,38 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     @Override
+    @Transactional
     public void updateSourceWithSensors(InformationSource source, List<Sensor> sensors) {
-        List<Sensor> persistentSensors = sensorService.getBy(source);
-
-        sensors.forEach(s -> s.setSource(source));
-        
+        final InformationSource src = sourceService.get(source.getId());
         sensors.forEach(s -> {
-            if (!persistentSensors.contains(s)) {
-                addNewSensor(source, s);
-                return;
-            }
-            addReadoutsToPersistentSensors(persistentSensors, s);
+            s.setSource(source);
+            src.getSensors().add(s);
         });
+        sourceService.save(src);
 
-        sensorService.save(sensors);
+        addNewReadouts(src, sensors);
     }
 
-    private void addReadoutsToPersistentSensors(List<Sensor> persistentSensors, Sensor s) {
-        persistentSensors.forEach(p -> {
-            if (p.equals(s)) {
-                p.setReadouts(s.getReadouts());
-                sensorService.update(p);
-            }
+    private void addNewReadouts(InformationSource source, List<Sensor> sensors) {
+        sensors.forEach(s -> {
+            source.getSensors().forEach(e -> {
+                if (s.getName().equals(e.getName())){
+                    System.out.println(s);
+                    e.setReadouts(s.getReadouts());
+                    sensorService.save(e);
+                }
+            });
         });
-    }
-
-    /**
-     * Makes a new sensor and it's possible readouts persistent.
-     *
-     * @param source
-     * @param sensor
-     */
-    private void addNewSensor(InformationSource source, Sensor sensor) {
-        sensorService.save(sensor);
     }
 
     @Override
-    public void addSource(InformationSource source) {
-        sourceService.save(source);
+    public InformationSource addSource(InformationSource source) {
+        return sourceService.save(source);
     }
 
     @Override
-    public void updateSource(InformationSource source) {
-        sourceService.save(source);
+    public InformationSource updateSource(InformationSource source) {
+        return sourceService.save(source);
     }
 
     @Override

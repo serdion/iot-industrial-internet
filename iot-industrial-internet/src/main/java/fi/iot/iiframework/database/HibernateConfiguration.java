@@ -11,6 +11,7 @@ import java.beans.PropertyVetoException;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -45,6 +47,14 @@ public class HibernateConfiguration {
 
     @Resource
     private Environment env;
+    
+    @Bean
+    @Transactional
+    public OpenSessionInViewFilter openSessionInViewFilter(SessionFactory sessionFactory) {
+        OpenSessionInViewFilter filter = new OpenSessionInViewFilter();
+        filter.setSessionFactoryBeanName("sessionFactory");
+        return filter;
+    }
 
     @Bean
     public ComboPooledDataSource dataSource() throws PropertyVetoException {

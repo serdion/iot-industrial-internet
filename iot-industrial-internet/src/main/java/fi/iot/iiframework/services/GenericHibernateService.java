@@ -31,8 +31,8 @@ public class GenericHibernateService<T, ID extends Serializable>
     }
     
     @Override
-    public T persist(T t) {
-        return (T) dao.persist(t);
+    public T merge(T t) {
+        return (T) dao.merge(t);
     }
 
     @Override

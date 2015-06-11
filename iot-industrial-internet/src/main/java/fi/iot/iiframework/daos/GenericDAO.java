@@ -26,7 +26,7 @@ public interface GenericDAO<T, ID extends Serializable> {
      * @param t
      * @return 
      */
-    public T persist(T t);
+    public T merge(T t);
     
     /**
      * Update an object in the database.

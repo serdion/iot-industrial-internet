@@ -20,9 +20,9 @@ public interface InformationSourcePersistence {
 
     void updateSourceWithSensors(InformationSource source, List<Sensor> sensors);
     
-    void updateSource(InformationSource source);
+    InformationSource updateSource(InformationSource source);
     
-    void addSource(InformationSource source);
+    InformationSource addSource(InformationSource source);
     
     void deleteSource(InformationSource source);
 }

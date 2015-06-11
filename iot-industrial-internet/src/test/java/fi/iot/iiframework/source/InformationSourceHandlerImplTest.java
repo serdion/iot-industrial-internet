@@ -16,11 +16,13 @@ import javax.xml.bind.JAXBException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
+@Ignore
 public class InformationSourceHandlerImplTest {
 
     private InformationSourceHandler handler;

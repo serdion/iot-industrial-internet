@@ -8,12 +8,12 @@ package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -23,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 @Data
-@ToString(exclude = {"readouts", "sensorConfiguration", "source"})
+@ToString(exclude = {"readouts", "sensorConfiguration"})
 public class Sensor implements Serializable {
 
     @Id
@@ -39,16 +39,15 @@ public class Sensor implements Serializable {
     @XmlElementWrapper(name = "readouts")
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    protected Set<Readout> readouts;
+    protected Set<Readout> readouts = new HashSet<>();
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source", nullable = false, updatable = false)
-    @Cascade({CascadeType.SAVE_UPDATE})
     protected InformationSource source;
     
     @JsonIgnore
-    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.LAZY)
     protected SensorConfiguration sensorConfiguration;
     
     @XmlAttribute

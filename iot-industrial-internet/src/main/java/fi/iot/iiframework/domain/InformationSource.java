@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -83,8 +84,8 @@ public class InformationSource implements Serializable, Validatable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
-    @Cascade({CascadeType.REMOVE})
-    protected Set<Sensor> sensors; 
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    protected Set<Sensor> sensors = new HashSet<>(); 
     
     @Override
     public boolean isValid() {

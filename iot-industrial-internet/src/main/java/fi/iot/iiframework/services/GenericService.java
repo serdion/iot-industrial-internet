@@ -17,7 +17,7 @@ public interface GenericService<T, ID extends Serializable> {
     
     public T update(T t);
     
-    public T persist(T t);
+    public T merge(T t);
 
     public T get(ID id);
     
