@@ -20,12 +20,16 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
     }]);
 
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function($scope, $routeParams, Sensor, Readout) {
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', 'SensorConfig', function($scope, $routeParams, Sensor, Readout, SensorConfig) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
         $scope.filter = function() {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
-        }
+        };
+        $scope.sensorconfig = SensorConfig.query();
+        $scope.sensorconfig = SensorConfig.get({sensorid: $routeParams.sensorid});
+        $scope.sensorconfig = SensorConfig.add({sensorid: $routeParams.sensorid});
+        
     }]);
 
 

@@ -17,12 +17,22 @@ informationSources.factory('InformationSource', ['$resource',
 
 
 informationSources.factory('Sensor', ['$resource',
-    function ($resource) {
+    function($resource) {
         return $resource('1.0/sensors/:informationsourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });
     }]);
+
+informationSources.factory('SensorConfig', ['$resource',
+    function($resource) {
+        return $resource('1.0/configurations/sensors/:sensorid/:action', {}, {
+            get: {method: 'GET', params: {action: 'view'}},
+            query: {method: 'GET', params: {action: 'list'}, isArray: true},
+            add: {method: 'GET', params: {action: 'list'}, isArray: true}
+        });
+    }]);
+
 
 informationSources.factory('Readout', ['$resource',
     function($resource) {
