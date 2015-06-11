@@ -14,43 +14,32 @@
                     <th>Value</th>
                     <th>New</th>
                     <tbody>
-                        <tr>
-                            <th>Sensor Id</th>
-                            <td>{{sensor.id}}</td>
-                            <td>     
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Custom name:</th>
-                            <td>{{sensor.customname}}</td>
-                            <td>
-                                <div class="form-group">
-                                    <input class="form-control" name="sname" ng-model="ss.customname" placeholder="name"/>
-                                </div>
-                            </td>
 
-                        </tr>
                         <tr>
                             <th>Upper limit:</th>
-                            <td>{{sensor.upperlimit}}</td>
+                            <td>{{sensorconf.thresholdMax}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="supperlimit" ng-model="ss.thresholdMin"/>
+                                    <input class="form-control" name="supperlimit" ng-model="ss.thresholdMax"/>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <th>Lower limit:</th>
-                            <td>{{sensor.lowerlimit}}</td>
+                            <td>{{sensorconf.thresholdMin}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="slowerlimit" ng-model="ss.thresholdMax"/>
+                                    <input class="form-control" name="slowerlimit" ng-model="ss.thresholdMin"/>
                                 </div>
                             </td>
                         </tr>
 
+ 
+
                 </table>
                 <button id="submitbutton" type="button" class="btn btn-info btn-circle btn-xl" ng-click="save()"><i class="fa fa-check"></i>
+                </button>
+                <button id="submitbutton" type="button" class="btn btn-info btn-refresh btn-xl" ng-click="refresh()"><i class="fa fa-check"></i>
                 </button>
             </div>
         </div>
