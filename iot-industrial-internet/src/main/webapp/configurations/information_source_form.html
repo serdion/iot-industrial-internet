@@ -7,61 +7,73 @@
                 <form role="form">
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control" name="is_name" ng-model="is.name" placeholder="Enter name" />
+                        <input class="form-control" name="is_name" ng-model="is.name" placeholder="Enter name" required />
                         <p class="help-block">Name of the Information source</p>
                     </div>
 
                     <label>Source Type</label>
                     <div class="form-group">
-                        <select class="form-control" name="is_type" ng-model="is.type" ng-options="type for type in types"/>
+                        <select class="form-control" name="is_type" ng-model="is.type" ng-options="type for type in types" required />
                         </select>
                         <p class="help-block">Type of the Information source</p>
                     </div>
                     <div class="form-group">
                         <label>Source URL</label>
-                        <input class="form-control" name="is_url" ng-model="is.url" placeholder="Enter URL" />
+                        <input class="form-control" name="is_url" ng-model="is.url" placeholder="Enter URL" required />
                         <p class="help-block">Information source URL</p>
                     </div>
 
-                    <label>Read Frequency</label>
-                    <div class="form-group input-group">
+                    <label>Read Frequency or Specific Read Date/Time?</label>
+                    <div class="btn-group">
+                        <label class="btn btn-primary" type="radio" ng-model="radioPick" value="Read Frequency" btn-radio="'Never'">Read Frequency</label>
+                        <label class="btn btn-primary" type="radio" ng-model="radioPick" value="Specific Date/Time" btn-radio="'Daily'">Specific Date/Time</label>
+                    </div>
+                    <div class="btn-group">
+                        <input id="frequency" type="radio" ng-model="radioPick" value="Read Frequency">Read Frequency
+                        <input id="datetime" type="radio" ng-model="radioPick" value="Specific Date/Time">Specific Date/Time
+                    </div>
+                    <div class="form-group input-group" ng-show="radioPick == 'Read Frequency'">
                         <input type="text" class="form-control" name="is_freq" ng-model="readFrequency_s" placeholder="Leave empty if you want to use a specific date/time instead" />
                         <span class="input-group-addon">seconds</span>
                     </div>
 
-                    <p>OR</p>
-
-                    <label>Specific Read Date/Time</label>
-                    <br>
-                    <label>Start Date (yyyy-mm-dd)</label>
-                    <div ng-controller="StartDatePickerController">
-                        <div>
+                    <div ng-show="radioPick == 'Specific Date/Time'">
+                        <label>Start Date (yyyy-mm-dd)</label>
+                        <div ng-controller="StartDatePickerController">
+                            <div>
+                                <p class="input-group">
+                                    <input type="date" class="form-control" datepicker-popup ng-model="is.startDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                            </div>
+                            <label>Start Time (hh:mm)</label>
+                            <timepicker ng-model="is.time" show-meridian="false"></timepicker>
+                            <label>Repeat?</label>
+                            <div class="btn-group">
+                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="'Never'" btn-radio="'Never'">Never</label>
+                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="'Daily'" btn-radio="'Daily'">Daily</label>
+                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="'Weekly'" btn-radio="'Weekly'">Weekly</label>
+                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="'Monthly'" btn-radio="'Monthly'">Monthly</label>
+                            </div>
+                            <div class="btn-group">
+                                <input id="never" type="radio" ng-model="radioModel" value="Never">Never
+                                <input id="daily" type="radio" ng-model="radioModel" value="Daily">Daily
+                                <input id="weekly" type="radio" ng-model="radioModel" value="Weekly">Weekly
+                                <input id="monthly" type="radio" ng-model="radioModel" value="Monthly">Monthly
+                            </div>
+                        </div>
+                        <br>
+                        <label>Repeat Until</label>
+                        <div ng-controller="EndDatePickerController">
                             <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="is.startDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <input type="date" class="form-control" datepicker-popup ng-model="is.endDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                         </div>
-                        <label>Start Time (hh:mm)</label>
-                        <timepicker ng-model="is.time" show-meridian="false"></timepicker>
-                        <label>Repeat?</label>
-                        <div class="btn-group">
-                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Never'">Never</label>
-                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Daily'">Daily</label>
-                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Weekly'">Weekly</label>
-                            <label class="btn btn-primary" ng-model="radioModel" btn-radio="'Monthly'">Monthly</label>
-                        </div>
-                    </div>
-                    <br>
-                    <label>Repeat Until</label>
-                    <div ng-controller="EndDatePickerController">
-                        <p class="input-group">
-                            <input type="date" class="form-control" datepicker-popup ng-model="is.endDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
-                        </p>
                     </div>
                     <br>
                     <div>

@@ -10,7 +10,7 @@ function showError(error) {
     el.append('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + error + '</div>');
 }
 
-function comicMe(){
+function comicMe() {
     $('body').css("font-family", "Comic Sans MS, cursive, sans-serif");
 }
 
@@ -25,6 +25,7 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
 
         $scope.submit = function () {
             $scope.is.readFrequency = $scope.readFrequency_s * 1000;
+            $scope.is.readInterval = $scope.radioModel;
             $scope.is.$save({}, function () {
                 $location.path('/configurations');
             },
@@ -46,6 +47,7 @@ configurations.controller('EditInformationSourceController', ['$scope', 'Informa
         };
         $scope.submit = function () {
             $scope.is.readFrequency = $scope.readFrequency_s * 1000;
+            $scope.is.readInterval = $scope.radioModel;
             $scope.is.$edit({}, function () {
                 $location.path('/configurations');
             },
