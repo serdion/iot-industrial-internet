@@ -64,21 +64,6 @@ public class Application {
         SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
         ErrorLogger.log(e4);
 
-<<<<<<< HEAD
-               
-//        DeviceConfigurationService deviceConfService = ctx.getBean(DeviceConfigurationService.class);
-//        DeviceService seviceServiceImpl = ctx.getBean(DeviceService.class);
-//        
-//        Device device = seviceServiceImpl.getAll().get(0);
-//        
-//        DeviceConfiguration conf = new DeviceConfiguration();
-//        conf.setDevice(device);
-//        conf.setActive(false);
-//        
-//        deviceConfService.save(conf);
-        
 
-=======
->>>>>>> dev
     }
 }

@@ -29,7 +29,7 @@ informationSources.factory('SensorConfig', ['$resource',
         return $resource('1.0/configurations/sensors/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
-            add: {method: 'GET', params: {action: 'list'}, isArray: true}
+            add: {method: 'POST', params: {action: 'add'}}
         });
     }]);
 
