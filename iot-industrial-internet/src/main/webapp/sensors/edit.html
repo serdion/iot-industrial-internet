@@ -15,8 +15,24 @@
                     <th>New</th>
                     <tbody>
 
+
                         <tr>
-                            <th>Upper limit:</th>
+                            <th>Sensor id:</th>
+                            <td>{{sensor.id}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Sensor configuration active:</th>
+                            <td>{{sensorconf.active}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Sensor configuration valid:</th>
+                            <td>{{sensorconf.valid}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Threshold max:</th>
                             <td>{{sensorconf.thresholdMax}}</td>
                             <td>
                                 <div class="form-group">
@@ -25,7 +41,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>Lower limit:</th>
+                            <th>Threshold min:</th>
                             <td>{{sensorconf.thresholdMin}}</td>
                             <td>
                                 <div class="form-group">
@@ -34,7 +50,7 @@
                             </td>
                         </tr>
 
- 
+
 
                 </table>
                 <button id="submitbutton" type="button" class="btn btn-info btn-circle btn-xl" ng-click="save()"><i class="fa fa-check"></i>

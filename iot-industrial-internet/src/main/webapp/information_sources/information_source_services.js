@@ -27,10 +27,10 @@ informationSources.factory('Sensor', ['$resource',
 informationSources.factory('SensorConfiguration', ['$resource',
     function($resource) {
         return $resource('1.0/configurations/sensors/:sensorid/:action', {}, {
-            get: {method: 'GET', params: {action: 'view'}},
+            get: {method: 'GET', params: {action: 'view'}, isArray: false},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
-            add: {method: 'POST', params: {action: 'add'}},
-            edit: {method: 'POST', params: {action: 'edit'}}
+            add: {method: 'POST', params: {action: 'add'}, isArray: false},
+            edit: {method: 'POST', params: {action: 'edit'}, isArray: false}
         });
     }]);
 

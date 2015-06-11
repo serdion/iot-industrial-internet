@@ -22,14 +22,14 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', 'SensorConfiguration', function($scope, $routeParams, Sensor, Readout, SensorConfiguration) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
-        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid})
-                ;
+        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
+        
         $scope.filter = function() {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
         };
 
-
         $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
+        $scope.sensorconflist = SensorConfiguration.query();
 
 
         $scope.save = function() {
