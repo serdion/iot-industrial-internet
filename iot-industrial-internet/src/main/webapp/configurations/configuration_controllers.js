@@ -26,6 +26,7 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
         $scope.submit = function () {
             $scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.readInterval = $scope.radioModel;
+//            $scope.is.startDate = $scope.is.startDate + $scope.time;
             $scope.is.$save({}, function () {
                 $location.path('/configurations');
             },
@@ -48,6 +49,7 @@ configurations.controller('EditInformationSourceController', ['$scope', 'Informa
         $scope.submit = function () {
             $scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.readInterval = $scope.radioModel;
+//            $scope.is.startDate = $scope.is.startDate + $scope.time;
             $scope.is.$edit({}, function () {
                 $location.path('/configurations');
             },

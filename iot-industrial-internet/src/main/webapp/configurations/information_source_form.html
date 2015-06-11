@@ -34,7 +34,7 @@
                         <input id="datetime" type="radio" ng-model="radioPick" value="Specific Date/Time">Specific Date/Time
                     </div>
                     <div class="form-group input-group" ng-show="radioPick == 'Read Frequency'">
-                        <input type="text" class="form-control" name="is_freq" ng-model="readFrequency_s" placeholder="Leave empty if you want to use a specific date/time instead" />
+                        <input type="text" class="form-control" name="is_freq" ng-model="readFrequency_s" placeholder="Read Frequency as Seconds" />
                         <span class="input-group-addon">seconds</span>
                     </div>
 
@@ -50,7 +50,7 @@
                                 </p>
                             </div>
                             <label>Start Time (hh:mm)</label>
-                            <timepicker ng-model="is.time" show-meridian="false"></timepicker>
+                            <timepicker ng-model="time" show-meridian="false"></timepicker>
                             <label>Repeat?</label>
                             <div class="btn-group">
                                 <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Never" btn-radio="'Never'">Never</label>
