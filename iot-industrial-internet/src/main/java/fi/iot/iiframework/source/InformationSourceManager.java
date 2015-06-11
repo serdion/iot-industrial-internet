@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 
 public interface InformationSourceManager {
 
@@ -16,7 +16,7 @@ public interface InformationSourceManager {
      *
      * @param config the new configuration for this data source
      */
-    public void createSource(InformationSourceConfiguration config);
+    public void createSource(InformationSource config);
 
     /**
      * Deletes the object that represents an external data source defined by the
@@ -34,7 +34,8 @@ public interface InformationSourceManager {
      * @param config the new configuration that will replace the previous one
      */
 
-    public void updateSource(InformationSourceConfiguration config);
+    public void updateSource(InformationSource config);
+
 
     /**
      * Reads a source and returns true if the read succeeded.

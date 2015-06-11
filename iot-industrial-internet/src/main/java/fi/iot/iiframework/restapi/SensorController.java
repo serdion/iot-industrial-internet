@@ -9,11 +9,11 @@ package fi.iot.iiframework.restapi;
 import java.util.List;
 import java.util.Map;
 import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SensorController {
     
     @Autowired
-    private InformationSourceConfigurationService sourceService;
+    private InformationSourceService sourceService;
     
     @Autowired
     private SensorService sensorservice;
@@ -53,8 +53,8 @@ public class SensorController {
             @PathVariable String sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        InformationSourceConfiguration source = 
-                (InformationSourceConfiguration) helper.returnOrException(sourceService.get(sourceid));
+        InformationSource source = 
+                (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), source);
     }
 
@@ -65,8 +65,8 @@ public class SensorController {
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
-        InformationSourceConfiguration source = 
-                (InformationSourceConfiguration) helper.returnOrException(sourceService.get(sourceid));
+        InformationSource source = 
+                (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         helper.exceptionIfWrongLimits(0, amount);
         return sensorservice.getBy(0, amount, source);
     }
@@ -79,8 +79,8 @@ public class SensorController {
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        InformationSourceConfiguration source = 
-                (InformationSourceConfiguration) helper.returnOrException(sourceService.get(sourceid));
+        InformationSource source = 
+                (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         helper.exceptionIfWrongLimits(to, from);
         return sensorservice.getBy(from, to, source);
     }

@@ -38,6 +38,18 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
         getSession().saveOrUpdate(t);
         return t;
     }
+    
+    @Override
+    public T update(T t) {
+        getSession().update(t);
+        return t;
+    }
+    
+    @Override
+    public T persist(T t) {
+        getSession().persist(t);
+        return t;
+    }
 
     /**
      * Read all objects that fulfill the criteria

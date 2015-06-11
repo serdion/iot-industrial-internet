@@ -36,19 +36,13 @@ public class Readout implements Serializable {
 
     @XmlAttribute
     @NotNull
+    @Column(name = "READOUT_TIME")
     protected long time;
 
     @XmlAttribute
     @NotNull
+    @Column(name = "READOUT_VALUE")
     protected double value;
-
-    @XmlAttribute
-    @NotNull
-    protected String unit;
-
-    @XmlAttribute
-    @NotNull
-    protected String quantity;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,11 +53,9 @@ public class Readout implements Serializable {
     public Readout() {
     }
 
-    public Readout(long time, double value, String unit, String quantity) {
+    public Readout(long time, double value) {
         this.time = time;
         this.value = value;
-        this.unit = unit;
-        this.quantity = quantity;
     }
 
     /**
