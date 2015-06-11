@@ -12,15 +12,16 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Type</th>
+                            <th>Name</th>
                             <th>Severity</th>
+                            <th>Type</th>
                             <th>Time</th>
                             <th>Description</th>
                         </tr>
                     </thead>
 
                     <tr ng-repeat="error in errorlist" >
-                        <td>{{error.type} </td>
+                        <td>{{error.name}} </td>
 
                         <td>
                             <div ng-if="error.severity == 'FATAL'">
@@ -31,6 +32,7 @@
                             </div>
                         </td>
 
+                        <td>{{error.type}} </td>
                         <td>{{error.time| date: 'yyyy-MM-dd HH:mm:ss:sss'}} </td>
                         <td>{{error.description}} </td>
                         <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/syserrors/{{error.id}}">Details</a></td>
