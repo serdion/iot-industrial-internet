@@ -8,18 +8,11 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
         $scope.sources = InformationSource.query();
     }]);
 
-informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'Device', 'InformationSource', 'Sensor',
-    function ($scope, $routeParams, Device, InformationSource, Sensor) {
-
-        populateDevicesWithSensors = function() {
-            for (var i = 0; i < $scope.devices.length; i++) {
-                $scope.devices[i].sensors = Sensor.query({deviceid: $scope.devices[i].id});
-            }
-        };
+informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
+    function ($scope, $routeParams, InformationSource, Sensor) {
 
         $scope.source = InformationSource.get({informationsourceid: $routeParams.informationsourceid});
-        $scope.devices = Device.query({informationsourceid: $routeParams.informationsourceid}, function (value, headers) {
-            populateDevicesWithSensors();
+        $scope.sensors = Sensor.query({informationsourceid: $routeParams.informationsourceid}, function (value, headers) {
         });
 
     }]);

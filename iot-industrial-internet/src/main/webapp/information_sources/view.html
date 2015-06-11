@@ -3,40 +3,31 @@
         <h1>Source {{source.id}}</h1>
 
 
-        <div class="panel-group" id="accordion" ng-repeat="device in devices">
+        <div class="panel-group" id="accordion">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed">Device {{device.deviceId}}</a>
-                    </h4>
-                </div>
-                <div id="{{device.deviceId}}" class="panel-collapse collapse" collapse="isCollapsed">
-                    <div class="panel-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Sensor ID</th>
-                                    <th>Amount</th>
-                                    <th>Readouts</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="sensor in device.sensors">
-                                    <td>{{sensor.id}}</td>
-                                    <td>{{sensor.sensorId}}</td>
-                                    <td>
-                                        25
-                                    </td>
-                                    <td>
-                                        <a type="button" class="btn btn-info btn-xs" ng-href="#/visual/now/{{sensor.id}}">Graph</a>
-                                        <a type="button" class="btn btn-primary btn-xs" ng-href="#/sensors/{{sensor.id}}">List</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Sensor ID</th>
+                            <th>Amount</th>
+                            <th>Readouts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="sensor in sensors">
+                            <td>{{sensor.id}}</td>
+                            <td>{{sensor.sensorId}}</td>
+                            <td>
+                                25
+                            </td>
+                            <td>
+                                <a type="button" class="btn btn-info btn-xs" ng-href="#/visual/now/{{sensor.id}}">Graph</a>
+                                <a type="button" class="btn btn-primary btn-xs" ng-href="#/sensors/{{sensor.id}}">List</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

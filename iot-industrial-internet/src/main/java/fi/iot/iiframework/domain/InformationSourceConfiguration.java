@@ -11,6 +11,7 @@ import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -64,7 +66,21 @@ public class InformationSourceConfiguration implements Serializable, Validatable
      * How often read (in seconds).
      */
     protected int readFrequency;
-    
+    /**
+     * A specified time to start the reading (date/time).
+     */
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    protected Date startDate;
+    /**
+     * The interval for reading after a specified date/time (for example weekly).
+     */
+    protected String readInterval;
+    /**
+     * A specified time to end the reading (date/time).
+     */
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    protected Date endDate;
+
     @JsonIgnore
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
