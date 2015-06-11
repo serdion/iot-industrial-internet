@@ -10,7 +10,7 @@ import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
@@ -40,10 +40,10 @@ public class Application {
     private static void initTestData(ApplicationContext ctx) throws JAXBException, IOException {
         InformationSourceManagerImpl infSourceManager = ctx.getBean(InformationSourceManagerImpl.class);
 
-        InformationSourceConfiguration config = new InformationSourceConfiguration();
+        InformationSource config = new InformationSource();
         config.setName("Example Config");
         config.setType(InformationSourceType.XML);
-        config.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
+        config.setUrl("http://serd.io/dan/data.xml");
         config.setActive(true);
         config.setReadFrequency(100 * 1000);
         infSourceManager.createSource(config);

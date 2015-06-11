@@ -37,7 +37,7 @@ import org.hibernate.annotations.CascadeType;
 @Data
 @EqualsAndHashCode(exclude = {"id", "readFrequency", "sensors"})
 @ToString(exclude = {"sensors"})
-public class InformationSourceConfiguration implements Serializable, Validatable {
+public class InformationSource implements Serializable, Validatable {
 
     /**
      * Information source id.
@@ -83,7 +83,7 @@ public class InformationSourceConfiguration implements Serializable, Validatable
 
     @JsonIgnore
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @Cascade({CascadeType.REMOVE})
     protected Set<Sensor> sensors; 
     
     @Override

@@ -8,9 +8,9 @@ package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,8 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 @Data
-@EqualsAndHashCode(exclude = {"readouts"})
-@ToString(exclude = {"readouts"})
+@ToString(exclude = {"readouts", "sensorConfiguration", "source"})
 public class Sensor implements Serializable {
     
     @Id
@@ -32,8 +31,8 @@ public class Sensor implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     protected String id;
 
-    @XmlAttribute(name = "id")
-    protected String sensorId;
+    @XmlAttribute(name = "name")
+    protected String name;
 
     @JsonIgnore
     @XmlElement(name = "readout")
@@ -46,18 +45,47 @@ public class Sensor implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "source", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
-    protected InformationSourceConfiguration source;
+    protected InformationSource source;
     
     @JsonIgnore
     @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.EAGER)
     protected SensorConfiguration sensorConfiguration;
     
-    protected String name;
+    @XmlAttribute
+    protected String quantity;
+    
+    @XmlAttribute
+    protected String unit;
 
     public Sensor() {
     }
 
-    public Sensor(String id) {
-        this.sensorId = id;
+    public Sensor(String name) {
+        this.name = name;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.source);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sensor other = (Sensor) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return this.source.id.equals(other.source.id);
+    }
+    
+    
 }

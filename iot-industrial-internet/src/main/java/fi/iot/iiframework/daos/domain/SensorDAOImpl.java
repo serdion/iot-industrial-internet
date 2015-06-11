@@ -7,7 +7,7 @@
 package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericHibernateDAO;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +24,16 @@ public class SensorDAOImpl
     public SensorDAOImpl() {
         super();
         defaultOrder.add(Order.asc("source"));
-        defaultOrder.add(Order.asc("sensorId"));
+        defaultOrder.add(Order.asc("name"));
     }
 
     @Override
-    public List<Sensor> getBy(InformationSourceConfiguration source) {
+    public List<Sensor> getBy(InformationSource source) {
         return getBy(0, Integer.MAX_VALUE, source);
     }
 
     @Override
-    public List<Sensor> getBy(int from, int to, InformationSourceConfiguration source) {
+    public List<Sensor> getBy(int from, int to, InformationSource source) {
         List<Criterion> criterion = new ArrayList<>();
         criterion.add(Restrictions.eq("source", source));
 

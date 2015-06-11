@@ -7,13 +7,13 @@
 package fi.iot.iiframework.daos.domain;
 
 import fi.iot.iiframework.daos.GenericDAO;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import java.util.List;
 
 /**
  * DAO for InformationSourceConfiguration
  *
  */
-public interface InformationSourceConfigurationDAO extends GenericDAO<InformationSourceConfiguration, String> {
+public interface InformationSourceDAO extends GenericDAO<InformationSource, String> {
 
 }
