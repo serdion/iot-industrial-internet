@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!--
+    IoT - Industrial Internet Framework
+    Apache License Version 2.0, January 2004
+    Released as a part of Helsinki University
+    Software Engineering Lab in summer 2015
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head id="iothead">
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style type="text/css">
+            body {
+                font-family: "Lucida Console", Monaco, monospace;
+                font-size: 1.2em;
+                color: #080808;
+                margin-left: 10%;
+                margin-top: 10%;
+            }
+
+            .highlighted {
+                color: #9f191f;
+            }
+        </style>
+        <title th:text="${exceptionMessage} + ' - ' + ${statuscode}">Title</title>
+    </head>
+
+    <body>
+        <h1 th:text="${exceptionMessage} + ' ' + ${statuscode}">NaN</h1>
+        <p th:text="'Occured at ' + ${url}">Exception message</p>
+        
+        <p class="highlighted" th:if="${throwable!=null}" th:text="${throwable}">StackTrace</p>
+        <p class="highlighted" th:if="${throwable==null}">No StackTrace for this error.</p>
+    </body>
+
+</html>
