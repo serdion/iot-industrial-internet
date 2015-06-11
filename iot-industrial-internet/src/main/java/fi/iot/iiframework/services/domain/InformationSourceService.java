@@ -8,8 +8,8 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.services.GenericService;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 
-public interface InformationSourceConfigurationService extends GenericService<InformationSourceConfiguration, String>{
+public interface InformationSourceService extends GenericService<InformationSource, String>{
 
 }

@@ -7,7 +7,7 @@
 package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.HashSet;
 import java.util.List;
@@ -30,8 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SensorServiceTest {
 
-    InformationSourceConfiguration i1;
-    InformationSourceConfiguration i2;
+    InformationSource i1;
+    InformationSource i2;
 
     Sensor s1;
     Sensor s2;
@@ -40,13 +40,13 @@ public class SensorServiceTest {
     private SensorService service;
 
     @Autowired
-    private InformationSourceConfigurationService sourceService;
+    private InformationSourceService sourceService;
 
     @Before
     public void setUp() {
-        i1 = new InformationSourceConfiguration();
+        i1 = new InformationSource();
         i1.setSensors(new HashSet<>());
-        i2 = new InformationSourceConfiguration();
+        i2 = new InformationSource();
         i2.setSensors(new HashSet<>());
 
         s1 = InformationSourceObjectProvider.provideSensor();
