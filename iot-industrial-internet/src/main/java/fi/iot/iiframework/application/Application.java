@@ -11,6 +11,10 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.domain.SensorConfiguration;
+import fi.iot.iiframework.services.domain.SensorConfigurationService;
+import fi.iot.iiframework.services.domain.SensorService;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
@@ -59,19 +63,6 @@ public class Application {
 
         SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
         ErrorLogger.log(e4);
-
-        /*        
-        DeviceConfigurationService deviceConfService = ctx.getBean(DeviceConfigurationService.class);
-        DeviceService seviceServiceImpl = ctx.getBean(DeviceService.class);
-        
-        Device device = seviceServiceImpl.getAll().get(0);
-        
-        DeviceConfiguration conf = new DeviceConfiguration();
-        conf.setDevice(device);
-        conf.setActive(false);
-        
-        deviceConfService.save(conf);
-        */
 
     }
 }

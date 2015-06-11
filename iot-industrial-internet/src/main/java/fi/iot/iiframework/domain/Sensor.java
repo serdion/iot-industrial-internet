@@ -26,7 +26,7 @@ import org.hibernate.annotations.GenericGenerator;
 @EqualsAndHashCode(exclude = {"readouts"})
 @ToString(exclude = {"readouts"})
 public class Sensor implements Serializable {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -47,11 +47,11 @@ public class Sensor implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
     protected InformationSourceConfiguration source;
-    
+
     @JsonIgnore
     @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.EAGER)
     protected SensorConfiguration sensorConfiguration;
-    
+
     protected String name;
 
     public Sensor() {
@@ -59,5 +59,28 @@ public class Sensor implements Serializable {
 
     public Sensor(String id) {
         this.sensorId = id;
+    }
+
+    /**
+     * Returns the SesorConfiguration for the Sensor and if the sensor doesn't
+     * have a configuration a default configuration is returned instead.
+     *
+     * @return SensorConfiguration
+     */
+    public SensorConfiguration getSensorConfiguration() {
+        if (sensorConfiguration == null) {
+            return getDefaultSensorConfiguration();
+        }
+
+        return sensorConfiguration;
+    }
+
+    private SensorConfiguration getDefaultSensorConfiguration() {
+        SensorConfiguration configuration = new SensorConfiguration();
+        configuration.active = true;
+        configuration.thresholdMax = Integer.MAX_VALUE;
+        configuration.thresholdMin = Integer.MIN_VALUE;
+
+        return configuration;
     }
 }
