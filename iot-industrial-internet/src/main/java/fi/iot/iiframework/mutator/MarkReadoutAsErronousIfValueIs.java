@@ -29,20 +29,14 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
             SensorConfiguration configuration = sensor.getSensorConfiguration();
 
-            if (configuration.getThresholdMax() != Integer.MAX_VALUE) {
-                condition = ValueCondition.HIGHER_THAN;
-            }
-
-            if (configuration.getThresholdMin() != Integer.MIN_VALUE) {
-                condition = ValueCondition.HIGHER_THAN;
-            }
-
             for (Readout readout : sensor.getReadouts()) {
-                if (condition == ValueCondition.HIGHER_THAN) {
+                // IF condition is "Higher Than" and the maximum threshold is not the default one, else skip
+                if (condition == ValueCondition.HIGHER_THAN&&configuration.getThresholdMax()!=Integer.MAX_VALUE) {
                     if (ValueCondition.compare(condition, readout.getValue(), configuration.getThresholdMax())) {
                         addError(readout.getValue(), configuration.getThresholdMax(), condition, sensor);
                     }
-                } else {
+                // IF condition is "Lower Than" and the minimum threshold is not the default one, else skip
+                } else if(condition == ValueCondition.HIGHER_THAN&&configuration.getThresholdMin()!=Integer.MIN_VALUE) {
                     if (ValueCondition.compare(condition, readout.getValue(), configuration.getThresholdMin())) {
                         addError(readout.getValue(), configuration.getThresholdMin(), condition, sensor);
                     }
