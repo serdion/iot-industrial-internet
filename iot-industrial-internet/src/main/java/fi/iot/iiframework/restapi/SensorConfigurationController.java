@@ -64,7 +64,6 @@ public class SensorConfigurationController {
         Sensor sensor = (Sensor) helper.returnOrException(sensorService.get(sensorid));
         configuration.setSensor(sensor);
         sensor.setSensorConfiguration(configuration);
-        helper.checkIfObjectIsValid(configuration);
         sensorConfigurationService.save(configuration);
         sensorService.save(sensor);
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
