@@ -59,6 +59,9 @@ public class Application {
 
         SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
         ErrorLogger.log(e4);
+        
+        
+
 
     }
 }

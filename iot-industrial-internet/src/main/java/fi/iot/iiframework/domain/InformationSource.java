@@ -83,6 +83,7 @@ public class InformationSource implements Serializable, Validatable {
     protected Date endDate;
 
     @JsonIgnore
+
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
     protected Set<Sensor> sensors = new HashSet<>(); 

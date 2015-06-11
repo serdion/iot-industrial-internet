@@ -17,7 +17,7 @@ var IIFramework = angular.module('IIFramework', [
 ]);
 
 
-IIFramework.config(function ($routeProvider) {
+IIFramework.config(function($routeProvider) {
     $routeProvider.when('/', {
         controller: 'FrontController',
         templateUrl: 'front.html'
@@ -37,6 +37,10 @@ IIFramework.config(function ($routeProvider) {
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
                 templateUrl: 'information_sources/sensor.html'
+            })
+            .when('/sensors/:sensorid/edit', {
+                controller: 'SensorController',
+                templateUrl: 'sensors/edit.html'
             })
             .when('/configurations', {
                 controller: 'InformationSourceConfigurationsController',

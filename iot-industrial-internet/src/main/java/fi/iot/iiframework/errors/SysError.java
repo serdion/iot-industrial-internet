@@ -62,17 +62,21 @@ public class SysError implements Serializable {
      *
      * @param type ErrorType of error
      * @param desc Description of error
-     * @param location Location of where the error occurred
+     * @param additionalInformation Additional information attached to this error.
      * @param severity ErrorSeverity of the error
      */
-    public SysError(ErrorType type, ErrorSeverity severity, String desc, String location) {
+    public SysError(ErrorType type, ErrorSeverity severity, String desc, String additionalInformation) {
         this.type = type;
         this.description = desc;
-        this.location = location;
+        this.additionalInformation = additionalInformation;
         this.severity = severity;
     }
 
     public SysError() {
+    }
+    
+    public String getName(){
+        return this.type.getName();
     }
 
     @Override

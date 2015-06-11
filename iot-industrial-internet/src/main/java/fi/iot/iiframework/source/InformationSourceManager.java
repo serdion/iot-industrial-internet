@@ -33,7 +33,9 @@ public interface InformationSourceManager {
      *
      * @param config the new configuration that will replace the previous one
      */
+
     public void updateSource(InformationSource config);
+
 
     /**
      * Reads a source and returns true if the read succeeded.

@@ -107,7 +107,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
     public void setReader(InformationSourceReader reader) {
         this.reader = reader;
     }
-    
+
     @Override
     public void setScheduler(ReadScheduler scheduler) {
         this.scheduler = scheduler;

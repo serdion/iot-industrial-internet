@@ -15,8 +15,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="ds in sources" >
-                            <td>{{ds.id}}</td>
-                            <td class="text-muted">Generic name, todo</td>
+                            <td ng-app="">{{ds.id}}</td>
+                            <td>{{ds.name}}</td>
                             <td>
                                 <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>
                                 <a ng-href="#/sources/{{ds.id}}" class="btn btn-warning btn-xs">Edit</a>

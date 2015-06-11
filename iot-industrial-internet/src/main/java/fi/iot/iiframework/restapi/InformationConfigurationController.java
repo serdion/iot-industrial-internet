@@ -95,8 +95,10 @@ public class InformationConfigurationController {
             @PathVariable String configid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
+
         InformationSource configuration
                 = (InformationSource) helper.returnOrException(informationSourceConfigurationService.get(configid));
+
         informationSourceManager.removeSource(configid);
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
