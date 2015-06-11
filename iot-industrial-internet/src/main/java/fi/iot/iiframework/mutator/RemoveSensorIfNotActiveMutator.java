@@ -6,31 +6,17 @@
  */
 package fi.iot.iiframework.mutator;
 
-import fi.iot.iiframework.mutator.cases.Case;
 import fi.iot.iiframework.domain.Sensor;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RemoveSensorIfNotActiveMutator implements Mutator {
 
     @Override
-    public void mutate(List<Sensor> sensors){
-        Iterator<Sensor> iterator = sensors.iterator();
-        
-        while(iterator.hasNext()){
-            Sensor sensor = iterator.next();
-            if (sensor.getSensorConfiguration() == null)
-                continue;
-            if(!sensor.getSensorConfiguration().isActive()){
-                sensors.remove(sensor);
-            }
-        }
-    };
-
-    @Override
-    public void mutateIf(List<Sensor> sensor, Case mutateInCase) {
-        
+    public void mutateAll(List<Sensor> sensors) {
+        sensors = sensors.stream().filter(p -> p.getSensorConfiguration().isActive()).collect(Collectors.toList());
     }
+
 }

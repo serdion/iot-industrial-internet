@@ -37,9 +37,9 @@ public class SensorConfiguration implements Serializable, Validatable {
     
     protected boolean active = true;
 
-    protected int thresholdMin;
+    protected double thresholdMin;
 
-    protected int thresholdMax;
+    protected double thresholdMax;
 
     @Override
     public boolean isValid() {

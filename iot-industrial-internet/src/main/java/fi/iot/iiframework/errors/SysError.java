@@ -8,13 +8,14 @@ package fi.iot.iiframework.errors;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import lombok.Data;
 
 /**
  * Contains information about an error in the system
  */
 @Entity
 @Table(name = "Errors")
-
+@Data
 public class SysError implements Serializable {
 
     @Id
@@ -37,6 +38,9 @@ public class SysError implements Serializable {
 
     @Column(name = "severity")
     private ErrorSeverity severity;
+    
+    @Column(name = "additionalInformation")
+    private String additionalInformation;
 
     /**
      * Creates a new SysError
@@ -69,58 +73,6 @@ public class SysError implements Serializable {
     }
 
     public SysError() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public ErrorType getType() {
-        return type;
-    }
-
-    public void setType(ErrorType type) {
-        this.type = type;
-    }
-    
-    public String getName(){
-        return this.type.getName();
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public ErrorSeverity getSeverity() {
-        return severity;
-    }
-
-    public void setSeverity(ErrorSeverity severity) {
-        this.severity = severity;
     }
 
     @Override
