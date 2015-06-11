@@ -46,7 +46,7 @@ public class SensorConfigurationController {
             @PathVariable String sensorid
     ) throws InvalidParametersException, ResourceNotFoundException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorService.get(sensorid));
-        return (SensorConfiguration) helper.returnOrException(sensorConfigurationService.getBy(sensor));
+        return (SensorConfiguration) helper.returnOrException(sensor.getSensorConfiguration());
     }
     
     @RequestMapping(
