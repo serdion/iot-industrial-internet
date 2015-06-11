@@ -14,7 +14,6 @@ import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.services.domain.SensorConfigurationService;
-import fi.iot.iiframework.services.domain.SensorConfigurationService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
