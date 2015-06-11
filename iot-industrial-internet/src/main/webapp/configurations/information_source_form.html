@@ -40,42 +40,33 @@
 
                     <div ng-show="radioPick == 'Specific Date/Time'">
                         <label>Start Date (yyyy-mm-dd)</label>
-                        <div ng-controller="StartDatePickerController">
-                            <div>
-                                <p class="input-group">
-                                    <input type="date" class="form-control" datepicker-popup ng-model="is.startDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
-                                </p>
-                            </div>
-                            <label>Start Time (hh:mm)</label>
-                            <timepicker ng-model="time" show-meridian="false"></timepicker>
-                            <label>Repeat?</label>
-                            <div class="btn-group">
-                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Never" btn-radio="'Never'">Never</label>
-                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Daily" btn-radio="'Daily'">Daily</label>
-                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Weekly" btn-radio="'Weekly'">Weekly</label>
-                                <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Monthly" btn-radio="'Monthly'">Monthly</label>
-                            </div>
-                            <div class="btn-group">
-                                temp buttons
-                                <input id="never" type="radio" ng-model="radioModel" value="Never">Never
-                                <input id="daily" type="radio" ng-model="radioModel" value="Daily">Daily
-                                <input id="weekly" type="radio" ng-model="radioModel" value="Weekly">Weekly
-                                <input id="monthly" type="radio" ng-model="radioModel" value="Monthly">Monthly
-                            </div>
-                        </div>
-                        <br>
-                        <label>Repeat Until</label>
-                        <div ng-controller="EndDatePickerController">
+                        <!--                        <div ng-controller="StartDatePickerController">-->
+                        <div>
                             <p class="input-group">
-                                <input type="date" class="form-control" datepicker-popup ng-model="is.endDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                                <input type="date" class="form-control" datepicker-popup ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                         </div>
+                        <label>Start Time (hh:mm)</label>
+                        <timepicker ng-model="time" show-meridian="false"></timepicker>
+                        <label>Repeat?</label>
+                        <div class="btn-group">
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Never" btn-radio="'Never'">Never</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Daily" btn-radio="'Daily'">Daily</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Weekly" btn-radio="'Weekly'">Weekly</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Monthly" btn-radio="'Monthly'">Monthly</label>
+                        </div>
+                        <!--                        </div>-->
+                        <br>
+                        <label>Repeat Until</label>
+                        <p class="input-group">
+                            <input type="date" class="form-control" datepicker-popup ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
                     </div>
                     <br>
                     <div>
