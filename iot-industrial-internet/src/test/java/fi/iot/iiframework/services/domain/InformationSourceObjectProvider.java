@@ -6,14 +6,12 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
@@ -38,8 +36,10 @@ public class InformationSourceObjectProvider {
 
     public static Sensor provideSensor() {
         Sensor sensor = new Sensor();
-        sensor.setSensorId(getUUID());
+        sensor.setName(getUUID());
         sensor.setReadouts(new HashSet<>());
+        sensor.setQuantity("Temperature");
+        sensor.setUnit("°C");
 
         return sensor;
     }
@@ -53,8 +53,6 @@ public class InformationSourceObjectProvider {
     public static Readout provideReadout() {
         Readout readout = new Readout();
         readout.setTime(System.currentTimeMillis() + randInt(-100, 100));
-        readout.setQuantity("Temperature");
-        readout.setUnit("°C"); // Celsius
 
         DecimalFormat df = new DecimalFormat("#.00");
         String format = df.format(randDouble(22.1));

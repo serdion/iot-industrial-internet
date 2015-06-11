@@ -129,9 +129,7 @@ public class ReadoutServiceTest {
     @Test
     public void objectsThatAreEqualShouldBeOverwrittenInTheDatabase() {
         Readout r4 = r1;
-        r4.setUnit(r1.getUnit());
         r4.setTime(r1.getTime());
-        r4.setQuantity(r1.getQuantity());
         r4.setSensor(r1.getSensor());
         r4.setValue(r1.getValue());
         service.save(r4);

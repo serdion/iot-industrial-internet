@@ -6,7 +6,7 @@
  */
 
 
-IIFramework.controller('VisualRealtimeController', function ($scope, InformationSource, Readout, $routeParams) {
+IIFramework.controller('VisualRealtimeController', function ($scope, InformationSource, Sensor, Readout, $routeParams) {
     var dataToDisplay = [];
 
     $scope.from = 0;
@@ -15,6 +15,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
     $scope.number = [0, 80];
     $scope.threshold = 22.5;
 
+    $scope.sensor = Sensor.query
     $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
         $scope.id = $routeParams.sensorid;
 
@@ -27,7 +28,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
 
         $scope.flotData = [{
                 data: dataToDisplay,
-                label: " " + ($scope.readouts[0].quantity) + " (" + $scope.readouts[0].unit + ")"
+                label: " " + ($scope.sen) + " (" + $scope.readouts[0].unit + ")"
             }];
     });
 

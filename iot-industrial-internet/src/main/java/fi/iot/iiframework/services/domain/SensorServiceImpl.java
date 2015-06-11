@@ -8,7 +8,7 @@ package fi.iot.iiframework.services.domain;
 
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.daos.domain.SensorDAO;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -31,17 +31,17 @@ public class SensorServiceImpl
     }
 
     @Override
-    public List<Sensor> getBy(InformationSourceConfiguration source) {
+    public List<Sensor> getBy(InformationSource source) {
         return getBy(0, Integer.MAX_VALUE, source);
     }
 
     @Override
-    public List<Sensor> getBy(int from, int to, InformationSourceConfiguration source) {
+    public List<Sensor> getBy(int from, int to, InformationSource source) {
         return sensorDAO.getBy(from, to, source);
     }
 
     @Override
-    public Long countBy(InformationSourceConfiguration source) {
+    public Long countBy(InformationSource source) {
         return sensorDAO.countByCriteria(
                 buildCriterionList(Restrictions.eq("source", source))
         );

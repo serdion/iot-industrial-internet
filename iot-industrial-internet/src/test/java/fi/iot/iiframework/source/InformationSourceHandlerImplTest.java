@@ -6,11 +6,10 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
-import fi.iot.iiframework.services.domain.SensorService;
 import java.io.IOException;
 import java.util.List;
 import javax.xml.bind.JAXBException;
@@ -22,12 +21,12 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
-public class InformationSourceImplTest {
+public class InformationSourceHandlerImplTest {
 
+    private InformationSourceHandler handler;
     private InformationSource source;
-    private InformationSourceConfiguration config;
     @Mock
-    private SensorService mockService;
+    private InformationSourcePersistence mockPersistence;
     @Mock
     private ReadScheduler mockScheduler;
     @Mock
@@ -38,17 +37,17 @@ public class InformationSourceImplTest {
     @Before
     public void setUp() throws JAXBException, IOException {
         MockitoAnnotations.initMocks(this);
-        config = new InformationSourceConfiguration();
-        config.setReadFrequency(0);
-        config.setActive(false);
-        config.setReadFrequency(11);
-        config.setName("test");
-        config.setType(InformationSourceType.XML);
-        config.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
+        source = new InformationSource();
+        source.setReadFrequency(0);
+        source.setActive(false);
+        source.setReadFrequency(11);
+        source.setName("test");
+        source.setType(InformationSourceType.XML);
+        source.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
 
-        source = new InformationSourceImpl(config, mockService);
-        source.setReader(mockReader);
-        source.setScheduler(mockScheduler);
+        handler = new InformationSourceHandlerImpl(source, mockPersistence);
+        handler.setReader(mockReader);
+        handler.setScheduler(mockScheduler);
         
         examples = InformationSourceObjectProvider.provideSensorsWithChildren();
         
@@ -58,13 +57,13 @@ public class InformationSourceImplTest {
     @Test
     public void readReadsSuccesfullyFromReader() throws JAXBException, IOException {
         examples.forEach(s ->{
-            assertTrue(source.read().contains(s));
+            assertTrue(handler.read().contains(s));
         });
     }
     
     @Test
-    public void readAndWriteWritesTheReadObjectToDatabase() {
-        source.readAndWrite();
-        verify(mockService).save(examples);
+    public void readAndWriteWritesTheReadObjectsToDatabase() {
+        handler.readAndWrite();
+        verify(mockPersistence).updateSourceWithSensors(source, examples);
     }
 }

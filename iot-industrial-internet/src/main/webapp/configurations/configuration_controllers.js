@@ -26,6 +26,9 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
         $scope.submit = function () {
             $scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.readInterval = $scope.radioModel;
+            $scope.is.startDate = $scope.startDate;
+            $scope.is.endDate = $scope.endDate;
+//            $scope.is.startDate = $scope.startDate + $scope.time;
             $scope.is.$save({}, function () {
                 $location.path('/configurations');
             },
@@ -33,45 +36,10 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
                         showError(error.data.message);
                     });
         };
-    }]);
 
-configurations.controller('EditInformationSourceController', ['$scope', 'InformationSourceConfiguration', '$location', '$routeParams', function ($scope, InformationSourceConfiguration, $location, $routeParams) {
-        $scope.types = ['XML'];
-
-        $scope.is = InformationSourceConfiguration.get({configid: $routeParams.configid}, function () {
-            $scope.readFrequency_s = $scope.is.readFrequency / 1000;
-        });
-
-        $scope.back = function () {
-            window.history.back();
-        };
-        $scope.submit = function () {
-            $scope.is.readFrequency = $scope.readFrequency_s * 1000;
-            $scope.is.readInterval = $scope.radioModel;
-            $scope.is.$edit({}, function () {
-                $location.path('/configurations');
-            },
-                    function (error) {
-                        showError(error.data.message);
-                    });
-        };
-    }]);
-
-configurations.controller('InformationSourceConfigurationsController', ['$scope', 'InformationSourceConfiguration', '$location', function ($scope, InformationSourceConfiguration, $location) {
-        $scope.configurations = InformationSourceConfiguration.query();
-
-        $scope.deleteConfiguration = function (id) {
-            InformationSourceConfiguration.delete({configid: id}, function () {
-                $scope.configurations = InformationSourceConfiguration.query();
-            }, function (error) {
-                showError(error.data.message);
-            });
-        };
-    }]);
-
-configurations.controller('StartDatePickerController', ['$scope', function ($scope) {
         $scope.today = function () {
             $scope.startDate = new Date();
+            $scope.endDate = new Date();
         };
         $scope.today();
 
@@ -95,11 +63,32 @@ configurations.controller('StartDatePickerController', ['$scope', function ($sco
         $scope.radioModel = 'Never';
     }]);
 
-configurations.controller('EndDatePickerController', ['$scope', function ($scope) {
-        $scope.today = function () {
-            $scope.endDate = new Date();
+configurations.controller('EditInformationSourceController', ['$scope', 'InformationSourceConfiguration', '$location', '$routeParams', function ($scope, InformationSourceConfiguration, $location, $routeParams) {
+        $scope.types = ['XML'];
+
+        $scope.is = InformationSourceConfiguration.get({configid: $routeParams.configid}, function () {
+            $scope.readFrequency_s = $scope.is.readFrequency / 1000;
+            $scope.startDate = $scope.is.startDate;
+            $scope.endDate = $scope.is.endDate;
+            $scope.radioModel = $scope.is.readInterval;
+        });
+
+        $scope.back = function () {
+            window.history.back();
         };
-        $scope.today();
+        $scope.submit = function () {
+            $scope.is.readFrequency = $scope.readFrequency_s * 1000;
+            $scope.is.readInterval = $scope.radioModel;
+            $scope.is.startDate = $scope.startDate;
+            $scope.is.endDate = $scope.endDate;
+//            $scope.is.startDate = $scope.startDate + $scope.time;
+            $scope.is.$edit({}, function () {
+                $location.path('/configurations');
+            },
+                    function (error) {
+                        showError(error.data.message);
+                    });
+        };
 
         $scope.toggleMin = function () {
             $scope.minDate = $scope.minDate ? null : new Date();
@@ -116,5 +105,17 @@ configurations.controller('EndDatePickerController', ['$scope', function ($scope
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
+        };
+    }]);
+
+configurations.controller('InformationSourceConfigurationsController', ['$scope', 'InformationSourceConfiguration', '$location', function ($scope, InformationSourceConfiguration, $location) {
+        $scope.configurations = InformationSourceConfiguration.query();
+
+        $scope.deleteConfiguration = function (id) {
+            InformationSourceConfiguration.delete({configid: id}, function () {
+                $scope.configurations = InformationSourceConfiguration.query();
+            }, function (error) {
+                showError(error.data.message);
+            });
         };
     }]);

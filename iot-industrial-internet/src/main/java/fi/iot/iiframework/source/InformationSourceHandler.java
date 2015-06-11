@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import java.net.MalformedURLException;
@@ -17,7 +17,7 @@ import javax.xml.bind.JAXBException;
  *
  * An object representing an external data source
  */
-public interface InformationSource {
+public interface InformationSourceHandler {
 
     /**
      * Read a source from the reader
@@ -39,13 +39,13 @@ public interface InformationSource {
      *
      * @param config
      */
-    public void setConfig(InformationSourceConfiguration config);
+    public void setConfig(InformationSource config);
 
     /**
      * Get the configuration.
      * @return 
      */
-    public InformationSourceConfiguration getConfig();
+    public InformationSource getConfig();
     
     /**
      * Stop all read-operations.

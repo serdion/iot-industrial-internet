@@ -10,9 +10,9 @@ import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
-import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
+import fi.iot.iiframework.services.domain.InformationSourceService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +40,15 @@ public class InformationConfigurationController {
     private InformationSourceManagerImpl informationSourceManager;
 
     @Autowired
-    private InformationSourceConfigurationService informationSourceConfigurationService;
+    private InformationSourceService informationSourceConfigurationService;
 
     @RequestMapping(value = "/{configid}/view", produces = "application/json")
     @ResponseBody
-    public InformationSourceConfiguration getInformationSource(
+    public InformationSource getInformationSource(
             @PathVariable String configid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        return (InformationSourceConfiguration) helper.returnOrException(informationSourceConfigurationService.get(configid));
+        return (InformationSource) helper.returnOrException(informationSourceConfigurationService.get(configid));
     }
 
     @RequestMapping(
@@ -58,8 +58,8 @@ public class InformationConfigurationController {
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<InformationSourceConfiguration> addInformationSource(
-            @RequestBody InformationSourceConfiguration configuration,
+    public ResponseEntity<InformationSource> addInformationSource(
+            @RequestBody InformationSource configuration,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(configuration);
@@ -74,8 +74,8 @@ public class InformationConfigurationController {
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<InformationSourceConfiguration> editInformationSource(
-            @RequestBody InformationSourceConfiguration configuration,
+    public ResponseEntity<InformationSource> editInformationSource(
+            @RequestBody InformationSource configuration,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(configuration);
@@ -89,19 +89,19 @@ public class InformationConfigurationController {
             produces = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<InformationSourceConfiguration> deleteInformationSource(
+    public ResponseEntity<InformationSource> deleteInformationSource(
             @PathVariable String configid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
-        InformationSourceConfiguration configuration
-                = (InformationSourceConfiguration) helper.returnOrException(informationSourceConfigurationService.get(configid));
+        InformationSource configuration
+                = (InformationSource) helper.returnOrException(informationSourceConfigurationService.get(configid));
         informationSourceManager.removeSource(configid);
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
-    public List<InformationSourceConfiguration> listInformationSourcesList(
+    public List<InformationSource> listInformationSourcesList(
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
         return informationSourceConfigurationService.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
@@ -109,7 +109,7 @@ public class InformationConfigurationController {
 
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
-    public List<InformationSourceConfiguration> listInformationSourcesListAmount(
+    public List<InformationSource> listInformationSourcesListAmount(
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
@@ -119,7 +119,7 @@ public class InformationConfigurationController {
 
     @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
-    public List<InformationSourceConfiguration> listInformationSourcesListFromTo(
+    public List<InformationSource> listInformationSourcesListFromTo(
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params

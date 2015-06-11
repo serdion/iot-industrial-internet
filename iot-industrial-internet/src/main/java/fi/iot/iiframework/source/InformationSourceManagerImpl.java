@@ -6,8 +6,8 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.services.domain.InformationSourceConfigurationService;
+import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.HashMap;
 import java.util.List;
@@ -23,12 +23,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class InformationSourceManagerImpl implements InformationSourceManager {
 
-    private final Map<String, InformationSource> sources;
+    private final Map<String, InformationSourceHandler> sources;
     
     @Autowired
-    private SensorService sensorService;
-    @Autowired
-    private InformationSourceConfigurationService configService;
+    private InformationSourcePersistence persistence;
 
     public InformationSourceManagerImpl() {
         this.sources = new HashMap<>();
@@ -36,46 +34,50 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
 
     @PostConstruct
     public void loadConfigFromDB() {
-        List<InformationSourceConfiguration> configs = configService.getAll();
-        configs.forEach(c -> createSource(c));
+        List<InformationSource> sources = persistence.loadSourcesFromDB();
+        sources.forEach(c -> createSource(c));
     }
 
     @Override
-    public void createSource(InformationSourceConfiguration config) {
-        InformationSource source = new InformationSourceImpl(config, sensorService);
-        configService.save(config);
+    public void createSource(InformationSource config) {
+        InformationSourceHandler source = new InformationSourceHandlerImpl(config, persistence);
+        persistence.addSource(config);
         sources.put(config.getId(), source);
     }
 
     @Override
     public void removeSource(String id) {
-        configService.delete(sources.get(id).getConfig());
+        persistence.deleteSource(sources.get(id).getConfig());
         sources.get(id).close();
         sources.remove(id);
     }
 
     @Override
-    public void updateSource(InformationSourceConfiguration config) {
+    public void updateSource(InformationSource config) {
         sources.get(config.getId()).setConfig(config);
-        configService.save(config);
+        persistence.updateSource(config);
     }
     
     @Override
     public boolean readSource(String id) {
-        InformationSource source = sources.get(id);
+        InformationSourceHandler source = sources.get(id);
         return source.readAndWrite();
     }
 
-    public Map<String, InformationSource> getSources() {
+    /**
+     * Returns map of sources.
+     * @return 
+     */
+    public Map<String, InformationSourceHandler> getSources() {
         return sources;
     }
 
-    public void setSensorService(SensorService sensorService) {
-        this.sensorService = sensorService;
-    }
-
-    public void setConfigService(InformationSourceConfigurationService configService) {
-        this.configService = configService;
+    /**
+     * Sets the class for persistence.
+     * @param persistence 
+     */
+    public void setPersistence(InformationSourcePersistence persistence) {
+        this.persistence = persistence;
     }
 
 }

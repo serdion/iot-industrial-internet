@@ -11,9 +11,13 @@ import java.util.List;
 import org.hibernate.criterion.Criterion;
 
 public interface GenericService<T, ID extends Serializable> {
-    public void save(T t);
+    public T save(T t);
     
-    public void save(List<T> lt);
+    public List<T> save(List<T> lt);
+    
+    public T update(T t);
+    
+    public T persist(T t);
 
     public T get(ID id);
     
