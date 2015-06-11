@@ -6,15 +6,13 @@
  */
 package fi.iot.iiframework.mutator;
 
+import fi.iot.iiframework.mutator.cases.Case;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.errors.ErrorLogger;
-import fi.iot.iiframework.errors.ErrorSeverity;
-import fi.iot.iiframework.errors.ErrorType;
 import java.util.List;
 
-public abstract class Mutator {
+public interface Mutator {
+    
+    public void mutateIf(List<Sensor> sensor, Case mutateInCase);
 
-    public static void mutate(List<Sensor> sensor){
-        ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "Tried to call abstract class Mutator and not extended classes.");
-    };
+    public void mutate(List<Sensor> sensor);
 }

@@ -23,7 +23,7 @@ public class XMLReader implements InformationSourceReader {
         List<Sensor> object = parser.parse(location);
         
         if(object!=null){
-            RemoveSensorIfNotActiveMutator.mutate(object);
+            new RemoveSensorIfNotActiveMutator().mutate(object);
         } else {
             ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Attempted to mutate object that was null.");
         }
