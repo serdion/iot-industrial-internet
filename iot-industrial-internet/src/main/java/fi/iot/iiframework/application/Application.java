@@ -23,11 +23,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
 @ComponentScan("fi.iot.iiframework")
-@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class Application {
 
     public static final Logger logger = Logger.getLogger(Application.class.getName());
