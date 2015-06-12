@@ -86,7 +86,6 @@ public class ErrorLogger {
      */
     private static void saveError(SysError error) {
         gService.save(error);
-        System.out.println("Error:\t --- "+ error);
     }
 
     public static List<SysError> getAllErrors() {

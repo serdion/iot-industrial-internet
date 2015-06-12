@@ -14,6 +14,5 @@ public class ReadJob implements Job {
     public void execute(JobExecutionContext context)
             throws JobExecutionException {
         JobDataMap data = context.getMergedJobDataMap();
-        System.out.println("Task was run.");
     }
 }

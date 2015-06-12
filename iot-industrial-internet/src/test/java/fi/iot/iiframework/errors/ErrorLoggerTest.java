@@ -10,10 +10,9 @@ import fi.iot.iiframework.application.TestConfig;
 import java.util.Date;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -61,8 +60,6 @@ public class ErrorLoggerTest {
         Date now = new Date();
         ErrorLogger.getAllErrors().get(0).setTime(now);
         Date nowtest = ErrorLogger.getAllErrors().get(0).getTime();
-        System.out.println("Now: " + now + " Now in db: " + nowtest);
-
     }
 
 }
