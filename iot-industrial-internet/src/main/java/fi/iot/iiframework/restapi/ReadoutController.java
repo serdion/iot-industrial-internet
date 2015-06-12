@@ -18,11 +18,8 @@ import java.util.Map;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/readouts")
@@ -43,6 +40,7 @@ public class ReadoutController {
     @Autowired
     private RestAPIHelper helper;
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsList(
@@ -53,6 +51,7 @@ public class ReadoutController {
         return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), createCriterion(sensor, params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsAmount(
@@ -65,6 +64,7 @@ public class ReadoutController {
         return readoutservice.getBy(0, amount, createCriterion(sensor, params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsFromTo(
@@ -78,6 +78,7 @@ public class ReadoutController {
         return readoutservice.getBy(from, to, createCriterion(sensor, params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{readoutid}/view", produces = "application/json")
     @ResponseBody
     public Readout getReadout(

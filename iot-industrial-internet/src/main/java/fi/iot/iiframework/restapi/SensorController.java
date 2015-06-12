@@ -6,8 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import java.util.List;
-import java.util.Map;
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
@@ -15,13 +13,12 @@ import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/sensors")
@@ -39,6 +36,7 @@ public class SensorController {
     @Autowired
     private ApplicationSettings settings;
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/view", produces = "application/json")
     @ResponseBody
     public Sensor getSensor(
@@ -48,19 +46,18 @@ public class SensorController {
         return (Sensor) helper.returnOrException(sensorservice.get(sensorid));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/list", produces = "application/json")
     @ResponseBody
     public Set<Sensor> listSensors(
             @PathVariable String sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        InformationSource source
-                = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
+        InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         return source.getSensors();
-
-        //return sensorservice.getBy(0, settings.getDefaultAmountOfSensorsRetrievedFromDatabase(), source);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensorsAmount(
@@ -74,6 +71,7 @@ public class SensorController {
         return sensorservice.getBy(0, amount, source);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensorsFromTo(

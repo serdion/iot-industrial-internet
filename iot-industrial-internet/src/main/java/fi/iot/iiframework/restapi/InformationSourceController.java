@@ -15,11 +15,8 @@ import fi.iot.iiframework.services.domain.InformationSourceService;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/informationsources")
@@ -34,6 +31,7 @@ public class InformationSourceController {
     @Autowired
     private RestAPIHelper helper;
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listDatasources(
@@ -42,6 +40,7 @@ public class InformationSourceController {
         return informtionSourceService.get(0, settings.getDefaultAmountOfDataSourcesRetrievedFromDatabase());
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listDatasourcesAmount(
@@ -52,6 +51,7 @@ public class InformationSourceController {
         return informtionSourceService.get(0, amount);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listDatasourcesFromTo(
@@ -63,6 +63,7 @@ public class InformationSourceController {
         return informtionSourceService.get(to, from);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{informationsourceid}/view", produces = "application/json")
     @ResponseBody
     public InformationSource getDatasource(
@@ -72,6 +73,7 @@ public class InformationSourceController {
         return (InformationSource) helper.returnOrException(informtionSourceService.get(informationsourceid));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{informationsourceid}/header", produces = "application/json")
     @ResponseBody
     public Header getDatasourceHeader(

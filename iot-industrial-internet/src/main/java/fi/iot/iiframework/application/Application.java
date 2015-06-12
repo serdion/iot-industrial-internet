@@ -6,11 +6,11 @@
  */
 package fi.iot.iiframework.application;
 
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
@@ -23,9 +23,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
 @ComponentScan("fi.iot.iiframework")
+@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class Application {
 
     public static final Logger logger = Logger.getLogger(Application.class.getName());
