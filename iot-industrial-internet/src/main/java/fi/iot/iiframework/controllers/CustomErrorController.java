@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.restapi;
+package fi.iot.iiframework.controllers;
 
 import com.google.common.base.Throwables;
 import fi.iot.iiframework.errors.ErrorLogger;
@@ -29,9 +29,9 @@ class CustomErrorController implements ErrorController {
         Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
         String exceptionMessage = getExceptionMessage(throwable, statusCode);
 
-        // Log everything except 404 errors
-        logIfNot404Error(statusCode, exceptionMessage, throwable, getURI(request));
-        
+        // Log everything except 404 (not found) and 401 (unauthorized) errors
+        logIfNot404or401Error(statusCode, exceptionMessage, throwable, getURI(request));
+
         model.addAttribute("exceptionMessage", exceptionMessage);
         model.addAttribute("url", getURI(request));
         model.addAttribute("statuscode", statusCode);
@@ -39,23 +39,25 @@ class CustomErrorController implements ErrorController {
 
         return "errorpage";
     }
-    
-    private void logIfNot404Error(Integer statusCode, String exceptionMessage, Throwable throwable, String uri){
+
+    private void logIfNot404or401Error(Integer statusCode, String exceptionMessage, Throwable throwable, String uri) {
         String trace = "No stacktrace.";
-        
-        if(throwable!=null){
+
+        if(throwable!=null) {
             trace = throwable.getCause().toString();
         }
-        
-        ErrorLogger.log(
-                ErrorType.HTTP_ERROR, 
-                ErrorSeverity.NOTIFICATION, 
-                "User experienced an error ("+ exceptionMessage +" - "+ statusCode + ") :"+ trace, 
-                "Occured at: "+ uri);
+
+        if(statusCode!=404||statusCode!=401) {
+            ErrorLogger.log(
+                    ErrorType.HTTP_ERROR,
+                    ErrorSeverity.NOTIFICATION,
+                    "User experienced an error ("+exceptionMessage+" - "+statusCode+") :"+trace,
+                    "Occured at: "+uri);
+        }
     }
 
     private String getURI(HttpServletRequest request) {
-        if (request.getAttribute("javax.servlet.error.request_uri") == null) {
+        if(request.getAttribute("javax.servlet.error.request_uri")==null) {
             return "Unknown URI";
         }
 
@@ -63,7 +65,7 @@ class CustomErrorController implements ErrorController {
     }
 
     private String getExceptionMessage(Throwable throwable, Integer statusCode) {
-        if (throwable != null) {
+        if(throwable!=null) {
             return Throwables.getRootCause(throwable).getMessage();
         }
         HttpStatus httpStatus = HttpStatus.valueOf(statusCode);

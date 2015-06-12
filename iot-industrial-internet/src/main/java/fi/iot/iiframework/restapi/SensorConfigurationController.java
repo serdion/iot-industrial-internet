@@ -18,12 +18,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/configurations/sensors")
@@ -40,6 +36,7 @@ public class SensorConfigurationController {
     @Autowired
     private SensorService sensorService;
     
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/view", produces = "application/json")
     @ResponseBody
     public SensorConfiguration getSensorConfiguration(
@@ -49,6 +46,7 @@ public class SensorConfigurationController {
         return (SensorConfiguration) helper.returnOrException(sensor.getSensorConfiguration());
     }
     
+    @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/{sensorid}/add",
             method = RequestMethod.POST,
@@ -68,6 +66,7 @@ public class SensorConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/{sensorid}/edit",
             method = RequestMethod.POST,
@@ -88,6 +87,7 @@ public class SensorConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/{sensorid}/delete",
             method = RequestMethod.DELETE,
@@ -105,6 +105,7 @@ public class SensorConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<SensorConfiguration> listSensorConfigurationsList(
@@ -113,6 +114,7 @@ public class SensorConfigurationController {
         return sensorConfigurationService.get(0, settings.getDefaultSensorConfigurationsRetrievedFromDatabase());
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<SensorConfiguration> listSensorConfigurationsListAmount(
@@ -122,6 +124,7 @@ public class SensorConfigurationController {
         return sensorConfigurationService.get(0, amount);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
     public List<SensorConfiguration> listSensorConfigurationsListFromTo(

@@ -6,10 +6,8 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.application.Application;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
 
 public class ReadSchedulerImpl implements ReadScheduler {
 
@@ -22,11 +20,6 @@ public class ReadSchedulerImpl implements ReadScheduler {
 
             @Override
             public void run() {
-                Application.logger.log(
-                        Level.INFO, 
-                        "Task was run. Currently software has {0} threads.",
-                        Thread.activeCount()
-                );
                 runnable.run();
             }
 

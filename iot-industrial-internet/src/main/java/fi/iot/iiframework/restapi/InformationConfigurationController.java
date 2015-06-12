@@ -7,26 +7,19 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.application.ApplicationSettings;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import fi.iot.iiframework.services.domain.InformationSourceService;
-import java.util.HashSet;
+import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/configurations/informationsources")
@@ -44,6 +37,7 @@ public class InformationConfigurationController {
     @Autowired
     private InformationSourceService informationSourceConfigurationService;
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{configid}/view", produces = "application/json")
     @ResponseBody
     public InformationSource getInformationSource(
@@ -53,6 +47,7 @@ public class InformationConfigurationController {
         return (InformationSource) helper.returnOrException(informationSourceConfigurationService.get(configid));
     }
 
+    @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/add",
             method = RequestMethod.POST,
@@ -69,6 +64,7 @@ public class InformationConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/edit",
             method = RequestMethod.POST,
@@ -85,6 +81,7 @@ public class InformationConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.CREATED);
     }
 
+    @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/{configid}/delete",
             method = RequestMethod.DELETE,
@@ -103,6 +100,7 @@ public class InformationConfigurationController {
         return new ResponseEntity<>(configuration, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesList(
@@ -111,6 +109,7 @@ public class InformationConfigurationController {
         return informationSourceConfigurationService.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesListAmount(
@@ -121,6 +120,7 @@ public class InformationConfigurationController {
         return informationSourceConfigurationService.get(0, amount);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesListFromTo(

@@ -10,11 +10,8 @@ import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
-import java.util.HashSet;
 import java.util.List;
 import javax.transaction.Transactional;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +49,6 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
         sensors.forEach(s -> {
             source.getSensors().forEach(e -> {
                 if (s.getName().equals(e.getName())){
-                    System.out.println(s);
                     e.setReadouts(s.getReadouts());
                     sensorService.save(e);
                 }
