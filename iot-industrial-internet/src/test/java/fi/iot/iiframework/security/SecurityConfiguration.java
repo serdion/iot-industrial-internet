@@ -18,14 +18,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Configuration
     protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
+
         @Override
         public void init(AuthenticationManagerBuilder auth) throws Exception {
-            
-            
-            
-            // käyttäjällä jack, jonka salasana on bauer, on rooli USER
+
+            // From example, no idea how this actually works
+            auth.ldapAuthentication()
+                    .userDnPatterns("uid={0},ou=people")
+                    .groupSearchBase("ou=groups")
+                    .contextSource().ldif("classpath:test-server.ldif");
+
+            // Test Users
             auth.inMemoryAuthentication()
-                    .withUser("jack").password("bauer").roles("USER");
+                    .withUser("viewer").password("viewer").roles("VIEWER");
+            auth.inMemoryAuthentication()
+                    .withUser("moderator").password("moderator").roles("MODERATOR");
+            auth.inMemoryAuthentication()
+                    .withUser("both").password("both").roles("MOREDATOR", "VIEWER");
         }
     }
+
 }
