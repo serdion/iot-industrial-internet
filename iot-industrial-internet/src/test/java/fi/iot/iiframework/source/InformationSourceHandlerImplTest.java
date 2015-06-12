@@ -22,7 +22,6 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
-@Ignore
 public class InformationSourceHandlerImplTest {
 
     private InformationSourceHandler handler;
@@ -42,7 +41,6 @@ public class InformationSourceHandlerImplTest {
         source = new InformationSource();
         source.setReadFrequency(0);
         source.setActive(false);
-        source.setReadFrequency(11);
         source.setName("test");
         source.setType(InformationSourceType.XML);
         source.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");

@@ -33,4 +33,8 @@ public interface GenericService<T, ID extends Serializable> {
     
     public Long count();
     
+    public void flush();
+    
+    public void clear();
+    
 }

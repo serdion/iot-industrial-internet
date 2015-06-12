@@ -46,8 +46,8 @@ public class Readout implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sensor", nullable = false, updatable = false)
-    @Cascade({CascadeType.SAVE_UPDATE})
+    @JoinColumn(name = "sensor")
+    @Cascade(CascadeType.SAVE_UPDATE)
     protected Sensor sensor;
 
     public Readout() {

@@ -140,6 +140,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
         getSession().delete(t);
     }
 
+    @Override
     public void flush() {
         getSession().flush();
     }
