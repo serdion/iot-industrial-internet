@@ -10,7 +10,7 @@ case $1 in
     start)
         echo "Starting $SERVICE_NAME ..."
         if [ ! -f $PID_PATH_NAME ]; then
-            nohup java $JAVA_OPTIONS -jar $PATH_TO_JAR /tmp 2>> ../logs/errorlog >> ../logs/log &
+            nohup java $JAVA_OPTIONS -jar $PATH_TO_JAR /tmp </dev/null 2>> ../logs/errorlog >> ../logs/log &
                         echo $! > $PID_PATH_NAME
             echo "$SERVICE_NAME started ..."
         else
@@ -20,7 +20,7 @@ case $1 in
     stop)
         if [ -f $PID_PATH_NAME ]; then
             PID=$(cat $PID_PATH_NAME);
-            echo "$SERVICE_NAME stoping ..."
+            echo "$SERVICE_NAME stopping ..."
             kill $PID;
             echo "$SERVICE_NAME stopped ..."
             rm $PID_PATH_NAME
@@ -36,7 +36,7 @@ case $1 in
             echo "$SERVICE_NAME stopped ...";
             rm $PID_PATH_NAME
             echo "$SERVICE_NAME starting ..."
-            nohup java $JAVA_OPTIONS -jar $PATH_TO_JAR /tmp 2>> ../logs/errorlog >> ../logs/log &
+            nohup java $JAVA_OPTIONS -jar $PATH_TO_JAR /tmp </dev/null 2>> ../logs/errorlog >> ../logs/log &
                         echo $! > $PID_PATH_NAME
             echo "$SERVICE_NAME started ..."
         else
