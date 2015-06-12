@@ -19,7 +19,7 @@ public class SysErrorTest {
 
     @BeforeClass
     public static void setUpClass() {
-        testErrors = new SysError[3];
+        testErrors = new SysError[4];
 
     }
 
@@ -28,6 +28,8 @@ public class SysErrorTest {
         testErrors[0] = new SysError(ErrorType.BAD_CONFIGURATION, ErrorSeverity.NOTIFICATION, "Hello");
         testErrors[1] = new SysError(ErrorType.TIMEOUT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
         testErrors[2] = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
+        testErrors[3] = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh", "additional info");
+
     }
 
     @After
@@ -41,8 +43,18 @@ public class SysErrorTest {
     }
 
     @Test
-    public void correctDescriptionSaved() {
+    public void correctDescriptionNameSeveritySaved() {
         assertTrue(testErrors[2].getDescription().equals("muh"));
+        assertTrue(testErrors[2].getName().equals(ErrorType.CONFLICT_ERROR.getName()));
+        assertTrue(testErrors[2].getSeverity().equals(ErrorSeverity.NOTIFICATION));
+    }
+
+    @Test
+    public void EqualsItself() {
+        assertTrue(testErrors[2].equals(testErrors[2]));
+        assertFalse(testErrors[2].equals(testErrors[3]));
+        SysError e = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
+        assertTrue(testErrors[2].equals(e));
     }
 
     @Test
@@ -52,7 +64,7 @@ public class SysErrorTest {
     }
 
     @Test
-    public void changedDescpritionSaved() {
+    public void changedDescritionSaved() {
         testErrors[2].setDescription("test");
         assertTrue(testErrors[2].getDescription().equals("test"));
     }
