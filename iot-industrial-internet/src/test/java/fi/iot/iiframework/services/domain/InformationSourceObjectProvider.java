@@ -10,9 +10,11 @@ import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 
@@ -69,7 +71,12 @@ public class InformationSourceObjectProvider {
         Readout readout = new Readout();
         readout.setTime(System.currentTimeMillis() + randInt(-100, 100));
 
-        DecimalFormat df = new DecimalFormat("#.00");
+        // This might fix the problems with different locales 
+        // expecting decimal separator to be comma or period
+        
+        NumberFormat nformat = NumberFormat.getNumberInstance(Locale.getDefault());
+        DecimalFormat df = (DecimalFormat) nformat;
+        
         String format = df.format(randDouble(22.1));
 
         readout.setValue(Double.parseDouble(format));
