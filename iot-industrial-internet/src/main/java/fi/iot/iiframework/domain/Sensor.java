@@ -45,14 +45,14 @@ public class Sensor implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source", nullable = false, updatable = false)
     protected InformationSource source;
-    
+
     @JsonIgnore
     @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.LAZY)
     protected SensorConfiguration sensorConfiguration;
-    
+
     @XmlAttribute
     protected String quantity;
-    
+
     @XmlAttribute
     protected String unit;
 
@@ -106,7 +106,7 @@ public class Sensor implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        return this.source.id.equals(other.source.id);
+        return (this.source == null ? other.source == null : this.source.id.equals(other.source.id));
     }
-    
+
 }

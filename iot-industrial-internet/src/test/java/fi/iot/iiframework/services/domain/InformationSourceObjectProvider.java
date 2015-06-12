@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.services.domain;
 
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.text.DecimalFormat;
@@ -20,6 +21,20 @@ import java.util.UUID;
  * @author atte
  */
 public class InformationSourceObjectProvider {
+    
+    public static List<Sensor> provideSensorsWithChildren(InformationSource parent) {
+        List<Sensor> sensors = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Sensor s = provideSensor();
+            s.setSource(parent);
+            for (int j = 0; j < 3; j++) {
+                s.getReadouts().add(provideReadout(s));
+            }
+            sensors.add(s);
+        }
+
+        return sensors;
+    }
 
     public static List<Sensor> provideSensorsWithChildren() {
         List<Sensor> sensors = new ArrayList<>();

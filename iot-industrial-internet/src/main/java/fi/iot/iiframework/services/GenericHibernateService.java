@@ -81,5 +81,15 @@ public class GenericHibernateService<T, ID extends Serializable>
         lt.forEach(t -> dao.save(t));
         return lt;
     }
+    
+    @Override
+    public void flush() {
+        dao.flush();
+    }
+    
+    @Override
+    public void clear() {
+        dao.clear();
+    }
 
 }
