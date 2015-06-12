@@ -1,46 +1,93 @@
-#!/bin/sh
-SERVICE_NAME=IIFramework
-PATH_TO_JAR='target/iiframework-0.0.1-DEV.jar'
-JAVA_OPTIONS='-Dserver.port=8083 -Dserver.contextPath=/iot-master'
-PID_PATH_NAME=/tmp/IIFramework-pid
+#!/bin/bash
 
-cd iot-industrial-internet
+START_SCRIPT=iot-industrial-internet/startup.sh
+PID_FILE=/tmp/IIFramework-pid
 
-case $1 in
-    start)
-        echo "Starting $SERVICE_NAME ..."
-        if [ ! -f $PID_PATH_NAME ]; then
-            nohup java $JAVA_OPTIONS -jar $PATH_TO_JAR /tmp </dev/null 2>> ../logs/errorlog >> ../logs/log &
-                        echo $! > $PID_PATH_NAME
-            echo "$SERVICE_NAME started ..."
+# ***********************************************
+# ***********************************************
+
+ARGS="" # optional start script arguments
+DAEMON=$START_SCRIPT
+
+# colors
+red='\e[0;31m'
+green='\e[0;32m'
+yellow='\e[0;33m'
+reset='\e[0m'
+
+echoRed() { echo -e "${red}$1${reset}"; }
+echoGreen() { echo -e "${green}$1${reset}"; }
+echoYellow() { echo -e "${yellow}$1${reset}"; }
+
+start() {
+  PID=`$DAEMON $ARGS > /dev/null 2>&1 & echo $!`
+}
+
+case "$1" in
+start)
+    if [ -f $PID_FILE ]; then
+        PID=`cat $PID_FILE`
+        if [ -z "`ps axf | grep ${PID} | grep -v grep`" ]; then
+            start
         else
-            echo "$SERVICE_NAME is already running ..."
+            echoYellow "Already running [$PID]"
+            exit 0
         fi
-    ;;
-    stop)
-        if [ -f $PID_PATH_NAME ]; then
-            PID=$(cat $PID_PATH_NAME);
-            echo "$SERVICE_NAME stopping ..."
-            kill $PID;
-            echo "$SERVICE_NAME stopped ..."
-            rm $PID_PATH_NAME
+    else
+        start
+    fi
+
+    if [ -z $PID ]; then
+        echoRed "Failed starting"
+        exit 3
+    else
+        echo $PID > $PID_FILE
+        echoGreen "Started [$PID]"
+        exit 0
+    fi
+;;
+
+status)
+    if [ -f $PID_FILE ]; then
+        PID=`cat $PID_FILE`
+        if [ -z "`ps axf | grep ${PID} | grep -v grep`" ]; then
+            echoRed "Not running (process dead but pidfile exists)"
+            exit 1
         else
-            echo "$SERVICE_NAME is not running ..."
+            echoGreen "Running [$PID]"
+            exit 0
         fi
-    ;;
-    restart)
-        if [ -f $PID_PATH_NAME ]; then
-            PID=$(cat $PID_PATH_NAME);
-            echo "$SERVICE_NAME stopping ...";
-            kill $PID;
-            echo "$SERVICE_NAME stopped ...";
-            rm $PID_PATH_NAME
-            echo "$SERVICE_NAME starting ..."
-            nohup java $JAVA_OPTIONS -jar $PATH_TO_JAR /tmp </dev/null 2>> ../logs/errorlog >> ../logs/log &
-                        echo $! > $PID_PATH_NAME
-            echo "$SERVICE_NAME started ..."
+    else
+        echoRed "Not running"
+        exit 3
+    fi
+;;
+
+stop)
+    if [ -f $PID_FILE ]; then
+        PID=`cat $PID_FILE`
+        if [ -z "`ps axf | grep ${PID} | grep -v grep`" ]; then
+            echoRed "Not running (process dead but pidfile exists)"
+            exit 1
         else
-            echo "$SERVICE_NAME is not running ..."
+            PID=`cat $PID_FILE`
+            kill -HUP $PID
+            echoGreen "Stopped [$PID]"
+            rm -f $PID_FILE
+            exit 0
         fi
-    ;;
+    else
+        echoRed "Not running (pid not found)"
+        exit 3
+    fi
+;;
+
+restart)
+    $0 stop
+    $0 start
+;;
+
+*)
+    echo "Usage: $0 {status|start|stop|restart}"
+    exit 1
 esac
