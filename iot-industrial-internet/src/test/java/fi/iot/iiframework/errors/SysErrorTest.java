@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.errors;
 
-import java.util.Date;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -55,6 +54,14 @@ public class SysErrorTest {
         assertFalse(testErrors[2].equals(testErrors[3]));
         SysError e = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
         assertTrue(testErrors[2].equals(e));
+    }
+
+    @Test
+    public void CorrectHashCodes() {
+        assertFalse(testErrors[1].hashCode() == testErrors[2].hashCode());
+        SysError e = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
+        SysError e2 = e;
+        assertTrue(e.hashCode() == e2.hashCode());
     }
 
     @Test
