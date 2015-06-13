@@ -74,7 +74,7 @@ public class InformationSourceObjectProvider {
         // This might fix the problems with different locales 
         // expecting decimal separator to be comma or period
         
-        NumberFormat nformat = NumberFormat.getNumberInstance(Locale.getDefault());
+        NumberFormat nformat = NumberFormat.getNumberInstance(Locale.ENGLISH);
         DecimalFormat df = (DecimalFormat) nformat;
         
         String format = df.format(randDouble(22.1));
