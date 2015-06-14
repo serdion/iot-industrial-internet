@@ -60,6 +60,12 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         scheduler.cancel();
         if (source.isActive() && source.getReadFrequency() > 0) {
             scheduler.schedule(source.getReadFrequency(), this::readAndWrite);
+        } else if (source.isActive() && source.getReadInterval().equals("Daily")) {
+            scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+        } else if (source.isActive() && source.getReadInterval().equals("Weekly")) {
+            scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+        } else if (source.isActive() && source.getReadInterval().equals("Monthly")) {
+            scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
         }
     }
 

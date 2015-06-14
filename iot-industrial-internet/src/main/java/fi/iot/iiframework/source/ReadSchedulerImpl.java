@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.source;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +25,20 @@ public class ReadSchedulerImpl implements ReadScheduler {
             }
 
         }, 0, interval);
+
+    }
+    
+    @Override
+    public void scheduleAtSpecificInterval(final long interval, final Date startDate, final Date endDate, final Runnable runnable) {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                runnable.run();
+            }
+
+        }, startDate, interval);
 
     }
 
