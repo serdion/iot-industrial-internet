@@ -67,6 +67,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         } else if (source.isActive() && source.getReadInterval().equals("Monthly")) {
             scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
         }
+        // back end testing for setting a specific date and interval to a timer
     }
 
     /**
