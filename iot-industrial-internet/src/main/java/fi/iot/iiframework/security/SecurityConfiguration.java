@@ -23,6 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin().permitAll().and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+        http.csrf().disable();
     }
 
     @Configuration
