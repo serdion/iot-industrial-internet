@@ -19,6 +19,9 @@ configurations.controller('AddInformationSourceController', ['$scope', 'Informat
 
         $scope.is = new InformationSourceConfiguration();
 
+        $scope.datepickURL = "#/configurations/add#datepick";
+        $scope.frequencypickURL = "#/configurations/add#frequencypick";
+
         $scope.back = function () {
             window.history.back();
         };
@@ -76,6 +79,10 @@ configurations.controller('EditInformationSourceController', ['$scope', 'Informa
         $scope.back = function () {
             window.history.back();
         };
+
+        $scope.datepickURL = "#/configurations/{{is.id}}/edit#datepick";
+        $scope.frequencypickURL = "#/configurations/{{is.id}}/edit#frequencypick";
+
         $scope.submit = function () {
             $scope.is.readFrequency = $scope.readFrequency_s * 1000;
             $scope.is.readInterval = $scope.radioModel;

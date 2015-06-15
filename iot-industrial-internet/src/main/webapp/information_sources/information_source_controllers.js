@@ -34,10 +34,19 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
 //        $scope.sensorconflist = SensorConfiguration.query();
 
+
+
+
         $scope.save = function() {
+
             $scope.configuration = new SensorConfiguration();
+
+            $scope.configuration.quantity = $scope.newconfig.quantity;
+            $scope.configuration.unit = $scope.newconfig.unit;
+
             $scope.configuration.thresholdMin = $scope.newconfig.thresholdMin;
             $scope.configuration.thresholdMax = $scope.newconfig.thresholdMax;
+
             $scope.configuration.$add({sensorid: $routeParams.sensorid}, function() {
                 $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
             });

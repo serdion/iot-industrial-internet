@@ -34,8 +34,11 @@ public class SensorConfiguration implements Serializable, Validatable {
     /*
      Actual configurations below, add more if needed
      */
-    
     protected boolean active = true;
+
+    protected String unit;
+
+    protected String quantity;
 
     protected double thresholdMin;
 
@@ -43,7 +46,7 @@ public class SensorConfiguration implements Serializable, Validatable {
 
     @Override
     public boolean isValid() {
-        return sensor!=null;
+        return sensor != null;
     }
 
 }
