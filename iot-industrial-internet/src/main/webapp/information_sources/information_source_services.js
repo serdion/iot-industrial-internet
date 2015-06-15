@@ -9,16 +9,18 @@ var informationSources = angular.module('informationSources', ['ngResource']);
 
 informationSources.factory('InformationSource', ['$resource',
     function($resource) {
-        return $resource('1.0/informationsources/:informationsourceid/:action', {}, {
+        return $resource('1.0/sources/:sourceid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
-            query: {method: 'GET', params: {informationsourceid: 'list'}, isArray: true}
+            query: {method: 'GET', params: {sourceid: 'list'}, isArray: true},
+            delete: {method: 'DELETE', params: {action: 'delete'}, isArray: false},
+            edit: {method: 'POST', params: {action: 'edit'}, isArray: false}
         });
     }]);
 
 
 informationSources.factory('Sensor', ['$resource',
     function($resource) {
-        return $resource('1.0/sensors/:informationsourceid/:sensorid/:action', {}, {
+        return $resource('1.0/sensors/:sourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });
