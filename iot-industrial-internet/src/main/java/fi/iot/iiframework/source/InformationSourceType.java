@@ -7,5 +7,5 @@
 package fi.iot.iiframework.source;
 
 public enum InformationSourceType {
-    XML;
+    XML, JSON;
 }

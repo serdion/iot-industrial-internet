@@ -42,8 +42,8 @@ public class Application {
 
         InformationSource config = new InformationSource();
         config.setName("Example Config");
-        config.setType(InformationSourceType.XML);
-        config.setUrl("http://serd.io/dan/data.xml");
+        config.setType(InformationSourceType.JSON);
+        config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
         config.setActive(true);
         config.setReadFrequency(10 * 1000);
         infSourceManager.createSource(config);

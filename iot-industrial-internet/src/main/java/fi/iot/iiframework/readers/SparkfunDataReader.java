@@ -13,14 +13,21 @@ import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
 import fi.iot.iiframework.mutator.RemoveSensorIfNotActiveMutator;
 import fi.iot.iiframework.mutator.ValueCondition;
-import fi.iot.iiframework.parsers.XmlParser;
+import fi.iot.iiframework.parsers.SparkfunDataParser;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-public class XMLReader implements InformationSourceReader {
+/**
+ *
+ * @author atte
+ */
+public class SparkfunDataReader implements InformationSourceReader {
 
     @Override
     public List<Sensor> read(String location) {
-        List<Sensor> sensors = XmlParser.parse(location);
+        Collection<Sensor> sensorsCol = SparkfunDataParser.parse(location);
+        List<Sensor> sensors = Arrays.asList(sensorsCol.toArray(new Sensor[0]));
         
         if (sensors != null) {
             // Remove Sensor if it's not active
@@ -31,7 +38,7 @@ public class XMLReader implements InformationSourceReader {
         } else {
             ErrorLogger.log(ErrorType.PARSE_ERROR, ErrorSeverity.LOW, "Attempted to mutate object that was null.");
         }
-
+        
         return sensors;
     }
 

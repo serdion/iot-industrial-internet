@@ -9,6 +9,7 @@ package fi.iot.iiframework.source;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
+import fi.iot.iiframework.readers.SparkfunDataReader;
 import fi.iot.iiframework.readers.XMLReader;
 import java.util.List;
 
@@ -47,6 +48,9 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
             case XML:
                 this.reader = new XMLReader();
                 break;
+            case JSON:
+                this.reader = new SparkfunDataReader();
+                break;
             default:
                 throw new AssertionError(source.getType().name());
         }
@@ -81,7 +85,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
     @Override
     public boolean readAndWrite() {
         List<Sensor> sensors = read();
-        if (sensors == null){
+        if (sensors == null) {
             return false;
         }
         persistence.updateSourceWithSensors(source, sensors);

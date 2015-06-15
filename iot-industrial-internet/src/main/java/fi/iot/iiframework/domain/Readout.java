@@ -58,6 +58,12 @@ public class Readout implements Serializable {
         this.value = value;
     }
 
+    public Readout(long time, double value, Sensor sensor) {
+        this.time = time;
+        this.value = value;
+        this.sensor = sensor;
+    }
+
     /**
      * Returns the time of this Readout as Java Date.
      *
