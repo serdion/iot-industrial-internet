@@ -23,7 +23,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
             var time = $scope.readouts[i].time;
             var value = $scope.readouts[i].value;
 
-            dataToDisplay[i] = [(time * 1000), value];
+            dataToDisplay[i] = [(time), value];
         }
 
         $scope.flotData = [{

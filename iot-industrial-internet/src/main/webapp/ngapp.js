@@ -17,7 +17,7 @@ var IIFramework = angular.module('IIFramework', [
 ]);
 
 
-IIFramework.config(function($routeProvider) {
+IIFramework.config(function ($routeProvider) {
     $routeProvider.when('/', {
         controller: 'FrontController',
         templateUrl: 'front.html'
@@ -30,9 +30,13 @@ IIFramework.config(function($routeProvider) {
                 controller: 'InformationSourcesController',
                 templateUrl: 'information_sources/list.html'
             })
-            .when('/sources/:informationsourceid', {
+            .when('/sources/:sourceid', {
                 controller: 'InformationSourceController',
                 templateUrl: 'information_sources/view.html'
+            })
+            .when('/sources/:sourceid/edit', {
+                controller: 'EditInformationSourceController',
+                templateUrl: 'configurations/information_source_form.html'
             })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
@@ -45,14 +49,6 @@ IIFramework.config(function($routeProvider) {
             .when('/configurations', {
                 controller: 'InformationSourceConfigurationsController',
                 templateUrl: 'configurations/configurations.html'
-            })
-            .when('/configurations/add', {
-                controller: 'AddInformationSourceController',
-                templateUrl: 'configurations/information_source_form.html'
-            })
-            .when('/configurations/:configid/edit', {
-                controller: 'EditInformationSourceController',
-                templateUrl: 'configurations/information_source_form.html'
             })
 
             // Controllers for SysErrors

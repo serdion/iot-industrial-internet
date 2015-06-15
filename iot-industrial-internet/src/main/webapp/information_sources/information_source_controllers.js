@@ -6,6 +6,8 @@
  */
 
 
+/* global informationSources */
+
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function($scope, InformationSource) {
         $scope.sources = InformationSource.query();
     }]);
@@ -14,8 +16,8 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
     function($scope, $routeParams, InformationSource, Sensor) {
 
-        $scope.source = InformationSource.get({informationsourceid: $routeParams.informationsourceid});
-        $scope.sensors = Sensor.query({informationsourceid: $routeParams.informationsourceid}, function(value, headers) {
+        $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
+        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function(value, headers) {
         });
 
     }]);
