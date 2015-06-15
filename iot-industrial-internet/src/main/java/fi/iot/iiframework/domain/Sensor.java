@@ -90,6 +90,8 @@ public class Sensor implements Serializable {
         configuration.active = true;
         configuration.thresholdMax = Integer.MAX_VALUE;
         configuration.thresholdMin = Integer.MIN_VALUE;
+        configuration.quantity = "Not set";
+        configuration.unit = "Not set";
 
         return configuration;
     }
