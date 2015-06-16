@@ -15,7 +15,6 @@ import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +52,7 @@ public class SensorController {
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<Sensor> editSensorConfiguration(
+    public ResponseEntity<Sensor> editSensor(
             @PathVariable String sensorid,
             @RequestBody Sensor sensor
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
