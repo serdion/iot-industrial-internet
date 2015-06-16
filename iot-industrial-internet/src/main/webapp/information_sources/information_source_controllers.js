@@ -49,8 +49,8 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
             $scope.sensor.thresholdMax = $scope.newsensor.thresholdMax;
             $scope.sensor.active = $scope.newsensor.active;
 
-            $scope.configuration.$edit({sensorid: $routeParams.sensorid}, function () {
-                $scope.sensorconf = Sensor.get({sensorid: $routeParams.sensorid});
+            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
+                $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
             });
 
         };
