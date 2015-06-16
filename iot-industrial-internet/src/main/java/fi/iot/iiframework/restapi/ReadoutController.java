@@ -89,4 +89,21 @@ public class ReadoutController {
         readoutCriterion.add(Restrictions.eq("sensor", sensor));
         return readoutCriterion;
     }
+
+    public void setCriterionfactory(CriterionFactory criterionfactory) {
+        this.criterionfactory = criterionfactory;
+    }
+
+    public void setHelper(RestAPIHelper helper) {
+        this.helper = helper;
+    }
+
+    public void setReadoutservice(ReadoutService readoutservice) {
+        this.readoutservice = readoutservice;
+    }
+
+    public void setSensorservice(SensorService sensorservice) {
+        this.sensorservice = sensorservice;
+    }
+
 }
