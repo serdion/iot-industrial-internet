@@ -7,22 +7,26 @@
 package fi.iot.iiframework.parsers;
 
 import fi.iot.iiframework.domain.Sensor;
-import java.util.Collection;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
 
 public class SparkFunDataParserTest {
 
     List<Sensor> sensors;
+    String testjson = "/test/testjson.json";
 
     @Before
-    public void setUp() {
-        sensors = SparkfunDataParser.parse("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
+    public void setUp() throws MalformedURLException, IOException {
+        assertNotNull("Testfile missing", getClass().getResource(testjson));
+        sensors = SparkfunDataParser.parse(this.getClass().getResource(testjson));
     }
+
 
     @Test
     public void sparkFunDataParserFindsSensors() {
@@ -36,7 +40,7 @@ public class SparkFunDataParserTest {
         Sensor sensor = sensors.get(0);
         assertTrue(sensor.getReadouts().size() > 10);
     }
-    
+
     @Test
     public void readoutsHaveValueSet() {
         Sensor sensor = sensors.get(0);
@@ -52,4 +56,5 @@ public class SparkFunDataParserTest {
             assertTrue(r.getTime() != 0);
         });
     }
+
 }

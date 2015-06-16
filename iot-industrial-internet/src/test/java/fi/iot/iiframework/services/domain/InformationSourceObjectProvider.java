@@ -66,10 +66,12 @@ public class InformationSourceObjectProvider {
         r.setSensor(s);
         return r;
     }
+    
+    static int index = 0;
 
     public static Readout provideReadout() {
         Readout readout = new Readout();
-        readout.setTime(System.currentTimeMillis() + randInt(-100, 100));
+        readout.setTime(System.currentTimeMillis() + index++);
 
         // This might fix the problems with different locales 
         // expecting decimal separator to be comma or period
