@@ -38,10 +38,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
         };
 
-
         $scope.save = function () {
-
-
             $scope.sensor.quantity = $scope.newsensor.quantity;
             $scope.sensor.unit = $scope.newsensor.unit;
 
