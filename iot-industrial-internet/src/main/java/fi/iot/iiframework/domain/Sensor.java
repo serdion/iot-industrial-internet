@@ -25,7 +25,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 @Data
-@ToString(exclude = {"readouts", "sensorConfiguration"})
+@ToString(exclude = {"readouts", "source"})
 public class Sensor implements Serializable {
 
     @Id
@@ -72,7 +72,7 @@ public class Sensor implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.source);
+        hash = 97 * hash + Objects.hashCode(this.source == null ? this.source.id : 0);
         return hash;
     }
 

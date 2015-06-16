@@ -12,6 +12,7 @@ import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.SparkfunDataReader;
 import fi.iot.iiframework.readers.XMLReader;
 import java.util.List;
+import org.springframework.scheduling.annotation.Async;
 
 public final class InformationSourceHandlerImpl implements InformationSourceHandler {
 
@@ -92,14 +93,14 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         schedule();
     }
 
+    @Async
     @Override
-    public boolean readAndWrite() {
+    public void readAndWrite() {
         List<Sensor> sensors = read();
         if (sensors == null) {
-            return false;
+            return;
         }
         persistence.updateSourceWithSensors(source, sensors);
-        return true;
     }
 
     @Override

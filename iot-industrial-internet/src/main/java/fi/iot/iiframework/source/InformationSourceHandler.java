@@ -12,6 +12,7 @@ import fi.iot.iiframework.readers.InformationSourceReader;
 import java.net.MalformedURLException;
 import java.util.List;
 import javax.xml.bind.JAXBException;
+import org.springframework.scheduling.annotation.Async;
 
 /**
  *
@@ -26,12 +27,12 @@ public interface InformationSourceHandler {
      */
     public List<Sensor> read();
 
+    @Async
     /**
      * Reads an InformationSourceObject and writes it to database.
      *
-     * @return true, if successful, false if unsuccessful
      */
-    public boolean readAndWrite();
+    public void readAndWrite();
 
     /**
      * Set configuration for this instance and update the readers and

@@ -43,5 +43,5 @@ public interface InformationSourceManager {
      * @param id Source id
      * @return true if read succeeded
      */
-    public boolean readSource(String id);
+    public void readSource(String id);
 }

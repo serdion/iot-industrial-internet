@@ -25,7 +25,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableAsync
+@EnableScheduling
 @SpringBootApplication
 @ComponentScan("fi.iot.iiframework")
 public class Application extends SpringBootServletInitializer{

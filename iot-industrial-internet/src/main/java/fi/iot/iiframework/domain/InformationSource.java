@@ -85,7 +85,7 @@ public class InformationSource implements Serializable, Validatable {
     @JsonIgnore
 
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, orphanRemoval = true)
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     protected Set<Sensor> sensors = new HashSet<>();
 
