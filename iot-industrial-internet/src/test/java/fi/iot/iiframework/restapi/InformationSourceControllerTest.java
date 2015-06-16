@@ -15,29 +15,26 @@ import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
 import fi.iot.iiframework.services.domain.InformationSourceService;
-import fi.iot.iiframework.services.domain.ReadoutService;
-import fi.iot.iiframework.services.domain.SensorService;
+import fi.iot.iiframework.source.InformationSourceManagerImpl;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-@Ignore
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 @SpringApplicationConfiguration(classes = {TestConfig.class})
@@ -57,13 +54,32 @@ public class InformationSourceControllerTest {
     private Readout readoutB;
     private Readout readoutC;
     
-    @Autowired
+    @Mock
     private InformationSourceService sourceService;
     
+    @Mock
+    private InformationSourceManagerImpl sourceManager;
+    
+    @Mock
+    private RestAPIHelper helper;
+    
     @Before
-    public void setUp() {
+    public void setUp() throws ResourceNotFoundException {
+        MockitoAnnotations.initMocks(this);
+        
         initLogin();
         initContext();
+        
+        controller.setInformationSourceService(sourceService);
+        controller.setInformationSourceManager(sourceManager);
+        controller.setRestAPIHelper(helper);
+
+        
+        when(helper.returnOrException(Matchers.eq(sourceA))).thenReturn(sourceA);
+        when(helper.returnOrException(Matchers.eq(sourceB))).thenReturn(sourceB);
+        
+        when(sourceService.get(Matchers.eq(sourceA.getId()))).thenReturn(sourceA);
+        when(sourceService.get(Matchers.eq(sourceB.getId()))).thenReturn(sourceB);
     }
     
     /*
@@ -105,7 +121,7 @@ public class InformationSourceControllerTest {
         sourceService.save(sourceA);
         // Don't save this sourceService.save(sourceB);
     }
-    
+
     /*
     Login as a moderator, broken if the in-memory logins are changed!
     */
@@ -137,37 +153,28 @@ public class InformationSourceControllerTest {
         sourceA.setReadFrequency(5555555);
         controller.editInformationSource(sourceA, null);
         
-        InformationSource foundSource = controller.getInformationSource("sourceA", null);
-        assertEquals(foundSource.getReadFrequency(), 5555555);
+        Mockito.verify(sourceManager, Mockito.times(1)).updateSource(sourceA);
     }
 
     @Test
     public void testDeleteInformationSource() throws InvalidParametersException, ResourceNotFoundException  {
         controller.deleteInformationSource("sourceA", null);
-        assertEquals(controller.getInformationSource("sourceA", null), null);
+        Mockito.verify(sourceManager, Mockito.times(1)).removeSource("sourceA");
     }
 
     @Test
     public void testListInformationSourcesList() throws InvalidParametersException  {
-        List<InformationSource> asList = controller.listInformationSourcesList(null);
-        
-        assertTrue(asList.contains(sourceA));
+        assertFalse(controller.listInformationSourcesList(null)==null);
     }
 
     @Test
     public void testListInformationSourcesListAmount() throws InvalidParametersException  {
-        sourceService.save(sourceB);
-        List<InformationSource> asList = controller.listInformationSourcesListAmount(1, null);
-        
-        assertFalse(asList.contains(sourceB));
+        assertFalse(controller.listInformationSourcesListAmount(1, null)==null);
     }
 
     @Test
     public void testListInformationSourcesListFromTo() throws InvalidParametersException  {
-        sourceService.save(sourceB);
-        List<InformationSource> asList = controller.listInformationSourcesListFromTo(0, 1, null);
-        
-        assertFalse(asList.contains(sourceB));
+        assertFalse(controller.listInformationSourcesListFromTo(0, 1, null)==null);
     }
     
 }

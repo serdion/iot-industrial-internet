@@ -128,4 +128,15 @@ public class InformationSourceController {
         return informationSourceService.get(to, from);
     }
 
+    public void setInformationSourceService(InformationSourceService informationSourceService) {
+        this.informationSourceService = informationSourceService;
+    }
+
+    public void setInformationSourceManager(InformationSourceManagerImpl informationSourceManager) {
+        this.informationSourceManager = informationSourceManager;
+    }
+
+    public void setRestAPIHelper(RestAPIHelper helper) {
+        this.helper = helper;
+    }
 }
