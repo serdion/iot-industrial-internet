@@ -1,3 +1,4 @@
+package fi.iot.iiframework.database;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.beans.PropertyVetoException;
@@ -17,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource("classpath:application-test.properties")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @ActiveProfiles(profiles = "test")
 public class TestHibernateConfig {
