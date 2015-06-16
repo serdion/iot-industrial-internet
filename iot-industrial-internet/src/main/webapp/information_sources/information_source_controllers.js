@@ -39,13 +39,16 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         };
 
         $scope.save = function () {
+            
             $scope.sensor.quantity = $scope.newsensor.quantity;
             $scope.sensor.unit = $scope.newsensor.unit;
 
             $scope.sensor.thresholdMin = $scope.newsensor.thresholdMin;
             $scope.sensor.thresholdMax = $scope.newsensor.thresholdMax;
             $scope.sensor.active = $scope.newsensor.active;
-
+            
+            console.log($scope.sensor);
+            
             $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
                 $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
             });
