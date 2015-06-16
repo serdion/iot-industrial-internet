@@ -25,7 +25,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 @Data
-@ToString(exclude = {"readouts", "sensorConfiguration"})
+@ToString(exclude = {"readouts"})
 public class Sensor implements Serializable {
 
     @Id
@@ -60,10 +60,6 @@ public class Sensor implements Serializable {
     protected double thresholdMax;
     
     protected double thresholdMin;
-
-    protected double thresholdMin;
-
-    protected double thresholdMax;
 
     public Sensor() {
     }
