@@ -26,7 +26,6 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class HibernateConfiguration {
 
