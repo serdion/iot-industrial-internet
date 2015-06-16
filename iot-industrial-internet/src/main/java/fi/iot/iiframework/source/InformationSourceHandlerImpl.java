@@ -7,6 +7,7 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.domain.ReadInterval;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.SparkfunDataReader;
@@ -67,20 +68,26 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
 //            System.out.println("Frequently runnable task created");
 //        }
 
-        if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Never")) {
-            scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
-            System.out.println("Once runnable task created");
-        } else if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Daily")) {
-            scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-            System.out.println("Daily task created");
-        } else if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Weekly")) {
-            scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-            System.out.println("Weekly task created");
-        } else if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Monthly")) {
-            scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-            System.out.println("Monthly task created");
-
+        if (source.isActive() && source.getStartDate() != null) {
+            switch (source.getReadInterval()) {
+                case "Never":
+                    scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
+                    System.out.println("Once runnable task created");
+                case "Daily":
+                    scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+                    System.out.println("Daily task created");
+                case "Weekly":
+                    scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+                    System.out.println("Weekly task created");
+                case "Monthly":
+                    scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+                    System.out.println("Monthly task created");
+                case "Other":
+                    scheduler.scheduleAtSpecificInterval(source.getOtherInterval(), source.getStartDate(), source.getEndDate(), this::readAndWrite);
+                    System.out.println("Other task created");
+            }
         }
+
         // back end testing for setting a specific date and interval to a timer
     }
 
