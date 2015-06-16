@@ -49,44 +49,23 @@ public class Sensor implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     protected InformationSource source;
 
-    @JsonIgnore
-    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.LAZY)
-    protected SensorConfiguration sensorConfiguration;
-
     @XmlAttribute
     protected String quantity;
 
     @XmlAttribute
     protected String unit;
+    
+    protected boolean active;
+    
+    protected double thresholdMax;
+    
+    protected double thresholdMin;
 
     public Sensor() {
     }
 
     public Sensor(String name) {
         this.name = name;
-    }
-
-    /**
-     * Returns the SensorConfiguration for the Sensor and if the sensor doesn't
-     * have a configuration a default configuration is returned instead.
-     *
-     * @return SensorConfiguration
-     */
-    public SensorConfiguration getSensorConfiguration() {
-        if (sensorConfiguration == null) {
-            return getDefaultSensorConfiguration();
-        }
-
-        return sensorConfiguration;
-    }
-
-    private SensorConfiguration getDefaultSensorConfiguration() {
-        SensorConfiguration configuration = new SensorConfiguration();
-        configuration.active = true;
-        configuration.thresholdMax = Integer.MAX_VALUE;
-        configuration.thresholdMin = Integer.MIN_VALUE;
-
-        return configuration;
     }
 
     @Override
