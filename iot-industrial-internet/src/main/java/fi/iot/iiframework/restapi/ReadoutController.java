@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
@@ -32,9 +31,6 @@ public class ReadoutController {
     private ReadoutService readoutservice;
 
     @Autowired
-    private ApplicationSettings settings;
-
-    @Autowired
     private CriterionFactory criterionfactory;
 
     @Autowired
@@ -48,7 +44,7 @@ public class ReadoutController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(sensorid));
-        return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), createCriterion(sensor, params));
+        return readoutservice.getBy(0, 10000, createCriterion(sensor, params));
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})

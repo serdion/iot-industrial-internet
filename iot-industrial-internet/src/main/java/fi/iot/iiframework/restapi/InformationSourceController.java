@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
@@ -27,9 +26,6 @@ public class InformationSourceController {
 
     @Autowired
     private RestAPIHelper helper;
-
-    @Autowired
-    private ApplicationSettings settings;
 
     @Autowired
     private InformationSourceManagerImpl informationSourceManager;
@@ -106,7 +102,7 @@ public class InformationSourceController {
     public List<InformationSource> listInformationSourcesList(
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException {
-        return informationSourceService.get(0, settings.getDefaultInformationSourcesRetrievedFromDatabase());
+        return informationSourceService.get(0, 10);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})

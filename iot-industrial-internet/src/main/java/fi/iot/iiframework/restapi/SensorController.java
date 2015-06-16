@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
@@ -32,9 +31,6 @@ public class SensorController {
 
     @Autowired
     private RestAPIHelper helper;
-
-    @Autowired
-    private ApplicationSettings settings;
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/view", produces = "application/json")
