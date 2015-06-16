@@ -9,6 +9,7 @@ package fi.iot.iiframework.restapi;
 import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.services.domain.InformationSourceService;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +31,10 @@ public class SensorController {
     private InformationSourceService sourceService;
 
     @Autowired
-    private SensorService sensorservice;
+    private SensorService sensorService;
 
     @Autowired
     private RestAPIHelper helper;
-
-    @Autowired
-    private ApplicationSettings settings;
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/view", produces = "application/json")
@@ -43,7 +43,24 @@ public class SensorController {
             @PathVariable String sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
-        return (Sensor) helper.returnOrException(sensorservice.get(sensorid));
+        return (Sensor) helper.returnOrException(sensorService.get(sensorid));
+    }
+    
+    @Secured("ROLE_MODERATOR")
+    @RequestMapping(
+            value = "/{sensorid}/edit",
+            method = RequestMethod.POST,
+            produces = "application/json",
+            consumes = "application/json"
+    )
+    @ResponseBody
+    public ResponseEntity<Sensor> editSensorConfiguration(
+            @PathVariable String sensorid,
+            @RequestBody Sensor sensor
+    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
+        helper.returnOrException(sourceService.get(sensorid));
+        sensorService.update(sensor);
+        return new ResponseEntity<>(sensor, HttpStatus.CREATED);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
@@ -68,7 +85,7 @@ public class SensorController {
         InformationSource source
                 = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         helper.exceptionIfWrongLimits(0, amount);
-        return sensorservice.getBy(0, amount, source);
+        return sensorService.getBy(0, amount, source);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
@@ -83,6 +100,6 @@ public class SensorController {
         InformationSource source
                 = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         helper.exceptionIfWrongLimits(to, from);
-        return sensorservice.getBy(from, to, source);
+        return sensorService.getBy(from, to, source);
     }
 }

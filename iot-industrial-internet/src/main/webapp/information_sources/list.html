@@ -8,15 +8,19 @@
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
                         <tr>
-                            <th>Source ID</th>
                             <th>Source Name</th>
+                            <th>URL</th>
+                            <th>Frequency (optional)</th>
+                            <th>Start Date & Interval (optional)</th>
                             <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="ds in sources" >
-                            <td ng-app="">{{ds.id}}</td>
                             <td>{{ds.name}}</td>
+                            <td>{{ds.url}}</td>
+                            <td>{{ds.readFrequency}}</td>
+                            <td>{{ds.startDate | date: 'dd.MM.yyyy HH:mm'}} & {{ds.readInterval}}</td>
                             <td>
                                 <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>
                                 <a ng-href="#/sources/{{ds.id}}/edit" class="btn btn-warning btn-xs">Edit</a>
