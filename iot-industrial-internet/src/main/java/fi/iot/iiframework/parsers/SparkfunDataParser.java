@@ -35,27 +35,35 @@ public class SparkfunDataParser {
 
     public static List<Sensor> parse(String location) {
         try {
-            JsonParser parser = new JsonParser();
             URL url = new URL(location);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(url.openStream()));
-
-            Map<String, Sensor> sensors = new HashMap<>();
-
-            JsonElement document = parser.parse(in);
-            document.getAsJsonArray().iterator().forEachRemaining(a -> {
-                Set<Entry<String, JsonElement>> entrySet = a.getAsJsonObject().entrySet();
-                long timestamp = findTimeStamp(entrySet);
-                readReadoutsToSensors(entrySet, sensors, timestamp);
-            });
-
-            return Arrays.asList(sensors.values().toArray(new Sensor[0]));
+            return parse(url);
         } catch (MalformedURLException ex) {
             ErrorLogger.log(ErrorType.BAD_REQUEST, ErrorSeverity.MEDIUM, "Tried to parse XML to Object but URI given could not be formed correctly");
         } catch (IOException ex) {
             ErrorLogger.log(ErrorType.IO_ERROR, ErrorSeverity.MEDIUM, "Tried to parse XML to Object but failed due to an error: " + ex.toString());
         }
         return null;
+    }
+
+    public static List<Sensor> parse(URL url) throws IOException {
+        JsonParser parser = new JsonParser();
+        BufferedReader in
+                = new BufferedReader(new InputStreamReader(url.openStream()));
+
+        Map<String, Sensor> sensors = new HashMap<>();
+
+        JsonElement document = parser.parse(in);
+        readSensors(document, sensors);
+
+        return Arrays.asList(sensors.values().toArray(new Sensor[0]));
+    }
+
+    private static void readSensors(JsonElement document, Map<String, Sensor> sensors) {
+        document.getAsJsonArray().iterator().forEachRemaining(a -> {
+            Set<Entry<String, JsonElement>> entrySet = a.getAsJsonObject().entrySet();
+            long timestamp = findTimeStamp(entrySet);
+            readReadoutsToSensors(entrySet, sensors, timestamp);
+        });
     }
 
     private static void readReadoutsToSensors(Set<Entry<String, JsonElement>> entrySet, Map<String, Sensor> sensors, long timestamp) {
