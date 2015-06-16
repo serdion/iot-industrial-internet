@@ -29,7 +29,7 @@
                         <label ng-click="showDetails = !showDetails" class="btn btn-primary" type="radio" ng-model="radioPick" value="Specific Date/Time">Specific Date/Time</label>
                     </div>
 
-                    <div ng-show="showDetails">
+                    <div ng-show="showDetails" class="input-group">
                         <input type="text" class="form-control" name="is_freq" ng-model="readFrequency_s" placeholder="Read Frequency as Seconds" />
                         <span class="input-group-addon">seconds</span>
                     </div>
