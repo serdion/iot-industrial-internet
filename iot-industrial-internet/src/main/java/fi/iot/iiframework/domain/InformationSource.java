@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,10 @@ import javax.persistence.Temporal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -57,8 +59,7 @@ public class InformationSource implements Serializable, Validatable {
      */
     protected String url;
     /**
-     * Read in intervals
-     * TODO: handle this intelligently.
+     * Read in intervals TODO: handle this intelligently.
      */
     protected boolean active = true;
     /**
@@ -71,7 +72,8 @@ public class InformationSource implements Serializable, Validatable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date startDate;
     /**
-     * The interval for reading after a specified date/time (for example weekly).
+     * The interval for reading after a specified date/time (for example
+     * weekly).
      */
     protected String readInterval;
     /**
@@ -82,9 +84,11 @@ public class InformationSource implements Serializable, Validatable {
 
     @JsonIgnore
 
-    @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    protected Set<Sensor> sensors = new HashSet<>(); 
-    
+    @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    protected Set<Sensor> sensors = new HashSet<>();
+
     @Override
     public boolean isValid() {
         try {

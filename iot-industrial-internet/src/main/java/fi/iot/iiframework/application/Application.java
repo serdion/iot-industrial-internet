@@ -45,7 +45,7 @@ public class Application {
         config.setType(InformationSourceType.JSON);
         config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
         config.setActive(true);
-        config.setReadFrequency(10 * 1000);
+        config.setReadFrequency(100 * 1000);
         infSourceManager.createSource(config);
 
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");

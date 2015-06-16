@@ -36,10 +36,6 @@ public class SensorConfiguration implements Serializable, Validatable {
      */
     protected boolean active = true;
 
-    protected String unit;
-
-    protected String quantity;
-
     protected double thresholdMin;
 
     protected double thresholdMax;

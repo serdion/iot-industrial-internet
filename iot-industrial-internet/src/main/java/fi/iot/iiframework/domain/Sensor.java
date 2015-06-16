@@ -15,7 +15,11 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -35,7 +39,9 @@ public class Sensor implements Serializable {
     @JsonIgnore
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
-    @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
+    @Cascade({CascadeType.ALL})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected Set<Readout> readouts = new HashSet<>();
 
     @JsonIgnore
@@ -44,7 +50,7 @@ public class Sensor implements Serializable {
     protected InformationSource source;
 
     @JsonIgnore
-    @OneToOne(targetEntity = SensorConfiguration.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.LAZY)
     protected SensorConfiguration sensorConfiguration;
 
     @XmlAttribute
@@ -60,16 +66,8 @@ public class Sensor implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.source);
-        return hash;
-    }
-
     /**
-     * Returns the SesorConfiguration for the Sensor and if the sensor doesn't
+     * Returns the SensorConfiguration for the Sensor and if the sensor doesn't
      * have a configuration a default configuration is returned instead.
      *
      * @return SensorConfiguration
@@ -87,10 +85,16 @@ public class Sensor implements Serializable {
         configuration.active = true;
         configuration.thresholdMax = Integer.MAX_VALUE;
         configuration.thresholdMin = Integer.MIN_VALUE;
-        configuration.quantity = "Not set";
-        configuration.unit = "Not set";
 
         return configuration;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.source);
+        return hash;
     }
 
     @Override
