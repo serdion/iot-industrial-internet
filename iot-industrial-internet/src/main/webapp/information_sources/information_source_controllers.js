@@ -8,25 +8,33 @@
 
 /* global informationSources */
 
-informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function($scope, InformationSource) {
+informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function ($scope, InformationSource) {
         $scope.sources = InformationSource.query();
+
+        $scope.deleteSource = function (id) {
+            InformationSource.delete({sourceid: id}, function () {
+                $scope.sources = InformationSource.query();
+            }, function (error) {
+                showError(error.data.message);
+            });
+        };
+
     }]);
 
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
-    function($scope, $routeParams, InformationSource, Sensor) {
-
+    function ($scope, $routeParams, InformationSource, Sensor) {
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
-        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function(value, headers) {
+        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function (value, headers) {
         });
 
     }]);
 
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', 'SensorConfiguration', function($scope, $routeParams, Sensor, Readout, SensorConfiguration) {
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', 'SensorConfiguration', function ($scope, $routeParams, Sensor, Readout, SensorConfiguration) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
 
-        $scope.filter = function() {
+        $scope.filter = function () {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
         };
 
@@ -37,7 +45,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
 
 
-        $scope.save = function() {
+        $scope.save = function () {
 
             $scope.configuration = new SensorConfiguration();
 
@@ -47,13 +55,13 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
             $scope.configuration.thresholdMin = $scope.newconfig.thresholdMin;
             $scope.configuration.thresholdMax = $scope.newconfig.thresholdMax;
 
-            $scope.configuration.$add({sensorid: $routeParams.sensorid}, function() {
+            $scope.configuration.$add({sensorid: $routeParams.sensorid}, function () {
                 $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
             });
 
         };
 
-        $scope.refresh = function() {
+        $scope.refresh = function () {
             $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
         };
 
@@ -151,18 +159,6 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
-        };
-    }]);
-
-informationSources.controller('InformationSourceController', ['$scope', 'InformationSource', '$location', function ($scope, InformationSource, $location) {
-        $scope.sources = InformationSource.query();
-
-        $scope.deleteSource = function (id) {
-            InformationSource.delete({sourceid: id}, function () {
-                $scope.sources = InformationSource.query();
-            }, function (error) {
-                showError(error.data.message);
-            });
         };
     }]);
 
