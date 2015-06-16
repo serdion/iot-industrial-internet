@@ -97,7 +97,7 @@ public class InformationSource implements Serializable, Validatable {
             return false;
         }
 
-        return readFrequency > 0;
+        return startDate != null && readInterval != null;
     }
 
 }
