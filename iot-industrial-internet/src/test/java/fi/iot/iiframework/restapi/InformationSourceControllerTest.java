@@ -60,31 +60,15 @@ public class InformationSourceControllerTest {
     @Autowired
     private InformationSourceService sourceService;
     
-    @Autowired
-    private ReadoutService readoutService;
-
-    @Autowired
-    private SensorService sensorService;
-    
-    public InformationSourceControllerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
-        controller = new InformationSourceController();
-        
         initLogin();
         initContext();
     }
     
+    /*
+    Initiates the context in which the tests are run in.
+    */
     private void initContext(){
         sourceA = new InformationSource();
         sourceA.setId("sourceA");
