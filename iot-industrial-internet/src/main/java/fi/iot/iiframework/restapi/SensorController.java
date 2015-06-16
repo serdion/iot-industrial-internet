@@ -71,7 +71,7 @@ public class SensorController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
-        return sensorservice.getBy(source);
+        return sensorService.getBy(source);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
