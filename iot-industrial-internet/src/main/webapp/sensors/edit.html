@@ -26,30 +26,30 @@
 
                         <tr>
                             <th>Sensor unit:</th>
-                            <td>{{sensorconf.unit}}</td>
+                            <td>{{sensor.unit}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="unit" ng-model="newconfig.unit" placeholder="{{sensorconf.unit}}"/>
+                                    <input class="form-control" name="unit" ng-model="newsensor.unit" placeholder="{{sensor.unit}}"/>
                                 </div>
                             </td>
                         </tr>
 
                         <tr>
                             <th>Sensor quantity:</th>
-                            <td>{{sensorconf.quantity}}</td>
+                            <td>{{sensor.quantity}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="quantity" ng-model="newconfig.quantity" placeholder="{{sensorconf.quantity}}"/>
+                                    <input class="form-control" name="quantity" ng-model="newsensor.quantity" placeholder="{{sensor.quantity}}"/>
                                 </div>
                             </td>
                         </tr>
 
                         <tr>
                             <th>Sensor configuration active:</th>
-                            <td>{{sensorconf.active}}</td>
+                            <td>{{sensor.active}}</td>
                             <td>
                                 <div>
-                                    <select ng-model="newconfig.active">
+                                    <select ng-model="newsensor.active">
                                         <option value="false">False</option>
                                         <option value="true">True</option>
                                     </select>
@@ -59,24 +59,24 @@
 
                         <tr>
                             <th>Sensor configuration valid:</th>
-                            <td>{{sensorconf.valid}}</td>
+                            <td>{{sensor.valid}}</td>
                         </tr>
 
                         <tr>
                             <th>Threshold max:</th>
-                            <td>{{sensorconf.thresholdMax}}</td>
+                            <td>{{sensor.thresholdMax}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="supperlimit" ng-model="newconfig.thresholdMax" placeholder="{{sensorconf.thresholdMax}}"/>
+                                    <input class="form-control" name="supperlimit" ng-model="newsensor.thresholdMax" placeholder="{{sensor.thresholdMax}}"/>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <th>Threshold min:</th>
-                            <td>{{sensorconf.thresholdMin}}</td>
+                            <td>{{sensor.thresholdMin}}</td>
                             <td>
                                 <div class="form-group">
-                                    <input class="form-control" name="slowerlimit" ng-model="newconfig.thresholdMin" placeholder="{{sensorconf.thresholdMin}}"/>
+                                    <input class="form-control" name="slowerlimit" ng-model="newsensor.thresholdMin" placeholder="{{sensor.thresholdMin}}"/>
                                 </div>
                             </td>
                         </tr>

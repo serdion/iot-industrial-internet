@@ -30,7 +30,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
     }]);
 
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', 'SensorConfiguration', function ($scope, $routeParams, Sensor, Readout, SensorConfiguration) {
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function ($scope, $routeParams, Sensor, Readout) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
 
@@ -38,28 +38,23 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
         };
 
-        $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
 
         $scope.save = function () {
 
-            $scope.configuration = new SensorConfiguration();
 
-            $scope.configuration.quantity = $scope.newconfig.quantity;
-            $scope.configuration.unit = $scope.newconfig.unit;
+            $scope.sensor.quantity = $scope.newsensor.quantity;
+            $scope.sensor.unit = $scope.newsensor.unit;
 
-            $scope.configuration.thresholdMin = $scope.newconfig.thresholdMin;
-            $scope.configuration.thresholdMax = $scope.newconfig.thresholdMax;
-            $scope.configuration.active = $scope.newconfig.active;
+            $scope.sensor.thresholdMin = $scope.newsensor.thresholdMin;
+            $scope.sensor.thresholdMax = $scope.newsensor.thresholdMax;
+            $scope.sensor.active = $scope.newsensor.active;
 
             $scope.configuration.$edit({sensorid: $routeParams.sensorid}, function () {
-                $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
+                $scope.sensorconf = Sensor.get({sensorid: $routeParams.sensorid});
             });
 
         };
 
-        $scope.refresh = function () {
-            $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
-        };
 
 
     }]);
