@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.services.errors.ErrorService;
@@ -28,9 +27,6 @@ public class SysErrorController {
     private RestAPIHelper helper;
 
     @Autowired
-    private ApplicationSettings settings;
-
-    @Autowired
     private CriterionFactory criterionfactory;
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
@@ -49,7 +45,7 @@ public class SysErrorController {
     public List<SysError> listErrors(
             @RequestParam(required = false) Map<String, String> params
     ) {
-        return errorservice.getBy(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase(), createCriterion(params));
+        return errorservice.getBy(0, 25, createCriterion(params));
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
