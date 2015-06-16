@@ -14,19 +14,17 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 
 /**
@@ -84,8 +82,7 @@ public class InformationSource implements Serializable, Validatable {
 
     @JsonIgnore
 
-    @OneToMany(mappedBy = "source", fetch = FetchType.LAZY)
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Sensor> sensors = new HashSet<>(); 
     
     @Override

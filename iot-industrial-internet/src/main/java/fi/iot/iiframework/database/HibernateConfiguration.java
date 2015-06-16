@@ -47,14 +47,6 @@ public class HibernateConfiguration {
 
     @Resource
     private Environment env;
-    
-    @Bean
-    @Transactional
-    public OpenSessionInViewFilter openSessionInViewFilter(SessionFactory sessionFactory) {
-        OpenSessionInViewFilter filter = new OpenSessionInViewFilter();
-        filter.setSessionFactoryBeanName("sessionFactory");
-        return filter;
-    }
 
     @Bean
     public ComboPooledDataSource dataSource() throws PropertyVetoException {

@@ -49,12 +49,12 @@ public class SensorController {
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/list", produces = "application/json")
     @ResponseBody
-    public Set<Sensor> listSensors(
+    public List<Sensor> listSensors(
             @PathVariable String sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
-        return source.getSensors();
+        return sensorservice.getBy(source);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})

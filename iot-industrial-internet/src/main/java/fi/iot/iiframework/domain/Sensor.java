@@ -15,8 +15,6 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -37,8 +35,7 @@ public class Sensor implements Serializable {
     @JsonIgnore
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
-    @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Readout> readouts = new HashSet<>();
 
     @JsonIgnore
@@ -47,7 +44,7 @@ public class Sensor implements Serializable {
     protected InformationSource source;
 
     @JsonIgnore
-    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.LAZY)
+    @OneToOne(targetEntity = SensorConfiguration.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     protected SensorConfiguration sensorConfiguration;
 
     @XmlAttribute
