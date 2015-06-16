@@ -64,7 +64,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         scheduler.cancel();
         if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Never")) {
             scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
-            System.out.println("Weekly task created");
+            System.out.println("Once runnable task created");
         }
         if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Never")) {
             scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
