@@ -56,6 +56,10 @@ public class Sensor implements Serializable {
     @XmlAttribute
     protected String unit;
 
+    protected double thresholdMin;
+
+    protected double thresholdMax;
+
     public Sensor() {
     }
 
