@@ -48,8 +48,6 @@ public class CriterionFactory {
         acceptedSysErrorFilters.put("after", new After("errordate"));
         acceptedSysErrorFilters.put("before", new Before("errordate"));
 
-        acceptedSysErrorFilters.put("higher", new MoreThan("severity"));
-        acceptedSysErrorFilters.put("lower", new LessThan("severity"));
         acceptedSysErrorFilters.put("severity", new EqualsErrorSeverity("severity"));
     }
 
