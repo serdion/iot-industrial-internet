@@ -44,6 +44,7 @@ public class SensorConfiguration implements Serializable, Validatable {
 
     protected double thresholdMax;
 
+    @JsonIgnore
     @Override
     public boolean isValid() {
         return sensor != null;
