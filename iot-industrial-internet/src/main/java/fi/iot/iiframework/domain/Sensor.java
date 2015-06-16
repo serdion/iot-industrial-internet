@@ -18,6 +18,8 @@ import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -38,7 +40,8 @@ public class Sensor implements Serializable {
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
+    @Cascade({CascadeType.ALL})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     protected Set<Readout> readouts = new HashSet<>();
 
     @JsonIgnore
@@ -46,15 +49,17 @@ public class Sensor implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     protected InformationSource source;
 
-    @JsonIgnore
-    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.LAZY)
-    protected SensorConfiguration sensorConfiguration;
-
     @XmlAttribute
     protected String quantity;
 
     @XmlAttribute
     protected String unit;
+    
+    protected boolean active;
+    
+    protected double thresholdMax;
+    
+    protected double thresholdMin;
 
     protected double thresholdMin;
 
@@ -73,31 +78,6 @@ public class Sensor implements Serializable {
         hash = 97 * hash + Objects.hashCode(this.name);
         hash = 97 * hash + Objects.hashCode(this.source);
         return hash;
-    }
-
-    /**
-     * Returns the SesorConfiguration for the Sensor and if the sensor doesn't
-     * have a configuration a default configuration is returned instead.
-     *
-     * @return SensorConfiguration
-     */
-    public SensorConfiguration getSensorConfiguration() {
-        if (sensorConfiguration == null) {
-            return getDefaultSensorConfiguration();
-        }
-
-        return sensorConfiguration;
-    }
-
-    private SensorConfiguration getDefaultSensorConfiguration() {
-        SensorConfiguration configuration = new SensorConfiguration();
-        configuration.active = true;
-        configuration.thresholdMax = Integer.MAX_VALUE;
-        configuration.thresholdMin = Integer.MIN_VALUE;
-        configuration.quantity = "Not set";
-        configuration.unit = "Not set";
-
-        return configuration;
     }
 
     @Override

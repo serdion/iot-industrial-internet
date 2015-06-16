@@ -14,10 +14,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- *
- * @author atte
- */
+
 public class SparkFunDataParserTest {
 
     List<Sensor> sensors;

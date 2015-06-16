@@ -16,7 +16,7 @@ public class RemoveSensorIfNotActiveMutator implements Mutator {
 
     @Override
     public void mutateAll(List<Sensor> sensors) {
-        sensors = sensors.stream().filter(p -> p.getSensorConfiguration().isActive()).collect(Collectors.toList());
+        sensors = sensors.stream().filter(p -> p.isActive()).collect(Collectors.toList());
     }
 
 }

@@ -21,12 +21,19 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("fi.iot.iiframework")
-public class Application {
+public class Application extends SpringBootServletInitializer{
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+        return application.sources(Application.class);
+    }
 
     public static final Logger logger = Logger.getLogger(Application.class.getName());
 
@@ -45,7 +52,7 @@ public class Application {
         config.setType(InformationSourceType.JSON);
         config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
         config.setActive(true);
-        config.setReadFrequency(10 * 1000);
+        config.setReadFrequency(100 * 1000);
         infSourceManager.createSource(config);
 
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");

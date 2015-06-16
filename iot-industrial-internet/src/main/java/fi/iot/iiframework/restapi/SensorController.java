@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
@@ -16,7 +15,6 @@ import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +52,7 @@ public class SensorController {
             consumes = "application/json"
     )
     @ResponseBody
-    public ResponseEntity<Sensor> editSensorConfiguration(
+    public ResponseEntity<Sensor> editSensor(
             @PathVariable String sensorid,
             @RequestBody Sensor sensor
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
@@ -66,12 +64,12 @@ public class SensorController {
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/list", produces = "application/json")
     @ResponseBody
-    public Set<Sensor> listSensors(
+    public List<Sensor> listSensors(
             @PathVariable String sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
-        return source.getSensors();
+        return sensorService.getBy(source);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})

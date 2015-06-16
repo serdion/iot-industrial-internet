@@ -18,10 +18,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -36,12 +37,12 @@ public class Readout implements Serializable {
 
     @XmlAttribute
     @NotNull
-    @Column(name = "READOUT_TIME")
+    @Column(name = "readout_time")
     protected long time;
 
     @XmlAttribute
     @NotNull
-    @Column(name = "READOUT_VALUE")
+    @Column(name = "readout_value")
     protected double value;
 
     @JsonIgnore
@@ -106,7 +107,7 @@ public class Readout implements Serializable {
         if (this.sensor == null || other.sensor == null) {
             return false;
         }
-        
+
         return this.sensor.id.equals(other.sensor.id);
     }
 
