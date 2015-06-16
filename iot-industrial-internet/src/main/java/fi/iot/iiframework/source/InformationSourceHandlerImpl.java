@@ -62,11 +62,14 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      */
     private void schedule() {
         scheduler.cancel();
-        if (source.isActive() && source.getReadFrequency() > 0) {
-            scheduler.schedule(source.getReadFrequency(), this::readAndWrite);
+        if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Never")) {
+            scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
+            System.out.println("Once runnable task created");
         }
-        
-        if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Daily")) {
+        if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Never")) {
+            scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+            System.out.println("Weekly task created");
+        } else if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Daily")) {
             scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
             System.out.println("Daily task created");
         } else if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Weekly")) {
@@ -75,7 +78,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         } else if (source.isActive() && source.getStartDate() != null && source.getReadInterval().equals("Monthly")) {
             scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
             System.out.println("Monthly task created");
-            
+
         }
         // back end testing for setting a specific date and interval to a timer
     }

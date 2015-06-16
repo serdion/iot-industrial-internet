@@ -27,7 +27,7 @@ public class ReadSchedulerImpl implements ReadScheduler {
         }, 0, interval);
 
     }
-    
+
     @Override
     public void scheduleAtSpecificInterval(final long interval, final Date startDate, final Date endDate, final Runnable runnable) {
         timer = new Timer();
@@ -39,6 +39,20 @@ public class ReadSchedulerImpl implements ReadScheduler {
             }
 
         }, startDate, interval);
+
+    }
+
+    @Override
+    public void scheduleOnlyOnce(final Date startDate, final Runnable runnable) {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runnable.run();
+            }
+
+        }, startDate);
 
     }
 
