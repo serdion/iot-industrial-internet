@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,8 +34,7 @@ public class RestAPIHelperTest {
     
     @Before
     public void setUp() {
-        ApplicationSettings settings = new ApplicationSettings();
-        maxObjects = settings.getMaxObjectsRetrievedFromDatabase();
+        maxObjects = 10000;
         helper = new RestAPIHelper();
     }
     

@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.domain.SensorConfiguration;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
@@ -27,9 +26,6 @@ public class SensorConfigurationController {
     @Autowired
     private RestAPIHelper helper;
 
-    @Autowired
-    private ApplicationSettings settings;
-    
     @Autowired
     private SensorConfigurationService sensorConfigurationService;
     
@@ -111,7 +107,7 @@ public class SensorConfigurationController {
     public List<SensorConfiguration> listSensorConfigurationsList(
             
     ) throws InvalidParametersException {
-        return sensorConfigurationService.get(0, settings.getDefaultSensorConfigurationsRetrievedFromDatabase());
+        return sensorConfigurationService.get(0, 10);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})

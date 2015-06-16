@@ -10,7 +10,6 @@ import fi.iot.iiframework.domain.Validatable;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
@@ -19,9 +18,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RestAPIHelper {
-    
-    @Autowired
-    private ApplicationSettings settings;
     
     /*
      * {from} cannot be negative
@@ -33,7 +29,7 @@ public class RestAPIHelper {
 
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if (from < 0 || to <= 0 || to == from || from > to
-                || (from - to) > settings.getMaxObjectsRetrievedFromDatabase()) {
+                || (from - to) > 10000) {
             ErrorLogger.log(ErrorType.BAD_REQUEST, ErrorSeverity.LOW, "Invalid parameters given for limits (" + from + ", " + to + ") in RestAPI.");
             throw new InvalidParametersException();
         }

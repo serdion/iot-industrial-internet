@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
