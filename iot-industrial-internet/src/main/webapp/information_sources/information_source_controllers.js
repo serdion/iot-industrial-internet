@@ -40,6 +40,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
         $scope.save = function () {
             
+            $scope.sensor = new Sensor();
             $scope.sensor.quantity = $scope.newsensor.quantity;
             $scope.sensor.unit = $scope.newsensor.unit;
 
