@@ -17,7 +17,7 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
 
     $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid})
     $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
-        $scope.id = $routeParams.sensorid;
+        $scope.name = $scope.sensor.name;
 
         for (var i = 0; i < $scope.readouts.length; i++) {
             var time = $scope.readouts[i].time;

@@ -9,6 +9,7 @@ package fi.iot.iiframework.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.Unmarshaller;
@@ -26,7 +27,6 @@ import org.hibernate.annotations.CascadeType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "readout")
 @Data
-@EqualsAndHashCode(exclude = {"id", "value"})
 @ToString(exclude = {"sensor"})
 public class Readout implements Serializable {
 
@@ -76,6 +76,38 @@ public class Readout implements Serializable {
 
     public void afterUnmarshal(Unmarshaller u, Object parent) {
         this.sensor = (Sensor) parent;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + (int) (this.time ^ (this.time >>> 32));
+        hash = 79 * hash + Objects.hashCode(this.sensor != null ? this.sensor.id : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Readout other = (Readout) obj;
+        if (this.time != other.time) {
+            return false;
+        }
+
+        if (this.sensor == null && other.sensor == null) {
+            return true;
+        }
+
+        if (this.sensor == null || other.sensor == null) {
+            return false;
+        }
+        
+        return this.sensor.id.equals(other.sensor.id);
     }
 
 }
