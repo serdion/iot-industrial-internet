@@ -59,7 +59,7 @@ public class Application extends SpringBootServletInitializer{
         config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
         config.setActive(true);
         config.setStartDate(new Date());
-        config.setReadInterval(IntervalType.DAILY);
+        config.setReadInterval(IntervalType.HOURLY);
         infSourceManager.createSource(config);
 
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");

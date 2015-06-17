@@ -22,7 +22,8 @@
                                 <td>{{ds.name}}</td>
                                 <td>{{ds.url}}</td>
                                 <td>{{ds.startDate| date: 'dd.MM.yyyy HH:mm'}}</td>
-                                <td>{{ds.readInterval}}</td>
+                                <td ng-if="ds.otherInterval <= 0 || ds.otherInterval === null">{{ds.readInterval}}</td>
+                                <td ng-if="ds.otherInterval > 0">{{ds.readInterval}}: {{ds.otherInterval}}</td>
                                 <td>{{ds.endDate| date: 'dd.MM.yyyy HH:mm'}}</td>
                                 <td>
                                     <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>

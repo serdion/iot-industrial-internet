@@ -43,7 +43,7 @@
                             <label class="btn btn-primary" type="radio" ng-model="radioModel" value="MONTHLY" btn-radio="'MONTHLY'">Monthly</label>
                             <label class="btn btn-primary" type="radio" ng-model="radioModel" value="OTHER" btn-radio="'OTHER'">Other</label>
                         </div>
-                        <div ng-if="radioModel === 'OTHER'" class="input-group">
+                        <div ng-show="radioModel === 'OTHER'" class="input-group">
                             <input type="text" class="form-control" name="otherInterval" ng-model="otherInterval" placeholder="Read Interval as Seconds" />
                             <span class="input-group-addon">seconds</span>
                         </div>
