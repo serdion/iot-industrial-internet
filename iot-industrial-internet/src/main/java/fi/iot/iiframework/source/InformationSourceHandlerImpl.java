@@ -109,7 +109,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         schedule();
     }
 
-    @Async
     @Override
     public void readAndWrite() {
         List<Sensor> sensors = read();

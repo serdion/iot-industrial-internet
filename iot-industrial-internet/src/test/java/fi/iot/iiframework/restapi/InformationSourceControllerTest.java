@@ -14,7 +14,7 @@ import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
 import fi.iot.iiframework.services.domain.InformationSourceService;
-import fi.iot.iiframework.source.InformationSourceManagerImpl;
+import fi.iot.iiframework.source.InformationSourceManager;
 import java.util.HashSet;
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +46,7 @@ public class InformationSourceControllerTest {
     private InformationSourceService sourceService;
     
     @Mock
-    private InformationSourceManagerImpl sourceManager;
+    private InformationSourceManager sourceManager;
     
     @Mock
     private RestAPIHelper helper;
@@ -76,11 +76,11 @@ public class InformationSourceControllerTest {
     */
     private void initContext(){
         sourceA = new InformationSource();
-        sourceA.setId("sourceA");
+        sourceA.setId(1l);
         sourceA.setSensors(new HashSet<>());
         
         sourceB = new InformationSource();
-        sourceB.setId("sourceB");
+        sourceB.setId(2l);
         sourceB.setSensors(new HashSet<>());
 
         sensorA = InformationSourceObjectProvider.provideSensor();
@@ -126,14 +126,14 @@ public class InformationSourceControllerTest {
 
     @Test
     public void testGetInformationSource() throws InvalidParametersException, ResourceNotFoundException  {
-        InformationSource foundSource = controller.getInformationSource("sourceA", null);
+        InformationSource foundSource = controller.getInformationSource(1, null);
         assertEquals(foundSource, sourceA);
     }
 
     @Test
     public void testAddInformationSource() throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException  {
         controller.addInformationSource(sourceB, null);
-        InformationSource foundSource = controller.getInformationSource("sourceB", null);
+        InformationSource foundSource = controller.getInformationSource(2, null);
         assertEquals(foundSource, sourceB);
     }
 
@@ -147,8 +147,8 @@ public class InformationSourceControllerTest {
 
     @Test
     public void testDeleteInformationSource() throws InvalidParametersException, ResourceNotFoundException  {
-        controller.deleteInformationSource("sourceA", null);
-        Mockito.verify(sourceManager, Mockito.times(1)).removeSource("sourceA");
+        controller.deleteInformationSource(1, null);
+        Mockito.verify(sourceManager, Mockito.times(1)).removeSource(1);
     }
 
     @Test

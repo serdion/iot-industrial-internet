@@ -41,7 +41,7 @@ public class ReadoutController {
     @RequestMapping(value = "/{sensorid}/list", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsList(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(sensorid));
@@ -52,7 +52,7 @@ public class ReadoutController {
     @RequestMapping(value = "/{sensorid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsAmount(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
@@ -65,7 +65,7 @@ public class ReadoutController {
     @RequestMapping(value = "/{sensorid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsFromTo(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params

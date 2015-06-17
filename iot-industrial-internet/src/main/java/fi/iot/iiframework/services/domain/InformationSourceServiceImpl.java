@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class InformationSourceServiceImpl
-        extends GenericHibernateService<InformationSource, String>
+        extends GenericHibernateService<InformationSource, Long>
         implements InformationSourceService {
 
     @Autowired

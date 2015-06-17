@@ -83,7 +83,8 @@ public class Readout implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + (int) (this.time ^ (this.time >>> 32));
-        hash = 79 * hash + Objects.hashCode(this.sensor != null ? this.sensor.id : 0);
+        hash = 79 * hash + Objects.hashCode(this.sensor == null ? 0
+                : (this.sensor.id == null ? 0 : this.sensor.id));
         return hash;
     }
 

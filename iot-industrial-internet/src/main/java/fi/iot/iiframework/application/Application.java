@@ -12,7 +12,7 @@ import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.source.InformationSourceManagerImpl;
+import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -51,7 +51,7 @@ public class Application extends SpringBootServletInitializer{
     }
 
     private static void initTestData(ApplicationContext ctx) throws JAXBException, IOException {
-        InformationSourceManagerImpl infSourceManager = ctx.getBean(InformationSourceManagerImpl.class);
+        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
         InformationSource config = new InformationSource();
         config.setName("Example Config");

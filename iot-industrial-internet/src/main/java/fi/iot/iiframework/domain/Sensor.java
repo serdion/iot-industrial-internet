@@ -29,9 +29,8 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Sensor implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    protected String id;
+    @GeneratedValue
+    protected Long id;
 
     @XmlAttribute(name = "name")
     protected String name;

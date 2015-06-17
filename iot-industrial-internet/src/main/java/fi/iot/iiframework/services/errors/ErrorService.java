@@ -14,7 +14,7 @@ import fi.iot.iiframework.services.GenericService;
  * 
  */
 
-public interface ErrorService extends GenericService<SysError, String> {
+public interface ErrorService extends GenericService<SysError, Long> {
 
 
 }

@@ -34,7 +34,7 @@ public class SysErrorController {
     @RequestMapping(value = "/{errorid}/view", produces = "application/json")
     @ResponseBody
     public SysError getError(
-            @PathVariable String errorid,
+            @PathVariable long errorid,
             @RequestParam(required = false) Map<String, String> params
     ) {
         return errorservice.get(errorid);

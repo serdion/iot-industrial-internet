@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class InformationSourceManagerTest {
 
     @Autowired
-    private InformationSourceManagerImpl manager;
+    private InformationSourceManager manager;
 
     @Mock
     private InformationSourcePersistence mockPersistence;
@@ -42,7 +42,7 @@ public class InformationSourceManagerTest {
         manager.setPersistence(mockPersistence);
 
         source = new InformationSource();
-        source.setId("1");
+        source.setId(1l);
         source.setName("Example");
         source.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         source.setType(InformationSourceType.XML);
@@ -53,8 +53,8 @@ public class InformationSourceManagerTest {
 
     @Test
     public void aNewInformationSourceIsCreatedSuccesfully() {
-        Map<String, InformationSourceHandler> sources = manager.getSources();
-        assertEquals(source, sources.get("1").getConfig());
+        Map<Long, InformationSourceHandler> sources = manager.getSources();
+        assertEquals(source, sources.get(1l).getConfig());
     }
 
     @Test

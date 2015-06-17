@@ -11,7 +11,7 @@ import fi.iot.iiframework.domain.InformationSource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InformationSourceDAOImpl extends GenericHibernateDAO<InformationSource, String>
+public class InformationSourceDAOImpl extends GenericHibernateDAO<InformationSource, Long>
         implements InformationSourceDAO {
 
 }
