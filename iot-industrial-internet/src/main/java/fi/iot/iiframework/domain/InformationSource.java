@@ -98,9 +98,9 @@ public class InformationSource implements Serializable, Validatable {
             return false;
         }
 
-//        if (readInterval == readInterval.OTHER) {
-//            return startDate != null && readInterval != null && otherInterval > 0;
-//        }
+        if (readInterval == IntervalType.OTHER) {
+            return startDate != null && readInterval != null && otherInterval > 0;
+        }
 
         return startDate != null && readInterval != null;
     }
