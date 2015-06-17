@@ -54,14 +54,14 @@ public enum ErrorType {
     /**
      * Returns ErrorType from the given ID.
      *
-     * @param id ID of the ErrorType
+     * @param typeid ID of the ErrorType
      * @return ErrorType
      */
-    public static ErrorType getType(String id) {
+    public static ErrorType getType(String typeid) {
         ErrorType[] values = ErrorType.values();
 
         for (ErrorType value : values) {
-            if (value.getId().equals(id)) {
+            if (value.getId().equals(typeid)) {
                 return value;
             }
         }
