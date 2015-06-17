@@ -33,35 +33,20 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function($scope, $routeParams, Sensor, Readout) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
+        
+        
+        //Function to allow reading of sensor.active value into the UI properly
+        $scope.boolToStr = function(arg) {
+            return arg ? 'true' : 'false'
+        };
 
         $scope.filter = function() {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
         };
 
+
         $scope.save = function() {
-
-            if ($scope.newsensor.quantity !== "" || $scope.newsensor.quantity !== null) {
-                $scope.sensor.quantity = $scope.newsensor.quantity;
-            }
-
-            if ($scope.newsensor.unit !== "") {
-                $scope.sensor.unit = $scope.newsensor.unit;
-            }
-
-            if ($scope.newsensor.thresholdMin !== "") {
-                $scope.sensor.thresholdMin = $scope.newsensor.thresholdMin;
-            }
-
-            if ($scope.newsensor.thresholdMax !== "") {
-                $scope.sensor.thresholdMax = $scope.newsensor.thresholdMax;
-            }
-
-            if ($scope.newsensor.active !== "") {
-                $scope.sensor.active = $scope.newsensor.active;
-            }
-
-            console.log($scope.sensor);
-
+//            console.log($scope.sensor);
             $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function() {
                 $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
             });
