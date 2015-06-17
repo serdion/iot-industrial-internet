@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.services.errors.ErrorService;

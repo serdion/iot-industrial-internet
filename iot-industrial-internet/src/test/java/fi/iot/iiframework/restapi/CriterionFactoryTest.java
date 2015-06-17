@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
