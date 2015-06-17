@@ -72,13 +72,19 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     /**
-     * Based on sensor-configuration, mark erronous readouts and disable disabled sensors.
-     * @param sensors 
+     * Based on sensor-configuration, mark erronous readouts and disable
+     * disabled sensors.
+     *
+     * @param sensors
      */
     private void mutateSensors(InformationSource source) {
-        new RemoveSensorIfNotActiveMutator().mutateAll(source);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        try {
+            new RemoveSensorIfNotActiveMutator().mutateAll(source);
+            new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
+            new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        } catch (Exception ex) {
+            
+        }
     }
 
     @Override

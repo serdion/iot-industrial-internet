@@ -7,14 +7,11 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.domain.IntervalType;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.SparkfunDataReader;
 import fi.iot.iiframework.readers.XMLReader;
-import java.util.Date;
 import java.util.List;
-import org.springframework.scheduling.annotation.Async;
 
 public final class InformationSourceHandlerImpl implements InformationSourceHandler {
 
@@ -105,8 +102,8 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         if (sensors == null) {
             return;
         }
-        source = persistence.updateSource(source);
-        source = persistence.updateSensorsForSource(source, sensors);
+        persistence.updateSource(source);
+        persistence.updateSensorsForSource(source, sensors);
     }
 
     @Override
@@ -116,12 +113,12 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
     }
 
     @Override
-    public InformationSource getConfig() {
+    public InformationSource getSource() {
         return source;
     }
 
     @Override
-    public void setConfig(InformationSource config) {
+    public void setSource(InformationSource config) {
         this.source = config;
         update();
     }
