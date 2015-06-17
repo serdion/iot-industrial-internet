@@ -6,17 +6,25 @@
  */
 package fi.iot.iiframework.mutator;
 
+import fi.iot.iiframework.application.Application;
 import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
+import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
+import java.util.logging.Level;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
     private ValueCondition condition;
+
+    @Autowired
+    private SensorService sensorService;
 
     public MarkReadoutAsErronousIfValueIs(ValueCondition condition) {
         this.condition = condition;
@@ -26,16 +34,24 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
     public void mutateAll(List<Sensor> sensors) {
         for (Sensor sensor : sensors) {
             for (Readout readout : sensor.getReadouts()) {
-                // IF condition is "Higher Than" and the maximum threshold is not the default one, else skip
-                if (condition == ValueCondition.HIGHER_THAN && sensor.getThresholdMax() != Integer.MAX_VALUE) {
-                    if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMax())) {
-                        addError(readout.getValue(), sensor.getThresholdMax(), condition, sensor);
+                try {
+                    Sensor fetchedSensor = sensorService.get(sensor.getId());
+
+                    // IF condition is "Higher Than" and the maximum threshold is not the default one, else skip
+                    if (condition == ValueCondition.HIGHER_THAN && fetchedSensor.getThresholdMax() != Integer.MAX_VALUE) {
+                        if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMax())) {
+                            addError(readout.getValue(), sensor.getThresholdMax(), condition, sensor);
+                            readout.setFlag(ReadoutFlag.TOO_HIGH_VALUE);
+                        }
+                        // IF condition is "Lower Than" and the minimum threshold is not the default one, else skip
+                    } else if (condition == ValueCondition.LOWER_THAN && fetchedSensor.getThresholdMin() != Integer.MIN_VALUE) {
+                        if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMin())) {
+                            addError(readout.getValue(), sensor.getThresholdMin(), condition, sensor);
+                            readout.setFlag(ReadoutFlag.TOO_LOW_VALUE);
+                        }
                     }
-                    // IF condition is "Lower Than" and the minimum threshold is not the default one, else skip
-                } else if (condition == ValueCondition.LOWER_THAN && sensor.getThresholdMin() != Integer.MIN_VALUE) {
-                    if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMin())) {
-                        addError(readout.getValue(), sensor.getThresholdMin(), condition, sensor);
-                    }
+                } catch (NullPointerException npe) {
+                    // No such sensor with this id, first time reading
                 }
             }
 
