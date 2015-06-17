@@ -10,7 +10,7 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class EqualsErrorSeverity extends Equals {
+public class EqualsErrorSeverity extends GeneralFilter {
 
     public EqualsErrorSeverity(String field) {
         super(field);

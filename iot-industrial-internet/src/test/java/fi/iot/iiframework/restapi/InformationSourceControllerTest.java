@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
@@ -21,27 +20,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-@TransactionConfiguration(defaultRollback = true)
-@Transactional
-@SpringApplicationConfiguration(classes = {TestConfig.class})
-@RunWith(SpringJUnit4ClassRunner.class)
 public class InformationSourceControllerTest {
-    
-    @Autowired
+
     private InformationSourceController controller;
     
     private InformationSource sourceA;
@@ -65,6 +53,7 @@ public class InformationSourceControllerTest {
     
     @Before
     public void setUp() throws ResourceNotFoundException {
+        controller = new InformationSourceController();
         MockitoAnnotations.initMocks(this);
         
         initLogin();
