@@ -37,6 +37,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
     }]);
 
+
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function($scope, $routeParams, Sensor, Readout, $window) {
 
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
