@@ -24,38 +24,39 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
     private ValueCondition condition;
 
-    @Autowired
-    private SensorService sensorService;
-
     public MarkReadoutAsErronousIfValueIs(ValueCondition condition) {
         this.condition = condition;
     }
 
     @Override
-    public void mutateAll(List<Sensor> sensors) {
-        for (Sensor sensor : sensors) {
-            for (Readout readout : sensor.getReadouts()) {
-                try {
-                    Sensor fetchedSensor = sensorService.get(sensor.getId());
+    public void mutateAll(InformationSource source) {
+        for (Sensor sensor : source.getSensors()) {
+            mutateOneSensor(sensor);
+        }
+    }
 
-                    // IF condition is "Higher Than" and the maximum threshold is not the default one, else skip
-                    if (condition == ValueCondition.HIGHER_THAN && fetchedSensor.getThresholdMax() != Integer.MAX_VALUE) {
-                        if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMax())) {
-                            addError(readout.getValue(), sensor.getThresholdMax(), condition, sensor);
-                            readout.setFlag(ReadoutFlag.TOO_HIGH_VALUE);
-                        }
-                        // IF condition is "Lower Than" and the minimum threshold is not the default one, else skip
-                    } else if (condition == ValueCondition.LOWER_THAN && fetchedSensor.getThresholdMin() != Integer.MIN_VALUE) {
-                        if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMin())) {
-                            addError(readout.getValue(), sensor.getThresholdMin(), condition, sensor);
-                            readout.setFlag(ReadoutFlag.TOO_LOW_VALUE);
-                        }
-                    }
-                } catch (NullPointerException npe) {
-                    // No such sensor with this id, first time reading
+    public void mutateOneSensor(Sensor sensor) {
+        for (Readout readout : sensor.getReadouts()) {
+            try {
+                if(condition==ValueCondition.HIGHER_THAN){
+                    mutateOneReadout(readout, condition, sensor.getThresholdMax());
+                } else if (condition==ValueCondition.LOWER_THAN){
+                    mutateOneReadout(readout, condition, sensor.getThresholdMin());
                 }
+                
+                mutateOneReadout(readout, condition, 1.0);
+            } catch (NullPointerException npe) {
+                // No such sensor with this id, first time reading
             }
+        }
+    }
 
+    public void mutateOneReadout(Readout readout, ValueCondition condition, double theshold) {
+        if (isNotDefaultThreshold(theshold)) {
+            if (ValueCondition.compare(condition, readout.getValue(), theshold)) {
+                addError(readout.getValue(), theshold, condition, readout.getSensor());
+                readout.setFlag(ReadoutFlag.TOO_HIGH_VALUE);
+            }
         }
     }
 
@@ -67,9 +68,9 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                 "This error was caused in sensor [id: " + sensor.getId() + "]");
         ErrorLogger.log(error);
     }
-
-    public void mutateAll(InformationSource source) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    private boolean isNotDefaultThreshold(double theshold){
+        return theshold != Integer.MIN_VALUE || theshold != Integer.MAX_VALUE;
     }
 
 }

@@ -6,11 +6,10 @@
  */
 package fi.iot.iiframework.mutator;
 
-import fi.iot.iiframework.domain.Sensor;
-import java.util.List;
+import fi.iot.iiframework.domain.InformationSource;
 
 public interface Mutator {
 
-    public void mutateAll(List<Sensor> sensors);
+    public void mutateAll(InformationSource source);
 
 }
