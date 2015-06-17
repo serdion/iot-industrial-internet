@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.mutator;
 
-import fi.iot.iiframework.application.Application;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.domain.Sensor;
@@ -14,45 +14,56 @@ import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.services.domain.SensorService;
-import java.util.List;
-import java.util.logging.Level;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
     private ValueCondition condition;
-
-    @Autowired
-    private SensorService sensorService;
 
     public MarkReadoutAsErronousIfValueIs(ValueCondition condition) {
         this.condition = condition;
     }
 
     @Override
-    public void mutateAll(List<Sensor> sensors) {
-        for (Sensor sensor : sensors) {
-            for (Readout readout : sensor.getReadouts()) {
-                try {
-                    Sensor fetchedSensor = sensorService.get(sensor.getId());
-                    // IF condition is "Higher Than" and the maximum threshold is not the default one, else skip
-                    if (condition == ValueCondition.HIGHER_THAN && fetchedSensor.getThresholdMax() != Integer.MAX_VALUE) {
-                        if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMax())) {
-                            addError(readout.getValue(), sensor.getThresholdMax(), condition, sensor);
-                            readout.setFlag(ReadoutFlag.TOO_HIGH_VALUE);
-                        }
-                        // IF condition is "Lower Than" and the minimum threshold is not the default one, else skip
-                    } else if (condition == ValueCondition.LOWER_THAN && fetchedSensor.getThresholdMin() != Integer.MIN_VALUE) {
-                        if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMin())) {
-                            addError(readout.getValue(), sensor.getThresholdMin(), condition, sensor);
-                            readout.setFlag(ReadoutFlag.TOO_LOW_VALUE);
-                        }
-                    }
-                } catch (NullPointerException npe) {
-                }
-            }
+    public void mutateAll(InformationSource source) {
+        for (Sensor sensor : source.getSensors()) {
+            mutateOneSensor(sensor);
+        }
+    }
 
+    /**
+     * Mutates one sensor by calling mutateOneReadout for each readout
+     *
+     * @param sensor Sensor to mutate
+     */
+    public void mutateOneSensor(Sensor sensor) {
+        for (Readout readout : sensor.getReadouts()) {
+            try {
+                if (condition == ValueCondition.HIGHER_THAN) {
+                    mutateOneReadout(readout, condition, sensor.getThresholdMax());
+                } else if (condition == ValueCondition.LOWER_THAN) {
+                    mutateOneReadout(readout, condition, sensor.getThresholdMin());
+                }
+
+                mutateOneReadout(readout, condition, 1.0);
+            } catch (NullPointerException npe) {
+            }
+        }
+    }
+
+    /**
+     * Mutates one readout based on the threshold. Warning: Assumes that the
+     * given readout has a sensor!
+     *
+     * @param readout Readout to mutate
+     * @param condition Condition to mutate the Readout by
+     * @param theshold Threshold for the mutation
+     */
+    public void mutateOneReadout(Readout readout, ValueCondition condition, double theshold) {
+        if (isNotDefaultThreshold(theshold)) {
+            if (ValueCondition.compare(condition, readout.getValue(), theshold)) {
+                addError(readout.getValue(), theshold, condition, readout.getSensor());
+                readout.setFlag(ReadoutFlag.TOO_HIGH_VALUE);
+            }
         }
     }
 
@@ -63,6 +74,11 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                 + threshold + " was " + condition.getLiteral() + " value " + readout + " found in the sensor.",
                 "This error was caused in sensor [id: " + sensor.getId() + "]");
         ErrorLogger.log(error);
+    }
+
+    private boolean isNotDefaultThreshold(double theshold) {
+        return theshold != Integer.MIN_VALUE || theshold != Integer.MAX_VALUE;
+
     }
 
 }

@@ -7,28 +7,19 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.services.domain.InformationSourceService;
-import fi.iot.iiframework.services.domain.SensorService;
 import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.MockitoAnnotations.initMocks;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {TestConfig.class})
 @Ignore
 public class InformationSourceManagerTest {
 
-    @Autowired
     private InformationSourceManager manager;
 
     @Mock
@@ -39,7 +30,7 @@ public class InformationSourceManagerTest {
     @Before
     public void setUp() {
         initMocks(this);
-        manager.setPersistence(mockPersistence);
+        manager = new InformationSourceManager(mockPersistence);
 
         source = new InformationSource();
         source.setId(1l);
@@ -47,14 +38,18 @@ public class InformationSourceManagerTest {
         source.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         source.setType(InformationSourceType.XML);
         source.setActive(false);
-//        source.setReadFrequency(0);
         manager.createSource(source);
+
+        Mockito.when(mockPersistence.updateSource(Matchers.any(InformationSource.class)))
+                .thenReturn(source);
+        Mockito.when(mockPersistence.updateSource(Matchers.any(InformationSource.class)))
+                .thenReturn(source);
     }
 
     @Test
     public void aNewInformationSourceIsCreatedSuccesfully() {
         Map<Long, InformationSourceHandler> sources = manager.getSources();
-        assertEquals(source, sources.get(1l).getConfig());
+        assertEquals(source, sources.get(1l).getSource());
     }
 
     @Test
@@ -68,7 +63,7 @@ public class InformationSourceManagerTest {
         manager.updateSource(source);
         Mockito.verify(mockPersistence).updateSource(source);
     }
-    
+
     @Test
     public void removeRemovesTheConfiguration() {
         manager.removeSource(source.getId());

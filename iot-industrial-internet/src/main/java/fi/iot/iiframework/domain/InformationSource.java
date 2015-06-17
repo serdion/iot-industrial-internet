@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -67,6 +68,11 @@ public class InformationSource implements Serializable, Validatable {
      */
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date startDate;
+    
+    /**
+     * The specified time to start and end the reading.
+     */
+    protected long startTime;
 
     /**
      * The interval for reading after a specified date/time (for example
@@ -82,6 +88,9 @@ public class InformationSource implements Serializable, Validatable {
      */
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date endDate;
+    
+    @Column(name = "last_readout")
+    protected long lastReadout;
 
     @JsonIgnore
 

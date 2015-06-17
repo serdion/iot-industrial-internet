@@ -7,13 +7,11 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.domain.IntervalType;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.SparkfunDataReader;
 import fi.iot.iiframework.readers.XMLReader;
 import java.util.List;
-import org.springframework.scheduling.annotation.Async;
 
 public final class InformationSourceHandlerImpl implements InformationSourceHandler {
 
@@ -64,41 +62,29 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      */
     private void schedule() {
         scheduler.cancel();
-//        if (source.isActive() && source.getReadFrequency() > 0) {
-//            scheduler.schedule(source.getReadFrequency(), this::readAndWrite);
-//            System.out.println("Frequently runnable task created");
-//        }
 
         if (source.isActive() && source.getStartDate() != null) {
             switch (source.getReadInterval()) {
                 case NEVER:
                     scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
-                    System.out.println("Once runnable task created");
                     break;
                 case HOURLY:
                     scheduler.scheduleAtSpecificInterval(3600000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    System.out.println("Hourly task created");
                     break;
                 case DAILY:
                     scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    System.out.println("Daily task created");
                     break;
                 case WEEKLY:
                     scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    System.out.println("Weekly task created");
                     break;
                 case MONTHLY:
                     scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    System.out.println("Monthly task created");
                     break;
                 case OTHER:
                     scheduler.scheduleAtSpecificInterval(source.getOtherInterval(), source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    System.out.println("Other task created");
                     break;
             }
         }
-
-        // back end testing for setting a specific date and interval to a timer
     }
 
     /**
@@ -111,11 +97,13 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
 
     @Override
     public void readAndWrite() {
+        source.setLastReadout(System.currentTimeMillis());
         List<Sensor> sensors = read();
         if (sensors == null) {
             return;
         }
-        persistence.updateSourceWithSensors(source, sensors);
+        persistence.updateSource(source);
+        persistence.updateSensorsForSource(source, sensors);
     }
 
     @Override
@@ -125,12 +113,12 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
     }
 
     @Override
-    public InformationSource getConfig() {
+    public InformationSource getSource() {
         return source;
     }
 
     @Override
-    public void setConfig(InformationSource config) {
+    public void setSource(InformationSource config) {
         this.source = config;
         update();
     }

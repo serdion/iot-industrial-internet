@@ -8,24 +8,31 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
+import fi.iot.iiframework.mutator.RemoveSensorIfNotActiveMutator;
+import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Responsible for writing read source-information to services and retrieving
  * information from services.
  */
-@Component
+@Service
 public class InformationSourcePersistenceImpl implements InformationSourcePersistence {
 
+    private final InformationSourceService sourceService;
+    private final SensorService sensorService;
+
     @Autowired
-    private InformationSourceService sourceService;
-    @Autowired
-    private SensorService sensorService;
+    public InformationSourcePersistenceImpl(InformationSourceService sourceService, SensorService sensorService) {
+        this.sourceService = sourceService;
+        this.sensorService = sensorService;
+    }
 
     @Override
     public List<InformationSource> loadSourcesFromDB() {
@@ -34,25 +41,50 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
 
     @Override
     @Transactional
-    public void updateSourceWithSensors(InformationSource source, List<Sensor> sensors) {
+    public InformationSource updateSensorsForSource(InformationSource source, List<Sensor> sensors) {
         final InformationSource src = sourceService.get(source.getId());
         sensors.forEach(s -> {
             s.setSource(src);
             src.getSensors().add(s);
         });
         addNewReadouts(src, sensors);
+        mutateSensors(src);
+        sourceService.save(src);
+        return src;
     }
 
+    /**
+     * Adds new readouts to known sensors and saves those sensors with their new
+     * readouts.
+     *
+     * @param source
+     * @param sensors
+     */
     private void addNewReadouts(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
             source.getSensors().forEach(se -> {
                 if (s.equals(se)) {
                     s.getReadouts().forEach(r -> r.setSensor(se));
                     se.setReadouts(s.getReadouts());
-                    sensorService.save(se);
                 }
             });
         });
+    }
+
+    /**
+     * Based on sensor-configuration, mark erronous readouts and disable
+     * disabled sensors.
+     *
+     * @param sensors
+     */
+    private void mutateSensors(InformationSource source) {
+        try {
+            new RemoveSensorIfNotActiveMutator().mutateAll(source);
+            new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
+            new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        } catch (Exception ex) {
+            
+        }
     }
 
     @Override

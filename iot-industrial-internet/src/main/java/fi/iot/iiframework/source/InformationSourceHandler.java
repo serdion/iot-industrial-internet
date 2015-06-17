@@ -39,14 +39,14 @@ public interface InformationSourceHandler {
      *
      * @param config
      */
-    public void setConfig(InformationSource config);
+    public void setSource(InformationSource config);
 
     /**
      * Get the configuration.
      *
      * @return
      */
-    public InformationSource getConfig();
+    public InformationSource getSource();
 
     /**
      * Stop all read-operations.

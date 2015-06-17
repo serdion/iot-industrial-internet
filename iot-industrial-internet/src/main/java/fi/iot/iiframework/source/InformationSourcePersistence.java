@@ -11,18 +11,42 @@ import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 
 /**
- *
- * @author atte
+ * Interface for loading and updating source from and in the database, and
+ * updating their information.
  */
 public interface InformationSourcePersistence {
 
+    /**
+     * Loads all InformationSources from the database.
+     * @return 
+     */
     List<InformationSource> loadSourcesFromDB();
 
-    void updateSourceWithSensors(InformationSource source, List<Sensor> sensors);
-    
+    /**
+     * Update InformationSources with read sensors and their readouts.
+     * @param source
+     * @param sensors 
+     * @return  
+     */
+    InformationSource updateSensorsForSource(InformationSource source, List<Sensor> sensors);
+
+    /**
+     * Updates an InformationSources fields in the database.
+     * @param source
+     * @return 
+     */
     InformationSource updateSource(InformationSource source);
-    
+
+    /**
+     * Adds a new InformationSource to the database
+     * @param source
+     * @return 
+     */
     InformationSource addSource(InformationSource source);
-    
+
+    /**
+     * Deletes a source from the database.
+     * @param source 
+     */
     void deleteSource(InformationSource source);
 }

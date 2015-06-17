@@ -7,11 +7,9 @@
 package fi.iot.iiframework.domain;
 
 /**
- *
- * @author Teemu
+ * Defines a type of interval in which a source is read.
  */
 public enum IntervalType {
-
     NEVER,
     HOURLY,
     DAILY,

@@ -64,6 +64,6 @@ public class InformationSourceHandlerImplTest {
     @Test
     public void readAndWriteWritesTheReadObjectsToDatabase() {
         handler.readAndWrite();
-        verify(mockPersistence).updateSourceWithSensors(source, examples);
+        verify(mockPersistence).updateSensorsForSource(source, examples);
     }
 }

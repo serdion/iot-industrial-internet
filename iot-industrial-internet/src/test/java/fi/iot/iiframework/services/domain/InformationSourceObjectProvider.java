@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -24,8 +25,8 @@ import java.util.UUID;
  */
 public class InformationSourceObjectProvider {
     
-    public static List<Sensor> provideSensorsWithChildren(InformationSource parent) {
-        List<Sensor> sensors = new ArrayList<>();
+    public static Set<Sensor> provideSensorsWithChildren(InformationSource parent) {
+        Set<Sensor> sensors = new HashSet<>();
         for (int i = 0; i < 3; i++) {
             Sensor s = provideSensor();
             s.setSource(parent);
@@ -34,7 +35,7 @@ public class InformationSourceObjectProvider {
             }
             sensors.add(s);
         }
-
+        parent.setSensors(sensors);
         return sensors;
     }
 

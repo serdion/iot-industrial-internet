@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.mutator;
 
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.domain.Sensor;
@@ -21,8 +22,9 @@ import org.junit.Test;
 
 public class MutatorTest {
 
-    private List<Sensor> sensors;
+    private ArrayList<Sensor> sensors;
     private HashSet<Readout> readouts;
+    private Sensor testsensor;
 
     public MutatorTest() {
     }
@@ -37,8 +39,9 @@ public class MutatorTest {
 
     @Before
     public void setUp() {
+
         sensors = new ArrayList<>();
-        Sensor testsensor = new Sensor();
+        testsensor = new Sensor();
 
         readouts = new HashSet<>();
 
@@ -61,12 +64,12 @@ public class MutatorTest {
     public void tearDown() {
     }
 
-//    @Test
+    @Test
     public void spotsValueThatIsTooHigh() {
         double max = 60;
-        sensors.get(0).setThresholdMax(max);
+        testsensor.setThresholdMax(max);
 
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(sensors);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateOneSensor(testsensor);
         for (Readout r : readouts) {
 
             if (r.getFlag() == ReadoutFlag.TOO_HIGH_VALUE) {
@@ -77,12 +80,12 @@ public class MutatorTest {
         }
     }
 
-//    @Test
+    @Test
     public void spotsValueThatIsTooLow() {
         double min = -20;
-        sensors.get(0).setThresholdMax(min);
+        testsensor.setThresholdMin(min);
 
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(sensors);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateOneSensor(testsensor);
         for (Readout r : readouts) {
             if (r.getFlag() == ReadoutFlag.TOO_LOW_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() > min);
