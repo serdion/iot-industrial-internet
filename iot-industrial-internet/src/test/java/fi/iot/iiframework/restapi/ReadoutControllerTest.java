@@ -84,11 +84,11 @@ public class ReadoutControllerTest {
     
     private void initContext(){
         sourceA = new InformationSource();
-        sourceA.setId("sourceA");
+        sourceA.setId(1l);
         sourceA.setSensors(new HashSet<>());
         
         sourceB = new InformationSource();
-        sourceB.setId("sourceB");
+        sourceB.setId(2l);
         sourceB.setSensors(new HashSet<>());
 
         sensorA = InformationSourceObjectProvider.provideSensor();
