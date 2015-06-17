@@ -36,7 +36,6 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
             for (Readout readout : sensor.getReadouts()) {
                 try {
                     Sensor fetchedSensor = sensorService.get(sensor.getId());
-
                     // IF condition is "Higher Than" and the maximum threshold is not the default one, else skip
                     if (condition == ValueCondition.HIGHER_THAN && fetchedSensor.getThresholdMax() != Integer.MAX_VALUE) {
                         if (ValueCondition.compare(condition, readout.getValue(), sensor.getThresholdMax())) {
@@ -51,7 +50,6 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                         }
                     }
                 } catch (NullPointerException npe) {
-                    // No such sensor with this id, first time reading
                 }
             }
 
