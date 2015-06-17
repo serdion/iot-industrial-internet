@@ -58,13 +58,9 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
         $scope.save = function () {
 //            console.log($scope.sensor);
-<<<<<<< HEAD
             $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function() {
                 $window.history.back();
-=======
-            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
-                $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
->>>>>>> dev
+
             });
 
         };
