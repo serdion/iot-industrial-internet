@@ -27,10 +27,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import org.joda.time.DateTime;
 
-/**
- *
- * @author atte
- */
 public class SparkfunDataParser {
 
     public static List<Sensor> parse(String location) {
