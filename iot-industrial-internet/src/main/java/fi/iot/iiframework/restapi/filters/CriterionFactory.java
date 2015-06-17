@@ -4,7 +4,7 @@
  * Released as a part of Helsinki University
  * Software Engineering Lab in summer 2015
  */
-package fi.iot.iiframework.restapi;
+package fi.iot.iiframework.restapi.filters;
 
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
@@ -88,7 +88,6 @@ public class CriterionFactory {
                 }
 
             } catch (ArrayIndexOutOfBoundsException exp) {
-                System.out.println("out of bound");
                 ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
             } catch (NullPointerException exp) {
                 ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.LOW, "Filter provided could not be identified.");
