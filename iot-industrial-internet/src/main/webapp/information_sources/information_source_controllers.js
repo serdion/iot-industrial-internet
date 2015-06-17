@@ -123,6 +123,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
             $scope.startDate = $scope.is.startDate;
             $scope.endDate = $scope.is.endDate;
             $scope.radioModel = $scope.is.readInterval;
+            $scope.startTime = $scope.is.startTime;
         });
 
         $scope.back = function () {
@@ -133,7 +134,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
-//            $scope.is.startDate = $scope.startDate + $scope.time;
+//            $scope.is.startDate = $scope.startDate + 5000000;
             $scope.is.$edit({}, function () {
                 $location.path('/sources');
             },

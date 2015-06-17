@@ -67,6 +67,11 @@ public class InformationSource implements Serializable, Validatable {
      */
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date startDate;
+    
+    /**
+     * The specified time to start and end the reading.
+     */
+    protected long startTime;
 
     /**
      * The interval for reading after a specified date/time (for example
