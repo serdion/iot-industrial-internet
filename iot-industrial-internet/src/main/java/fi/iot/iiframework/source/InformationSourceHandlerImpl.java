@@ -112,8 +112,8 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         if (sensors == null) {
             return;
         }
-        persistence.updateSource(source);
-        persistence.updateSensorsForSource(source, sensors);
+        source = persistence.updateSource(source);
+        source = persistence.updateSensorsForSource(source, sensors);
     }
 
     @Override

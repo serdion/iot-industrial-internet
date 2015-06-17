@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -34,7 +35,7 @@ public class InformationSourceObjectProvider {
             }
             sensors.add(s);
         }
-
+        parent.setSensors((Set<Sensor>) sensors);
         return sensors;
     }
 

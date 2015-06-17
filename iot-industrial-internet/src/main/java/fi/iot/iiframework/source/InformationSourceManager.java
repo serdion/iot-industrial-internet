@@ -24,10 +24,11 @@ public class InformationSourceManager {
 
     private final Map<Long, InformationSourceHandler> sources;
 
-    @Autowired
     private InformationSourcePersistence persistence;
-
-    public InformationSourceManager() {
+    
+    @Autowired
+    public InformationSourceManager(InformationSourcePersistence persistence) {
+        this.persistence = persistence;
         this.sources = new HashMap<>();
     }
 
@@ -67,15 +68,6 @@ public class InformationSourceManager {
      */
     public Map<Long, InformationSourceHandler> getSources() {
         return sources;
-    }
-
-    /**
-     * Sets the class for persistence.
-     *
-     * @param persistence
-     */
-    public void setPersistence(InformationSourcePersistence persistence) {
-        this.persistence = persistence;
     }
 
 }
