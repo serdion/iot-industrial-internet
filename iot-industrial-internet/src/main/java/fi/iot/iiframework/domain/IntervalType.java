@@ -13,6 +13,7 @@ package fi.iot.iiframework.domain;
 public enum IntervalType {
 
     NEVER,
+    HOURLY,
     DAILY,
     WEEKLY,
     MONTHLY,

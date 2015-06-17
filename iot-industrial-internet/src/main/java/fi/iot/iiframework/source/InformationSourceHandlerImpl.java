@@ -75,6 +75,10 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
                     scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
                     System.out.println("Once runnable task created");
                     break;
+                case HOURLY:
+                    scheduler.scheduleAtSpecificInterval(3600000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
+                    System.out.println("Hourly task created");
+                    break;
                 case DAILY:
                     scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
                     System.out.println("Daily task created");
