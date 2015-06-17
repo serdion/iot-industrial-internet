@@ -48,7 +48,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
             src.getSensors().add(s);
         });
         addNewReadouts(src, sensors);
-        mutateRead(src);
+        mutateSensors(src);
         sourceService.save(src);
         return src;
     }

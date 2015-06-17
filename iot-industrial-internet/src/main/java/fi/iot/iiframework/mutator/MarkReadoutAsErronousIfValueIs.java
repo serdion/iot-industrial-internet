@@ -7,6 +7,7 @@
 package fi.iot.iiframework.mutator;
 
 import fi.iot.iiframework.application.Application;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.domain.Sensor;
@@ -65,6 +66,10 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                 + threshold + " was " + condition.getLiteral() + " value " + readout + " found in the sensor.",
                 "This error was caused in sensor [id: " + sensor.getId() + "]");
         ErrorLogger.log(error);
+    }
+
+    public void mutateAll(InformationSource source) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
