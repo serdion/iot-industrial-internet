@@ -72,7 +72,7 @@ public class InformationSource implements Serializable, Validatable {
      * The interval for reading after a specified date/time (for example
      * weekly).
      */
-    protected String readInterval;
+    protected IntervalType readInterval;
     /**
      * How often read (in seconds).
      */

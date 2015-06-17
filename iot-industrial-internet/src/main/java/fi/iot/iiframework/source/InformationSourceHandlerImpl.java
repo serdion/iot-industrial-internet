@@ -7,7 +7,7 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.domain.ReadInterval;
+import fi.iot.iiframework.domain.IntervalType;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.SparkfunDataReader;
@@ -71,19 +71,19 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
 
         if (source.isActive() && source.getStartDate() != null) {
             switch (source.getReadInterval()) {
-                case "Never":
+                case NEVER:
                     scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
                     System.out.println("Once runnable task created");
-                case "Daily":
+                case DAILY:
                     scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
                     System.out.println("Daily task created");
-                case "Weekly":
+                case WEEKLY:
                     scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
                     System.out.println("Weekly task created");
-                case "Monthly":
+                case MONTHLY:
                     scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
                     System.out.println("Monthly task created");
-                case "Other":
+                case OTHER:
                     scheduler.scheduleAtSpecificInterval(source.getOtherInterval(), source.getStartDate(), source.getEndDate(), this::readAndWrite);
                     System.out.println("Other task created");
             }

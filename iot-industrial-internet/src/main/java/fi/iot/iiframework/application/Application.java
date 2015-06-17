@@ -7,6 +7,7 @@
 package fi.iot.iiframework.application;
 
 import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.domain.IntervalType;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
@@ -56,7 +57,7 @@ public class Application extends SpringBootServletInitializer{
         config.setType(InformationSourceType.JSON);
         config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
         config.setActive(true);
-        config.setReadInterval("Daily");
+        config.setReadInterval(IntervalType.WEEKLY);
         infSourceManager.createSource(config);
 
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");

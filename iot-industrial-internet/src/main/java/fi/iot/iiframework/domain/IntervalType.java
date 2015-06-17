@@ -10,7 +10,7 @@ package fi.iot.iiframework.domain;
  *
  * @author Teemu
  */
-public enum ReadInterval {
+public enum IntervalType {
 
     NEVER("never", "NEVER"),
     DAILY("daily", "DAILY"),
@@ -21,7 +21,7 @@ public enum ReadInterval {
     private final String name;
     private final String id;
 
-    private ReadInterval(String name, String id) {
+    private IntervalType(String name, String id) {
         this.name = name;
         this.id = id;
     }
