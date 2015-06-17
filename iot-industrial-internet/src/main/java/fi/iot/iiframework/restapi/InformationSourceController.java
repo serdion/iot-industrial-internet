@@ -28,6 +28,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("1.0/sources")
 public class InformationSourceController {
+    
+    /**
+     * Keeps track of when a source was last read.
+     */
+    private Map<Long, Long> lastRequests = new HashMap<>();
 
     @Autowired
     private RestAPIHelper helper;
@@ -133,12 +138,6 @@ public class InformationSourceController {
         return informationSourceService.get(to, from);
     }
 
-    /**
-     * Keeps track of when a source was last read.
-     */
-    Map<Long, Long> lastRequests = new HashMap<>();
-
-    //TODO: Show the user an error.
     @Secured({"ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/read", produces = "application/json")
     @ResponseBody
@@ -149,8 +148,8 @@ public class InformationSourceController {
             ErrorLogger.log(
                     ErrorType.NOT_ACCEPTED,
                     ErrorSeverity.LOW,
-                    "Too many requests.",
-                    "Read request can only be done every 10 seconds for a single informationSource"
+                    "Too many forced requests for a single source.",
+                    "Read request can only be issued every 10 seconds for a single source"
             );
             throw new TooManyRequestsException();
         }
