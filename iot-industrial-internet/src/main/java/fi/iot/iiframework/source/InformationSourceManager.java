@@ -25,7 +25,7 @@ public class InformationSourceManager {
     private final Map<Long, InformationSourceHandler> sources;
 
     private InformationSourcePersistence persistence;
-    
+
     @Autowired
     public InformationSourceManager(InformationSourcePersistence persistence) {
         this.persistence = persistence;
@@ -33,26 +33,27 @@ public class InformationSourceManager {
     }
 
     @PostConstruct
-    public void loadConfigFromDB() {
+    public void loadSourcesFromDb() {
         List<InformationSource> sources = persistence.loadSourcesFromDB();
         sources.forEach(c -> createSource(c));
     }
 
-    public void createSource(InformationSource config) {
-        config = persistence.addSource(config);
-        InformationSourceHandler source = new InformationSourceHandlerImpl(config, persistence);
-        sources.put(config.getId(), source);
+    public void createSource(InformationSource source) {
+        source = persistence.addSource(source);
+        InformationSourceHandler sourceHandler
+                = new InformationSourceHandlerImpl(source, persistence);
+        sources.put(source.getId(), sourceHandler);
     }
 
     public void removeSource(long id) {
-        persistence.deleteSource(sources.get(id).getConfig());
+        persistence.deleteSource(sources.get(id).getSource());
         sources.get(id).close();
         sources.remove(id);
     }
 
     public void updateSource(InformationSource config) {
         config = persistence.updateSource(config);
-        sources.get(config.getId()).setConfig(config);
+        sources.get(config.getId()).setSource(config);
     }
 
     @Async
