@@ -88,7 +88,6 @@ public class CriterionFactory {
                 }
 
             } catch (ArrayIndexOutOfBoundsException exp) {
-                System.out.println("out of bound");
                 ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
             } catch (NullPointerException exp) {
                 ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.LOW, "Filter provided could not be identified.");
