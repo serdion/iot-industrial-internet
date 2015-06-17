@@ -113,7 +113,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             startingDay: 1
         };
 
-        $scope.radioModel = 'Never';
+        $scope.radioModel = 'NEVER';
     }]);
 
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
