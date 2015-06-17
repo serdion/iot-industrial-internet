@@ -37,11 +37,8 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
     }]);
 
-<<<<<<< HEAD
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function($scope, $routeParams, Sensor, Readout, $window) {
-=======
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function ($scope, $routeParams, Sensor, Readout) {
->>>>>>> dev
+
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
 
