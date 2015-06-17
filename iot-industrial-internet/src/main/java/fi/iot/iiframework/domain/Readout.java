@@ -21,8 +21,6 @@ import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -50,6 +48,8 @@ public class Readout implements Serializable {
     @JoinColumn(name = "sensor")
     @Cascade(CascadeType.SAVE_UPDATE)
     protected Sensor sensor;
+    
+    protected ReadoutFlag flag;
 
     public Readout() {
     }

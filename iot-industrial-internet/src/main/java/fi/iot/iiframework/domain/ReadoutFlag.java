@@ -6,14 +6,9 @@
  */
 package fi.iot.iiframework.domain;
 
-/**
- * Defines a type of interval in which a source is read.
- */
-public enum IntervalType {
-    NEVER,
-    HOURLY,
-    DAILY,
-    WEEKLY,
-    MONTHLY,
-    OTHER;
+public enum ReadoutFlag {
+    ERRONOUS,
+    POSSIBLE_ERRONOUS,
+    TOO_HIGH_VALUE,
+    TOO_LOW_VALUE;
 }
