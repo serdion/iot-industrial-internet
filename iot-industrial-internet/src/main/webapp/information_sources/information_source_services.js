@@ -11,7 +11,7 @@ informationSources.factory('InformationSource', ['$resource',
     function($resource) {
         return $resource('1.0/sources/:sourceid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
-            query: {method: 'GET', params: {sourceid: 'list'}, isArray: true},
+            query: {method: 'GET', params: {action: 'list'}, isArray: true},
             edit: {method: 'POST', params: {action: 'edit'}},
             save: {method: 'POST', params: {action: 'add'}},
             delete: {method: 'DELETE', params: {action: 'delete'}}
