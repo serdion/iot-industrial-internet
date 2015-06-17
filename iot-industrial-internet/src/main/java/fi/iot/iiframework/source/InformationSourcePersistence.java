@@ -18,7 +18,7 @@ public interface InformationSourcePersistence {
 
     List<InformationSource> loadSourcesFromDB();
 
-    void updateSourceWithSensors(InformationSource source, List<Sensor> sensors);
+    void updateSensorsForSource(InformationSource source, List<Sensor> sensors);
     
     InformationSource updateSource(InformationSource source);
     

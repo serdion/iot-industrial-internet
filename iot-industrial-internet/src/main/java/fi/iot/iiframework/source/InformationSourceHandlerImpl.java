@@ -64,10 +64,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      */
     private void schedule() {
         scheduler.cancel();
-//        if (source.isActive() && source.getReadFrequency() > 0) {
-//            scheduler.schedule(source.getReadFrequency(), this::readAndWrite);
-//            System.out.println("Frequently runnable task created");
-//        }
 
         if (source.isActive() && source.getStartDate() != null) {
             switch (source.getReadInterval()) {
@@ -111,11 +107,13 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
 
     @Override
     public void readAndWrite() {
+        source.setLastReadout(System.currentTimeMillis());
         List<Sensor> sensors = read();
         if (sensors == null) {
             return;
         }
-        persistence.updateSourceWithSensors(source, sensors);
+        persistence.updateSource(source);
+        persistence.updateSensorsForSource(source, sensors);
     }
 
     @Override

@@ -31,16 +31,18 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     public List<InformationSource> loadSourcesFromDB() {
         return sourceService.getAll();
     }
+    
 
     @Override
     @Transactional
-    public void updateSourceWithSensors(InformationSource source, List<Sensor> sensors) {
+    public void updateSensorsForSource(InformationSource source, List<Sensor> sensors) {
         final InformationSource src = sourceService.get(source.getId());
         sensors.forEach(s -> {
             s.setSource(src);
             src.getSensors().add(s);
         });
         addNewReadouts(src, sensors);
+        sourceService.save(src);
     }
 
     private void addNewReadouts(InformationSource source, List<Sensor> sensors) {
