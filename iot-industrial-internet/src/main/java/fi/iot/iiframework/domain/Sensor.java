@@ -54,14 +54,16 @@ public class Sensor implements Serializable {
 
     @XmlAttribute
     protected String unit;
-    
+
     protected boolean active;
-    
+
     protected double thresholdMax;
-    
+
     protected double thresholdMin;
 
     public Sensor() {
+        thresholdMax = Integer.MAX_VALUE;
+        thresholdMin = Integer.MIN_VALUE;
     }
 
     public Sensor(String name) {
