@@ -13,7 +13,7 @@ import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.restapi.exceptions.RestAPIExceptionObject;
+import fi.iot.iiframework.restapi.exceptions.TooManyRequestsException;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.source.InformationSourceManager;
 import java.util.HashMap;
@@ -142,9 +142,9 @@ public class InformationSourceController {
     @Secured({"ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/read", produces = "application/json")
     @ResponseBody
-    public RestAPIExceptionObject readInformationSource(
+    public String readInformationSource(
             @PathVariable long sourceid
-    ) {
+    ) throws TooManyRequestsException {
         if (lastRequests.containsKey(sourceid) && lastRequestTooClose(sourceid)) {
             ErrorLogger.log(
                     ErrorType.NOT_ACCEPTED,
@@ -152,17 +152,13 @@ public class InformationSourceController {
                     "Too many requests.",
                     "Read request can only be done every 10 seconds for a single informationSource"
             );
-            return new RestAPIExceptionObject(
-                    ErrorType.NOT_ACCEPTED,
-                    "Too many requests."
-            );
+            throw new TooManyRequestsException();
         }
+
         informationSourceManager.readSource(sourceid);
         lastRequests.put(sourceid, System.currentTimeMillis());
-        return new RestAPIExceptionObject(
-                ErrorType.SUCCESS,
-                "Source read operation command transmitted succesfully."
-        );
+
+        return "Source ["+ sourceid +"] was read successfully.";
     }
 
     private boolean lastRequestTooClose(long sourceid) {

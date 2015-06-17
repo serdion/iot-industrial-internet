@@ -23,7 +23,6 @@ public enum ErrorType {
     INVALID_OBJECT("Invalid Object", "INVALID_OBJECT"),
     HTTP_ERROR("HTTP or HTTPS Error", "HTTP_ERROR"),
     ERRONOUS_DATA("Erronous Data", "ERRONOUS_DATA"),
-    SUCCESS("Success", "SUCCESS"),
     UNKNOWN_ERROR("Unknown error", "UNKNOWN_ERROR");
 
     private final String name;
