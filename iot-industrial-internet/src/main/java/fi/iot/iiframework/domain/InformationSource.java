@@ -67,7 +67,7 @@ public class InformationSource implements Serializable, Validatable {
      */
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date startDate;
-    
+
     /**
      * The interval for reading after a specified date/time (for example
      * weekly).
@@ -97,6 +97,10 @@ public class InformationSource implements Serializable, Validatable {
         } catch (MalformedURLException ex) {
             return false;
         }
+
+//        if (readInterval == readInterval.OTHER) {
+//            return startDate != null && readInterval != null && otherInterval > 0;
+//        }
 
         return startDate != null && readInterval != null;
     }
