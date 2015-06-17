@@ -42,6 +42,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
@@ -232,7 +237,7 @@
     <build>
         <finalName>ROOT</finalName>
         <plugins>
-<!--            <plugin>
+            <!--            <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
@@ -308,7 +313,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <executions>
-<!--                    <execution>
+                    <!--                    <execution>
                         <id>Install NPM dependencies</id>
                         <phase>prepare-package</phase>
                         <goals>
