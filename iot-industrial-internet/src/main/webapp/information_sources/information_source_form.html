@@ -37,13 +37,14 @@
                         <label>Repeat?</label>
                         <div class="btn-group">
                             <label class="btn btn-primary" type="radio" ng-model="radioModel" value="NEVER" btn-radio="'NEVER'">Never</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="HOURLY" btn-radio="'HOURLY'">Hourly</label>
                             <label class="btn btn-primary" type="radio" ng-model="radioModel" value="DAILY" btn-radio="'DAILY'">Daily</label>
                             <label class="btn btn-primary" type="radio" ng-model="radioModel" value="WEEKLY" btn-radio="'WEEKLY'">Weekly</label>
                             <label class="btn btn-primary" type="radio" ng-model="radioModel" value="MONTHLY" btn-radio="'MONTHLY'">Monthly</label>
                             <label ng-click="showField = !showField" class="btn btn-primary" type="radio" ng-model="radioModel" value="OTHER" btn-radio="'OTHER'">Other</label>
                         </div>
                         <div ng-show="showField" class="input-group">
-                            <input type="text" class="form-control" name="is_freq" ng-model="other" placeholder="Read Interval as Seconds" />
+                            <input type="text" class="form-control" name="otherInterval" ng-model="otherInterval" placeholder="Read Interval as Seconds" />
                             <span class="input-group-addon">seconds</span>
                         </div>
                         <br>
