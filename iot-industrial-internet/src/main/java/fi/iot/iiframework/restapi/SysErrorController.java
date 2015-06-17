@@ -6,21 +6,16 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
-import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.services.errors.ErrorService;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
+import fi.iot.iiframework.services.errors.ErrorService;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/errors")
@@ -33,28 +28,28 @@ public class SysErrorController {
     private RestAPIHelper helper;
 
     @Autowired
-    private ApplicationSettings settings;
-
-    @Autowired
     private CriterionFactory criterionfactory;
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{errorid}/view", produces = "application/json")
     @ResponseBody
     public SysError getError(
-            @PathVariable String errorid,
+            @PathVariable long errorid,
             @RequestParam(required = false) Map<String, String> params
     ) {
         return errorservice.get(errorid);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrors(
             @RequestParam(required = false) Map<String, String> params
     ) {
-        return errorservice.getBy(0, settings.getDefautAmountOfErrorsRetrievedFromDatabase(), createCriterion(params));
+        return errorservice.getBy(0, 25, createCriterion(params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrorsAmount(
@@ -65,6 +60,7 @@ public class SysErrorController {
         return errorservice.getBy(0, amount, createCriterion(params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<SysError> listErrorsFromTo(

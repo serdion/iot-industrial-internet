@@ -39,10 +39,11 @@ public class ErrorLogger {
      * @param type ErrorType of error
      * @param severity ErrorSeverity of error
      * @param desc Description of error
-     * @param location Location of the error
+     * @param additionalInformation Additional information about this error.
      */
-    public static void log(ErrorType type, ErrorSeverity severity, String desc, String location) {
-        SysError error = new SysError(type, severity, sanitizeString(desc), sanitizeString(location));
+    public static void log(ErrorType type, ErrorSeverity severity, String desc, String additionalInformation) {
+        SysError error = new SysError(type, severity, sanitizeString(desc));
+        error.setAdditionalInformation(sanitizeString(additionalInformation));
         saveError(error);
     }
 
@@ -68,13 +69,13 @@ public class ErrorLogger {
     /**
      * Saves a predefined SysError to the database
      *
-     * @param error
+     * @param error Error to add
      */
     public static void log(SysError error) {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         error.setLocation(stackTraceElements[2].toString());
         error.setDescription(sanitizeString(error.getDescription()));
-        
+        error.setAdditionalInformation(sanitizeString(error.getAdditionalInformation()));
         saveError(error);
     }
 
@@ -85,7 +86,6 @@ public class ErrorLogger {
      */
     private static void saveError(SysError error) {
         gService.save(error);
-        System.out.println("Error:\t --- "+ error);
     }
 
     public static List<SysError> getAllErrors() {

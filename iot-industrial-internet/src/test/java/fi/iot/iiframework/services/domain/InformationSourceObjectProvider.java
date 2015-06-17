@@ -6,15 +6,17 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -22,6 +24,20 @@ import java.util.UUID;
  * @author atte
  */
 public class InformationSourceObjectProvider {
+    
+    public static Set<Sensor> provideSensorsWithChildren(InformationSource parent) {
+        Set<Sensor> sensors = new HashSet<>();
+        for (int i = 0; i < 3; i++) {
+            Sensor s = provideSensor();
+            s.setSource(parent);
+            for (int j = 0; j < 3; j++) {
+                s.getReadouts().add(provideReadout(s));
+            }
+            sensors.add(s);
+        }
+        parent.setSensors(sensors);
+        return sensors;
+    }
 
     public static List<Sensor> provideSensorsWithChildren() {
         List<Sensor> sensors = new ArrayList<>();
@@ -38,8 +54,10 @@ public class InformationSourceObjectProvider {
 
     public static Sensor provideSensor() {
         Sensor sensor = new Sensor();
-        sensor.setSensorId(getUUID());
+        sensor.setName(getUUID());
         sensor.setReadouts(new HashSet<>());
+        sensor.setQuantity("Temperature");
+        sensor.setUnit("°C");
 
         return sensor;
     }
@@ -49,14 +67,19 @@ public class InformationSourceObjectProvider {
         r.setSensor(s);
         return r;
     }
+    
+    static int index = 0;
 
     public static Readout provideReadout() {
         Readout readout = new Readout();
-        readout.setTime(System.currentTimeMillis() + randInt(-100, 100));
-        readout.setQuantity("Temperature");
-        readout.setUnit("°C"); // Celsius
+        readout.setTime(System.currentTimeMillis() + index++);
 
-        DecimalFormat df = new DecimalFormat("#.00");
+        // This might fix the problems with different locales 
+        // expecting decimal separator to be comma or period
+        
+        NumberFormat nformat = NumberFormat.getNumberInstance(Locale.ENGLISH);
+        DecimalFormat df = (DecimalFormat) nformat;
+        
         String format = df.format(randDouble(22.1));
 
         readout.setValue(Double.parseDouble(format));

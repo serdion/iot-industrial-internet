@@ -6,40 +6,69 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
-public interface InformationSourceManager {
+/**
+ *
+ * Creates and manages objects that represent external data sources
+ */
+@Service
+public class InformationSourceManager {
+
+    private final Map<Long, InformationSourceHandler> sources;
+
+    private InformationSourcePersistence persistence;
+
+    @Autowired
+    public InformationSourceManager(InformationSourcePersistence persistence) {
+        this.persistence = persistence;
+        this.sources = new HashMap<>();
+    }
+
+    @PostConstruct
+    public void loadSourcesFromDb() {
+        List<InformationSource> sources = persistence.loadSourcesFromDB();
+        sources.forEach(c -> createSource(c));
+    }
+
+    public void createSource(InformationSource source) {
+        source = persistence.addSource(source);
+        InformationSourceHandler sourceHandler
+                = new InformationSourceHandlerImpl(source, persistence);
+        sources.put(source.getId(), sourceHandler);
+    }
+
+    public void removeSource(long id) {
+        persistence.deleteSource(sources.get(id).getSource());
+        sources.get(id).close();
+        sources.remove(id);
+    }
+
+    public void updateSource(InformationSource config) {
+        config = persistence.updateSource(config);
+        sources.get(config.getId()).setSource(config);
+    }
+
+    @Async
+    public void readSource(long id) {
+        InformationSourceHandler source = sources.get(id);
+        source.readAndWrite();
+    }
 
     /**
+     * Returns map of sources.
      *
-     * Creates an object that represents an external data source
-     *
-     * @param config the new configuration for this data source
+     * @return
      */
-    public void createSource(InformationSourceConfiguration config);
+    public Map<Long, InformationSourceHandler> getSources() {
+        return sources;
+    }
 
-    /**
-     * Deletes the object that represents an external data source defined by the
-     * id.
-     *
-     * @param id id of source to be deleted
-     */
-    public void removeSource(String id);
-
-    /**
-     *
-     * Updates the configuration information of an object that represents an
-     * external data source
-     *
-     * @param config the new configuration that will replace the previous one
-     */
-    public void updateSource(InformationSourceConfiguration config);
-
-    /**
-     * Reads a source and returns true if the read succeeded.
-     *
-     * @param id Source id
-     * @return true if read succeeded
-     */
-    public boolean readSource(String id);
 }

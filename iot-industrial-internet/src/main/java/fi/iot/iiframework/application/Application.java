@@ -6,27 +6,40 @@
  */
 package fi.iot.iiframework.application;
 
+import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.domain.IntervalType;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
-import fi.iot.iiframework.source.InformationSourceManagerImpl;
+import fi.iot.iiframework.source.InformationSourceManager;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableAsync
+@EnableScheduling
 @SpringBootApplication
 @ComponentScan("fi.iot.iiframework")
-public class Application {
+public class Application extends SpringBootServletInitializer{
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
+        return application.sources(Application.class);
+    }
 
     public static final Logger logger = Logger.getLogger(Application.class.getName());
 
@@ -38,40 +51,15 @@ public class Application {
     }
 
     private static void initTestData(ApplicationContext ctx) throws JAXBException, IOException {
-        InformationSourceManagerImpl infSourceManager = ctx.getBean(InformationSourceManagerImpl.class);
+        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
 
-        InformationSourceConfiguration config = new InformationSourceConfiguration();
+        InformationSource config = new InformationSource();
         config.setName("Example Config");
-        config.setType(InformationSourceType.XML);
-        config.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
+        config.setType(InformationSourceType.JSON);
+        config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
         config.setActive(true);
-        config.setReadFrequency(100 * 1000);
+        config.setStartDate(new Date());
+        config.setReadInterval(IntervalType.HOURLY);
         infSourceManager.createSource(config);
-
-        SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
-        ErrorLogger.log(e);
-
-        SysError e2 = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.HIGH, "This is an another test error");
-        ErrorLogger.log(e2);
-
-        SysError e3 = new SysError(ErrorType.TIMEOUT_ERROR, ErrorSeverity.FATAL, "This is an another test error");
-        ErrorLogger.log(e3);
-
-        SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
-        ErrorLogger.log(e4);
-
-        /*        
-        DeviceConfigurationService deviceConfService = ctx.getBean(DeviceConfigurationService.class);
-        DeviceService seviceServiceImpl = ctx.getBean(DeviceService.class);
-        
-        Device device = seviceServiceImpl.getAll().get(0);
-        
-        DeviceConfiguration conf = new DeviceConfiguration();
-        conf.setDevice(device);
-        conf.setActive(false);
-        
-        deviceConfService.save(conf);
-        */
-
     }
 }

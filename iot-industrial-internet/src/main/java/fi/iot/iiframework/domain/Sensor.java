@@ -8,56 +8,88 @@ package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "sensor")
 @Data
-@EqualsAndHashCode(exclude = {"readouts"})
-@ToString(exclude = {"readouts"})
+@ToString(exclude = {"readouts", "source"})
 public class Sensor implements Serializable {
-    
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    protected String id;
 
-    @XmlAttribute(name = "id")
-    protected String sensorId;
+    @Id
+    @GeneratedValue
+    protected Long id;
+
+    @XmlAttribute(name = "name")
+    protected String name;
 
     @JsonIgnore
     @XmlElement(name = "readout")
     @XmlElementWrapper(name = "readouts")
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.REMOVE})
-    protected Set<Readout> readouts;
+    @Cascade({CascadeType.ALL})
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    protected Set<Readout> readouts = new HashSet<>();
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source", nullable = false, updatable = false)
-    @Cascade({CascadeType.SAVE_UPDATE})
-    protected InformationSourceConfiguration source;
-    
-    @JsonIgnore
-    @OneToOne(targetEntity = SensorConfiguration.class, fetch = FetchType.EAGER)
-    protected SensorConfiguration sensorConfiguration;
-    
-    protected String name;
+    protected InformationSource source;
+
+    @XmlAttribute
+    protected String quantity;
+
+    @XmlAttribute
+    protected String unit;
+
+    protected boolean active;
+
+    protected double thresholdMax;
+
+    protected double thresholdMin;
 
     public Sensor() {
+        thresholdMax = Integer.MAX_VALUE;
+        thresholdMin = Integer.MIN_VALUE;
     }
 
-    public Sensor(String id) {
-        this.sensorId = id;
+    public Sensor(String name) {
+        this.name = name;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        hash = 97 * hash + Objects.hashCode(this.source == null ? this.source.id : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sensor other = (Sensor) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return (this.source == null ? other.source == null : this.source.id.equals(other.source.id));
+    }
+
 }

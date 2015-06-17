@@ -13,13 +13,28 @@ import org.hibernate.criterion.Criterion;
 public interface GenericDAO<T, ID extends Serializable> {
 
     /**
-     * Save an object to database
+     * Save an object to database.
      *
      * @param t object to be saved
      * @return T
      */
     public T save(T t);
 
+    /**
+     * Persist an object to database.
+     * 
+     * @param t
+     * @return 
+     */
+    public T merge(T t);
+    
+    /**
+     * Update an object in the database.
+     * @param t
+     * @return 
+     */
+    public T update(T t);
+    
     /**
      * Get an object with the given id
      *
@@ -54,4 +69,8 @@ public interface GenericDAO<T, ID extends Serializable> {
     public List<T> findByCriteriaFromTo(int from, int to, List<Criterion> list);
 
     public Long countByCriteria(List<Criterion> list);
+
+    public void flush();
+    
+    public void clear();
 }

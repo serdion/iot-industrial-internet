@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.application.ApplicationSettings;
+import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
@@ -18,11 +18,8 @@ import java.util.Map;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("1.0/readouts")
@@ -35,28 +32,27 @@ public class ReadoutController {
     private ReadoutService readoutservice;
 
     @Autowired
-    private ApplicationSettings settings;
-
-    @Autowired
     private CriterionFactory criterionfactory;
 
     @Autowired
     private RestAPIHelper helper;
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsList(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         Sensor sensor = (Sensor) helper.returnOrException(sensorservice.get(sensorid));
-        return readoutservice.getBy(0, settings.getDefaultAmountOfReadoutsRetrievedFromDatabase(), createCriterion(sensor, params));
+        return readoutservice.getBy(0, 10000, createCriterion(sensor, params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsAmount(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
@@ -65,10 +61,11 @@ public class ReadoutController {
         return readoutservice.getBy(0, amount, createCriterion(sensor, params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<Readout> listReadoutsFromTo(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params
@@ -78,6 +75,7 @@ public class ReadoutController {
         return readoutservice.getBy(from, to, createCriterion(sensor, params));
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{readoutid}/view", produces = "application/json")
     @ResponseBody
     public Readout getReadout(
@@ -92,4 +90,21 @@ public class ReadoutController {
         readoutCriterion.add(Restrictions.eq("sensor", sensor));
         return readoutCriterion;
     }
+
+    public void setCriterionfactory(CriterionFactory criterionfactory) {
+        this.criterionfactory = criterionfactory;
+    }
+
+    public void setHelper(RestAPIHelper helper) {
+        this.helper = helper;
+    }
+
+    public void setReadoutservice(ReadoutService readoutservice) {
+        this.readoutservice = readoutservice;
+    }
+
+    public void setSensorservice(SensorService sensorservice) {
+        this.sensorservice = sensorservice;
+    }
+
 }

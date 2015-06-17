@@ -8,23 +8,30 @@
 var informationSources = angular.module('informationSources', ['ngResource']);
 
 informationSources.factory('InformationSource', ['$resource',
-    function ($resource) {
-        return $resource('1.0/informationsources/:informationsourceid/:action', {}, {
+    function($resource) {
+        return $resource('1.0/sources/:sourceid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
-            query: {method: 'GET', params: {informationsourceid: 'list'}, isArray: true}
+            query: {method: 'GET', params: {action: 'list'}, isArray: true},
+            read: {method: 'GET', params: {action: 'read'}},
+            edit: {method: 'POST', params: {action: 'edit'}},
+            save: {method: 'POST', params: {action: 'add'}},
+            delete: {method: 'DELETE', params: {action: 'delete'}}
         });
     }]);
+
 
 informationSources.factory('Sensor', ['$resource',
-    function ($resource) {
-        return $resource('1.0/sensors/:informationsourceid/:sensorid/:action', {}, {
+    function($resource) {
+        return $resource('1.0/sensors/:sourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
-            query: {method: 'GET', params: {action: 'list'}, isArray: true}
+            query: {method: 'GET', params: {action: 'list'}, isArray: true},
+            edit: {method: 'POST', params: {action: 'edit'}}
         });
     }]);
 
+
 informationSources.factory('Readout', ['$resource',
-    function ($resource) {
+    function($resource) {
         return $resource('1.0/readouts/:sensorid/:action', {}, {
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });

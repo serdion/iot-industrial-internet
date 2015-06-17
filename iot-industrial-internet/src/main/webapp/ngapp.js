@@ -10,7 +10,6 @@ var IIFramework = angular.module('IIFramework', [
     'ngRoute',
     'angular-flot',
     'informationSources',
-    'configurations',
     'sysErrors',
     'angularMoment',
     'ui.bootstrap'
@@ -30,27 +29,26 @@ IIFramework.config(function ($routeProvider) {
                 controller: 'InformationSourcesController',
                 templateUrl: 'information_sources/list.html'
             })
-            .when('/sources/:informationsourceid', {
+            .when('/sources/add', {
+                controller: 'AddInformationSourceController',
+                templateUrl: 'information_sources/information_source_form.html'
+            })
+            .when('/sources/:sourceid', {
                 controller: 'InformationSourceController',
                 templateUrl: 'information_sources/view.html'
             })
+            .when('/sources/:sourceid/edit', {
+                controller: 'EditInformationSourceController',
+                templateUrl: 'information_sources/information_source_form.html'
+            })
             .when('/sensors/:sensorid', {
                 controller: 'SensorController',
-                templateUrl: 'information_sources/sensor.html'
+                templateUrl: 'sensors/sensor.html'
             })
-            .when('/configurations', {
-                controller: 'InformationSourceConfigurationsController',
-                templateUrl: 'configurations/configurations.html'
+            .when('/sensors/:sensorid/edit', {
+                controller: 'SensorController',
+                templateUrl: 'sensors/edit.html'
             })
-            .when('/configurations/add', {
-                controller: 'AddInformationSourceController',
-                templateUrl: 'configurations/information_source_form.html'
-            })
-            .when('/configurations/:configid/edit', {
-                controller: 'EditInformationSourceController',
-                templateUrl: 'configurations/information_source_form.html'
-            })
-
             // Controllers for SysErrors
             .when('/syserrors/:errorid', {
                 controller: 'SysErrorDetailsController',

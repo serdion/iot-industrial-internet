@@ -6,19 +6,19 @@
  */
 package fi.iot.iiframework.services.domain;
 
-import fi.iot.iiframework.domain.InformationSourceConfiguration;
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.GenericService;
 import java.util.List;
 
-public interface SensorService extends GenericService<Sensor, String> {
+public interface SensorService extends GenericService<Sensor, Long> {
 
     /**
      * Gets all sensors associated with the given configuration.
      * @param source
      * @return 
      */
-    public List<Sensor> getBy(InformationSourceConfiguration source);
+    public List<Sensor> getBy(InformationSource source);
 
     /**
      * Gets sensors associated with the given device from the given range.
@@ -27,12 +27,12 @@ public interface SensorService extends GenericService<Sensor, String> {
      * @param source
      * @return 
      */
-    public List<Sensor> getBy(int from, int to, InformationSourceConfiguration source);
+    public List<Sensor> getBy(int from, int to, InformationSource source);
     
     /**
      * Returns number of sensors associated with the given device
      * @param source
      * @return 
      */
-    public Long countBy(InformationSourceConfiguration source);
+    public Long countBy(InformationSource source);
 }

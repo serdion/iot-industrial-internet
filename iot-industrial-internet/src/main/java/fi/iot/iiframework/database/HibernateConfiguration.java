@@ -11,6 +11,8 @@ import java.beans.PropertyVetoException;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
+import javax.xml.ws.Action;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,7 +26,6 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 public class HibernateConfiguration {
 

@@ -21,8 +21,18 @@ public class GenericHibernateService<T, ID extends Serializable>
     protected GenericDAO dao;
 
     @Override
-    public void save(T t) {
-        dao.save(t);
+    public T save(T t) {
+        return (T) dao.save(t);
+    }
+    
+    @Override
+    public T update(T t) {
+        return (T) dao.update(t);
+    }
+    
+    @Override
+    public T merge(T t) {
+        return (T) dao.merge(t);
     }
 
     @Override
@@ -67,8 +77,19 @@ public class GenericHibernateService<T, ID extends Serializable>
     }
 
     @Override
-    public void save(List<T> lt) {
+    public List<T> save(List<T> lt) {
         lt.forEach(t -> dao.save(t));
+        return lt;
+    }
+    
+    @Override
+    public void flush() {
+        dao.flush();
+    }
+    
+    @Override
+    public void clear() {
+        dao.clear();
     }
 
 }

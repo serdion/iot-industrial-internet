@@ -55,15 +55,15 @@
 
                             <ul class="dropdown-menu dropdown-alerts" >
 
-                                <li ng-repeat="error in alarmlist">
+                                <li ng-repeat="error in alarmlist | limitTo:5">
                                     <a href="#/syserrors/{{error.id}}">
                                         <div>
                                             <div ng-if="error.severity == 'FATAL'">
                                                 <font color="red">
-                                                    <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.type}}</font>
+                                                    <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.name}}</font>
                                             </div>
                                             <div ng-if="error.severity != 'FATAL'">
-                                                <i class="fa fa-bell fa-fw"></i>{{error.type}} 
+                                                <i class="fa fa-bell fa-fw"></i>{{error.name}}
                                             </div>
                                             <span class="pull-right text-muted small" am-time-ago=error.time></span>
                                         </div>
@@ -115,9 +115,6 @@
                                     <ul class="nav nav-second-level">
                                         <li>
                                             <a th:href="@{#/sources/}"><i class="fa fa-upload fa-fw"></i> Information Sources</a>
-                                        </li>
-                                        <li>
-                                            <a th:href="@{#/configurations/}"><i class="fa fa-cogs fa-fw"></i> Configurations</a>
                                         </li>
                                         <li>
                                             <a th:href="@{#}"><i class="fa fa-database fa-fw"></i> Database</a>
@@ -174,12 +171,11 @@
         <script th:attr="src=@{/dist/js/sb-admin-2.js}"></script>
 
         <script th:attr="src=@{/ngapp.js}"></script>
+        <script th:attr="src=@{/lib/lib.js}"></script>
         <script th:attr="src=@{/front_controller.js}"></script>
         <script th:attr="src=@{/information_sources/visual_realtime_controller.js}"></script>
         <script th:attr="src=@{/information_sources/information_source_services.js}"></script>
         <script th:attr="src=@{/information_sources/information_source_controllers.js}"></script>
-        <script th:attr="src=@{/configurations/configuration_services.js}"></script>
-        <script th:attr="src=@{/configurations/configuration_controllers.js}"></script>
         <script th:attr="src=@{/syserrors/syserror_services.js}"></script>
         <script th:attr="src=@{/syserrors/syserror_controllers.js}"></script>
         <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap.min.js}"></script>

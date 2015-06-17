@@ -6,10 +6,9 @@
  */
 package fi.iot.iiframework.source;
 
-import fi.iot.iiframework.application.Application;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
 
 public class ReadSchedulerImpl implements ReadScheduler {
 
@@ -22,15 +21,38 @@ public class ReadSchedulerImpl implements ReadScheduler {
 
             @Override
             public void run() {
-                Application.logger.log(
-                        Level.INFO, 
-                        "Task was run. Currently software has {0} threads.",
-                        Thread.activeCount()
-                );
                 runnable.run();
             }
 
         }, 0, interval);
+
+    }
+
+    @Override
+    public void scheduleAtSpecificInterval(final long interval, final Date startDate, final Date endDate, final Runnable runnable) {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                runnable.run();
+            }
+
+        }, startDate, interval);
+
+    }
+
+    @Override
+    public void scheduleOnlyOnce(final Date startDate, final Runnable runnable) {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                runnable.run();
+            }
+
+        }, startDate);
 
     }
 

@@ -1,3 +1,4 @@
+package fi.iot.iiframework.database;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.beans.PropertyVetoException;
@@ -17,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource("classpath:application-test.properties")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @ActiveProfiles(profiles = "test")
 public class TestHibernateConfig {
@@ -72,7 +73,6 @@ public class TestHibernateConfig {
         properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
         properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
         properties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
-        properties.put("show_sql", "true");
         properties.put("cache.provider_class", "org.hibernate.cache.internal.NoCacheProvider");
         return properties;
     }

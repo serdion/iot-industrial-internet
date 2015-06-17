@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.errors;
 
-import java.util.Date;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -19,7 +18,7 @@ public class SysErrorTest {
 
     @BeforeClass
     public static void setUpClass() {
-        testErrors = new SysError[3];
+        testErrors = new SysError[4];
 
     }
 
@@ -28,6 +27,8 @@ public class SysErrorTest {
         testErrors[0] = new SysError(ErrorType.BAD_CONFIGURATION, ErrorSeverity.NOTIFICATION, "Hello");
         testErrors[1] = new SysError(ErrorType.TIMEOUT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
         testErrors[2] = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
+        testErrors[3] = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh", "additional info");
+
     }
 
     @After
@@ -41,8 +42,26 @@ public class SysErrorTest {
     }
 
     @Test
-    public void correctDescriptionSaved() {
+    public void correctDescriptionNameSeveritySaved() {
         assertTrue(testErrors[2].getDescription().equals("muh"));
+        assertTrue(testErrors[2].getName().equals(ErrorType.CONFLICT_ERROR.getName()));
+        assertTrue(testErrors[2].getSeverity().equals(ErrorSeverity.NOTIFICATION));
+    }
+
+    @Test
+    public void equalsItself() {
+        assertTrue(testErrors[2].equals(testErrors[2]));
+        assertFalse(testErrors[2].equals(testErrors[3]));
+        SysError e = new SysError(testErrors[2].getType(), testErrors[2].getSeverity(), testErrors[2].getDescription());
+        assertTrue(testErrors[2].equals(e));
+    }
+
+    @Test
+    public void correctHashCodes() {
+        assertFalse(testErrors[1].hashCode() == testErrors[2].hashCode());
+        SysError e = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
+        SysError e2 = e;
+        assertTrue(e.hashCode() == e2.hashCode());
     }
 
     @Test
@@ -52,7 +71,7 @@ public class SysErrorTest {
     }
 
     @Test
-    public void changedDescpritionSaved() {
+    public void changedDescritionSaved() {
         testErrors[2].setDescription("test");
         assertTrue(testErrors[2].getDescription().equals("test"));
     }
