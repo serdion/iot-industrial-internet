@@ -21,7 +21,7 @@ public class SysError implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private String id;
+    private Long id;
 
     @Column(name = "type")
     private ErrorType type;

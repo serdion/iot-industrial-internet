@@ -36,7 +36,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "informationsources")
 @Data
-@EqualsAndHashCode(exclude = {"id", "readFrequency", "sensors"})
+@EqualsAndHashCode(of = {"url", "type"})
 @ToString(exclude = {"sensors"})
 public class InformationSource implements Serializable, Validatable {
 
@@ -45,7 +45,7 @@ public class InformationSource implements Serializable, Validatable {
      */
     @Id
     @GeneratedValue
-    protected String id;
+    protected Long id;
     /**
      * Information source name.
      */
@@ -59,7 +59,7 @@ public class InformationSource implements Serializable, Validatable {
      */
     protected String url;
     /**
-     * Read in intervals TODO: handle this intelligently.
+     * Read in intervals.
      */
     protected boolean active = true;
     /**

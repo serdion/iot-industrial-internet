@@ -7,41 +7,75 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
-public interface InformationSourceManager {
+/**
+ *
+ * Creates and manages objects that represent external data sources
+ */
+@Service
+public class InformationSourceManager {
+
+    private final Map<Long, InformationSourceHandler> sources;
+
+    @Autowired
+    private InformationSourcePersistence persistence;
+
+    public InformationSourceManager() {
+        this.sources = new HashMap<>();
+    }
+
+    @PostConstruct
+    public void loadConfigFromDB() {
+        List<InformationSource> sources = persistence.loadSourcesFromDB();
+        sources.forEach(c -> createSource(c));
+    }
+
+    public void createSource(InformationSource config) {
+        config = persistence.addSource(config);
+        InformationSourceHandler source = new InformationSourceHandlerImpl(config, persistence);
+        sources.put(config.getId(), source);
+    }
+
+    public void removeSource(long id) {
+        persistence.deleteSource(sources.get(id).getConfig());
+        sources.get(id).close();
+        sources.remove(id);
+    }
+
+    public void updateSource(InformationSource config) {
+        config = persistence.updateSource(config);
+        sources.get(config.getId()).setConfig(config);
+    }
+
+    @Async
+    public void readSource(long id) {
+        InformationSourceHandler source = sources.get(id);
+        source.readAndWrite();
+    }
 
     /**
+     * Returns map of sources.
      *
-     * Creates an object that represents an external data source
-     *
-     * @param config the new configuration for this data source
+     * @return
      */
-    public void createSource(InformationSource config);
+    public Map<Long, InformationSourceHandler> getSources() {
+        return sources;
+    }
 
     /**
-     * Deletes the object that represents an external data source defined by the
-     * id.
+     * Sets the class for persistence.
      *
-     * @param id id of source to be deleted
+     * @param persistence
      */
-    public void removeSource(String id);
+    public void setPersistence(InformationSourcePersistence persistence) {
+        this.persistence = persistence;
+    }
 
-    /**
-     *
-     * Updates the configuration information of an object that represents an
-     * external data source
-     *
-     * @param config the new configuration that will replace the previous one
-     */
-
-    public void updateSource(InformationSource config);
-
-
-    /**
-     * Reads a source and returns true if the read succeeded.
-     *
-     * @param id Source id
-     * @return true if read succeeded
-     */
-    public void readSource(String id);
 }

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class ErrorServiceImpl extends GenericHibernateService<SysError, String> implements ErrorService {
+public class ErrorServiceImpl extends GenericHibernateService<SysError, Long> implements ErrorService {
     
     @Autowired
     public ErrorServiceImpl(ErrorDAO dao) {

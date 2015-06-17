@@ -15,7 +15,7 @@ import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.restapi.exceptions.RestAPIExceptionObject;
 import fi.iot.iiframework.services.domain.InformationSourceService;
-import fi.iot.iiframework.source.InformationSourceManagerImpl;
+import fi.iot.iiframework.source.InformationSourceManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class InformationSourceController {
     private RestAPIHelper helper;
 
     @Autowired
-    private InformationSourceManagerImpl informationSourceManager;
+    private InformationSourceManager informationSourceManager;
 
     @Autowired
     private InformationSourceService informationSourceService;
@@ -42,7 +42,7 @@ public class InformationSourceController {
     @RequestMapping(value = "/{sourceid}/view", produces = "application/json")
     @ResponseBody
     public InformationSource getInformationSource(
-            @PathVariable String sourceid,
+            @PathVariable long sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
         return (InformationSource) helper.returnOrException(informationSourceService.get(sourceid));
@@ -90,7 +90,7 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> deleteInformationSource(
-            @PathVariable String sourceid,
+            @PathVariable long sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
 
@@ -136,14 +136,14 @@ public class InformationSourceController {
     /**
      * Keeps track of when a source was last read.
      */
-    Map<String, Long> lastRequests = new HashMap<>();
+    Map<Long, Long> lastRequests = new HashMap<>();
 
     //TODO: Show the user an error.
     @Secured({"ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/read", produces = "application/json")
     @ResponseBody
     public RestAPIExceptionObject readInformationSource(
-            @PathVariable String sourceid
+            @PathVariable long sourceid
     ) {
         if (lastRequests.containsKey(sourceid) && lastRequestTooClose(sourceid)) {
             ErrorLogger.log(
@@ -152,24 +152,28 @@ public class InformationSourceController {
                     "Too many requests.",
                     "Read request can only be done every 10 seconds for a single informationSource"
             );
+            return new RestAPIExceptionObject(
+                    ErrorType.NOT_ACCEPTED,
+                    "Too many requests."
+            );
         }
         informationSourceManager.readSource(sourceid);
         lastRequests.put(sourceid, System.currentTimeMillis());
         return new RestAPIExceptionObject(
                 ErrorType.SUCCESS,
-                "Invalid parameters found in your request."
+                "Source read operation command transmitted succesfully."
         );
     }
 
-    private boolean lastRequestTooClose(String sourceid) {
-        return lastRequests.get(sourceid) - System.currentTimeMillis() < 10000;
+    private boolean lastRequestTooClose(long sourceid) {
+        return System.currentTimeMillis() - lastRequests.get(sourceid) < 10000;
     }
 
     public void setInformationSourceService(InformationSourceService informationSourceService) {
         this.informationSourceService = informationSourceService;
     }
 
-    public void setInformationSourceManager(InformationSourceManagerImpl informationSourceManager) {
+    public void setInformationSourceManager(InformationSourceManager informationSourceManager) {
         this.informationSourceManager = informationSourceManager;
     }
 

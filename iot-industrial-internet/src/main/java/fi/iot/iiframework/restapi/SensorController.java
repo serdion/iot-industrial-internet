@@ -38,7 +38,7 @@ public class SensorController {
     @RequestMapping(value = "/{sensorid}/view", produces = "application/json")
     @ResponseBody
     public Sensor getSensor(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         return (Sensor) helper.returnOrException(sensorService.get(sensorid));
@@ -53,7 +53,7 @@ public class SensorController {
     )
     @ResponseBody
     public ResponseEntity<Sensor> editSensor(
-            @PathVariable String sensorid,
+            @PathVariable long sensorid,
             @RequestBody Sensor sensor
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.returnOrException(sourceService.get(sensorid));
@@ -65,7 +65,7 @@ public class SensorController {
     @RequestMapping(value = "/{sourceid}/list", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensors(
-            @PathVariable String sourceid,
+            @PathVariable long sourceid,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
@@ -76,7 +76,7 @@ public class SensorController {
     @RequestMapping(value = "/{sourceid}/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensorsAmount(
-            @PathVariable String sourceid,
+            @PathVariable long sourceid,
             @PathVariable int amount,
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException, InvalidParametersException {
@@ -90,7 +90,7 @@ public class SensorController {
     @RequestMapping(value = "/{sourceid}/list/{from}/{to}", produces = "application/json")
     @ResponseBody
     public List<Sensor> listSensorsFromTo(
-            @PathVariable String sourceid,
+            @PathVariable long sourceid,
             @PathVariable int from,
             @PathVariable int to,
             @RequestParam(required = false) Map<String, String> params

@@ -11,7 +11,7 @@ import fi.iot.iiframework.errors.SysError;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ErrorDAOImpl extends GenericHibernateDAO<SysError, String>
+public class ErrorDAOImpl extends GenericHibernateDAO<SysError, Long>
         implements ErrorDAO {
 
 }

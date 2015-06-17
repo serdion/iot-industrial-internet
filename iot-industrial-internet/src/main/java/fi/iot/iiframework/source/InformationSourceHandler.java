@@ -27,7 +27,6 @@ public interface InformationSourceHandler {
      */
     public List<Sensor> read();
 
-    @Async
     /**
      * Reads an InformationSourceObject and writes it to database.
      *
@@ -44,20 +43,22 @@ public interface InformationSourceHandler {
 
     /**
      * Get the configuration.
-     * @return 
+     *
+     * @return
      */
     public InformationSource getConfig();
-    
+
     /**
      * Stop all read-operations.
      */
     public void close();
 
     /**
-     * Manually set 
-     * @param mockReader 
+     * Manually set
+     *
+     * @param mockReader
      */
     public void setReader(InformationSourceReader mockReader);
-    
+
     public void setScheduler(ReadScheduler scheduler);
 }

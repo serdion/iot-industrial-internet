@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class SensorDAOImpl
-        extends GenericHibernateDAO<Sensor, String>
+        extends GenericHibernateDAO<Sensor, Long>
         implements SensorDAO {
 
     public SensorDAOImpl() {
