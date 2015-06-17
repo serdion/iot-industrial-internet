@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.mutator;
 
+import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,11 @@ public class RemoveSensorIfNotActiveMutator implements Mutator {
     @Override
     public void mutateAll(List<Sensor> sensors) {
         sensors = sensors.stream().filter(p -> p.isActive()).collect(Collectors.toList());
+    }
+
+    @Override
+    public void mutateAll(InformationSource source) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
