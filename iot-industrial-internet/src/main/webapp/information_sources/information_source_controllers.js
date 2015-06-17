@@ -37,7 +37,9 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
     }]);
 
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function ($scope, $routeParams, Sensor, Readout) {
+
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function($scope, $routeParams, Sensor, Readout, $window) {
+
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
 
@@ -54,8 +56,9 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
         $scope.save = function () {
 //            console.log($scope.sensor);
-            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
-                $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
+            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function() {
+                $window.history.back();
+
             });
 
         };
@@ -74,7 +77,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         };
 
         $scope.submit = function () {
-            $scope.is.readFrequency = $scope.readFrequency_s * 1000;
+            $scope.is.otherInterval = $scope.otherInterval * 1000;
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
@@ -116,7 +119,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
-            $scope.readFrequency_s = $scope.is.readFrequency / 1000;
+            $scope.otherInterval = $scope.is.otherInterval / 1000;
             $scope.startDate = $scope.is.startDate;
             $scope.endDate = $scope.is.endDate;
             $scope.radioModel = $scope.is.readInterval;
@@ -126,7 +129,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
             window.history.back();
         };
         $scope.submit = function () {
-            $scope.is.readFrequency = $scope.readFrequency_s * 1000;
+            $scope.is.otherInterval = $scope.otherInterval * 1000;
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
