@@ -47,7 +47,7 @@ public class InformationSourceManagerTest {
         source.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
         source.setType(InformationSourceType.XML);
         source.setActive(false);
-        source.setReadFrequency(0);
+//        source.setReadFrequency(0);
         manager.createSource(source);
     }
 

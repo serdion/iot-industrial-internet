@@ -148,13 +148,13 @@ public class InformationSourceControllerTest {
         assertEquals(foundSource, sourceB);
     }
 
-    @Test
-    public void testEditInformationSource() throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException  {
-        sourceA.setReadFrequency(5555555);
-        controller.editInformationSource(sourceA, null);
-        
-        Mockito.verify(sourceManager, Mockito.times(1)).updateSource(sourceA);
-    }
+//    @Test
+//    public void testEditInformationSource() throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException  {
+//        sourceA.setReadFrequency(5555555);
+//        controller.editInformationSource(sourceA, null);
+//        
+//        Mockito.verify(sourceManager, Mockito.times(1)).updateSource(sourceA);
+//    }
 
     @Test
     public void testDeleteInformationSource() throws InvalidParametersException, ResourceNotFoundException  {
