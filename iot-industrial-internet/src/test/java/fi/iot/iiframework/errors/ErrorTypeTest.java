@@ -10,10 +10,23 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ErrorTypeTest {
+    
+    private void assertType(ErrorType type, String id){
+        assertEquals(ErrorType.getType(id), type);
+    }
 
     @Test
     public void returnsUnknownErrorIfNoProperID() {
-        assertEquals(ErrorType.UNKNOWN_ERROR, ErrorType.getType("sddss"));
+        assertEquals(ErrorType.UNKNOWN_ERROR, ErrorType.getType("Ooppa.fi"));
+    }
+    
+    @Test
+    public void testGetType() {
+        ErrorType[] values = ErrorType.values();
+        
+        for (int i = 0; i < values.length; i++) {
+            assertType(values[i], values[i].getId());
+        }
     }
     
 }

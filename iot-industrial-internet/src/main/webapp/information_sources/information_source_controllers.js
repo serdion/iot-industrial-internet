@@ -19,6 +19,13 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
             });
         };
 
+        $scope.readSource = function (id) {
+            InformationSource.read({sourceid: id}, function () {
+                showSuccess("Read performed");
+            }, function (error) {
+                showError(error.data.message);
+            });
+        };
     }]);
 
 
@@ -30,40 +37,29 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
     }]);
 
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', 'SensorConfiguration', function ($scope, $routeParams, Sensor, Readout, SensorConfiguration) {
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', function ($scope, $routeParams, Sensor, Readout) {
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
+
+
+        //Function to allow reading of sensor.active value into the UI properly
+        $scope.boolToStr = function (arg) {
+            return arg ? 'true' : 'false';
+        };
 
         $scope.filter = function () {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, more: $scope.more, less: $scope.less});
         };
 
 
-        $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
-//        $scope.sensorconflist = SensorConfiguration.query();
-
-
-
-
         $scope.save = function () {
-
-            $scope.configuration = new SensorConfiguration();
-
-            $scope.configuration.quantity = $scope.newconfig.quantity;
-            $scope.configuration.unit = $scope.newconfig.unit;
-
-            $scope.configuration.thresholdMin = $scope.newconfig.thresholdMin;
-            $scope.configuration.thresholdMax = $scope.newconfig.thresholdMax;
-
-            $scope.configuration.$add({sensorid: $routeParams.sensorid}, function () {
-                $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
+//            console.log($scope.sensor);
+            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
+                $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
             });
 
         };
 
-        $scope.refresh = function () {
-            $scope.sensorconf = SensorConfiguration.get({sensorid: $routeParams.sensorid});
-        };
 
 
     }]);
@@ -113,7 +109,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             startingDay: 1
         };
 
-        $scope.radioModel = 'Never';
+        $scope.radioModel = 'NEVER';
     }]);
 
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {

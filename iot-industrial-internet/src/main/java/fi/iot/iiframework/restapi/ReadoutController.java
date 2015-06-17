@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
@@ -89,4 +90,21 @@ public class ReadoutController {
         readoutCriterion.add(Restrictions.eq("sensor", sensor));
         return readoutCriterion;
     }
+
+    public void setCriterionfactory(CriterionFactory criterionfactory) {
+        this.criterionfactory = criterionfactory;
+    }
+
+    public void setHelper(RestAPIHelper helper) {
+        this.helper = helper;
+    }
+
+    public void setReadoutservice(ReadoutService readoutservice) {
+        this.readoutservice = readoutservice;
+    }
+
+    public void setSensorservice(SensorService sensorservice) {
+        this.sensorservice = sensorservice;
+    }
+
 }

@@ -56,7 +56,7 @@ public class SensorController {
             @PathVariable long sensorid,
             @RequestBody Sensor sensor
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        helper.returnOrException(sourceService.get(sensorid));
+        helper.returnOrException(sensorService.get(sensorid));
         sensorService.update(sensor);
         return new ResponseEntity<>(sensor, HttpStatus.CREATED);
     }
