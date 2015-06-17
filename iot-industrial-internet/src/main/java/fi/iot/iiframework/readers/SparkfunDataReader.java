@@ -12,10 +12,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-/**
- *
- * @author atte
- */
 public class SparkfunDataReader implements InformationSourceReader {
 
     @Override
