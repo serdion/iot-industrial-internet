@@ -82,7 +82,6 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
 
         $scope.today = function() {
             $scope.startDate = new Date();
-            $scope.endDate = new Date();
         };
         $scope.today();
 

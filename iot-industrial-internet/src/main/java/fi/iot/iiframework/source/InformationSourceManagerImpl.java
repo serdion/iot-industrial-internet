@@ -59,9 +59,9 @@ public class InformationSourceManagerImpl implements InformationSourceManager {
     }
 
     @Override
-    public boolean readSource(String id) {
+    public void readSource(String id) {
         InformationSourceHandler source = sources.get(id);
-        return source.readAndWrite();
+        source.readAndWrite();
     }
 
     /**

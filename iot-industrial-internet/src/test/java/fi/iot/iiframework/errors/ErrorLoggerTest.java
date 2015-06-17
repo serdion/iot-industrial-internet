@@ -35,21 +35,19 @@ public class ErrorLoggerTest {
 
     @Test
     public void newErrorISCreatedWithoutDescription() {
-        int sizeOfErrorList = ErrorLogger.getAllErrors().size();
         ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "");
         List<SysError> allErrors = ErrorLogger.getAllErrors();
-        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("NaN"));
+        assertTrue(allErrors.get(0).getDescription().equalsIgnoreCase("NaN"));
     }
 
     @Test
     public void newErrorISCreatedWithPresetError() {
 
-        int sizeOfErrorList = ErrorLogger.getAllErrors().size();
         SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "I was added directly...");
         ErrorLogger.log(e);
 
         List<SysError> allErrors = ErrorLogger.getAllErrors();
-        assertTrue(allErrors.get(sizeOfErrorList).getDescription().equalsIgnoreCase("I was added directly..."));
+        assertTrue(allErrors.get(0).getDescription().equalsIgnoreCase("I was added directly..."));
     }
     
     @Test

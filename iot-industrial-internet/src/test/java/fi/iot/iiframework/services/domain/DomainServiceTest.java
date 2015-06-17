@@ -88,6 +88,21 @@ public class DomainServiceTest {
         sourceService.save(i1);
         sourceService.save(i2);
     }
+    
+    @Test
+    public void informationSourceIsSaved() {
+        assertEquals(2, (long) sourceService.count());
+    }
+    
+    @Test
+    public void sensorsAreSavedCascading() {
+        assertEquals(2, (long) sensorService.count());
+    }
+    
+    @Test
+    public void readoutsAreSavedCascading() {
+        assertEquals(3, (long) readoutService.count());
+    }
 
     @Test
     public void sensorsCanBeFoundBySource() {
@@ -103,7 +118,7 @@ public class DomainServiceTest {
     }
 
     @Test
-    public void sensorCanBeSavedAndRetrieved() {
+    public void sensorCanBeRetrieved() {
         assertEquals(s1, sensorService.get(s1.getId()));
     }
 

@@ -22,18 +22,7 @@
                         <p class="help-block">Information source URL</p>
                     </div>
 
-                    <label>Read Frequency or Specific Read Date/Time?</label>
-
-                    <div class="btn-group">
-                        <label ng-click="showDetails = !showDetails" class="btn btn-primary" type="radio" ng-model="radioPick" value="Read Frequency">Read Frequency</label>
-                        <label ng-click="showDetails = !showDetails" class="btn btn-primary" type="radio" ng-model="radioPick" value="Specific Date/Time">Specific Date/Time</label>
-                    </div>
-
-                    <div ng-show="showDetails" class="input-group">
-                        <input type="text" class="form-control" name="is_freq" ng-model="readFrequency_s" placeholder="Read Frequency as Seconds" ng-required='!radioModel' />
-                        <span class="input-group-addon">seconds</span>
-                    </div>
-                    <div ng-hide="showDetails">
+                    <div>
                         <label>Start Date (yyyy-mm-dd)</label>
                         <div>
                             <p class="input-group">
@@ -47,10 +36,15 @@
                         <timepicker ng-model="time" show-meridian="false"></timepicker>
                         <label>Repeat?</label>
                         <div class="btn-group">
-                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Never" btn-radio="'Never'" ng-required='!readFrequency_s'>Never</label>
-                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Daily" btn-radio="'Daily'" ng-required='!readFrequency_s'>Daily</label>
-                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Weekly" btn-radio="'Weekly'" ng-required='!readFrequency_s'>Weekly</label>
-                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Monthly" btn-radio="'Monthly'" ng-required='!readFrequency_s'>Monthly</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Never" btn-radio="'Never'">Never</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Daily" btn-radio="'Daily'">Daily</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Weekly" btn-radio="'Weekly'">Weekly</label>
+                            <label class="btn btn-primary" type="radio" ng-model="radioModel" value="Monthly" btn-radio="'Monthly'">Monthly</label>
+                            <label ng-click="showField = !showField" class="btn btn-primary" type="radio" ng-model="radioModel" value="Other" btn-radio="'Other'">Other</label>
+                        </div>
+                        <div ng-show="showField" class="input-group">
+                            <input type="text" class="form-control" name="is_freq" ng-model="other" placeholder="Read Interval as Seconds" />
+                            <span class="input-group-addon">seconds</span>
                         </div>
                         <br>
                         <label>Repeat Until</label>

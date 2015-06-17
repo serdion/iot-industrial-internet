@@ -10,8 +10,9 @@
                         <tr>
                             <th>Source Name</th>
                             <th>URL</th>
-                            <th>Frequency (optional)</th>
-                            <th>Start Date & Interval (optional)</th>
+                            <th>Start Date</th>
+                            <th>Interval</th>
+                            <th>End Date</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -19,8 +20,9 @@
                         <tr ng-repeat="ds in sources" >
                             <td>{{ds.name}}</td>
                             <td>{{ds.url}}</td>
-                            <td>{{ds.readFrequency}}</td>
-                            <td>{{ds.startDate | date: 'dd.MM.yyyy HH:mm'}} & {{ds.readInterval}}</td>
+                            <td>{{ds.startDate | date: 'dd.MM.yyyy HH:mm'}}</td>
+                            <td>{{ds.readInterval}}</td>
+                            <td>{{ds.endDate | date: 'dd.MM.yyyy HH:mm'}}</td>
                             <td>
                                 <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>
                                 <a ng-href="#/sources/{{ds.id}}/edit" class="btn btn-warning btn-xs">Edit</a>

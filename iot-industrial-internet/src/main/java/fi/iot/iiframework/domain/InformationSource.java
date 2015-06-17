@@ -63,19 +63,20 @@ public class InformationSource implements Serializable, Validatable {
      */
     protected boolean active = true;
     /**
-     * How often read (in seconds).
-     */
-    protected int readFrequency;
-    /**
      * A specified time to start the reading (date/time).
      */
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date startDate;
+    
     /**
      * The interval for reading after a specified date/time (for example
      * weekly).
      */
-    protected String readInterval;
+    protected IntervalType readInterval;
+    /**
+     * How often read (in seconds).
+     */
+    protected int otherInterval;
     /**
      * A specified time to end the reading (date/time).
      */
@@ -97,7 +98,7 @@ public class InformationSource implements Serializable, Validatable {
             return false;
         }
 
-        return readFrequency > 0;
+        return startDate != null && readInterval != null;
     }
 
 }

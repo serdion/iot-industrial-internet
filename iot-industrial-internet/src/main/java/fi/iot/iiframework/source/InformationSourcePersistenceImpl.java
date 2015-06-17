@@ -37,18 +37,17 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     public void updateSourceWithSensors(InformationSource source, List<Sensor> sensors) {
         final InformationSource src = sourceService.get(source.getId());
         sensors.forEach(s -> {
-            s.setSource(source);
+            s.setSource(src);
             src.getSensors().add(s);
         });
-        sourceService.save(src);
-
         addNewReadouts(src, sensors);
     }
 
     private void addNewReadouts(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
             source.getSensors().forEach(se -> {
-                if (s.getName().equals(se.getName())){
+                if (s.equals(se)) {
+                    s.getReadouts().forEach(r -> r.setSensor(se));
                     se.setReadouts(s.getReadouts());
                     sensorService.save(se);
                 }

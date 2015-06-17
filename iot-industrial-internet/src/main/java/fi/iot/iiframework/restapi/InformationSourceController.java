@@ -7,11 +7,16 @@
 package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.errors.ErrorLogger;
+import fi.iot.iiframework.errors.ErrorSeverity;
+import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
+import fi.iot.iiframework.restapi.exceptions.RestAPIExceptionObject;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.source.InformationSourceManagerImpl;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +131,38 @@ public class InformationSourceController {
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(to, from);
         return informationSourceService.get(to, from);
+    }
+
+    /**
+     * Keeps track of when a source was last read.
+     */
+    Map<String, Long> lastRequests = new HashMap<>();
+
+    //TODO: Show the user an error.
+    @Secured({"ROLE_MODERATOR"})
+    @RequestMapping(value = "/{sourceid}/read", produces = "application/json")
+    @ResponseBody
+    public RestAPIExceptionObject readInformationSource(
+            @PathVariable String sourceid
+    ) {
+        if (lastRequests.containsKey(sourceid) && lastRequestTooClose(sourceid)) {
+            ErrorLogger.log(
+                    ErrorType.NOT_ACCEPTED,
+                    ErrorSeverity.LOW,
+                    "Too many requests.",
+                    "Read request can only be done every 10 seconds for a single informationSource"
+            );
+        }
+        informationSourceManager.readSource(sourceid);
+        lastRequests.put(sourceid, System.currentTimeMillis());
+        return new RestAPIExceptionObject(
+                ErrorType.SUCCESS,
+                "Invalid parameters found in your request."
+        );
+    }
+
+    private boolean lastRequestTooClose(String sourceid) {
+        return lastRequests.get(sourceid) - System.currentTimeMillis() < 10000;
     }
 
     public void setInformationSourceService(InformationSourceService informationSourceService) {
