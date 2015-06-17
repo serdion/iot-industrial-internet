@@ -6,7 +6,6 @@
  */
 package fi.iot.iiframework.mutator;
 
-import fi.iot.iiframework.application.Application;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.ReadoutFlag;
@@ -15,10 +14,6 @@ import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
-import fi.iot.iiframework.services.domain.SensorService;
-import java.util.List;
-import java.util.logging.Level;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
@@ -35,22 +30,34 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
         }
     }
 
+    /**
+     * Mutates one sensor by calling mutateOneReadout for each readout
+     *
+     * @param sensor Sensor to mutate
+     */
     public void mutateOneSensor(Sensor sensor) {
         for (Readout readout : sensor.getReadouts()) {
             try {
-                if(condition==ValueCondition.HIGHER_THAN){
+                if (condition == ValueCondition.HIGHER_THAN) {
                     mutateOneReadout(readout, condition, sensor.getThresholdMax());
-                } else if (condition==ValueCondition.LOWER_THAN){
+                } else if (condition == ValueCondition.LOWER_THAN) {
                     mutateOneReadout(readout, condition, sensor.getThresholdMin());
                 }
-                
+
                 mutateOneReadout(readout, condition, 1.0);
             } catch (NullPointerException npe) {
-                // No such sensor with this id, first time reading
             }
         }
     }
 
+    /**
+     * Mutates one readout based on the threshold. Warning: Assumes that the
+     * given readout has a sensor!
+     *
+     * @param readout Readout to mutate
+     * @param condition Condition to mutate the Readout by
+     * @param theshold Threshold for the mutation
+     */
     public void mutateOneReadout(Readout readout, ValueCondition condition, double theshold) {
         if (isNotDefaultThreshold(theshold)) {
             if (ValueCondition.compare(condition, readout.getValue(), theshold)) {
@@ -68,8 +75,8 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                 "This error was caused in sensor [id: " + sensor.getId() + "]");
         ErrorLogger.log(error);
     }
-    
-    private boolean isNotDefaultThreshold(double theshold){
+
+    private boolean isNotDefaultThreshold(double theshold) {
         return theshold != Integer.MIN_VALUE || theshold != Integer.MAX_VALUE;
     }
 
