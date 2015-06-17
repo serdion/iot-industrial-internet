@@ -10,7 +10,7 @@ import fi.iot.iiframework.errors.ErrorType;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class EqualsErrorType extends Equals {
+public class EqualsErrorType extends GeneralFilter {
 
     public EqualsErrorType(String field) {
         super(field);

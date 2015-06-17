@@ -11,6 +11,7 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.restapi.filters.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +49,6 @@ public class CriterionFactory {
         acceptedSysErrorFilters.put("after", new After("errordate"));
         acceptedSysErrorFilters.put("before", new Before("errordate"));
 
-        acceptedSysErrorFilters.put("higher", new MoreThan("severity"));
-        acceptedSysErrorFilters.put("lower", new LessThan("severity"));
         acceptedSysErrorFilters.put("severity", new EqualsErrorSeverity("severity"));
     }
 
@@ -81,7 +80,7 @@ public class CriterionFactory {
             String value = entrySet.getValue();
 
             try {
-                GeneralFilter filter = acceptedReadoutFilters.get(name);
+                GeneralFilter filter = filters.get(name);
                 Criterion criterion = filter.createCriterion(value);
 
                 if (criterion != null) {
@@ -91,7 +90,7 @@ public class CriterionFactory {
             } catch (ArrayIndexOutOfBoundsException exp) {
                 ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.MEDIUM, "Wrong amount of parameters while trying to add a filter.");
             } catch (NullPointerException exp) {
-                // No filters
+                ErrorLogger.log(ErrorType.NOT_ACCEPTED, ErrorSeverity.LOW, "Filter provided could not be identified.");
             }
         }
 
