@@ -8,21 +8,25 @@ package fi.iot.iiframework.mutator;
 
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Iterator;
+import java.util.Set;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RemoveSensorIfNotActiveMutator implements Mutator {
 
     @Override
-    public void mutateAll(List<Sensor> sensors) {
-        sensors = sensors.stream().filter(p -> p.isActive()).collect(Collectors.toList());
-    }
-
-    @Override
     public void mutateAll(InformationSource source) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<Sensor> sensors = source.getSensors();
+        Iterator<Sensor> iterator = sensors.iterator();
+        
+        while(iterator.hasNext()){
+            Sensor sensor = iterator.next();
+            
+            if(!sensor.isActive()){
+                sensors.remove(sensor);
+            }
+        }
     }
 
 }
