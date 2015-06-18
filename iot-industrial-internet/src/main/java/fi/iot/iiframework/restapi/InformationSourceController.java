@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("1.0/sources")
 public class InformationSourceController {
-    
+
     /**
      * Keeps track of when a source was last read.
      */
@@ -157,7 +157,7 @@ public class InformationSourceController {
         informationSourceManager.readSource(sourceid);
         lastRequests.put(sourceid, System.currentTimeMillis());
 
-        return "Source ["+ sourceid +"] was read successfully.";
+        return "Source [" + sourceid + "] was read successfully.";
     }
 
     private boolean lastRequestTooClose(long sourceid) {

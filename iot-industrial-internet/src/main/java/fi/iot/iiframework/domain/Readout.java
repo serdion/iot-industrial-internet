@@ -48,7 +48,7 @@ public class Readout implements Serializable {
     @JoinColumn(name = "sensor")
     @Cascade(CascadeType.SAVE_UPDATE)
     protected Sensor sensor;
-    
+
     protected ReadoutFlag flag;
 
     public Readout() {

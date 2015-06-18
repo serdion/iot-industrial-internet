@@ -44,7 +44,7 @@ public interface InformationSourcePersistence {
      * Adds a new InformationSource to the database
      *
      * @param source
-     * @return 
+     * @return
      */
     public InformationSource addSource(InformationSource source);
 
