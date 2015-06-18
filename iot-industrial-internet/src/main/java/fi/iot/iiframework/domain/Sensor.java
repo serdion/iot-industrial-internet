@@ -56,13 +56,13 @@ public class Sensor implements Serializable {
 
     protected boolean active;
 
-    protected double thresholdMax;
+    protected Double thresholdMax;
 
-    protected double thresholdMin;
+    protected Double thresholdMin;
 
     public Sensor() {
-        thresholdMax = (double) Integer.MAX_VALUE;
-        thresholdMin = (double) Integer.MIN_VALUE;
+        thresholdMax = null;
+        thresholdMin = null;
         active = true;
     }
 
