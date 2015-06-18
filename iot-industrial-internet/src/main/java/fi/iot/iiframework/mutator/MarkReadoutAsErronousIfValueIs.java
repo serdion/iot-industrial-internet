@@ -69,9 +69,8 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
         ErrorLogger.log(error);
     }
 
-    private boolean isNotDefaultThreshold(double theshold) {
-        return theshold != Integer.MIN_VALUE || theshold != Integer.MAX_VALUE;
-
+    private boolean isNotDefaultThreshold(double threshold) {
+        return threshold != Integer.MIN_VALUE || threshold != Integer.MAX_VALUE;
     }
 
 
