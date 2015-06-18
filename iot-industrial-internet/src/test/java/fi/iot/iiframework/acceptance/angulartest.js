@@ -1,5 +1,5 @@
 describe('Acceptance testing for the AngularJS web interface', function () {
-    
+
     // guide to using these acceptance tests:
     // 1) install Protractor by typing "npm install -g protractor" to the command line
     // 2) then type "webdriver-manager update" to the command line
@@ -14,12 +14,22 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         expect(browser.getTitle()).toEqual('IIFramework');
     });
 
+    it('should be able to log in with the default user', function () {
+        browser.get('http://localhost:8080/#/');
+        var userField = element(by.name("username"));
+        var passwordField = element(by.name("password"));
+        userField.sendKeys('moderator');
+        passwordField.sendKeys('moderator');
+        element(by.name("submit")).click();
+        expect(element(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
+    });
+
     it('should be able to move to the sources list by clicking the sidebar button', function () {
         browser.get('http://localhost:8080/#/');
         element(by.partialLinkText('Information Sources')).click();
         expect(element(by.partialLinkText('Add New')).isPresent()).toBe(true);
     });
-    
+
     it('should be able to move to the errors list, view an error and then return to the errors list', function () {
         browser.get('http://localhost:8080/#/');
         element(by.partialLinkText('Errors')).click();
@@ -27,7 +37,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         element(by.id('backbutton')).click();
         expect(element(by.partialLinkText('Details')).isPresent()).toBe(true);
     });
-    
+
     it('should be able view a sensor and filter its readouts', function () {
         browser.get('http://localhost:8080/#/sources/');
         element(by.partialLinkText('View')).click();
