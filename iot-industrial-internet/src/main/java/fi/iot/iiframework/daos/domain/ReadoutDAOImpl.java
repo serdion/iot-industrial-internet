@@ -43,5 +43,5 @@ public class ReadoutDAOImpl
     public List<Readout> getBy(int amount, Sensor sensor) {
         return getBy(0, amount-1, sensor);
     }
-    
+        
 }

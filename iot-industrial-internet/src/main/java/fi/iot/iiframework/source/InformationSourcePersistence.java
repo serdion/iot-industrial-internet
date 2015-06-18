@@ -30,7 +30,7 @@ public interface InformationSourcePersistence {
      * @param sensors
      * @return
      */
-    public InformationSource updateSensorsForSource(InformationSource source, List<Sensor> sensors);
+    public InformationSource writeReadoutsToSource(InformationSource source, List<Sensor> sensors);
 
     /**
      * Updates an InformationSources fields in the database.
