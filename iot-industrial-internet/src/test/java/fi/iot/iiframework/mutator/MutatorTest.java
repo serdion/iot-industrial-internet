@@ -76,20 +76,22 @@ public class MutatorTest {
 
     @Test
     public void spotsValueThatIsTooHigh() {
-        double max = 60;
+        double max = 50;
         testsensor.setThresholdMax(max);
         source.setSensors(sensors);
 
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
 
-        sensors = source.getSensors();
-        readouts = sensors.iterator().next().getReadouts();
+        readouts = source.getSensors().iterator().next().getReadouts();
 
         for (Readout r : readouts) {
-            System.out.println(r.getFlag());
             if (r.getFlag() == ReadoutFlag.TOO_HIGH_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too high when limit was " + max, r.getValue() > max);
+            } else if (r.getFlag() == ReadoutFlag.EMPTY) {
+                assertTrue("Value " + r.getValue() + " was marked as empty when limit was " + max, r.getValue() <= max);
+            } else {
+                assertTrue("Value " + r.getValue() + " was not marked as too high when limit was " + max, r.getValue() <= max);
             }
         }
     }
@@ -103,11 +105,30 @@ public class MutatorTest {
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
 
+        readouts = source.getSensors().iterator().next().getReadouts();
+
         for (Readout r : readouts) {
-            System.out.println(r.getFlag());
             if (r.getFlag() == ReadoutFlag.TOO_LOW_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() > min);
+            } else if (r.getFlag() == ReadoutFlag.EMPTY) {
+                assertTrue("Value " + r.getValue() + " was marked as empty when limit was " + min, r.getValue() >= min);
+            } else {
+                assertTrue("Value " + r.getValue() + " was not marked as too low when limit was " + min, r.getValue() <= min);
             }
         }
+    }
+
+    @Ignore
+    public void markReadoutsIfSensorIsNotActive() {
+        testsensor.setActive(false);
+        source.setSensors(sensors);
+        new RemoveSensorIfNotActiveMutator().mutateAll(source);
+        readouts = source.getSensors().iterator().next().getReadouts();
+
+        for (Readout r : readouts) {
+            System.out.println(r.getFlag());
+
+        }
+
     }
 }
