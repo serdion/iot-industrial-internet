@@ -50,16 +50,17 @@ public class MutatorTest {
 
         readouts = new HashSet<>();
 
-        readouts.add(new Readout(9, -50, testsensor));
+        testsensor.setActive(true);
+        testsensor.setThresholdMax((double) 20000);
+        testsensor.setThresholdMin((double) -1000);
+
+        readouts.add(new Readout(9, -500, testsensor));
         readouts.add(new Readout(10, 0, testsensor));
         readouts.add(new Readout(11, 10, testsensor));
         readouts.add(new Readout(12, 50, testsensor));
         readouts.add(new Readout(13, 100, testsensor));
         readouts.add(new Readout(14, 1000, testsensor));
-
-        testsensor.setActive(true);
-        testsensor.setThresholdMax((double) 20000);
-        testsensor.setThresholdMin((double) -1000);
+        
         testsensor.setReadouts(readouts);
         testsensor.setSource(source);
         sensors.add(testsensor);
@@ -79,13 +80,11 @@ public class MutatorTest {
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
-        readouts = source.getSensors().iterator().next().getReadouts();
+        readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
             if (r.getFlag() == ReadoutFlag.TOO_HIGH_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too high when limit was " + max, r.getValue() > max);
-            } else if (r.getFlag() == ReadoutFlag.EMPTY) {
-                assertTrue("Value " + r.getValue() + " was marked as empty when limit was " + max, r.getValue() <= max);
             } else {
                 assertTrue("Value " + r.getValue() + " was not marked as too high when limit was " + max, r.getValue() <= max);
             }
@@ -94,22 +93,20 @@ public class MutatorTest {
 
     @Test
     public void spotsValueThatIsTooLow() {
-        double min = -20;
+        double min = -60;
         testsensor.setThresholdMin(min);
         source.setSensors(sensors);
 
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
-        readouts = source.getSensors().iterator().next().getReadouts();
+        readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
             if (r.getFlag() == ReadoutFlag.TOO_LOW_VALUE) {
-                assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() > min);
-            } else if (r.getFlag() == ReadoutFlag.EMPTY) {
-                assertTrue("Value " + r.getValue() + " was marked as empty when limit was " + min, r.getValue() >= min);
+                assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() < min);
             } else {
-                assertTrue("Value " + r.getValue() + " was not marked as too low when limit was " + min, r.getValue() <= min);
+                assertTrue("Value " + r.getValue() + " was not marked as too low when limit was " + min, r.getValue() > min);
             }
         }
     }
