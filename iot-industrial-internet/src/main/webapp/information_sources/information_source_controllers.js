@@ -43,7 +43,6 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
 
-
         //Function to allow reading of sensor.active value into the UI properly
         $scope.boolToStr = function (arg) {
             return arg ? 'true' : 'false';
@@ -55,7 +54,6 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
 
         $scope.save = function () {
-//            console.log($scope.sensor);
             $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
                 $window.history.back();
 
@@ -71,6 +69,8 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = new InformationSource();
+        
+        $scope.header = "Create a New Source";
 
         $scope.back = function () {
             window.history.back();
@@ -89,15 +89,9 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
                     });
         };
 
-        $scope.today = function () {
-            $scope.startDate = new Date();
-        };
-        $scope.today();
+        $scope.startDate = new Date();
 
-        $scope.toggleMin = function () {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+        $scope.minDate = $scope.minDate ? null : new Date();
 
         $scope.open = function ($event) {
             $event.preventDefault();
@@ -116,6 +110,8 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
 
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
         $scope.types = ['XML', 'JSON'];
+        
+        $scope.header = "Edit a Source";
 
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
             $scope.otherInterval = $scope.is.otherInterval;
@@ -140,10 +136,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
                     });
         };
 
-        $scope.toggleMin = function () {
-            $scope.minDate = $scope.minDate ? null : new Date();
-        };
-        $scope.toggleMin();
+        $scope.minDate = $scope.minDate ? null : new Date();
 
         $scope.open = function ($event) {
             $event.preventDefault();
