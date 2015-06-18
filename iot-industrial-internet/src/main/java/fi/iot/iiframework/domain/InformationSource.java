@@ -34,9 +34,9 @@ import org.hibernate.annotations.OnDeleteAction;
  *
  * Configures a information source.
  */
+@Data
 @Entity
 @Table(name = "informationsources")
-@Data
 @EqualsAndHashCode(of = {"url", "type"})
 @ToString(exclude = {"sensors"})
 public class InformationSource implements Serializable, Validatable {

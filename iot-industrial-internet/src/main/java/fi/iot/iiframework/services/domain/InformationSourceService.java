@@ -11,4 +11,5 @@ import fi.iot.iiframework.domain.InformationSource;
 
 public interface InformationSourceService extends GenericService<InformationSource, Long> {
 
+    public InformationSource getWithSensors(Long id);
 }
