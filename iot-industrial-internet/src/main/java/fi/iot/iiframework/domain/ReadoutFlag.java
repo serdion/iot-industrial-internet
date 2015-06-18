@@ -23,14 +23,26 @@ public enum ReadoutFlag {
      * @return Flag that corresponds the ValueCondition given
      */
     public static ReadoutFlag getFlagFromCondition(ValueCondition condition) {
-        if (condition == ValueCondition.HIGHER_THAN) {
+        if (atleastOneIs(condition, ValueCondition.HIGHER_THAN, ValueCondition.HIGHER_THAN_OR_EQUALS)) {
             return TOO_HIGH_VALUE;
         }
 
-        if (condition == ValueCondition.LOWER_THAN) {
+        if (atleastOneIs(condition, ValueCondition.LOWER_THAN, ValueCondition.LOWER_THAN_OR_EQUALS)) {
             return TOO_LOW_VALUE;
         }
 
         return EMPTY;
+    }
+    
+    private static boolean atleastOneIs(ValueCondition condition, ValueCondition...compared){
+        boolean atleastOne = false;
+        
+        for (ValueCondition compare : compared) {
+            if(compare==condition){
+                atleastOne = true;
+            }
+        }
+        
+        return atleastOne;
     }
 }

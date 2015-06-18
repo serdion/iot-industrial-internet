@@ -38,7 +38,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
     }]);
 
 
-informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function($scope, $routeParams, Sensor, Readout, $window) {
+informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function ($scope, $routeParams, Sensor, Readout, $window) {
 
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
@@ -56,7 +56,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
         $scope.save = function () {
 //            console.log($scope.sensor);
-            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function() {
+            $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
                 $window.history.back();
 
             });
@@ -81,7 +81,6 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
-//            $scope.is.startDate = $scope.startDate + $scope.time;
             $scope.is.$save({}, function () {
                 $location.path('/sources');
             },
@@ -121,9 +120,8 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
             $scope.otherInterval = $scope.is.otherInterval / 1000;
             $scope.startDate = $scope.is.startDate;
-            $scope.endDate = $scope.is.endDate;
             $scope.radioModel = $scope.is.readInterval;
-            $scope.startTime = $scope.is.startTime;
+            $scope.endDate = $scope.is.endDate;
         });
 
         $scope.back = function () {
@@ -134,7 +132,6 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
-//            $scope.is.startDate = $scope.startDate + 5000000;
             $scope.is.$edit({}, function () {
                 $location.path('/sources');
             },

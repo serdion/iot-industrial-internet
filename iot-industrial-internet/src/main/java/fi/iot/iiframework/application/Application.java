@@ -61,21 +61,5 @@ public class Application extends SpringBootServletInitializer{
         config.setStartDate(new Date());
         config.setReadInterval(IntervalType.HOURLY);
         infSourceManager.createSource(config);
-
-        SysError e = new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "This is a test error");
-        ErrorLogger.log(e);
-
-        SysError e2 = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.HIGH, "This is an another test error");
-        ErrorLogger.log(e2);
-
-        SysError e3 = new SysError(ErrorType.TIMEOUT_ERROR, ErrorSeverity.FATAL, "This is an another test error");
-        ErrorLogger.log(e3);
-
-        SysError e4 = new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.NOTIFICATION, "This is an another test error");
-        ErrorLogger.log(e4);
-        
-        
-
-
     }
 }

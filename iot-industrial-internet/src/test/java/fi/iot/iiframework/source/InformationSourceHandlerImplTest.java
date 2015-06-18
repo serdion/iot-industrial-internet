@@ -39,7 +39,6 @@ public class InformationSourceHandlerImplTest {
     public void setUp() throws JAXBException, IOException {
         MockitoAnnotations.initMocks(this);
         source = new InformationSource();
-//        source.setReadFrequency(0);
         source.setActive(false);
         source.setName("test");
         source.setType(InformationSourceType.XML);
