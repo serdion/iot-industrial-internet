@@ -63,6 +63,7 @@ public class Sensor implements Serializable {
     public Sensor() {
         thresholdMax = Integer.MAX_VALUE;
         thresholdMin = Integer.MIN_VALUE;
+        active = true;
     }
 
     public Sensor(String name) {

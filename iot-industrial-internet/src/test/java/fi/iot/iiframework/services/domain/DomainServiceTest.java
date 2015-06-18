@@ -202,7 +202,7 @@ public class DomainServiceTest {
 
     @Test
     public void objectsThatAreEqualShouldBeOverwrittenInTheDatabase() {
-        Readout r4 = r1;
+        Readout r4 = new Readout();
         r4.setTime(r1.getTime());
         r4.setSensor(r1.getSensor());
         r4.setValue(r1.getValue());
