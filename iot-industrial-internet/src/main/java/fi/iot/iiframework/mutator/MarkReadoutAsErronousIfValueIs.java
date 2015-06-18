@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.mutator;
 
+import fi.iot.iiframework.application.Application;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.ReadoutFlag;
@@ -14,6 +15,8 @@ import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
+import java.util.logging.Level;
+import sun.util.logging.PlatformLogger;
 
 public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
@@ -43,9 +46,8 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                 } else if (condition == ValueCondition.LOWER_THAN) {
                     mutateOneReadout(readout, condition, sensor.getThresholdMin());
                 }
-
-                mutateOneReadout(readout, condition, 1.0);
             } catch (NullPointerException npe) {
+                Application.logger.log(Level.INFO, "Catched a NullPointerException while mutating one sensor.");
             }
         }
     }

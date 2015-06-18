@@ -75,7 +75,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      * Based on sensor-configuration, mark erronous readouts and disable
      * disabled sensors.
      *
-     * @param sensors
+     * @param InformationSource
      */
     private void mutateSensors(InformationSource source) {
         new RemoveSensorIfNotActiveMutator().mutateAll(source);

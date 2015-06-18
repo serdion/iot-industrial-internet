@@ -17,7 +17,7 @@ public abstract class Parser {
     /**
      * Attempts to parse data from given location to a InformationSourceObject.
      *
-     * @param location Location of the data
+     * @param location Location of the data as a String
      * @return InformationSourceObject
      */
     public static List<Sensor> parse(String location){

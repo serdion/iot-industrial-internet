@@ -12,7 +12,7 @@ import fi.iot.iiframework.domain.Sensor;
 import java.util.List;
 
 /**
- * DAO for Readout
+ * DAO for Readout.
  */
 public interface ReadoutDAO extends GenericDAO<Readout, Long> {
     public List<Readout> getBy(Sensor sensor);
