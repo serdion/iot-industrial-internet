@@ -46,12 +46,15 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
      *
      * @param readout Readout to mutate
      * @param condition Condition to mutate the Readout by
-     * @param theshold Threshold for the mutation
+     * @param threshold Threshold for the mutation
      */
-    public void mutateOneReadout(Readout readout, ValueCondition condition, double theshold) {
-        if (isNotDefaultThreshold(theshold)) {
-            if (ValueCondition.compare(condition, readout.getValue(), theshold)) {
-                addError(readout.getValue(), theshold, condition, readout.getSensor());
+    public void mutateOneReadout(Readout readout, ValueCondition condition, Double threshold) {
+        if (threshold == null) {
+            return;
+        }
+        if (isNotDefaultThreshold(threshold)) {
+            if (ValueCondition.compare(condition, readout.getValue(), threshold)) {
+                addError(readout.getValue(), threshold, condition, readout.getSensor());
                 readout.setFlag(ReadoutFlag.TOO_HIGH_VALUE);
             }
         }

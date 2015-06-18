@@ -61,8 +61,6 @@ public class Sensor implements Serializable {
     protected Double thresholdMin;
 
     public Sensor() {
-        thresholdMax = null;
-        thresholdMin = null;
         active = true;
     }
 
