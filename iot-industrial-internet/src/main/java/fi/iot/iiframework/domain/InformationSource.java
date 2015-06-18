@@ -83,7 +83,7 @@ public class InformationSource implements Serializable, Validatable {
      */
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date endDate;
-    
+
     @Column(name = "last_readout")
     protected long lastReadout;
 

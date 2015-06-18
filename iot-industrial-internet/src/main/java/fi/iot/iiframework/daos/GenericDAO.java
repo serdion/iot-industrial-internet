@@ -22,19 +22,20 @@ public interface GenericDAO<T, ID extends Serializable> {
 
     /**
      * Persist an object to database.
-     * 
+     *
      * @param t
-     * @return 
+     * @return
      */
     public T merge(T t);
-    
+
     /**
      * Update an object in the database.
+     *
      * @param t
-     * @return 
+     * @return
      */
     public T update(T t);
-    
+
     /**
      * Get an object with the given id.
      *
@@ -71,6 +72,6 @@ public interface GenericDAO<T, ID extends Serializable> {
     public Long countByCriteria(List<Criterion> list);
 
     public void flush();
-    
+
     public void clear();
 }

@@ -16,7 +16,6 @@ import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.errors.SysError;
 import java.util.logging.Level;
-import sun.util.logging.PlatformLogger;
 
 public class MarkReadoutAsErronousIfValueIs implements Mutator {
 

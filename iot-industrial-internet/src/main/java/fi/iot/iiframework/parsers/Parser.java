@@ -20,9 +20,9 @@ public abstract class Parser {
      * @param location Location of the data as a String
      * @return InformationSourceObject
      */
-    public static List<Sensor> parse(String location){
+    public static List<Sensor> parse(String location) {
         ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "Tried to call abstract class Parser and not extended classes.");
         return null;
-    };
+    }
+;
 }
-        
