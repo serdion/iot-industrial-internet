@@ -117,18 +117,4 @@ public class MutatorTest {
             }
         }
     }
-
-    @Ignore
-    public void markReadoutsIfSensorIsNotActive() {
-        testsensor.setActive(false);
-        source.setSensors(sensors);
-        new RemoveSensorIfNotActiveMutator().mutateAll(source);
-        readouts = source.getSensors().iterator().next().getReadouts();
-
-        for (Readout r : readouts) {
-            System.out.println(r.getFlag());
-
-        }
-
-    }
 }
