@@ -8,7 +8,7 @@
 
 /* global informationSources */
 
-informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function ($scope, InformationSource) {
+informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource',  function ($scope, InformationSource) {
         $scope.sources = InformationSource.query();
 
         $scope.deleteSource = function (id) {
@@ -30,7 +30,7 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
     }]);
 
 
-informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
+informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource',  'Sensor',
     function ($scope, $routeParams, InformationSource, Sensor) {
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
         $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function (value, headers) {
@@ -66,7 +66,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
     }]);
 
-informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource', '$location', function ($scope, InformationSource, $location) {
+informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource',  '$location', function ($scope, InformationSource, $location) {
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = new InformationSource();
@@ -81,7 +81,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             $scope.is.otherInterval = $scope.otherInterval;
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
-            $scope.is.endDate = $scope.endDate;
+            $scope.is.endDate = $scope.endDate;1
             $scope.is.$save({}, function () {
                 $location.path('/sources');
             },
@@ -109,7 +109,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         $scope.radioModel = 'NEVER';
     }]);
 
-informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
+informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource',  '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
         $scope.types = ['XML', 'JSON'];
         
         $scope.header = "Edit a Source";
