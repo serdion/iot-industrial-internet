@@ -20,8 +20,9 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
         };
 
         $scope.readSource = function (id) {
-            InformationSource.read({sourceid: id}, function () {
-                showSuccess("Read performed");
+            InformationSource.read({sourceid: id}, function (success) {
+                console.log(success);
+                showSuccess(success.message);
             }, function (error) {
                 showError(error.data.message);
             });
