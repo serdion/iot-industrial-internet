@@ -78,13 +78,9 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      * @param sensors
      */
     private void mutateSensors(InformationSource source) {
-        try {
-            new RemoveSensorIfNotActiveMutator().mutateAll(source);
-            new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
-            new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
-        } catch (Exception ex) {
-            
-        }
+        new RemoveSensorIfNotActiveMutator().mutateAll(source);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
     }
 
     @Override
