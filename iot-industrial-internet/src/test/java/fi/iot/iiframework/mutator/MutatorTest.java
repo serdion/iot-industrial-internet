@@ -62,8 +62,8 @@ public class MutatorTest {
         readouts.add(new Readout(14, 1000, testsensor));
 
         testsensor.setActive(true);
-        testsensor.setThresholdMax(20000);
-        testsensor.setThresholdMin(-1000);
+        testsensor.setThresholdMax((double) 20000);
+        testsensor.setThresholdMin((double) -1000);
         testsensor.setReadouts(readouts);
         testsensor.setSource(source);
         sensors.add(testsensor);
