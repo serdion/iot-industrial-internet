@@ -54,12 +54,12 @@ public class MutatorTest {
 
         readouts = new HashSet<>();
 
-        readouts.add(new Readout(9, -50));
-        readouts.add(new Readout(10, 0));
-        readouts.add(new Readout(11, 10));
-        readouts.add(new Readout(12, 50));
-        readouts.add(new Readout(13, 100));
-        readouts.add(new Readout(14, 1000));
+        readouts.add(new Readout(9, -50, testsensor));
+        readouts.add(new Readout(10, 0, testsensor));
+        readouts.add(new Readout(11, 10, testsensor));
+        readouts.add(new Readout(12, 50, testsensor));
+        readouts.add(new Readout(13, 100, testsensor));
+        readouts.add(new Readout(14, 1000, testsensor));
 
         testsensor.setActive(true);
         testsensor.setThresholdMax(20000);
@@ -74,7 +74,7 @@ public class MutatorTest {
     public void tearDown() {
     }
 
-    @Ignore
+    @Test
     public void spotsValueThatIsTooHigh() {
         double max = 60;
         testsensor.setThresholdMax(max);
@@ -87,18 +87,14 @@ public class MutatorTest {
         readouts = sensors.iterator().next().getReadouts();
 
         for (Readout r : readouts) {
-
+            System.out.println(r.getFlag());
             if (r.getFlag() == ReadoutFlag.TOO_HIGH_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too high when limit was " + max, r.getValue() > max);
-            } else if (r.getFlag() == null) {
-                assertTrue("Value " + r.getValue() + " was not marked when limit was " + max, r.getValue() > max);
-            } else {
-                assertTrue("Value " + r.getValue() + " was not marked as too high when limit was " + max, r.getValue() <= max);
             }
         }
     }
 
-    @Ignore
+    @Test
     public void spotsValueThatIsTooLow() {
         double min = -20;
         testsensor.setThresholdMin(min);
@@ -108,12 +104,9 @@ public class MutatorTest {
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
 
         for (Readout r : readouts) {
+            System.out.println(r.getFlag());
             if (r.getFlag() == ReadoutFlag.TOO_LOW_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() > min);
-            } else if (r.getFlag() == null) {
-                assertTrue("Value " + r.getValue() + " was not marked when limit was " + min, r.getValue() < min);
-            } else {
-                assertTrue("Value " + r.getValue() + " was not marked as too low when limit was " + min, r.getValue() <= min);
             }
         }
     }
