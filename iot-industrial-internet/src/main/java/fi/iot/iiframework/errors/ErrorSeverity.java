@@ -23,12 +23,12 @@ public enum ErrorSeverity {
         this.id = id;
     }
 
-    public int getSeverity() {
-        return this.severity;
-    }
-
     public String getId() {
         return id;
+    }
+
+    public int getSeverity() {
+        return this.severity;
     }
 
     /**

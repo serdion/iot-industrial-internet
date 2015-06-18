@@ -23,6 +23,5 @@ public abstract class Parser {
     public static List<Sensor> parse(String location) {
         ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "Tried to call abstract class Parser and not extended classes.");
         return null;
-    }
-;
+    };
 }
