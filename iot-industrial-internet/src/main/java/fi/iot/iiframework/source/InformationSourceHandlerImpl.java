@@ -103,7 +103,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
             return;
         }
         persistence.updateSource(source);
-        persistence.updateSensorsForSource(source, sensors);
+        persistence.writeReadoutsToSource(source, sensors);
     }
 
     @Override

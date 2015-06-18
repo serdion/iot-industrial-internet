@@ -22,8 +22,14 @@
                             <td>{{sensor.name}}</td>
                             <td>{{sensor.quantity}}</td>
                             <td>{{sensor.unit}}</td>
-                            <td>{{sensor.active}}</td>                            
-                            <td> from {{sensor.thresholdMin}} to {{sensor.thresholdMax}}</td>
+                            <td>{{sensor.active}}</td>       
+                            <td>
+                                <span ng-if="sensor.thresholdMin === null" >undefined</span>
+                                <span ng-if="sensor.thresholdMin !== null" >{{sensor.thresholdMin}}</span>
+                                <span style="font-weight:bold">to</span> 
+                                <span ng-if="sensor.thresholdMax === null" >undefined</span>
+                                <span ng-if="sensor.thresholdMax !== null" >{{sensor.thresholdMax}}</span>
+                            </td>
                             <td>
                                 <a type="button" class="btn btn-info btn-xs" ng-href="#/visual/now/{{sensor.id}}">Graph</a>
                                 <a type="button" class="btn btn-primary btn-xs" ng-href="#/sensors/{{sensor.id}}">List</a>

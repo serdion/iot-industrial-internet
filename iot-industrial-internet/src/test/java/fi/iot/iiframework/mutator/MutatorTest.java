@@ -22,10 +22,6 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- * NOT DONE YET STOP LOOKING!
- *
- */
 public class MutatorTest {
 
     private Set<Sensor> sensors;
@@ -62,8 +58,8 @@ public class MutatorTest {
         readouts.add(new Readout(14, 1000, testsensor));
 
         testsensor.setActive(true);
-        testsensor.setThresholdMax(20000);
-        testsensor.setThresholdMin(-1000);
+        testsensor.setThresholdMax((double) 20000);
+        testsensor.setThresholdMin((double) -1000);
         testsensor.setReadouts(readouts);
         testsensor.setSource(source);
         sensors.add(testsensor);
@@ -80,8 +76,8 @@ public class MutatorTest {
         testsensor.setThresholdMax(max);
         source.setSensors(sensors);
 
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
         readouts = source.getSensors().iterator().next().getReadouts();
 
@@ -102,8 +98,8 @@ public class MutatorTest {
         testsensor.setThresholdMin(min);
         source.setSensors(sensors);
 
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
         readouts = source.getSensors().iterator().next().getReadouts();
 
