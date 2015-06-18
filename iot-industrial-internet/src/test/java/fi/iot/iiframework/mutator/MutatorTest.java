@@ -22,10 +22,6 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- * NOT DONE YET STOP LOOKING!
- *
- */
 public class MutatorTest {
 
     private Set<Sensor> sensors;
