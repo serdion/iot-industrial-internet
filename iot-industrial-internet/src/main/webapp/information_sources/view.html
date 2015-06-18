@@ -12,6 +12,8 @@
                             <th>Name</th>
                             <th>Quantity</th>
                             <th>Unit</th>
+                            <th>Active</th>
+                            <th>Thresholds</th>
                             <th>Readouts</th>
                         </tr>
                     </thead>
@@ -20,6 +22,9 @@
                             <td>{{sensor.name}}</td>
                             <td>{{sensor.quantity}}</td>
                             <td>{{sensor.unit}}</td>
+                            <td>{{sensor.active}}</td>                            
+                            <td ng-if="sensor.thresholdMin === -2147483648">Min value </td>
+                            <td ng-if="sensor.thresholdMin !== -2147483648">{{sensor.thresholdMin}} </td>
                             <td>
                                 <a type="button" class="btn btn-info btn-xs" ng-href="#/visual/now/{{sensor.id}}">Graph</a>
                                 <a type="button" class="btn btn-primary btn-xs" ng-href="#/sensors/{{sensor.id}}">List</a>
