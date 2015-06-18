@@ -80,8 +80,8 @@ public class MutatorTest {
         testsensor.setThresholdMax(max);
         source.setSensors(sensors);
 
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
         readouts = source.getSensors().iterator().next().getReadouts();
 
@@ -102,8 +102,8 @@ public class MutatorTest {
         testsensor.setThresholdMin(min);
         source.setSensors(sensors);
 
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(source);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(source);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
         readouts = source.getSensors().iterator().next().getReadouts();
 
