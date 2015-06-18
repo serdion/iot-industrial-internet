@@ -9,7 +9,6 @@ package fi.iot.iiframework.mutator;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
