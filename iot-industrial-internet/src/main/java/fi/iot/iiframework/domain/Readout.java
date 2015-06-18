@@ -52,17 +52,14 @@ public class Readout implements Serializable {
     protected ReadoutFlag flag;
 
     public Readout() {
-    }
-
-    public Readout(long time, double value) {
-        this.time = time;
-        this.value = value;
+        this.flag = ReadoutFlag.EMPTY;
     }
 
     public Readout(long time, double value, Sensor sensor) {
         this.time = time;
         this.value = value;
         this.sensor = sensor;
+        this.flag = ReadoutFlag.EMPTY;
     }
 
     /**

@@ -10,8 +10,6 @@ import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -19,14 +17,10 @@ import org.springframework.stereotype.Component;
 public class RemoveSensorIfNotActiveMutator implements Mutator {
 
     @Override
-    public void mutateAll(InformationSource source) {        
-        Collection<Sensor> toRemove = new ArrayList<>();
-        for (Sensor sensor : source.getSensors()) {
-            if(!sensor.isActive()){
-                toRemove.add(sensor);
-            }
-        }
-        source.getSensors().removeAll(toRemove);
+    public void mutateAll(InformationSource source) {
+        Collection<Sensor> sensors = source.getSensors();
+        sensors.removeIf(sensor -> !sensor.isActive());
+        source.setSensors((Set<Sensor>) sensors);
     }
 
 }

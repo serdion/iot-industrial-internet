@@ -22,7 +22,7 @@ public class ReadoutServiceImpl
         extends GenericHibernateService<Readout, Long>
         implements ReadoutService {
 
-    ReadoutDAO readoutDAO;
+    private ReadoutDAO readoutDAO;
 
     @Autowired
     public ReadoutServiceImpl(ReadoutDAO dao) {
