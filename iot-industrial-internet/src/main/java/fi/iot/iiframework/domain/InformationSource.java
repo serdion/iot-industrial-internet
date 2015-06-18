@@ -77,7 +77,7 @@ public class InformationSource implements Serializable, Validatable {
     /**
      * How often read (in seconds).
      */
-    protected int otherInterval;
+    protected long otherInterval;
     /**
      * A specified time to end the reading (date/time).
      */

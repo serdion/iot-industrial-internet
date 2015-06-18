@@ -77,7 +77,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         };
 
         $scope.submit = function () {
-            $scope.is.otherInterval = $scope.otherInterval * 1000;
+            $scope.is.otherInterval = $scope.otherInterval;
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
@@ -118,7 +118,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
-            $scope.otherInterval = $scope.is.otherInterval / 1000;
+            $scope.otherInterval = $scope.is.otherInterval;
             $scope.startDate = $scope.is.startDate;
             $scope.radioModel = $scope.is.readInterval;
             $scope.endDate = $scope.is.endDate;
@@ -128,7 +128,7 @@ informationSources.controller('EditInformationSourceController', ['$scope', 'Inf
             window.history.back();
         };
         $scope.submit = function () {
-            $scope.is.otherInterval = $scope.otherInterval * 1000;
+            $scope.is.otherInterval = $scope.otherInterval;
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
