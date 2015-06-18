@@ -68,11 +68,11 @@
                                         </div>
                                     </a>
                                 </li>
-                                <ul ng-if="alarmlist.length === 0" text-align: center><i class="fa fa-spinner fa-spin"></i> No errors</ul>
+                                <li ng-if="alarmlist.length === 0" class="text-center"><i class="text-muted">No errors...</i></li>
 
                                 <li>
                                     <a class="text-center" th:href="@{#/syserrors/}">
-                                        <strong>See All Alerts</strong>
+                                        <strong>See All Errors</strong>
                                         <i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
