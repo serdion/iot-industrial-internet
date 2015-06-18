@@ -9,11 +9,6 @@ describe('Acceptance testing for the AngularJS web interface', function () {
     // 4) make sure to choose "Run Project" in Netbeans again before running the tests a second time
     // or there will be errors in the tests
 
-    it('the web interface should have a title', function () {
-        browser.get('http://localhost:8080/#/');
-        expect(browser.getTitle()).toEqual('IIFramework');
-    });
-
     it('should be able to log in with the default user', function () {
         browser.get('http://localhost:8080/#/');
         var userField = element(by.name("username"));
@@ -22,6 +17,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         passwordField.sendKeys('moderator');
         element(by.name("submit")).click();
         expect(element(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
+        expect(browser.getTitle()).toEqual('IIFramework');
     });
 
     it('should be able to move to the sources list by clicking the sidebar button', function () {
