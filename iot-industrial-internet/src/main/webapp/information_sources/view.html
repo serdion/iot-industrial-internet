@@ -9,11 +9,17 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th colspan="4"></th>
+                            <th id="limits" colspan="2" >Thresholds</th>
+                            <th></th>
+                        </tr>
+                        <tr>
                             <th>Name</th>
                             <th>Quantity</th>
                             <th>Unit</th>
                             <th>Active</th>
-                            <th>Thresholds</th>
+                            <th headers="limits">Min</th>
+                            <th headers="limits">Max</th>
                             <th>Readouts</th>
                         </tr>
                     </thead>
@@ -30,10 +36,12 @@
                                 </div>
                             </td>
                             <td>
-                                <span ng-if="sensor.thresholdMin === null" >undefined</span>
+                                <span ng-if="sensor.thresholdMin === null" ><i class="text-muted">Not set</i></span>
                                 <span ng-if="sensor.thresholdMin !== null" >{{sensor.thresholdMin}}</span>
-                                <span style="font-weight:bold">to</span> 
-                                <span ng-if="sensor.thresholdMax === null" >undefined</span>
+
+                            </td>
+                            <td>
+                                <span ng-if="sensor.thresholdMax === null" ><i class="text-muted">Not set</i></span>
                                 <span ng-if="sensor.thresholdMax !== null" >{{sensor.thresholdMax}}</span>
                             </td>
                             <td>
