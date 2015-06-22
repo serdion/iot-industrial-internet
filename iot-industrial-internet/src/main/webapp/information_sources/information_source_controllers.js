@@ -8,16 +8,7 @@
 
 /* global informationSources */
 
-<<<<<<< HEAD
-informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function($scope, InformationSource) {
-        $scope.sources = InformationSource.query();
 
-        $scope.deleteSource = function(id) {
-            InformationSource.delete({sourceid: id}, function() {
-                $scope.sources = InformationSource.query();
-            }, function(error) {
-                showError(error.data.message);
-=======
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
         $scope.sources = InformationSource.query();
 
@@ -44,7 +35,6 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
                 } else {
                     SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
                 }
->>>>>>> dev
             });
         };
 
@@ -60,16 +50,13 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
 
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
-<<<<<<< HEAD
-    function($scope, $routeParams, InformationSource, Sensor) {
-=======
+
     function ($scope, $routeParams, InformationSource, Sensor) {
->>>>>>> dev
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
         $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function(value, headers) {
         });
 
-        $scope.toggleSensor = function(action, sensor) {
+        $scope.toggleSensorInView = function(action, sensor) {
             console.log(action + " " + sensor);
             if (action == "on") {
                 sensor.active = true;
@@ -77,9 +64,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
             else {
                 sensor.active = false;
             }
-
             sensor.$edit({sensorid: sensor.id}, function() {
-
             });
         };
 
@@ -108,11 +93,8 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         };
     }]);
 
-<<<<<<< HEAD
-informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource', '$location', function($scope, InformationSource, $location) {
-=======
+
 informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource', '$location', function ($scope, InformationSource, $location) {
->>>>>>> dev
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = new InformationSource();
@@ -128,12 +110,7 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
-            1
-<<<<<<< HEAD
-            $scope.is.$save({}, function() {
-=======
             $scope.is.$save({}, function () {
->>>>>>> dev
                 $location.path('/sources');
             },
                     function(error) {
@@ -160,11 +137,8 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         $scope.radioModel = 'NEVER';
     }]);
 
-<<<<<<< HEAD
-informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function($scope, InformationSource, $location, $routeParams) {
-=======
+
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
->>>>>>> dev
         $scope.types = ['XML', 'JSON'];
 
         $scope.header = "Edit a Source";
