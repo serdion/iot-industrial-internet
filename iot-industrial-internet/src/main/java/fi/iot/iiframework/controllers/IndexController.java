@@ -24,4 +24,9 @@ public class IndexController {
         return "ng";
     }
 
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
 }
