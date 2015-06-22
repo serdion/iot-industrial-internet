@@ -55,7 +55,6 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
         });
         
         $scope.toggleSensorInView = function(action, sensor) {
-            console.log(action + " " + sensor);
             if (action == "on") {
                 sensor.active = true;
             }
