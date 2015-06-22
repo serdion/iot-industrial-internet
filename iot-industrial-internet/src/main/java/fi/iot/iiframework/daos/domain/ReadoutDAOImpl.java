@@ -23,7 +23,7 @@ public class ReadoutDAOImpl
 
     public ReadoutDAOImpl() {
         super();
-        defaultOrder.add(Order.asc("time"));
+        defaultOrder.add(Order.desc("time"));
         defaultOrder.add(Order.asc("sensor"));
     }
 

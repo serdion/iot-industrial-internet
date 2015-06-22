@@ -16,10 +16,7 @@ public class SparkfunDataReader implements InformationSourceReader {
 
     @Override
     public List<Sensor> read(String location) {
-        Collection<Sensor> sensorsCol = SparkfunDataParser.parse(location);
-        List<Sensor> sensors = Arrays.asList(sensorsCol.toArray(new Sensor[0]));
-
-        return sensors;
+        return SparkfunDataParser.parse(location);
     }
 
 }
