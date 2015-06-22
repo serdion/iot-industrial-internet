@@ -1,28 +1,52 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<!--
+    IoT - Industrial Internet Framework
+    Apache License Version 2.0, January 2004
+    Released as a part of Helsinki University
+    Software Engineering Lab in summer 2015
+-->
 
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
-  <head>
-    <title tiles:fragment="title">Login Page</title>
-  </head>
-  <body>
-    <div tiles:fragment="content">
-        <form name="f" th:action="@{/login}" method="post">               
-            <fieldset>
-                <legend>Please Login</legend>
-                <div th:if="${param.error}" class="alert alert-error">    
-                    Invalid username and password.
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Please Sign In</title>
+        <link th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Please Sign In</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form name="f" th:action="@{/login}" method="post">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" id="username" name="username" placeholder="Username" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="password" placeholder="Password" name="password" type="password" value="" />
+                                    </div>
+                                    <button class="btn btn-lg btn-primary btn-block">Login</button>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div th:if="${param.logout}" class="alert alert-success"> 
-                    You have been logged out.
-                </div>
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username"/>        
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password"/>    
-                <div class="form-actions">
-                    <button type="submit" class="btn">Log in</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-  </body>
+            </div>
+        </div>
+
+        <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
+        <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+        <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
+        <script th:attr="src=@{/dist/js/sb-admin-2.js}"></script>
+    </body>
 </html>
