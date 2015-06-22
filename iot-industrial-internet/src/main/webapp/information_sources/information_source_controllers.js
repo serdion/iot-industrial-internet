@@ -8,6 +8,7 @@
 
 /* global informationSources */
 
+<<<<<<< HEAD
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function($scope, InformationSource) {
         $scope.sources = InformationSource.query();
 
@@ -16,6 +17,34 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
                 $scope.sources = InformationSource.query();
             }, function(error) {
                 showError(error.data.message);
+=======
+informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
+        $scope.sources = InformationSource.query();
+
+        $scope.deleteSource = function (id) {
+            console.log("Pressed");
+            SweetAlert.swal({
+                title: "Are you sure?",
+                text: "Your are about to delete a source with id "+ id + ".",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55", confirmButtonText: "Delete",
+                cancelButtonText: "Cancel",
+                closeOnConfirm: false,
+                closeOnCancel: false},
+            function (isConfirm) {
+                if (isConfirm) {
+                    console.log("Confirmed");
+                    InformationSource.delete({sourceid: id}, function () {
+                        $scope.sources = InformationSource.query();
+                    }, function (error) {
+                        showError(error.data.message);
+                    });
+                    SweetAlert.swal("Deleted!", "A source with id + "+ id +" has been deleted.", "success");
+                } else {
+                    SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
+                }
+>>>>>>> dev
             });
         };
 
@@ -31,7 +60,11 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
 
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
+<<<<<<< HEAD
     function($scope, $routeParams, InformationSource, Sensor) {
+=======
+    function ($scope, $routeParams, InformationSource, Sensor) {
+>>>>>>> dev
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
         $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function(value, headers) {
         });
@@ -75,7 +108,11 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         };
     }]);
 
+<<<<<<< HEAD
 informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource', '$location', function($scope, InformationSource, $location) {
+=======
+informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource', '$location', function ($scope, InformationSource, $location) {
+>>>>>>> dev
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = new InformationSource();
@@ -92,7 +129,11 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             $scope.is.startDate = $scope.startDate;
             $scope.is.endDate = $scope.endDate;
             1
+<<<<<<< HEAD
             $scope.is.$save({}, function() {
+=======
+            $scope.is.$save({}, function () {
+>>>>>>> dev
                 $location.path('/sources');
             },
                     function(error) {
@@ -119,7 +160,11 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         $scope.radioModel = 'NEVER';
     }]);
 
+<<<<<<< HEAD
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function($scope, InformationSource, $location, $routeParams) {
+=======
+informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
+>>>>>>> dev
         $scope.types = ['XML', 'JSON'];
 
         $scope.header = "Edit a Source";

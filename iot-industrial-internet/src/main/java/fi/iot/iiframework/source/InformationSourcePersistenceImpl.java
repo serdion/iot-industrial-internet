@@ -65,11 +65,13 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.getSensors().forEach(se -> {
-                if (s.equals(se)) {
-                    s.getReadouts().forEach(r -> r.setSensor(se));
-                    se.getReadouts().addAll(s.getReadouts());
-                    mutateReadouts(se);
+            source.getSensors().stream()
+                    .filter(sensor -> sensor.isActive())
+                    .forEach(sensor -> {
+                if (s.equals(sensor)) {
+                    s.getReadouts().forEach(r -> r.setSensor(sensor));
+                    sensor.getReadouts().addAll(s.getReadouts());
+                    mutateReadouts(sensor);
                 }
             });
         });
