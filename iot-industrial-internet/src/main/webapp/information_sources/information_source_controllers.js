@@ -8,14 +8,32 @@
 
 /* global informationSources */
 
-informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource',  function ($scope, InformationSource) {
+informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
         $scope.sources = InformationSource.query();
 
         $scope.deleteSource = function (id) {
-            InformationSource.delete({sourceid: id}, function () {
-                $scope.sources = InformationSource.query();
-            }, function (error) {
-                showError(error.data.message);
+            console.log("Pressed");
+            SweetAlert.swal({
+                title: "Are you sure?",
+                text: "Your are about to delete a source with id "+ id + ".",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55", confirmButtonText: "Delete",
+                cancelButtonText: "Cancel",
+                closeOnConfirm: false,
+                closeOnCancel: false},
+            function (isConfirm) {
+                if (isConfirm) {
+                    console.log("Confirmed");
+                    InformationSource.delete({sourceid: id}, function () {
+                        $scope.sources = InformationSource.query();
+                    }, function (error) {
+                        showError(error.data.message);
+                    });
+                    SweetAlert.swal("Deleted!", "A source with id + "+ id +" has been deleted.", "success");
+                } else {
+                    SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
+                }
             });
         };
 
@@ -30,7 +48,7 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
     }]);
 
 
-informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource',  'Sensor',
+informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
     function ($scope, $routeParams, InformationSource, Sensor) {
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
         $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function (value, headers) {
@@ -66,11 +84,11 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
     }]);
 
-informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource',  '$location', function ($scope, InformationSource, $location) {
+informationSources.controller('AddInformationSourceController', ['$scope', 'InformationSource', '$location', function ($scope, InformationSource, $location) {
         $scope.types = ['XML', 'JSON'];
 
         $scope.is = new InformationSource();
-        
+
         $scope.header = "Create a New Source";
 
         $scope.back = function () {
@@ -81,7 +99,8 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
             $scope.is.otherInterval = $scope.otherInterval;
             $scope.is.readInterval = $scope.radioModel;
             $scope.is.startDate = $scope.startDate;
-            $scope.is.endDate = $scope.endDate;1
+            $scope.is.endDate = $scope.endDate;
+            1
             $scope.is.$save({}, function () {
                 $location.path('/sources');
             },
@@ -109,9 +128,9 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         $scope.radioModel = 'NEVER';
     }]);
 
-informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource',  '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
+informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
         $scope.types = ['XML', 'JSON'];
-        
+
         $scope.header = "Edit a Source";
 
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
