@@ -8,34 +8,63 @@
 
 /* global informationSources */
 
-informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', function ($scope, InformationSource) {
-        $scope.sources = InformationSource.query();
-
-        $scope.deleteSource = function (id) {
-            InformationSource.delete({sourceid: id}, function () {
+        informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function($scope, InformationSource, SweetAlert) {
                 $scope.sources = InformationSource.query();
-            }, function (error) {
-                showError(error.data.message);
-            });
-        };
 
-        $scope.readSource = function (id) {
-            InformationSource.read({sourceid: id}, function (success) {
-                console.log(success);
-                showSuccess(success.message);
-            }, function (error) {
-                showError(error.data.message);
-            });
-        };
-    }]);
+                $scope.deleteSource = function(id) {
+                    console.log("Pressed");
+                    SweetAlert.swal({
+                        title: "Are you sure?",
+                        text: "Your are about to delete a source with id " + id + ".",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55", confirmButtonText: "Delete",
+                        cancelButtonText: "Cancel",
+                        closeOnConfirm: false,
+                        closeOnCancel: false},
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            console.log("Confirmed");
+                            InformationSource.delete({sourceid: id}, function() {
+                                $scope.sources = InformationSource.query();
+                            }, function(error) {
+                                showError(error.data.message);
+                            });
+                            SweetAlert.swal("Deleted!", "A source with id + " + id + " has been deleted.", "success");
+                        } else {
+                            SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
+                        }
+                    });
+                };
+
+                $scope.readSource = function(id) {
+                    InformationSource.read({sourceid: id}, function(success) {
+                        console.log(success);
+                        showSuccess(success.message);
+                    }, function(error) {
+                        showError(error.data.message);
+                    });
+                };
+            }]);
 
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
     function ($scope, $routeParams, InformationSource, Sensor) {
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
-        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function (value, headers) {
+        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function(value, headers) {
         });
-
+        
+        $scope.toggleSensorInView = function(action, sensor) {
+            console.log(action + " " + sensor);
+            if (action == "on") {
+                sensor.active = true;
+            }
+            else {
+                sensor.active = false;
+            }
+            sensor.$edit({sensorid: sensor.id}, function() {
+            });
+        };
     }]);
 
 

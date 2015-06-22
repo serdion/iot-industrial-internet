@@ -12,6 +12,7 @@ var IIFramework = angular.module('IIFramework', [
     'informationSources',
     'sysErrors',
     'angularMoment',
+    'oitozero.ngSweetAlert',
     'ui.bootstrap'
 ]);
 

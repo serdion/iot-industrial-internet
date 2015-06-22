@@ -157,7 +157,7 @@ public class InformationSourceController {
 
         informationSourceManager.readSource(sourceid);
         lastRequests.put(sourceid, System.currentTimeMillis());
-        return new ResponseEntity<>(new SuccessObject("Source [" + sourceid + "] was read successfully."), HttpStatus.OK);
+        return new ResponseEntity<>(new SuccessObject("Source was read successfully."), HttpStatus.OK);
     }
 
     private boolean lastRequestTooClose(long sourceid) {
