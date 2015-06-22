@@ -58,7 +58,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
 
     /**
      * Adds new readouts to known sensors and saves those sensors with their new
-     * readouts.
+     * readouts. Takes horrific amounts of memory, TODO: FIX.
      *
      * @param source
      * @param sensors
