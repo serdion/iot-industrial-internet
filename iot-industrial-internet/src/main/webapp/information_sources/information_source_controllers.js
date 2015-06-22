@@ -8,10 +8,6 @@
 
 /* global informationSources */
 
-<< << << < HEAD
-
-        === === =
-        >>> >>> > dev
         informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function($scope, InformationSource, SweetAlert) {
                 $scope.sources = InformationSource.query();
 
