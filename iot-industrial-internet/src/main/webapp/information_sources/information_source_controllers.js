@@ -8,60 +8,60 @@
 
 /* global informationSources */
 
-        informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function($scope, InformationSource, SweetAlert) {
-                $scope.sources = InformationSource.query();
+informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
+        $scope.sources = InformationSource.query();
 
-                $scope.deleteSource = function(id) {
-                    console.log("Pressed");
-                    SweetAlert.swal({
-                        title: "Are you sure?",
-                        text: "Your are about to delete a source with id " + id + ".",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55", confirmButtonText: "Delete",
-                        cancelButtonText: "Cancel",
-                        closeOnConfirm: false,
-                        closeOnCancel: false},
-                    function(isConfirm) {
-                        if (isConfirm) {
-                            console.log("Confirmed");
-                            InformationSource.delete({sourceid: id}, function() {
-                                $scope.sources = InformationSource.query();
-                            }, function(error) {
-                                showError(error.data.message);
-                            });
-                            SweetAlert.swal("Deleted!", "A source with id " + id + " has been deleted.", "success");
-                        } else {
-                            SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
-                        }
-                    });
-                };
-
-                $scope.readSource = function(id) {
-                    InformationSource.read({sourceid: id}, function(success) {
-                        console.log(success);
-                        showSuccess(success.message);
-                    }, function(error) {
+        $scope.deleteSource = function (id) {
+            console.log("Pressed");
+            SweetAlert.swal({
+                title: "Are you sure?",
+                text: "Your are about to delete a source with id " + id + ".",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55", confirmButtonText: "Delete",
+                cancelButtonText: "Cancel",
+                closeOnConfirm: false,
+                closeOnCancel: false},
+            function (isConfirm) {
+                if (isConfirm) {
+                    console.log("Confirmed");
+                    InformationSource.delete({sourceid: id}, function () {
+                        $scope.sources = InformationSource.query();
+                    }, function (error) {
                         showError(error.data.message);
                     });
-                };
-            }]);
+                    SweetAlert.swal("Deleted!", "A source with id " + id + " has been deleted.", "success");
+                } else {
+                    SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
+                }
+            });
+        };
+
+        $scope.readSource = function (id) {
+            InformationSource.read({sourceid: id}, function (success) {
+                console.log(success);
+                showSuccess(success.message);
+            }, function (error) {
+                showError(error.data.message);
+            });
+        };
+    }]);
 
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
     function ($scope, $routeParams, InformationSource, Sensor) {
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
-        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function(value, headers) {
+        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function (value, headers) {
         });
-        
-        $scope.toggleSensorInView = function(action, sensor) {
+
+        $scope.toggleSensorInView = function (action, sensor) {
             if (action == "on") {
                 sensor.active = true;
             }
             else {
                 sensor.active = false;
             }
-            sensor.$edit({sensorid: sensor.id}, function() {
+            sensor.$edit({sensorid: sensor.id}, function () {
             });
         };
     }]);
@@ -70,10 +70,15 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function ($scope, $routeParams, Sensor, Readout, $window) {
 
         $scope.currentPage = 1;
+        $scope.itemsPerPage = 25;
 
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.sensorStats = Sensor.stats({sensorid: $routeParams.sensorid});
-        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
+        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: $scope.currentPage * $scope.itemsPerPage - $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+
+        $scope.pageChanged = function () {
+            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: $scope.currentPage * $scope.itemsPerPage - $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        }
 
         //Function to allow reading of sensor.active value into the UI properly
         $scope.boolToStr = function (arg) {
