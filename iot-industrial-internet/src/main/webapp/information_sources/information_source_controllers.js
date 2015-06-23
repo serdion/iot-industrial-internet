@@ -110,7 +110,9 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
             $scope.startDate = new Date($scope.is.startDate);
-            $scope.endDate = new Date($scope.is.endDate);
+            if ($scope.is.endDate !== null) {
+                $scope.endDate = new Date($scope.is.endDate);
+            }
             $scope.header = "Edit source " + $scope.is.name;
         });
 
