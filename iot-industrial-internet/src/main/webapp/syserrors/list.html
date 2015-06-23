@@ -37,8 +37,8 @@
                         <td>{{error.time| date: 'yyyy-MM-dd HH:mm:ss:sss'}} </td>
                         <td>{{error.description}} </td>
                         <td><span ng-switch on="error.viewed">
-                                <button class="btn btn-success btn-circle" ng-switch-when='true' ng-click='setstatus(error.id, "true")'> <i class="fa fa-check"></i>   </button>
-                                <button class="btn btn-default btn-circle" ng-switch-when='false' ng-click='setstatus(error.id, "false")'> <i class="fa fa-close"></i>   </button>
+                                <button class="btn btn-success btn-circle" ng-switch-when='true' ng-click='setstatus(error, "false")'> <i class="fa fa-check"></i>   </button>
+                                <button class="btn btn-default btn-circle" ng-switch-when='false' ng-click='setstatus(error, "true")'> <i class="fa fa-close"></i>   </button>
                             </span>
                         </td>
                         <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/syserrors/{{error.id}}">Details</a></td>

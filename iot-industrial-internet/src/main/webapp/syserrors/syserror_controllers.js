@@ -10,10 +10,8 @@ sysErrors.controller('SysErrorsListController', function ($scope, SysError, $rou
     $scope.errorlist = SysError.get(function () {
     });
 
-    $scope.setstatus = function (errid, stat) {
-        SysError.setstatus({errorid: errid, status: stat}, function (data) {
-            console.log(errid + " and status is set to " + stat);
-        });
+    $scope.setstatus = function (error, stat) {
+        error.$setstatus({errorid: error.id, viewed: stat});
     }
 });
 
