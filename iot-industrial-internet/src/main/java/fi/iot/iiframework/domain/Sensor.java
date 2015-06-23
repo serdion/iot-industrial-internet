@@ -97,7 +97,9 @@ public class Sensor implements Serializable {
         readouts.add(readout);
     }
 
-    public void addReadouts(Collection<Readout> readoutsToAdd) {
+    public void addReadouts(Collection<Readout> readouts) {
+        List<Readout> readoutsToAdd = new ArrayList<>();
+        readouts.forEach(r -> readoutsToAdd.add(r));
         readoutsToAdd.forEach(r -> addReadout(r));
     }
 
