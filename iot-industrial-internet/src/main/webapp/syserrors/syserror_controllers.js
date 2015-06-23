@@ -7,9 +7,14 @@
 
 // Get all syserrors in a list
 sysErrors.controller('SysErrorsListController', function ($scope, SysError, $routeParams) {
-    $scope.errorlist = SysError.get(function (data) {
-//        console.log(data);
+    $scope.errorlist = SysError.get(function () {
     });
+
+    $scope.setstatus = function (errid, stat) {
+        SysError.setstatus({errorid: errid, status: stat}, function (data) {
+            console.log(errid + " and status is set to " + stat);
+        });
+    }
 });
 
 //Get one syserror based on id
@@ -22,15 +27,10 @@ sysErrors.controller('SysErrorDetailsController', function ($scope, SysError, $r
     };
 });
 
-//Get errors of severity equal or higher than high
-
 sysErrors.controller('ErrorNotificationController', function ($scope, SysError, $routeParams) {
-    $scope.alarmlist = SysError.getHighAndFatal({errorid: $routeParams.errorid}, function (data) {
-//        console.log(data);
+    $scope.alarmlist = SysError.get({errorid: $routeParams.errorid}, function (data) {
     });
     $scope.reloadErrors = function () {
-        $scope.alarmlist = SysError.getHighAndFatal();
+        $scope.alarmlist = SysError.get();
     };
 });
-
-
