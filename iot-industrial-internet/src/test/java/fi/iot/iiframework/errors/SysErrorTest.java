@@ -49,14 +49,6 @@ public class SysErrorTest {
     }
 
     @Test
-    public void equalsItself() {
-        assertTrue(testErrors[2].equals(testErrors[2]));
-        assertFalse(testErrors[2].equals(testErrors[3]));
-        SysError e = new SysError(testErrors[2].getType(), testErrors[2].getSeverity(), testErrors[2].getDescription());
-        assertTrue(testErrors[2].equals(e));
-    }
-
-    @Test
     public void correctHashCodes() {
         assertFalse(testErrors[1].hashCode() == testErrors[2].hashCode());
         SysError e = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
