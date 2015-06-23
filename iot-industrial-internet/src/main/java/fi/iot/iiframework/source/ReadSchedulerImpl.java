@@ -38,7 +38,6 @@ public class ReadSchedulerImpl implements ReadScheduler {
                 if (endDate != null && new Date().after(endDate)) {
                     timer.cancel();
                 }
-                System.out.println("task run");
                 runnable.run();
             }
 
