@@ -15,7 +15,7 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
             console.log("Pressed");
             SweetAlert.swal({
                 title: "Are you sure?",
-                text: "Your are about to delete a source with id " + id + ".",
+                text: "You are about to delete a source with id " + id + ".",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55", confirmButtonText: "Delete",
