@@ -7,8 +7,13 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
@@ -17,13 +22,13 @@ import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "sensors")
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "sensor")
 @Data
 @ToString(exclude = {"readouts", "source"})
 public class Sensor implements Serializable {
@@ -36,12 +41,11 @@ public class Sensor implements Serializable {
     protected String name;
 
     @JsonIgnore
-    @XmlElement(name = "readout")
-    @XmlElementWrapper(name = "readouts")
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    protected Set<Readout> readouts = new HashSet<>();
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    protected Set<Readout> readouts;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -68,11 +72,44 @@ public class Sensor implements Serializable {
         this.name = name;
     }
 
+    protected void setReadouts(Set<Readout> readouts) {
+        this.readouts = readouts;
+    }
+
+    protected Set<Readout> getReadouts() {
+        return readouts;
+    }
+
+    @JsonProperty
+    public long numberOfReadouts() {
+        return readouts.size();
+    }
+
+    public Set<Readout> returnReadouts() {
+        return Collections.unmodifiableSet(readouts);
+    }
+
+    public void addReadout(Readout readout) {
+        if (readouts == null) {
+            readouts = new HashSet<>();
+        }
+        readout.setSensor(this);
+        readouts.add(readout);
+    }
+
+    public void addReadouts(Collection<Readout> readoutsToAdd) {
+        readoutsToAdd.forEach(r -> addReadout(r));
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.source == null ? this.source.id : 0);
+        if (this.source != null) {
+            if (this.source.id != null) {
+                hash = 97 * hash + Objects.hashCode(this.source.id);
+            }
+        }
         return hash;
     }
 

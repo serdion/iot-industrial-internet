@@ -24,18 +24,17 @@ import java.util.UUID;
  * @author atte
  */
 public class InformationSourceObjectProvider {
-    
+
     public static Set<Sensor> provideSensorsWithChildren(InformationSource parent) {
         Set<Sensor> sensors = new HashSet<>();
         for (int i = 0; i < 3; i++) {
             Sensor s = provideSensor();
-            s.setSource(parent);
             for (int j = 0; j < 3; j++) {
-                s.getReadouts().add(provideReadout(s));
+                s.addReadout(provideReadout(s));
             }
             sensors.add(s);
+            parent.addSensor(s);
         }
-        parent.setSensors(sensors);
         return sensors;
     }
 
@@ -44,7 +43,7 @@ public class InformationSourceObjectProvider {
         for (int i = 0; i < 3; i++) {
             Sensor s = provideSensor();
             for (int j = 0; j < 3; j++) {
-                s.getReadouts().add(provideReadout(s));
+                s.addReadout(provideReadout(s));
             }
             sensors.add(s);
         }
@@ -55,7 +54,6 @@ public class InformationSourceObjectProvider {
     public static Sensor provideSensor() {
         Sensor sensor = new Sensor();
         sensor.setName(getUUID());
-        sensor.setReadouts(new HashSet<>());
         sensor.setQuantity("Temperature");
         sensor.setUnit("°C");
 
@@ -67,7 +65,7 @@ public class InformationSourceObjectProvider {
         r.setSensor(s);
         return r;
     }
-    
+
     static int index = 0;
 
     public static Readout provideReadout() {
@@ -76,10 +74,9 @@ public class InformationSourceObjectProvider {
 
         // This might fix the problems with different locales 
         // expecting decimal separator to be comma or period
-        
         NumberFormat nformat = NumberFormat.getNumberInstance(Locale.ENGLISH);
         DecimalFormat df = (DecimalFormat) nformat;
-        
+
         String format = df.format(randDouble(22.1));
 
         readout.setValue(Double.parseDouble(format));

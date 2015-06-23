@@ -20,7 +20,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -74,8 +73,9 @@ public class SparkfunDataParser {
                 }
             }
             sensors.get(entry.getKey())
-                    .getReadouts()
-                    .add(new Readout(timestamp, entry.getValue().getAsDouble(), sensors.get(entry.getKey())));
+                    .addReadout(new Readout(timestamp,
+                                    entry.getValue().getAsDouble(),
+                                    sensors.get(entry.getKey())));
         });
     }
 
@@ -87,7 +87,6 @@ public class SparkfunDataParser {
         }
         Sensor sensor = new Sensor();
         sensor.setName(e.getKey());
-        sensor.setReadouts(new HashSet<>());
         sensors.put(e.getKey(), sensor);
     }
 
