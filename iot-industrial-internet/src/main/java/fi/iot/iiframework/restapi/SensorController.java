@@ -8,6 +8,8 @@ package fi.iot.iiframework.restapi;
 
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.domain.stats.SensorStats;
+import fi.iot.iiframework.domain.stats.SensorStatsFactory;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
@@ -30,6 +32,9 @@ public class SensorController {
 
     @Autowired
     private SensorService sensorService;
+    
+    @Autowired
+    private SensorStatsFactory sensorStatsFactory;
 
     @Autowired
     private RestAPIHelper helper;
@@ -42,6 +47,16 @@ public class SensorController {
             @RequestParam(required = false) Map<String, String> params
     ) throws ResourceNotFoundException {
         return (Sensor) helper.returnOrException(sensorService.get(sensorid));
+    }
+
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/{sensorid}/stats", produces = "application/json")
+    @ResponseBody
+    public SensorStats getSensorStats(
+            @PathVariable long sensorid,
+            @RequestParam(required = false) Map<String, String> params
+    ) throws ResourceNotFoundException {
+        return (SensorStats) helper.returnOrException(sensorStatsFactory.getStats(sensorService.get(sensorid)));
     }
 
     @Secured("ROLE_MODERATOR")
