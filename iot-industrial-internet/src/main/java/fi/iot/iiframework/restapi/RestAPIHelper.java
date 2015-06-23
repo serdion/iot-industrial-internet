@@ -13,6 +13,7 @@ import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.errors.ErrorLogger;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
+import fi.iot.iiframework.restapi.exceptions.ShouldBeBooleanException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -64,5 +65,24 @@ public class RestAPIHelper {
             ErrorLogger.log(ErrorType.IO_ERROR, ErrorSeverity.LOW, "Object recieved was invalid or wrong type in RestAPI.");
             throw new InvalidObjectException();
         }
+    }
+
+    /**
+     * Checks if given string resembles a boolean or not and throws exception if
+     * not.
+     *
+     * @param str String to compare
+     * @return boolean representation of the String
+     * @throws ShouldBeBooleanException if String doesn't resemble a boolean
+     */
+    public boolean checkIfStringIsBoolean(String str) throws ShouldBeBooleanException {
+        if (str.equals("true")) {
+            return true;
+        }
+        if (str.equals("false")) {
+            return false;
+        }
+
+        throw new ShouldBeBooleanException();
     }
 }
