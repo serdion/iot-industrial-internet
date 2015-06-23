@@ -6,8 +6,6 @@
  */
 package fi.iot.iiframework.controllers;
 
-import fi.iot.iiframework.views.ViewParams;
-import fi.iot.iiframework.views.ViewUtils;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +17,11 @@ public class IndexController {
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping("/")
     public String index(Model model) {
-        ViewParams params = new ViewParams("IIFramework", "Tervetuloa ng-Springiin!");
-        ViewUtils.addViewParamsToModel(model, params);
         return "ng";
     }
 
     @RequestMapping("/login")
-    public String login() {
+    public String login(Model model) {
         return "login";
     }
 

@@ -13,7 +13,6 @@ import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.restapi.exceptions.RestAPIExceptionObject;
 import fi.iot.iiframework.restapi.exceptions.TooManyRequestsException;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.source.InformationSourceManager;

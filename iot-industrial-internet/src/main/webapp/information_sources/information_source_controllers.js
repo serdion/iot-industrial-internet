@@ -9,7 +9,16 @@
 /* global informationSources */
 
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
-        $scope.sources = InformationSource.query();
+        $scope.getSources = function () {
+            $scope.sources = InformationSource.query({from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        }
+        $scope.getSources();
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = 25;
+        
+        $scope.pageChanged = function () {
+            $scope.getSources();
+        }
 
         $scope.deleteSource = function (id) {
             console.log("Pressed");
@@ -26,7 +35,7 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
                 if (isConfirm) {
                     console.log("Confirmed");
                     InformationSource.delete({sourceid: id}, function () {
-                        $scope.sources = InformationSource.query();
+                        $scope.getSources();
                     }, function (error) {
                         showError(error.data.message);
                     });
@@ -50,9 +59,20 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
 
 informationSources.controller('InformationSourceController', ['$scope', '$routeParams', 'InformationSource', 'Sensor',
     function ($scope, $routeParams, InformationSource, Sensor) {
+        
+        $scope.getSensors = function () {
+            $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        }
+        $scope.getSources();
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = 25;
+        
+        $scope.pageChanged = function () {
+            $scope.getSensors();
+        }
+        
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
-        $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid}, function (value, headers) {
-        });
+        $scope.getSensors();
 
         $scope.toggleSensorInView = function (action, sensor) {
             if (action == "on") {
@@ -72,12 +92,14 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
 
+        $scope.getReadouts = function () {
+            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        }
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
-        $scope.sensorStats = Sensor.stats({sensorid: $routeParams.sensorid});
-        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: $scope.currentPage * $scope.itemsPerPage - $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        $scope.getReadouts();
 
         $scope.pageChanged = function () {
-            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: $scope.currentPage * $scope.itemsPerPage - $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+            $scope.getReadouts();
         }
 
         //Function to allow reading of sensor.active value into the UI properly

@@ -7,6 +7,7 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -99,6 +100,7 @@ public class InformationSource implements Serializable, Validatable {
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Sensor> sensors;
     
+    @JsonProperty
     public long numberOfSensors() {
         return sensors.size();
     }

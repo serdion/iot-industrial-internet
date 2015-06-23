@@ -25,8 +25,7 @@ informationSources.factory('Sensor', ['$resource',
         return $resource('1.0/sensors/:sourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
-            edit: {method: 'POST', params: {action: 'edit'}},
-            stats: {method: 'GET', params: {action: 'stats'}}
+            edit: {method: 'POST', params: {action: 'edit'}}
         });
     }]);
 

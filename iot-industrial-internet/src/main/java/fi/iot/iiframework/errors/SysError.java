@@ -42,6 +42,12 @@ public class SysError implements Serializable {
     @Column(name = "additionalInformation")
     private String additionalInformation;
 
+    @Column(name = "viewed")
+    private boolean viewed;
+    
+    public SysError() {
+    }
+
     /**
      * Creates a new SysError
      *
@@ -53,7 +59,7 @@ public class SysError implements Serializable {
         this.type = type;
         this.description = desc;
         this.severity = severity;
-
+        this.viewed = false;
         this.time = new Date();
     }
 
@@ -69,8 +75,7 @@ public class SysError implements Serializable {
      *
      * @param type ErrorType of error
      * @param desc Description of error
-     * @param additionalInformation Additional information attached to this
-     * error.
+     * @param additionalInformation Additional information about this error.
      * @param severity ErrorSeverity of the error
      */
     public SysError(ErrorType type, ErrorSeverity severity, String desc, String additionalInformation) {
@@ -81,11 +86,12 @@ public class SysError implements Serializable {
         this.time = new Date();
     }
 
-    public SysError() {
-    }
-
     public String getName() {
         return this.type.getName();
+    }
+    
+    public String viewStatusAsString(){
+        return viewed ? "viewed" : "not viewed";
     }
 
     @Override
@@ -95,7 +101,8 @@ public class SysError implements Serializable {
                 + "\ttime: " + this.time.toString()
                 + "\tdesc: " + this.description
                 + "\tlocation: " + this.location
-                + "\tseverity: " + this.severity.toString();
+                + "\tseverity: " + this.severity.toString()
+                + "\tstatus: "+ viewStatusAsString();
     }
 
 }
