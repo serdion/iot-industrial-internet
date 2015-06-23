@@ -21,7 +21,7 @@ public enum ErrorType {
     PARSE_ERROR("Parse error", "PARSE_ERROR"),
     READ_ERROR("Read error", "READ_ERROR"),
     INVALID_OBJECT("Invalid Object", "INVALID_OBJECT"),
-    HTTP_ERROR("HTTP or HTTPS Error", "HTTP_ERROR"),
+    HTTP_ERROR("HTTP Error", "HTTP_ERROR"),
     ERRONOUS_DATA("Erronous Data", "ERRONOUS_DATA"),
     UNKNOWN_ERROR("Unknown error", "UNKNOWN_ERROR");
 
