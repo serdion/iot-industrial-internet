@@ -15,6 +15,7 @@ import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
 import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
+import fi.iot.iiframework.services.domain.SensorService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,13 +29,16 @@ import org.springframework.stereotype.Service;
 public class InformationSourcePersistenceImpl implements InformationSourcePersistence {
     
     private final InformationSourceService sourceService;
+    private final SensorService sensorService;
     private final ReadoutService readoutService;
 
     @Autowired
     public InformationSourcePersistenceImpl(
             InformationSourceService sourceService,
+            SensorService sensorService,
             ReadoutService readoutService) {
         this.sourceService = sourceService;
+        this.sensorService = sensorService;
         this.readoutService = readoutService;
     }
 
@@ -72,9 +76,16 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
                     s.getReadouts().forEach(r -> r.setSensor(sensor));
                     sensor.getReadouts().addAll(s.getReadouts());
                     mutateReadouts(sensor);
+                    saveSensorWithReadouts(sensor);
                 }
             });
         });
+    }
+    
+    @Transactional
+    private void saveSensorWithReadouts(Sensor sensor) {
+        sensorService.save(sensor);
+        readoutService.save(sensor.getReadouts());
     }
 
     /**
