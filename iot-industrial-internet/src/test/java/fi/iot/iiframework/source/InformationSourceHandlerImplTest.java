@@ -41,7 +41,7 @@ public class InformationSourceHandlerImplTest {
         source = new InformationSource();
         source.setActive(false);
         source.setName("test");
-        source.setType(InformationSourceType.XML);
+        source.setType(InformationSourceType.JSON);
         source.setUrl("http://t-teesalmi.users.cs.helsinki.fi/MafiaTools/source.xml");
 
         handler = new InformationSourceHandlerImpl(source, mockPersistence);

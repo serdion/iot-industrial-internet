@@ -9,16 +9,13 @@ package fi.iot.iiframework.source;
 import java.util.List;
 import javax.transaction.Transactional;
 import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
 import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,7 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class InformationSourcePersistenceImpl implements InformationSourcePersistence {
-    
+
     private final InformationSourceService sourceService;
     private final SensorService sensorService;
     private final ReadoutService readoutService;
@@ -50,42 +47,31 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     @Override
     @Transactional
     public InformationSource writeReadoutsToSource(InformationSource source, List<Sensor> sensors) {
-        final InformationSource src = sourceService.getWithSensors(source.getId());
-        sensors.forEach(s -> {
-            s.setSource(src);
-            src.getSensors().add(s);
-        });
+        final InformationSource src = sourceService.get(source.getId());
+        sensors.forEach(sensor -> src.addSensor(sensor));
         associateReadoutsWithPersistentSensors(src, sensors);
         sourceService.save(src);
-        return src;
+        return source;
     }
 
     /**
      * Adds new readouts to known sensors and saves those sensors with their new
-     * readouts. Takes horrific amounts of memory, TODO: FIX.
+     * readouts.
      *
      * @param source
      * @param sensors
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.getSensors().stream()
+            source.returnSensors().stream()
                     .filter(sensor -> sensor.isActive())
                     .forEach(sensor -> {
-                if (s.equals(sensor)) {
-                    s.getReadouts().forEach(r -> r.setSensor(sensor));
-                    sensor.getReadouts().addAll(s.getReadouts());
-                    mutateReadouts(sensor);
-                    saveSensorWithReadouts(sensor);
-                }
-            });
+                        if (s.equals(sensor)) {
+                            sensor.addReadouts(s.returnReadouts());
+                            mutateReadouts(sensor);
+                        }
+                    });
         });
-    }
-    
-    @Transactional
-    private void saveSensorWithReadouts(Sensor sensor) {
-        sensorService.save(sensor);
-        readoutService.save(sensor.getReadouts());
     }
 
     /**

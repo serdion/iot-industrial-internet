@@ -13,23 +13,12 @@ import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.SQLInsert;
 
 @Data
 @Entity
-@Table(name = "readouts",
-       uniqueConstraints
-        = @UniqueConstraint(columnNames = {"readout_time", "readout_value", "sensor"}))
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "readout")
+@Table(name = "readouts")
 @ToString(exclude = {"sensor"})
 public class Readout implements Serializable {
 
@@ -37,12 +26,10 @@ public class Readout implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @XmlAttribute
     @NotNull
     @Column(name = "readout_time")
     protected long time;
 
-    @XmlAttribute
     @NotNull
     @Column(name = "readout_value")
     protected double value;

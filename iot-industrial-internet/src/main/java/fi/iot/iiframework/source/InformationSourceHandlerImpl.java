@@ -10,7 +10,6 @@ import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.readers.InformationSourceReader;
 import fi.iot.iiframework.readers.SparkfunDataReader;
-import fi.iot.iiframework.readers.XMLReader;
 import java.util.List;
 
 public final class InformationSourceHandlerImpl implements InformationSourceHandler {
@@ -45,16 +44,12 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      */
     private void initReader() {
         switch (source.getType()) {
-            case XML:
-                this.reader = new XMLReader();
-                break;
             case JSON:
                 this.reader = new SparkfunDataReader();
                 break;
             default:
                 throw new AssertionError(source.getType().name());
         }
-
     }
 
     /**

@@ -27,7 +27,7 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
     @Override
     public void mutateAll(Sensor sensor) {
-        for (Readout readout : sensor.getReadouts()) {
+        for (Readout readout : sensor.returnReadouts()) {
             try {
                 if (condition == ValueCondition.HIGHER_THAN) {
                     mutateOneReadout(readout, condition, sensor.getThresholdMax());

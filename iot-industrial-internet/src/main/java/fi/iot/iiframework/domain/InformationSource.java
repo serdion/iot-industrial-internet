@@ -11,6 +11,7 @@ import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,8 +26,11 @@ import javax.persistence.Temporal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -88,11 +92,36 @@ public class InformationSource implements Serializable, Validatable {
     protected long lastReadout;
 
     @JsonIgnore
-
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, orphanRemoval = true)
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    protected Set<Sensor> sensors = new HashSet<>();
+    @BatchSize(size = 10)
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    protected Set<Sensor> sensors;
+    
+    public long numberOfSensors() {
+        return sensors.size();
+    }
+
+    protected Set<Sensor> getSensors() {
+        return sensors;
+    }
+
+    protected void setSensors(Set<Sensor> sensors) {
+        this.sensors = sensors;
+    }
+
+    public Set<Sensor> returnSensors() {
+        return Collections.unmodifiableSet(sensors);
+    }
+
+    public void addSensor(Sensor sensor) {
+        if (sensors == null) {
+            sensors = new HashSet<>();
+        }
+        sensor.setSource(this);
+        sensors.add(sensor);
+    }
 
     @Override
     public boolean isValid() {

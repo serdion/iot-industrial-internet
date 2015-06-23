@@ -10,7 +10,6 @@ package fi.iot.iiframework.domain;
  * Defines a type of interval in which a source is read.
  */
 public enum IntervalType {
-
     NEVER,
     HOURLY,
     DAILY,
