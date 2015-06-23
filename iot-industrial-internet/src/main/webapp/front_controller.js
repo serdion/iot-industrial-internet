@@ -7,5 +7,4 @@
 
 
 IIFramework.controller('FrontController', function ($scope){
-    console.log("controller is here");
 });

@@ -25,14 +25,15 @@ informationSources.factory('Sensor', ['$resource',
         return $resource('1.0/sensors/:sourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
-            edit: {method: 'POST', params: {action: 'edit'}}
+            edit: {method: 'POST', params: {action: 'edit'}},
+            stats: {method: 'GET', params: {action: 'stats'}}
         });
     }]);
 
 
 informationSources.factory('Readout', ['$resource',
     function($resource) {
-        return $resource('1.0/readouts/:sensorid/:action', {}, {
+        return $resource('1.0/readouts/:sensorid/:action/:from/:to', {}, {
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });
     }]);
