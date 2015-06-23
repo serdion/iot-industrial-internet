@@ -48,7 +48,10 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     @Transactional
     public InformationSource writeReadoutsToSource(InformationSource source, List<Sensor> sensors) {
         final InformationSource src = sourceService.get(source.getId());
-        sensors.forEach(sensor -> src.addSensor(sensor));
+        sensors.forEach(s -> {
+            s.setSource(src);
+            src.getSensors().add(s);
+        });
         associateReadoutsWithPersistentSensors(src, sensors);
         return source;
     }
@@ -62,11 +65,12 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.returnSensors().stream()
+            source.getSensors().stream()
                     .filter(sensor -> sensor.isActive())
                     .forEach(sensor -> {
                         if (s.equals(sensor)) {
-                            sensor.addReadouts(s.getReadouts());
+                            s.getReadouts().forEach(r -> r.setSensor(sensor));
+                            sensor.getReadouts().addAll(s.getReadouts());
                             mutateReadouts(sensor);
                         }
                     });

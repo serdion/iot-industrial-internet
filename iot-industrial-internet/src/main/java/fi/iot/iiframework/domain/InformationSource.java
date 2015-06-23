@@ -94,8 +94,8 @@ public class InformationSource implements Serializable, Validatable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, orphanRemoval = true)
-    @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Cascade(CascadeType.SAVE_UPDATE)
     @BatchSize(size = 10)
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Sensor> sensors;
@@ -105,16 +105,12 @@ public class InformationSource implements Serializable, Validatable {
         return sensors.size();
     }
 
-    protected Set<Sensor> getSensors() {
+    public Set<Sensor> getSensors() {
         return sensors;
     }
 
     protected void setSensors(Set<Sensor> sensors) {
         this.sensors = sensors;
-    }
-
-    public Set<Sensor> returnSensors() {
-        return Collections.unmodifiableSet(sensors);
     }
 
     public void addSensor(Sensor sensor) {

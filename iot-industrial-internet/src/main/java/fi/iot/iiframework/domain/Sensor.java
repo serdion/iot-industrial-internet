@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
@@ -37,13 +36,12 @@ public class Sensor implements Serializable {
     @GeneratedValue
     protected Long id;
 
-    @XmlAttribute(name = "name")
     protected String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Cascade(CascadeType.SAVE_UPDATE)
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Readout> readouts;
 
@@ -52,10 +50,8 @@ public class Sensor implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     protected InformationSource source;
 
-    @XmlAttribute
     protected String quantity;
 
-    @XmlAttribute
     protected String unit;
 
     protected boolean active;
@@ -123,7 +119,7 @@ public class Sensor implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        return (this.source == null ? other.source == null : this.source.id.equals(other.source.id));
+        return (Objects.equals(this.source, other.source));
     }
 
 }
