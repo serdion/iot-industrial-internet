@@ -71,6 +71,9 @@ public class Readout implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
+        if (this.id != null) {
+            hash = 79 * hash + (int) (this.id ^ (this.id >>> 32));
+        }
         hash = 79 * hash + (int) (this.time ^ (this.time >>> 32));
         hash = 79 * hash + Objects.hashCode(this.sensor != null ? this.sensor : 0);
         return hash;

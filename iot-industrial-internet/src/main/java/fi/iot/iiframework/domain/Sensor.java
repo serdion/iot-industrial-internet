@@ -76,17 +76,13 @@ public class Sensor implements Serializable {
         this.readouts = readouts;
     }
 
-    protected Set<Readout> getReadouts() {
+    public Set<Readout> getReadouts() {
         return readouts;
     }
 
     @JsonProperty
     public long numberOfReadouts() {
         return readouts.size();
-    }
-
-    public Set<Readout> returnReadouts() {
-        return Collections.unmodifiableSet(readouts);
     }
 
     public void addReadout(Readout readout) {

@@ -66,7 +66,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
                     .filter(sensor -> sensor.isActive())
                     .forEach(sensor -> {
                         if (s.equals(sensor)) {
-                            sensor.addReadouts(s.returnReadouts());
+                            sensor.addReadouts(s.getReadouts());
                             mutateReadouts(sensor);
                         }
                     });
