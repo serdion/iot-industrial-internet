@@ -96,8 +96,6 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
         $scope.is.readInterval = 'NEVER';
 
         $scope.submit = function () {
-            $scope.is.startDate = $scope.startDate;
-            $scope.is.endDate = $scope.endDate;
             $scope.is.$add({}, function () {
                 $location.path('/sources');
             },
@@ -109,17 +107,11 @@ informationSources.controller('AddInformationSourceController', ['$scope', 'Info
 
 informationSources.controller('EditInformationSourceController', ['$scope', 'InformationSource', '$location', '$routeParams', function ($scope, InformationSource, $location, $routeParams) {
         $scope.is = InformationSource.get({sourceid: $routeParams.sourceid}, function () {
-            $scope.startDate = new Date($scope.is.startDate);
-            if ($scope.is.endDate !== null) {
-                $scope.endDate = new Date($scope.is.endDate);
-            }
             $scope.header = "Edit source " + $scope.is.name;
         });
 
 
         $scope.submit = function () {
-            $scope.is.startDate = $scope.startDate;
-            $scope.is.endDate = $scope.endDate;
             $scope.is.$edit({}, function () {
                 $location.path('/sources');
             },

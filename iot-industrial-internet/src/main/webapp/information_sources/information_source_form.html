@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label>Start Date (yyyy-mm-dd)</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" datepicker-popup ng-model="startDate" is-open="startDatePickerOpened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                            <input type="date" class="form-control" datepicker-popup ng-model="is.startDate" is-open="startDatePickerOpened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="toggleStartDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
@@ -53,7 +53,7 @@
 
                     <div class="form-group">
                         <label>Start Time (hh:mm)</label>
-                        <timepicker ng-model="startDate" show-meridian="false"></timepicker>
+                        <timepicker ng-model="is.startDate" show-meridian="false"></timepicker>
                     </div>
 
                     <div  class="form-group">      
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <label>Repeat Until</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" datepicker-popup ng-model="endDate" is-open="endDatePickerOpened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                            <input type="date" class="form-control" datepicker-popup ng-model="is.endDate" is-open="endDatePickerOpened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="toggleEndDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
