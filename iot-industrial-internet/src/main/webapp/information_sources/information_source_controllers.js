@@ -69,7 +69,10 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
 
 informationSources.controller('SensorController', ['$scope', '$routeParams', 'Sensor', 'Readout', '$window', function ($scope, $routeParams, Sensor, Readout, $window) {
 
+        $scope.currentPage = 1;
+
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
+        $scope.sensorStats = Sensor.stats({sensorid: $routeParams.sensorid});
         $scope.readouts = Readout.query({sensorid: $routeParams.sensorid});
 
         //Function to allow reading of sensor.active value into the UI properly
