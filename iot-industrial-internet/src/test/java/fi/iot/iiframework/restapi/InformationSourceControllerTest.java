@@ -77,16 +77,12 @@ public class InformationSourceControllerTest {
     private void initContext(){
         sourceA = new InformationSource();
         sourceA.setId(1l);
-        sourceA.setSensors(new HashSet<>());
         
         sourceB = new InformationSource();
         sourceB.setId(2l);
-        sourceB.setSensors(new HashSet<>());
 
         sensorA = InformationSourceObjectProvider.provideSensor();
         sensorB = InformationSourceObjectProvider.provideSensor();
-        sensorA.setSource(sourceA);
-        sensorB.setSource(sourceB);
 
         readoutA = InformationSourceObjectProvider.provideReadout();
         readoutB = InformationSourceObjectProvider.provideReadout();
@@ -96,17 +92,13 @@ public class InformationSourceControllerTest {
         readoutB.setValue(22.0);
         readoutC.setValue(23.0);
 
-        sensorA.getReadouts().add(readoutA);
-        sensorA.getReadouts().add(readoutB);
-        sensorB.getReadouts().add(readoutC);
+        sensorA.addReadout(readoutA);
+        sensorA.addReadout(readoutB);
+        sensorB.addReadout(readoutC);
 
-        sourceA.getSensors().add(sensorA);
-        sourceB.getSensors().add(sensorB);
+        sourceA.addSensor(sensorA);
+        sourceB.addSensor(sensorB);
         
-        readoutA.setSensor(sensorA);
-        readoutB.setSensor(sensorA);
-        readoutC.setSensor(sensorB);
-
         sourceService.save(sourceA);
         // Don't save this sourceService.save(sourceB);
     }

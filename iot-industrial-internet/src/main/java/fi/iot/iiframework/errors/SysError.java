@@ -63,6 +63,13 @@ public class SysError implements Serializable {
         this.time = new Date();
     }
 
+    public SysError(ErrorType type, ErrorSeverity severity, String desc, Date date) {
+        this.type = type;
+        this.description = desc;
+        this.severity = severity;
+        this.time = date;
+    }
+
     /**
      * Creates a new SysError
      *
@@ -76,6 +83,7 @@ public class SysError implements Serializable {
         this.description = desc;
         this.additionalInformation = additionalInformation;
         this.severity = severity;
+        this.time = new Date();
     }
 
     public String getName() {

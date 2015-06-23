@@ -15,11 +15,4 @@ import org.springframework.stereotype.Repository;
 public class InformationSourceDAOImpl extends GenericHibernateDAO<InformationSource, Long>
         implements InformationSourceDAO {
 
-    @Override
-    public InformationSource getWithSensors(Long id) {
-        InformationSource source = get(id);
-        Hibernate.initialize(source.getSensors());
-        return source;
-    }
-
 }

@@ -26,13 +26,4 @@ public class InformationSourceServiceImpl
         super.dao = dao;
         informationSourceDAO = dao;
     }
-    
-    /**
-     *
-     * @return
-     */
-    @Override
-    public InformationSource getWithSensors(Long id) {
-        return informationSourceDAO.getWithSensors(id);
-    }
 }

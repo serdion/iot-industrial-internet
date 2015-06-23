@@ -32,7 +32,7 @@ informationSources.factory('Sensor', ['$resource',
 
 informationSources.factory('Readout', ['$resource',
     function($resource) {
-        return $resource('1.0/readouts/:sensorid/:action', {}, {
+        return $resource('1.0/readouts/:sensorid/:action/:from/:to', {}, {
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
         });
     }]);

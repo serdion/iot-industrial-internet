@@ -85,11 +85,9 @@ public class ReadoutControllerTest {
     private void initContext(){
         sourceA = new InformationSource();
         sourceA.setId(1l);
-        sourceA.setSensors(new HashSet<>());
         
         sourceB = new InformationSource();
         sourceB.setId(2l);
-        sourceB.setSensors(new HashSet<>());
 
         sensorA = InformationSourceObjectProvider.provideSensor();
         sensorB = InformationSourceObjectProvider.provideSensor();
@@ -103,13 +101,6 @@ public class ReadoutControllerTest {
         readoutA.setValue(21.0);
         readoutB.setValue(22.0);
         readoutC.setValue(23.0);
-
-        sensorA.getReadouts().add(readoutA);
-        sensorA.getReadouts().add(readoutB);
-        sensorB.getReadouts().add(readoutC);
-
-        sourceA.getSensors().add(sensorA);
-        sourceB.getSensors().add(sensorB);
         
         readoutA.setSensor(sensorA);
         readoutB.setSensor(sensorA);

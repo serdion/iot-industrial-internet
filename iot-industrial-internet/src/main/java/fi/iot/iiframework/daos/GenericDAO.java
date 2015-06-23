@@ -7,6 +7,7 @@
 package fi.iot.iiframework.daos;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.criterion.Criterion;
 
@@ -67,9 +68,9 @@ public interface GenericDAO<T, ID extends Serializable> {
      */
     public void remove(T t);
 
-    public List<T> findByCriteriaFromTo(int from, int to, List<Criterion> list);
+    public List<T> findByCriteriaFromTo(int from, int to, Collection<Criterion> list);
 
-    public Long countByCriteria(List<Criterion> list);
+    public Long countByCriteria(Collection<Criterion> list);
 
     public void flush();
 

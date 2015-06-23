@@ -23,10 +23,6 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-/**
- *
- * @author atte
- */
 public class InformationSourcePersistenceImplTest {
 
     InformationSourcePersistence persistence;
@@ -45,7 +41,10 @@ public class InformationSourcePersistenceImplTest {
     @Before
     public void setUp() {
         initMocks(this);
-        persistence = new InformationSourcePersistenceImpl(mockSourceService, mockReadoutService);
+        persistence = new InformationSourcePersistenceImpl(
+                mockSourceService,
+                mockSensorService,
+                mockReadoutService);
 
         mockSource = new InformationSource();
         InformationSourceObjectProvider.provideSensorsWithChildren(mockSource);

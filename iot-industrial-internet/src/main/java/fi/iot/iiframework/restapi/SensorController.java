@@ -30,7 +30,7 @@ public class SensorController {
 
     @Autowired
     private SensorService sensorService;
-
+    
     @Autowired
     private RestAPIHelper helper;
 

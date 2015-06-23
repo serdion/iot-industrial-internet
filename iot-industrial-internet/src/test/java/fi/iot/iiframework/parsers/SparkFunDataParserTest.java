@@ -38,13 +38,13 @@ public class SparkFunDataParserTest {
     @Test
     public void sensorsGetReadouts() {
         Sensor sensor = sensors.get(0);
-        assertTrue(sensor.getReadouts().size() > 10);
+        assertTrue(sensor.returnReadouts().size() > 10);
     }
 
     @Test
     public void readoutsHaveValueSet() {
         Sensor sensor = sensors.get(0);
-        sensor.getReadouts().forEach(r -> {
+        sensor.returnReadouts().forEach(r -> {
             assertTrue(r.getValue() != 0);
         });
     }
@@ -52,7 +52,7 @@ public class SparkFunDataParserTest {
     @Test
     public void readoutsHaveTimeSet() {
         Sensor sensor = sensors.get(0);
-        sensor.getReadouts().forEach(r -> {
+        sensor.returnReadouts().forEach(r -> {
             assertTrue(r.getTime() != 0);
         });
     }
