@@ -10,6 +10,7 @@ import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
+import fi.iot.iiframework.restapi.exceptions.ShouldBeBooleanException;
 import fi.iot.iiframework.services.errors.ErrorService;
 import java.util.List;
 import java.util.Map;
@@ -33,17 +34,18 @@ public class SysErrorController {
     
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(
-            value = "/{errorid}/setviewed", 
+            value = "/{errorid}/set/{status}", 
             produces = "application/json",
             method = RequestMethod.POST
             )
     @ResponseBody
     public SysError setErrorViewed(
             @PathVariable long errorid,
+            @PathVariable String status,
             @RequestParam(required = false) Map<String, String> params
-    ) throws ResourceNotFoundException {
+    ) throws ResourceNotFoundException, ShouldBeBooleanException {
         SysError error = (SysError) helper.returnOrException(errorservice.get(errorid));
-        error.setViewed(true);
+        error.setViewed(helper.checkIfStringIsBoolean(status));
         errorservice.save(error);
         
         return error;
