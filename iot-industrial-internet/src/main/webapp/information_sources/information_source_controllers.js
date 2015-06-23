@@ -11,6 +11,9 @@
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
         $scope.sources = InformationSource.query();
 
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = 25;
+
         $scope.deleteSource = function (id) {
             console.log("Pressed");
             SweetAlert.swal({
@@ -72,12 +75,14 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
 
+        $scope.getReadouts = function () {
+            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        }
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
-        $scope.sensorStats = Sensor.stats({sensorid: $routeParams.sensorid});
-        $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: $scope.currentPage * $scope.itemsPerPage - $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+        $scope.getReadouts();
 
         $scope.pageChanged = function () {
-            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: $scope.currentPage * $scope.itemsPerPage - $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+            $scope.getReadouts();
         }
 
         //Function to allow reading of sensor.active value into the UI properly
