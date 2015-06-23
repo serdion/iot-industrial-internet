@@ -66,7 +66,7 @@ public class MutatorTest {
         readouts.add(new Readout(12, 50, testsensor));
         readouts.add(new Readout(13, 100, testsensor));
         readouts.add(new Readout(14, 1000, testsensor));
-        
+
         testsensor.setReadouts(readouts);
         testsensor.setSource(source);
         sensors.add(testsensor);
@@ -109,12 +109,29 @@ public class MutatorTest {
         readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
-            System.out.println(r.getFlag() + ", " + r.getValue());
+
             if (r.getFlag() == ReadoutFlag.TOO_LOW_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() < min);
             } else {
                 assertTrue("Value " + r.getValue() + " was not marked as too low when limit was " + min, r.getValue() > min);
             }
+        }
+    }
+
+    @Test
+    public void thresholdsUnsetNoFlagsAreSet() {
+
+        testsensor.setThresholdMax(null);
+        testsensor.setThresholdMin(null);
+        source.setSensors(sensors);
+
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
+
+        readouts = testsensor.getReadouts();
+
+        for (Readout r : readouts) {
+            assertTrue("A flag was set when thresholds were null!", r.getFlag() == ReadoutFlag.EMPTY);
         }
     }
 }
