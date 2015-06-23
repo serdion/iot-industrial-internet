@@ -43,7 +43,6 @@ public class InformationSourcePersistenceImplTest {
         initMocks(this);
         persistence = new InformationSourcePersistenceImpl(
                 mockSourceService,
-                mockSensorService,
                 mockReadoutService);
 
         mockSource = new InformationSource();

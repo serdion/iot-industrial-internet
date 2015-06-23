@@ -9,13 +9,15 @@ package fi.iot.iiframework.source;
 import java.util.List;
 import javax.transaction.Transactional;
 import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
 import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
-import fi.iot.iiframework.services.domain.SensorService;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,18 +26,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class InformationSourcePersistenceImpl implements InformationSourcePersistence {
-
+    
     private final InformationSourceService sourceService;
-    private final SensorService sensorService;
     private final ReadoutService readoutService;
 
     @Autowired
     public InformationSourcePersistenceImpl(
             InformationSourceService sourceService,
-            SensorService sensorService,
             ReadoutService readoutService) {
         this.sourceService = sourceService;
-        this.sensorService = sensorService;
         this.readoutService = readoutService;
     }
 
@@ -53,7 +52,8 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
             src.getSensors().add(s);
         });
         associateReadoutsWithPersistentSensors(src, sensors);
-        return source;
+        sourceService.save(src);
+        return src;
     }
 
     /**
@@ -65,15 +65,13 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.getSensors().stream()
-                    .filter(sensor -> sensor.isActive())
-                    .forEach(sensor -> {
-                        if (s.equals(sensor)) {
-                            s.getReadouts().forEach(r -> r.setSensor(sensor));
-                            sensor.getReadouts().addAll(s.getReadouts());
-                            mutateReadouts(sensor);
-                        }
-                    });
+            source.getSensors().forEach(se -> {
+                if (s.equals(se)) {
+                    s.getReadouts().forEach(r -> r.setSensor(se));
+                    se.getReadouts().addAll(s.getReadouts());
+                    mutateReadouts(se);
+                }
+            });
         });
     }
 
