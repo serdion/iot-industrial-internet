@@ -18,7 +18,9 @@ import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "readouts")
+@Table(name = "readouts",
+        uniqueConstraints
+        = @UniqueConstraint(columnNames = {"readout_time", "readout_value", "sensor"}))
 @ToString(exclude = {"sensor"})
 public class Readout implements Serializable {
 
@@ -70,8 +72,7 @@ public class Readout implements Serializable {
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + (int) (this.time ^ (this.time >>> 32));
-        hash = 79 * hash + Objects.hashCode(this.sensor == null ? 0
-                : (this.sensor.id == null ? 0 : this.sensor.id));
+        hash = 79 * hash + Objects.hashCode(this.sensor != null ? this.sensor : 0);
         return hash;
     }
 
@@ -84,6 +85,12 @@ public class Readout implements Serializable {
             return false;
         }
         final Readout other = (Readout) obj;
+        if (this.id != null && other.id != null) {
+            if (this.id.equals(other.id)) {
+                return true;
+            }
+        }
+
         if (this.time != other.time) {
             return false;
         }
@@ -96,7 +103,7 @@ public class Readout implements Serializable {
             return false;
         }
 
-        return this.sensor.id.equals(other.sensor.id);
+        return this.sensor.equals(other.sensor);
     }
 
 }
