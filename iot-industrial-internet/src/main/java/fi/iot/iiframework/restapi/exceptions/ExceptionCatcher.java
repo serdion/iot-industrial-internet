@@ -87,5 +87,22 @@ public class ExceptionCatcher {
                         "You have performed too many requests in a row, please wait a second before trying again."
                 ), HttpStatus.TOO_MANY_REQUESTS);
     }
+    
+    /**
+     * Catches ShouldBeBooleanException created by RestAPI and notifies the
+     * user with RestAPIError object that contains an ErrorType and a message.
+     *
+     * @return ResponseEntity with RestAPIError object
+     */
+    @RequestMapping(value = "/error/toomanyrequests", produces = "application/json")
+    @ExceptionHandler(ShouldBeBooleanException.class)
+    @ResponseBody
+    public ResponseEntity<RestAPIExceptionObject> shouldBeBooleanException() {
+        return new ResponseEntity<>(
+                new RestAPIExceptionObject(
+                        ErrorType.BAD_REQUEST,
+                        "Provided string could not be converted into a boolean."
+                ), HttpStatus.BAD_REQUEST);
+    }
 
 }

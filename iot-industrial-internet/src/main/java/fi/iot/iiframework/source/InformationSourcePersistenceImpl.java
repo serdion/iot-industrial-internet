@@ -50,7 +50,6 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
         final InformationSource src = sourceService.get(source.getId());
         sensors.forEach(sensor -> src.addSensor(sensor));
         associateReadoutsWithPersistentSensors(src, sensors);
-        sourceService.save(src);
         return source;
     }
 
