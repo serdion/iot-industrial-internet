@@ -30,7 +30,7 @@
                             }, function(error) {
                                 showError(error.data.message);
                             });
-                            SweetAlert.swal("Deleted!", "A source with id + " + id + " has been deleted.", "success");
+                            SweetAlert.swal("Deleted!", "A source with id " + id + " has been deleted.", "success");
                         } else {
                             SweetAlert.swal("Cancelled!", "Delete action has been cancelled.", "error");
                         }
