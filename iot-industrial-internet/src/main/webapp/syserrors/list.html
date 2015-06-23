@@ -6,7 +6,11 @@
 * Software Engineering Lab in summer 2015
 */-->
 <div class="col-lg-12">
+    <h1>System Errors</h1>
     <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <button class="btn btn-xs pull-right" ng-class="{'btn-success': statusswitch, 'btn-default': !statusswitch}" ng-click="setstatusall(!statusswitch)" ng-bind="statuschangetext().toString()">a</button>
+        </div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table">
@@ -16,13 +20,14 @@
                             <th>Severity</th>
                             <th>Type</th>
                             <th>Time</th>
-                            <th>Viewed</th>
                             <th>Description</th>
+                            <th>Viewed</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
 
-                    <tr ng-repeat="error in errorlist" >
-                        <td>{{error.name}} </td>
+                    <tr ng-repeat="error in errorlist" ng-class="{danger: !error.viewed, deleted: error.viewed}" >
+                        <td>{{error.name}}</td>
 
                         <td>
                             <div ng-if="error.severity == 'FATAL'">
@@ -37,11 +42,11 @@
                         <td>{{error.time| date: 'yyyy-MM-dd HH:mm:ss:sss'}} </td>
                         <td>{{error.description}} </td>
                         <td><span ng-switch on="error.viewed">
-                                <button class="btn btn-success btn-circle" ng-switch-when='true' ng-click='setstatus(error, "false")'> <i class="fa fa-check"></i>   </button>
-                                <button class="btn btn-default btn-circle" ng-switch-when='false' ng-click='setstatus(error, "true")'> <i class="fa fa-close"></i>   </button>
+                                <button class="btn btn-default btn-circle" ng-switch-when='true' ng-click='setstatus(error, "false")'> <i class="fa fa-check"></i>   </button>
+                                <button class="btn btn-danger btn-circle" ng-switch-when='false' ng-click='setstatus(error, "true")'> <i class="fa fa-exclamation"></i>   </button>
                             </span>
                         </td>
-                        <td><a type="button" class="btn btn-primary btn-xs" ng-href="#/syserrors/{{error.id}}">Details</a></td>
+                        <td><a type="button" class="btn btn-primary btn-circle" ng-href="#/syserrors/{{error.id}}"> <i class="fa fa-search"></i></a></td>
                     </tr>
 
                 </table>
