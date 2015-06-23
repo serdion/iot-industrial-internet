@@ -95,7 +95,7 @@ public class ExceptionCatcher {
      * @return ResponseEntity with RestAPIError object
      */
     @RequestMapping(value = "/error/toomanyrequests", produces = "application/json")
-    @ExceptionHandler(TooManyRequestsException.class)
+    @ExceptionHandler(ShouldBeBooleanException.class)
     @ResponseBody
     public ResponseEntity<RestAPIExceptionObject> shouldBeBooleanException() {
         return new ResponseEntity<>(
