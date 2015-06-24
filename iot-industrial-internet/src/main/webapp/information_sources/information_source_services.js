@@ -13,6 +13,7 @@ informationSources.factory('InformationSource', ['$resource',
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
             read: {method: 'GET', params: {action: 'read'}},
+            count: {method: 'GET', params: {action: 'count'}},
             edit: {method: 'POST', params: {action: 'edit'}},
             add: {method: 'POST', params: {action: 'add'}},
             delete: {method: 'DELETE', params: {action: 'delete'}}

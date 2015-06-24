@@ -6,11 +6,15 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSource;
 import java.util.Date;
 
+/**
+ * Handler for JavaTimer class that can schedule a method to run at specific intervals.
+ */
 public interface ReadScheduler {
-
-    public void schedule(int interval, Runnable method);
+    
+    public void schedule(InformationSource source, Runnable method);
 
     public void scheduleAtSpecificInterval(final long interval, final Date startDate, final Date endDate, final Runnable runnable);
 

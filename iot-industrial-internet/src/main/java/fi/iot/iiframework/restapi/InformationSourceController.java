@@ -108,6 +108,13 @@ public class InformationSourceController {
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getInformationSourceCount() {
+        return new StatObject("numberOfSources","The number of information sources added to the system.",informationSourceService.count());
+    }
+    
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesList(
