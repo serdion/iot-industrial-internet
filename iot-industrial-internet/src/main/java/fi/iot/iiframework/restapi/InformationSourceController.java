@@ -107,6 +107,13 @@ public class InformationSourceController {
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public long getInformationSourceCount() {
+        return informationSourceService.count();
+    }
+    
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesList(
