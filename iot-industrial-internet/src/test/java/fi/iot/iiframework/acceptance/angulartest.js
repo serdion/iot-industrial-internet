@@ -54,17 +54,17 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         expect(element.all(by.repeater('error in errorlist')).count()).toEqual(1);
     });
     
-    it('should be notified of unread errors in the topbar', function () {
-        browser.driver.get('http://localhost:8080/login');
-        browser.driver.findElement(by.name('username')).sendKeys('moderator');
-        browser.driver.findElement(by.name('password')).sendKeys('moderator');
-        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
-        element(by.partialLinkText('Information Sources')).click();
-        element(by.partialLinkText('Read now')).click();
-        element(by.partialLinkText('Read now')).click();
-        browser.get("http://localhost:8080/#/sources");
-        expect(element(by.class('{unviewederrorsblink: unviewedErrors}')).isPresent()).toBe(true);
-    });
+//    it('should be notified of unread errors in the topbar', function () {
+//        browser.driver.get('http://localhost:8080/login');
+//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
+//        element(by.partialLinkText('Information Sources')).click();
+//        element(by.partialLinkText('Read now')).click();
+//        element(by.partialLinkText('Read now')).click();
+//        browser.get("http://localhost:8080/#/sources");
+//        expect(element(by.class('{unviewederrorsblink: unviewedErrors}')).isPresent()).toBe(true);
+//    });
 
     it('should be able view a sensor and filter its readouts', function () {
         browser.driver.get('http://localhost:8080/login');
@@ -79,6 +79,17 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         element(by.id('filter')).click();
         expect(element.all(by.repeater('readout in readouts')).count()).toEqual(0);
     });
+    
+//    it('should be able to delete an information source', function () {
+//        browser.driver.get('http://localhost:8080/login');
+//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
+//        element(by.partialLinkText('Information Sources')).click();
+//        element(by.partialLinkText('Delete')).click();
+//        element(by.partialLinkText('Delete')).click();
+//        expect(element(by.partialLinkText('Edit')).isPresent()).toBe(false);
+//    });
 
     it('should be able create a new information source', function () {
         browser.driver.get('http://localhost:8080/login');
@@ -90,11 +101,14 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         var name = element(by.model("is.name"));
         var type = element(by.model("is.type"));
         var url = element(by.model("is.url"));
+        var startDate = element(by.model("is.startDate")); 2015-06-24
         name.sendKeys('NewAcceptanceTestSource');
         element(by.cssContainingText('option', 'JSON')).click();
         url.sendKeys('https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1');
+        startDate.sendKeys("2015-06-24");
         element(by.id('submitbutton')).click();
-        expect(element.all(by.repeater('c in configurations')).count()).toEqual(2); //???
+        browser.get("http://localhost:8080/#/sources");
+        expect(element.all(by.repeater('ds in sources')).count()).toEqual(2);
     });
 
 });
