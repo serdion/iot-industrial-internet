@@ -22,6 +22,10 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         //expect(browser.driver.findElement(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
         expect(browser.driver.getTitle()).toEqual('IIFramework');
     });
+    
+    if('should not be able to log in with incorrect details', function () {
+        // TODO
+    });
 
 //    it('should be able to move to the sources list by clicking the sidebar button', function () {
 //        browser.get('http://localhost:8080/#/');
@@ -62,4 +66,13 @@ describe('Acceptance testing for the AngularJS web interface', function () {
 //        element(by.partialLinkText('Configurations')).click();
 //        expect(element.all(by.repeater('c in configurations')).count()).toEqual(2);
 //    });
+
+    it('should be albe to view occured errors', function () {
+        // TODO tee virhe esim restapipyynnöllä ja katso onko virhe ilmoittanut
+    });
+    
+    if('should be notified of unread errors in the topbar', function () {
+        // TODO lukematon virhe vaihtaa iconin classia
+    });
+    
 });
