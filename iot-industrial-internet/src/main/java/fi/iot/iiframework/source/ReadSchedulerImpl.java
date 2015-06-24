@@ -24,16 +24,16 @@ public class ReadSchedulerImpl implements ReadScheduler {
                     scheduleOnlyOnce(source.getStartDate(), method);
                     break;
                 case HOURLY:
-                    scheduleAtSpecificInterval(TimeUnit.HOURS.toSeconds(1), source.getStartDate(), source.getEndDate(), method);
+                    scheduleAtSpecificInterval(TimeUnit.HOURS.toMillis(1), source.getStartDate(), source.getEndDate(), method);
                     break;
                 case DAILY:
-                    scheduleAtSpecificInterval(TimeUnit.DAYS.toSeconds(1), source.getStartDate(), source.getEndDate(), method);
+                    scheduleAtSpecificInterval(TimeUnit.DAYS.toMillis(1), source.getStartDate(), source.getEndDate(), method);
                     break;
                 case WEEKLY:
-                    scheduleAtSpecificInterval(TimeUnit.DAYS.toSeconds(7), source.getStartDate(), source.getEndDate(), method);
+                    scheduleAtSpecificInterval(TimeUnit.DAYS.toMillis(7), source.getStartDate(), source.getEndDate(), method);
                     break;
                 case MONTHLY:
-                    scheduleAtSpecificInterval(TimeUnit.DAYS.toSeconds(30), source.getStartDate(), source.getEndDate(), method);
+                    scheduleAtSpecificInterval(TimeUnit.DAYS.toMillis(30), source.getStartDate(), source.getEndDate(), method);
                     break;
                 case OTHER:
                     scheduleAtSpecificInterval(source.getOtherInterval() * 1000, source.getStartDate(), source.getEndDate(), method);
