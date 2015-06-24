@@ -10,16 +10,17 @@ describe('Acceptance testing for the AngularJS web interface', function () {
     // or there will be errors in the tests
 
     it('login page should have a title', function () {
-        expect(browser.getTitle()).toEqual('Login Page');
+	browser.driver.get('http://localhost:8080/login');
+        expect(browser.driver.getTitle()).toEqual('Please Sign In');
     });
     
     it('should be able to log in with the default user', function () {
-        browser.get('http://localhost:8080/login');
+        browser.driver.get('http://localhost:8080/login');
         browser.driver.findElement(by.name('username')).sendKeys('moderator');
         browser.driver.findElement(by.name('password')).sendKeys('moderator');
-        browser.driver.findElement(by.name("submit")).click();
-        expect(browser.findElement(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
-        expect(browser.getTitle()).toEqual('IIFramework');
+        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
+        //expect(browser.driver.findElement(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
+        expect(browser.driver.getTitle()).toEqual('IIFramework');
     });
 
 //    it('should be able to move to the sources list by clicking the sidebar button', function () {
