@@ -30,6 +30,10 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         element(by.partialLinkText('Information Sources')).click();
         expect(element(by.partialLinkText('Add New')).isPresent()).toBe(true);
     });
+    
+    if('should not be able to log in with incorrect details', function () {
+        // TODO
+    });
 
     it('should be able to move to the errors list, view an error and then return to the errors list', function () {
         browser.driver.get('http://localhost:8080/login');
@@ -73,4 +77,13 @@ describe('Acceptance testing for the AngularJS web interface', function () {
 //        element(by.partialLinkText('Configurations')).click();
 //        expect(element.all(by.repeater('c in configurations')).count()).toEqual(2);
 //    });
+
+    it('should be albe to view occured errors', function () {
+        // TODO tee virhe esim restapipyynnöllä ja katso onko virhe ilmoittanut
+    });
+    
+    if('should be notified of unread errors in the topbar', function () {
+        // TODO lukematon virhe vaihtaa iconin classia
+    });
+    
 });
