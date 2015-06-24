@@ -63,7 +63,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
         $scope.getSensors = function () {
             $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
         }
-        $scope.getSources();
+        $scope.getSensors();
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
         
