@@ -16,6 +16,7 @@ import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
+import java.util.Set;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,7 +55,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
         sourceService.save(src);
         associateReadoutsWithPersistentSensors(src, sensors);
         sourceService.save(src);
-        return src;
+        return source;
     }
 
     private void addNewSensors(List<Sensor> sensors, final InformationSource src) {
@@ -72,16 +73,27 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.getSensors().forEach(se -> {
-                if (s.equals(se) && s != se) {
-                    Sensor sensor = sensorService.getWithReadouts(se.getId());
-                    s.getReadouts().forEach(r -> {
-                        sensor.addReadout(r);
-                    });
-                    sensorService.save(sensor);
+            source.getSensors().stream()
+                    .filter(sensor -> sensor.isActive())
+                    .forEach(sensor -> {
+                if (equalsButNotTheSameInstance(s, sensor)) {
+                    addReadoutsToSensor(sensor, s.getReadouts());
                 }
             });
         });
+    }
+
+    private static boolean equalsButNotTheSameInstance(Sensor s, Sensor sensor) {
+        return s.equals(sensor) && s != sensor;
+    }
+
+    private void addReadoutsToSensor(Sensor sen, Set<Readout> readouts) {
+        Sensor sensor = sensorService.getWithReadouts(sen.getId());
+        readouts.forEach(r -> {
+            sensor.addReadout(r);
+            mutateReadout(r);
+        });
+        sensorService.save(sensor);
     }
 
     /**
