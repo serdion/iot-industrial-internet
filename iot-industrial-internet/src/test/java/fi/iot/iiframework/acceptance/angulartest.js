@@ -20,7 +20,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         browser.driver.findElement(by.name('password')).sendKeys('moderator');
         browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
         //expect(browser.driver.findElement(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
-        expect(browser.driver.getTitle()).toEqual('IIFramework');
+        expect(browser.driver.getTitle()).toEqual('Industrial Internet Framework');
     });
 
 //    it('should be able to move to the sources list by clicking the sidebar button', function () {
