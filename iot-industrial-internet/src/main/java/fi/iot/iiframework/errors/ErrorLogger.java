@@ -9,7 +9,6 @@ package fi.iot.iiframework.errors;
 import fi.iot.iiframework.services.errors.ErrorService;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -96,7 +95,7 @@ public class ErrorLogger {
             string = "NaN";
         }
 
-        return StringEscapeUtils.escapeHtml4(string);
+        return string.trim();
     }
 
 }
