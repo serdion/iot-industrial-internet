@@ -10,8 +10,8 @@ describe('Acceptance testing for the AngularJS web interface', function () {
     // or there will be errors in the tests
 
     it('login page should have a title', function () {
-        browser.get('http://localhost:8080/login');
-        expect(browser.driver.getTitle()).toEqual('Login Page');
+        browser.driver.get('http://localhost:8080/login');
+        expect(browser.driver.getTitle()).toEqual('Please Sign In');
     });
     
     it('should be able to log in with the default user', function () {
