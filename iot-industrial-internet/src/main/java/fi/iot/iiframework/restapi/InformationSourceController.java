@@ -62,12 +62,12 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> addInformationSource(
-            @RequestBody InformationSource configuration,
+            @RequestBody InformationSource source,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.createSource(configuration);
-        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+        helper.checkIfObjectIsValid(source);
+        informationSourceManager.createSource(source);
+        return new ResponseEntity<>(source, HttpStatus.CREATED);
     }
 
     @Secured("ROLE_MODERATOR")
@@ -79,12 +79,12 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> editInformationSource(
-            @RequestBody InformationSource configuration,
+            @RequestBody InformationSource source,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.updateSource(configuration);
-        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+        helper.checkIfObjectIsValid(source);
+        informationSourceManager.updateSource(source);
+        return new ResponseEntity<>(source, HttpStatus.CREATED);
     }
 
     @Secured("ROLE_MODERATOR")
@@ -99,11 +99,11 @@ public class InformationSourceController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
 
-        InformationSource configuration
+        InformationSource source
                 = (InformationSource) helper.returnOrException(informationSourceService.get(sourceid));
-
+        informationSourceService.clear();
         informationSourceManager.removeSource(sourceid);
-        return new ResponseEntity<>(configuration, HttpStatus.OK);
+        return new ResponseEntity<>(source, HttpStatus.OK);
     }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
