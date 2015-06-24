@@ -6,6 +6,10 @@
  */
 package fi.iot.iiframework.errors;
 
+/**
+ * Defines the severities of SysErrors
+ */
+
 public enum ErrorSeverity {
 
     NONE(0, "NONE"),
