@@ -65,8 +65,8 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     /**
-     * Adds new readouts to known sensors and saves those sensors with their new
-     * readouts.
+     * Adds new readouts to persistent sensors and saves those sensors with
+     * their new readouts, cascading.
      *
      * @param source
      * @param sensors
@@ -76,17 +76,32 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
             source.getSensors().stream()
                     .filter(sensor -> sensor.isActive())
                     .forEach(sensor -> {
-                if (equalsButNotTheSameInstance(s, sensor)) {
-                    addReadoutsToSensor(sensor, s.getReadouts());
-                }
-            });
+                        if (equalsButNotTheSameInstance(s, sensor)) {
+                            addReadoutsToSensor(sensor, s.getReadouts());
+                        }
+                    });
         });
     }
 
+    /**
+     * No need to add readouts to the same object, which could be the case when
+     * we first read an source.
+     *
+     * @param s
+     * @param sensor
+     * @return
+     */
     private static boolean equalsButNotTheSameInstance(Sensor s, Sensor sensor) {
         return s.equals(sensor) && s != sensor;
     }
 
+    /**
+     * Get a sensor from database with its readouts, and add the new readouts.
+     * Inefficient, but sufficient for now.
+     *
+     * @param sen
+     * @param readouts
+     */
     private void addReadoutsToSensor(Sensor sen, Set<Readout> readouts) {
         Sensor sensor = sensorService.getWithReadouts(sen.getId());
         readouts.forEach(r -> {
