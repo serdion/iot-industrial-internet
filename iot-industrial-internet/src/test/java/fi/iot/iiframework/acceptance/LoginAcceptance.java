@@ -6,28 +6,21 @@
  */
 package fi.iot.iiframework.acceptance;
 
-import fi.iot.iiframework.application.Application;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
+@Ignore
 public class LoginAcceptance {
-    
+
     private WebDriver driver;
-    
-    private String root = "http://localhost:8080/";
-    
+
+    private String baseUrl = "http://localhost:8080/";
+
     @Before
     public void setUp() {
         // SpringApplication.run(Application.class);
@@ -35,11 +28,14 @@ public class LoginAcceptance {
     }
 
     @Test
-    public void onceBobSubmittedSignupSuccessful() {
-        driver.get(root);
+    public void loginSuccessfullWithCorrectDetails() {
+        driver.get(baseUrl + "/login");
+        driver.findElement(By.id("username")).clear();
+        driver.findElement(By.id("username")).sendKeys("moderator");
+        driver.findElement(By.id("password")).clear();
+        driver.findElement(By.id("password")).sendKeys("moderator");
+        driver.findElement(By.xpath("//button")).click();
 
-        
-
-        assertTrue(true);
+        assertTrue(driver.getPageSource().contains("IIFramework for Java"));
     }
 }
