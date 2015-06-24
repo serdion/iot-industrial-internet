@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
-import EqualsTester.EqualsTester;
+import testingtools.EqualsTester;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;

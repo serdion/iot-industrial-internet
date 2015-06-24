@@ -6,7 +6,7 @@
  */
 package fi.iot.iiframework.errors;
 
-import EqualsTester.EqualsTester;
+import testingtools.EqualsTester;
 import java.util.Date;
 import org.junit.After;
 import static org.junit.Assert.*;

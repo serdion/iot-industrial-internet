@@ -9,7 +9,7 @@
  *   Rüdiger Herrmann - initial API and implementation
  *   Frank Appel - code review, idea for assertEquals( T, Object, Object )
  ******************************************************************************/
-package EqualsTester;
+package testingtools;
  
 /**
  * This class helps unit testing the {@link Object#equals(Object)} and {@link Object#hashCode()}
