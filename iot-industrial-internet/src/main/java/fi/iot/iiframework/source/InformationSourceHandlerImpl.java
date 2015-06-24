@@ -8,8 +8,8 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.readers.InformationSourceReader;
-import fi.iot.iiframework.readers.SparkfunDataReader;
+import fi.iot.iiframework.parsers.ParserContainer;
+import fi.iot.iiframework.parsers.SparkfunDataParser;
 import java.util.List;
 
 public final class InformationSourceHandlerImpl implements InformationSourceHandler {
@@ -18,10 +18,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      * Configuration for the operations in this class.
      */
     private InformationSource source;
-    /**
-     * Reader used to read the server information.
-     */
-    private InformationSourceReader reader;
     /**
      * Scheduler that schedules the read operation based on configuration.
      */
@@ -35,21 +31,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         this.source = source;
         this.persistence = persistence;
         this.scheduler = new ReadSchedulerImpl();
-        initReader();
         schedule();
-    }
-
-    /**
-     * Initialize the type of reader this class will use.
-     */
-    private void initReader() {
-        switch (source.getType()) {
-            case JSON:
-                this.reader = new SparkfunDataReader();
-                break;
-            default:
-                throw new AssertionError(source.getType().name());
-        }
     }
 
     /**
@@ -86,7 +68,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      * Ensure that scheduler and reader match the configuration.
      */
     private void update() {
-        initReader();
         schedule();
     }
 
@@ -103,7 +84,9 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
 
     @Override
     public List<Sensor> read() {
-        List<Sensor> sensor = reader.read(source.getUrl());
+        List<Sensor> sensor = ParserContainer.getParsers()
+                .get(source.getType())
+                .parse(source.getUrl());
         return sensor;
     }
 
@@ -121,11 +104,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
     @Override
     public void close() {
         scheduler.cancel();
-    }
-
-    @Override
-    public void setReader(InformationSourceReader reader) {
-        this.reader = reader;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class SparkFunDataParserTest {
     @Before
     public void setUp() throws MalformedURLException, IOException {
         assertNotNull("Testfile missing", getClass().getResource(testjson));
-        sensors = SparkfunDataParser.parse(this.getClass().getResource(testjson));
+        sensors = new SparkfunDataParser().parse(this.getClass().getResource(testjson));
     }
 
 
