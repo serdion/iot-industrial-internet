@@ -167,8 +167,11 @@ public class InformationSourceController {
         return new ResponseEntity<>(new SuccessObject("Source was read successfully."), HttpStatus.OK);
     }
 
+    /*
+    * Only allows a single source to be read once every 10 seconds.
+    */
     private boolean lastRequestTooClose(long sourceid) {
-        return System.currentTimeMillis() - lastRequests.get(sourceid) < 10000;
+        return System.currentTimeMillis() - lastRequests.get(sourceid) < TimeUnit.SECONDS.toMillis(10);
     }
 
     /**
