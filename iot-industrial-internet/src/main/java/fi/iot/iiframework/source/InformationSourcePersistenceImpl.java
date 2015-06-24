@@ -16,6 +16,7 @@ import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
+import java.util.Set;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,7 +55,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
         sourceService.save(src);
         associateReadoutsWithPersistentSensors(src, sensors);
         sourceService.save(src);
-        return src;
+        return source;
     }
 
     private void addNewSensors(List<Sensor> sensors, final InformationSource src) {
@@ -64,24 +65,50 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     /**
-     * Adds new readouts to known sensors and saves those sensors with their new
-     * readouts.
+     * Adds new readouts to persistent sensors and saves those sensors with
+     * their new readouts, cascading.
      *
      * @param source
      * @param sensors
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.getSensors().forEach(se -> {
-                if (s.equals(se) && s != se) {
-                    Sensor sensor = sensorService.getWithReadouts(se.getId());
-                    s.getReadouts().forEach(r -> {
-                        sensor.addReadout(r);
+            source.getSensors().stream()
+                    .filter(sensor -> sensor.isActive())
+                    .forEach(sensor -> {
+                        if (equalsButNotTheSameInstance(s, sensor)) {
+                            addReadoutsToSensor(sensor, s.getReadouts());
+                        }
                     });
-                    sensorService.save(sensor);
-                }
-            });
         });
+    }
+
+    /**
+     * No need to add readouts to the same object, which could be the case when
+     * we first read an source.
+     *
+     * @param s
+     * @param sensor
+     * @return
+     */
+    private static boolean equalsButNotTheSameInstance(Sensor s, Sensor sensor) {
+        return s.equals(sensor) && s != sensor;
+    }
+
+    /**
+     * Get a sensor from database with its readouts, and add the new readouts.
+     * Inefficient, but sufficient for now.
+     *
+     * @param sen
+     * @param readouts
+     */
+    private void addReadoutsToSensor(Sensor sen, Set<Readout> readouts) {
+        Sensor sensor = sensorService.getWithReadouts(sen.getId());
+        readouts.forEach(r -> {
+            sensor.addReadout(r);
+            mutateReadout(r);
+        });
+        sensorService.save(sensor);
     }
 
     /**

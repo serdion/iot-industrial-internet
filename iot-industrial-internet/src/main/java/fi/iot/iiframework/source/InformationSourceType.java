@@ -9,11 +9,11 @@ package fi.iot.iiframework.source;
 public enum InformationSourceType {
 
     /**
-     * Fake XML
+     * XML Prototype, not implemented ATM.
      */
     XML, 
     /**
-     * Sparkfun JSON type data
+     * Sparkfun JSON type data.
      */
     JSON;
 }

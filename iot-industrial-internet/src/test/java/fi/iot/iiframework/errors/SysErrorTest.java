@@ -6,6 +6,8 @@
  */
 package fi.iot.iiframework.errors;
 
+import testingtools.EqualsTester;
+import java.util.Date;
 import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -49,14 +51,6 @@ public class SysErrorTest {
     }
 
     @Test
-    public void equalsItself() {
-        assertTrue(testErrors[2].equals(testErrors[2]));
-        assertFalse(testErrors[2].equals(testErrors[3]));
-        SysError e = new SysError(testErrors[2].getType(), testErrors[2].getSeverity(), testErrors[2].getDescription());
-        assertTrue(testErrors[2].equals(e));
-    }
-
-    @Test
     public void correctHashCodes() {
         assertFalse(testErrors[1].hashCode() == testErrors[2].hashCode());
         SysError e = new SysError(ErrorType.CONFLICT_ERROR, ErrorSeverity.NOTIFICATION, "muh");
@@ -74,6 +68,27 @@ public class SysErrorTest {
     public void changedDescritionSaved() {
         testErrors[2].setDescription("test");
         assertTrue(testErrors[2].getDescription().equals("test"));
+    }
+
+    @Test
+    public void testSysErrorEqualsAndHashCode() {
+        
+        Date startTime = new Date();
+        EqualsTester<SysError> tester = EqualsTester.newInstance(new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "test"));
+        tester.assertImplementsEqualsAndHashCode();
+        tester.assertEqual(
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "test"),
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "test"),
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "test"));
+        
+        tester.assertNotEqual(
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "test"),
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "unequal test"));
+        
+        tester.assertNotEqual(
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.FATAL, "test", startTime),
+                new SysError(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NONE, "test", startTime));
+
     }
 
 }

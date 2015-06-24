@@ -37,6 +37,8 @@ public class HibernateConfiguration {
     private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
     private static final String PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
+    private static final String PROPERTY_NAME_CACHE_PROVIDER_CLASS = "cache.provider_class";
+    
     private static final String PROPERTY_NAME_C3P0_MIN_SIZE = "hibernate.c3p0.min_size";
     private static final String PROPERTY_NAME_C3P0_MAX_SIZE = "hibernate.c3p0.max_size";
     private static final String PROPERTY_NAME_C3P0_TIMEOUT = "hibernate.c3p0.timeout";
@@ -79,8 +81,7 @@ public class HibernateConfiguration {
         properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
         properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
         properties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
-        properties.put("show_sql", "true");
-        properties.put("cache.provider_class", "org.hibernate.cache.internal.NoCacheProvider");
+        properties.put(PROPERTY_NAME_CACHE_PROVIDER_CLASS, env.getRequiredProperty(PROPERTY_NAME_CACHE_PROVIDER_CLASS));
         return properties;
     }
 
@@ -94,7 +95,7 @@ public class HibernateConfiguration {
 
         return transactionManager;
     }
-    
+
     @Bean
     @Transactional
     public OpenSessionInViewFilter openSessionInViewFilter(SessionFactory sessionFactory) {
