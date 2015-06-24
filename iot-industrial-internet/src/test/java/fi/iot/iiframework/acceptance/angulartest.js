@@ -19,18 +19,23 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         browser.driver.findElement(by.name('username')).sendKeys('moderator');
         browser.driver.findElement(by.name('password')).sendKeys('moderator');
         browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
-        //expect(browser.driver.findElement(by.partialLinkText('Information Sources')).isPresent()).toBe(true);
         expect(browser.driver.getTitle()).toEqual('Industrial Internet Framework');
     });
 
-//    it('should be able to move to the sources list by clicking the sidebar button', function () {
-//        browser.get('http://localhost:8080/#/');
-//        element(by.partialLinkText('Information Sources')).click();
-//        expect(element(by.partialLinkText('Add New')).isPresent()).toBe(true);
-//    });
-//
+    it('should be able to move to the sources list by clicking the sidebar button', function () {
+        browser.driver.get('http://localhost:8080/login');
+        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
+        element(by.partialLinkText('Information Sources')).click();
+        expect(element(by.partialLinkText('Add New')).isPresent()).toBe(true);
+    });
+
 //    it('should be able to move to the errors list, view an error and then return to the errors list', function () {
-//        browser.get('http://localhost:8080/#/');
+//        browser.driver.get('http://localhost:8080/login');
+//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
 //        element(by.partialLinkText('Errors')).click();
 //        element(by.partialLinkText('Details')).click();
 //        element(by.id('backbutton')).click();
@@ -38,7 +43,10 @@ describe('Acceptance testing for the AngularJS web interface', function () {
 //    });
 //
 //    it('should be able view a sensor and filter its readouts', function () {
-//        browser.get('http://localhost:8080/#/sources/');
+//        browser.driver.get('http://localhost:8080/login');
+//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
 //        element(by.partialLinkText('View')).click();
 //        element(by.partialLinkText('List')).click();
 //        element(by.model("more")).sendKeys("22.50");
@@ -48,7 +56,10 @@ describe('Acceptance testing for the AngularJS web interface', function () {
 //    });
 //
 //    it('should be able create a new information source', function () {
-//        browser.get('http://localhost:8080/#/sources/');
+//        browser.driver.get('http://localhost:8080/login');
+//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
 //        element(by.partialLinkText('Add New')).click();
 //        var name = element(by.model("is.name"));
 //        var type = element(by.model("is.type"));
