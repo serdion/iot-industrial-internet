@@ -38,4 +38,11 @@ public interface SensorService extends GenericService<Sensor, Long> {
      * @return
      */
     public Long countBy(InformationSource source);
+
+    /**
+     * Get sensor with all readouts.
+     * @param id
+     * @return 
+     */
+    public Sensor getWithReadouts(Long id);
 }

@@ -7,6 +7,9 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +20,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
@@ -27,23 +29,23 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+@Data
 @Entity
 @Table(name = "sensors")
-@Data
 @ToString(exclude = {"readouts", "source"})
+@JsonIgnoreProperties("numberOfReadouts")
 public class Sensor implements Serializable {
 
     @Id
     @GeneratedValue
     protected Long id;
 
-    @XmlAttribute(name = "name")
     protected String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Cascade(CascadeType.SAVE_UPDATE)
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Readout> readouts;
 
@@ -52,10 +54,8 @@ public class Sensor implements Serializable {
     @JoinColumn(name = "source", nullable = false, updatable = false)
     protected InformationSource source;
 
-    @XmlAttribute
     protected String quantity;
 
-    @XmlAttribute
     protected String unit;
 
     protected boolean active;
@@ -76,19 +76,15 @@ public class Sensor implements Serializable {
         this.readouts = readouts;
     }
 
-    protected Set<Readout> getReadouts() {
+    public Set<Readout> getReadouts() {
         return readouts;
     }
 
-    @JsonProperty
+    @JsonProperty(required = false)
     public long numberOfReadouts() {
         return readouts.size();
     }
-
-    public Set<Readout> returnReadouts() {
-        return Collections.unmodifiableSet(readouts);
-    }
-
+    
     public void addReadout(Readout readout) {
         if (readouts == null) {
             readouts = new HashSet<>();
@@ -127,7 +123,7 @@ public class Sensor implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        return (this.source == null ? other.source == null : this.source.id.equals(other.source.id));
+        return (Objects.equals(this.source, other.source));
     }
 
 }

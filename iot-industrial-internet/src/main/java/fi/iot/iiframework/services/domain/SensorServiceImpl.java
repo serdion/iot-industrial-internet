@@ -12,6 +12,7 @@ import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,13 @@ public class SensorServiceImpl
         return sensorDAO.countByCriteria(
                 buildCriterionList(Restrictions.eq("source", source))
         );
+    }
+
+    @Override
+    public Sensor getWithReadouts(Long id) {
+        Sensor sensor = sensorDAO.get(id);
+        Hibernate.initialize(sensor.getReadouts());
+        return sensor;
     }
 
 }

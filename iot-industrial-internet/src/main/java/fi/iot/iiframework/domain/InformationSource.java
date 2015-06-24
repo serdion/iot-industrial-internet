@@ -7,6 +7,9 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.iot.iiframework.source.InformationSourceType;
 import java.io.Serializable;
@@ -24,6 +27,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -44,6 +48,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "informationsources")
 @EqualsAndHashCode(of = {"url", "type"})
 @ToString(exclude = {"sensors"})
+@JsonIgnoreProperties("numberOfSensors")
 public class InformationSource implements Serializable, Validatable {
 
     /**
@@ -94,27 +99,24 @@ public class InformationSource implements Serializable, Validatable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "source", fetch = FetchType.LAZY, orphanRemoval = true)
-    @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Cascade(CascadeType.SAVE_UPDATE)
     @BatchSize(size = 10)
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Sensor> sensors;
-    
-    @JsonProperty
+
+    @JsonProperty(required = false)
+    @JsonInclude(Include.NON_EMPTY)
     public long numberOfSensors() {
         return sensors.size();
     }
 
-    protected Set<Sensor> getSensors() {
+    public Set<Sensor> getSensors() {
         return sensors;
     }
 
     protected void setSensors(Set<Sensor> sensors) {
         this.sensors = sensors;
-    }
-
-    public Set<Sensor> returnSensors() {
-        return Collections.unmodifiableSet(sensors);
     }
 
     public void addSensor(Sensor sensor) {

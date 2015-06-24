@@ -9,13 +9,17 @@ package fi.iot.iiframework.source;
 import java.util.List;
 import javax.transaction.Transactional;
 import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
 import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
+import java.util.Set;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -45,32 +49,66 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     @Override
-    @Transactional
     public InformationSource writeReadoutsToSource(InformationSource source, List<Sensor> sensors) {
-        final InformationSource src = sourceService.get(source.getId());
-        sensors.forEach(sensor -> src.addSensor(sensor));
+        final InformationSource src = sourceService.getWithSensors(source.getId());
+        addNewSensors(sensors, src);
+        sourceService.save(src);
         associateReadoutsWithPersistentSensors(src, sensors);
+        sourceService.save(src);
         return source;
     }
 
+    private void addNewSensors(List<Sensor> sensors, final InformationSource src) {
+        sensors.forEach(s -> {
+            src.addSensor(s);
+        });
+    }
+
     /**
-     * Adds new readouts to known sensors and saves those sensors with their new
-     * readouts.
+     * Adds new readouts to persistent sensors and saves those sensors with
+     * their new readouts, cascading.
      *
      * @param source
      * @param sensors
      */
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
-            source.returnSensors().stream()
+            source.getSensors().stream()
                     .filter(sensor -> sensor.isActive())
                     .forEach(sensor -> {
-                        if (s.equals(sensor)) {
-                            sensor.addReadouts(s.returnReadouts());
-                            mutateReadouts(sensor);
+                        if (equalsButNotTheSameInstance(s, sensor)) {
+                            addReadoutsToSensor(sensor, s.getReadouts());
                         }
                     });
         });
+    }
+
+    /**
+     * No need to add readouts to the same object, which could be the case when
+     * we first read an source.
+     *
+     * @param s
+     * @param sensor
+     * @return
+     */
+    private static boolean equalsButNotTheSameInstance(Sensor s, Sensor sensor) {
+        return s.equals(sensor) && s != sensor;
+    }
+
+    /**
+     * Get a sensor from database with its readouts, and add the new readouts.
+     * Inefficient, but sufficient for now.
+     *
+     * @param sen
+     * @param readouts
+     */
+    private void addReadoutsToSensor(Sensor sen, Set<Readout> readouts) {
+        Sensor sensor = sensorService.getWithReadouts(sen.getId());
+        readouts.forEach(r -> {
+            sensor.addReadout(r);
+            mutateReadout(r);
+        });
+        sensorService.save(sensor);
     }
 
     /**
@@ -78,9 +116,11 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      *
      * @param sensor
      */
-    private void mutateReadouts(Sensor sensor) {
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(sensor);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(sensor);
+    private void mutateReadout(Readout readout) {
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN)
+                .mutateReadout(readout);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN)
+                .mutateReadout(readout);
     }
 
     @Override

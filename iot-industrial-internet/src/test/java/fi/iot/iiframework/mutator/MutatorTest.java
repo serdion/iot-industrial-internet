@@ -7,9 +7,9 @@
 package fi.iot.iiframework.mutator;
 
 import fi.iot.iiframework.application.TestConfig;
-import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.domain.Readout;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
@@ -65,7 +65,7 @@ public class MutatorTest {
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
-        readouts = testsensor.returnReadouts();
+        readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
             if (r.getFlag() == ReadoutFlag.TOO_HIGH_VALUE) {
@@ -84,7 +84,7 @@ public class MutatorTest {
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
-        readouts = testsensor.returnReadouts();
+        readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
 
@@ -105,7 +105,7 @@ public class MutatorTest {
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
 
-        readouts = testsensor.returnReadouts();
+        readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
             assertTrue("A flag was set when thresholds were null!", r.getFlag() == ReadoutFlag.EMPTY);
