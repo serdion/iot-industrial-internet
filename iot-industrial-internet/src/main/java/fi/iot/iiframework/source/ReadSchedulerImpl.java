@@ -7,7 +7,6 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
-import static fi.iot.iiframework.domain.Sensor_.source;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
