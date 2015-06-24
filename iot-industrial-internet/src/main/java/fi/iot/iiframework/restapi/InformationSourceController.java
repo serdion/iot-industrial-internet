@@ -19,6 +19,7 @@ import fi.iot.iiframework.source.InformationSourceManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -163,14 +164,32 @@ public class InformationSourceController {
         return System.currentTimeMillis() - lastRequests.get(sourceid) < 10000;
     }
 
+    /**
+     * Manually set new InformationSourceService to be used.
+     *
+     * @param informationSourceService InformationSourceService to be set.
+     * @see InformationSourceService
+     */
     public void setInformationSourceService(InformationSourceService informationSourceService) {
         this.informationSourceService = informationSourceService;
     }
 
+    /**
+     * Manually set new InformationSourceManager to be used.
+     *
+     * @param informationSourceManager InformationSourceManager to be set.
+     * @see InformationSourceManager
+     */
     public void setInformationSourceManager(InformationSourceManager informationSourceManager) {
         this.informationSourceManager = informationSourceManager;
     }
 
+    /**
+     * Manually set new RestAPIHelper to be used.
+     *
+     * @param helper Helper to be set
+     * @see RestAPIHelper
+     */
     public void setRestAPIHelper(RestAPIHelper helper) {
         this.helper = helper;
     }

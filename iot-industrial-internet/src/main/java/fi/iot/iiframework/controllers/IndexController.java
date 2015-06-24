@@ -16,12 +16,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IndexController {
 
+    /**
+     * Index controller for this application.
+     *
+     * @param model Model that is passed to the view
+     * @return File: ng.html
+     */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping("/")
     public String index(Model model) {
         return "ng";
     }
 
+    /**
+     * Login controller for this application.
+     *
+     * @param model Model that is passed to the view
+     * @param params Parameters found in the URL of the page (marked with
+     * question mark)
+     * @return File: login.html
+     */
     @RequestMapping("/login")
     public String login(Model model, @RequestParam(required = false) Map<String, String> params) {
         model.addAttribute("haserror", params.containsKey("error"));

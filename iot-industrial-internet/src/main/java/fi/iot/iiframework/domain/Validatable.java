@@ -6,7 +6,15 @@
  */
 package fi.iot.iiframework.domain;
 
+/**
+ * Defines an object that can be validated.
+ */
 public interface Validatable {
 
+    /**
+     * Returns true if the object is valid and false if it's not.
+     *
+     * @return Validity as a boolean
+     */
     public boolean isValid();
 }

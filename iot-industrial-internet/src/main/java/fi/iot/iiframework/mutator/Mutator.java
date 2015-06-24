@@ -10,6 +10,12 @@ import fi.iot.iiframework.domain.Sensor;
 
 public interface Mutator {
 
+    /**
+     * Mutates all readouts found in a single sensor.
+     *
+     * @param sensor Sensor to mutate
+     * @see Sensor
+     */
     public void mutateAll(Sensor sensor);
 
 }
