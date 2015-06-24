@@ -18,6 +18,15 @@
     color: #d33333;
 }
 
+.erronous{
+    background-color: #F2DEDE !important;
+    color: #0c0c0c;
+}
+
+.login-panel-error {
+    margin-top: 5%;
+}
+
 .unviewederrorsblink{
     color: #d33333;
     -webkit-animation-name: blinker;
