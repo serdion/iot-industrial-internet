@@ -6,30 +6,45 @@
  */
 package fi.iot.iiframework.source;
 
+import fi.iot.iiframework.domain.InformationSource;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class ReadSchedulerImpl implements ReadScheduler {
 
     Timer timer;
 
     @Override
-    public void schedule(final int interval, final Runnable runnable) {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            @Override
-            public void run() {
-                runnable.run();
+    public void schedule(InformationSource source, Runnable method) {
+        if (source.isActive() && source.getStartDate() != null) {
+            switch (source.getReadInterval()) {
+                case NEVER:
+                    scheduleOnlyOnce(source.getStartDate(), method);
+                    break;
+                case HOURLY:
+                    scheduleAtSpecificInterval(TimeUnit.HOURS.toMillis(1), source.getStartDate(), source.getEndDate(), method);
+                    break;
+                case DAILY:
+                    scheduleAtSpecificInterval(TimeUnit.DAYS.toMillis(1), source.getStartDate(), source.getEndDate(), method);
+                    break;
+                case WEEKLY:
+                    scheduleAtSpecificInterval(TimeUnit.DAYS.toMillis(7), source.getStartDate(), source.getEndDate(), method);
+                    break;
+                case MONTHLY:
+                    scheduleAtSpecificInterval(TimeUnit.DAYS.toMillis(30), source.getStartDate(), source.getEndDate(), method);
+                    break;
+                case OTHER:
+                    scheduleAtSpecificInterval(source.getOtherInterval() * 1000, source.getStartDate(), source.getEndDate(), method);
+                    break;
             }
-
-        }, 0, interval);
+        }
 
     }
 
     @Override
-    public void scheduleAtSpecificInterval(final long interval, final Date startDate, final Date endDate, final Runnable runnable) {
+    public void scheduleAtSpecificInterval(final long interval, final Date startDate, final Date endDate, final Runnable method) {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -38,7 +53,7 @@ public class ReadSchedulerImpl implements ReadScheduler {
                 if (endDate != null && new Date().after(endDate)) {
                     timer.cancel();
                 }
-                runnable.run();
+                method.run();
             }
 
         }, startDate, interval);
@@ -46,13 +61,13 @@ public class ReadSchedulerImpl implements ReadScheduler {
     }
 
     @Override
-    public void scheduleOnlyOnce(final Date startDate, final Runnable runnable) {
+    public void scheduleOnlyOnce(final Date startDate, final Runnable method) {
         timer = new Timer();
         timer.schedule(new TimerTask() {
 
             @Override
             public void run() {
-                runnable.run();
+                method.run();
             }
 
         }, startDate);

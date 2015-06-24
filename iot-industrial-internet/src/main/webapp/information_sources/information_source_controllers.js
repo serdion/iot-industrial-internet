@@ -11,14 +11,15 @@
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
         $scope.getSources = function () {
             $scope.sources = InformationSource.query({from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
-        }
+        };
+        $scope.numberOfSources = InformationSource.count();
         $scope.getSources();
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
         
         $scope.pageChanged = function () {
             $scope.getSources();
-        }
+        };
 
         $scope.deleteSource = function (id) {
             console.log("Pressed");
