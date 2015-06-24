@@ -10,7 +10,7 @@
 
 informationSources.controller('InformationSourcesController', ['$scope', 'InformationSource', 'SweetAlert', function ($scope, InformationSource, SweetAlert) {
         $scope.getSources = function () {
-            $scope.sources = InformationSource.query({from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+            $scope.sources = InformationSource.query({from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
         }
         $scope.getSources();
         $scope.currentPage = 1;
@@ -61,7 +61,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
     function ($scope, $routeParams, InformationSource, Sensor) {
         
         $scope.getSensors = function () {
-            $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+            $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
         }
         $scope.getSensors();
         $scope.currentPage = 1;
@@ -93,7 +93,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         $scope.itemsPerPage = 25;
 
         $scope.getReadouts = function () {
-            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage});
+            $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
         }
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.getReadouts();
