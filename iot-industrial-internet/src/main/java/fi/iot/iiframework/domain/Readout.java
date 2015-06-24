@@ -13,23 +13,15 @@ import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.SQLInsert;
 
 @Data
 @Entity
 @Table(name = "readouts",
-       uniqueConstraints
-        = @UniqueConstraint(columnNames = {"readout_time", "readout_value", "sensor"}))
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "readout")
+        uniqueConstraints
+        = @UniqueConstraint(columnNames = {"readout_time", "sensor"})
+        )
 @ToString(exclude = {"sensor"})
 public class Readout implements Serializable {
 
@@ -37,12 +29,10 @@ public class Readout implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @XmlAttribute
     @NotNull
     @Column(name = "readout_time")
     protected long time;
 
-    @XmlAttribute
     @NotNull
     @Column(name = "readout_value")
     protected double value;
@@ -81,10 +71,9 @@ public class Readout implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + (int) (this.time ^ (this.time >>> 32));
-        hash = 79 * hash + Objects.hashCode(this.sensor == null ? 0
-                : (this.sensor.id == null ? 0 : this.sensor.id));
+        int hash = 5;
+        hash = 31 * hash + (int) (this.time ^ (this.time >>> 32));
+        hash = 31 * hash + Objects.hashCode(this.sensor);
         return hash;
     }
 
@@ -100,16 +89,12 @@ public class Readout implements Serializable {
         if (this.time != other.time) {
             return false;
         }
-
-        if (this.sensor == null && other.sensor == null) {
-            return true;
-        }
-
-        if (this.sensor == null || other.sensor == null) {
+        if (!Objects.equals(this.sensor, other.sensor)) {
             return false;
         }
-
-        return this.sensor.id.equals(other.sensor.id);
+        return true;
     }
+
+    
 
 }

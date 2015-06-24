@@ -9,6 +9,7 @@ package fi.iot.iiframework.daos;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -58,8 +59,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected List<T> findByCriteria(List<Criterion> criterion) {
-
+    protected List<T> findByCriteria(Collection<Criterion> criterion) {
         return findByCriteriaFromTo(0, Integer.MAX_VALUE, criterion);
     }
 
@@ -73,7 +73,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<T> findByCriteriaFromTo(int from, int to, List<Criterion> criterion) {
+    public List<T> findByCriteriaFromTo(int from, int to, Collection<Criterion> criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setFirstResult(from)
                 .setMaxResults((to + 1) - from);
@@ -88,7 +88,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public Long countByCriteria(List<Criterion> criterion) {
+    public Long countByCriteria(Collection<Criterion> criterion) {
         Criteria crit = getSession().createCriteria(getPersistentClass())
                 .setProjection(Projections.rowCount());
         criterion.stream().forEach((c) -> {

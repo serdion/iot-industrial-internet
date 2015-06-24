@@ -6,6 +6,6 @@
  */
 
 
-IIFramework.controller('FrontController', function ($scope){
-    console.log("controller is here");
+IIFramework.controller('FrontController', function ($scope, InformationSource){
+    $scope.numberOfSources = InformationSource.count();
 });

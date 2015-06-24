@@ -8,13 +8,21 @@ package fi.iot.iiframework.restapi;
 
 import lombok.Data;
 
+/*
+ * Defines a returnable Object that will be transformed into JSON form.
+ */
 @Data
 public class SuccessObject {
-    String message;
 
-    public SuccessObject(String message) {
+    private final String message;
+
+    /**
+     * Creates a new SuccessObject that contains single String.
+     *
+     * @param message Message as a String
+     */
+    public SuccessObject(final String message) {
         this.message = message;
     }
-    
-    
+
 }

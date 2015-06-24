@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-controller="InformationSourceFormController">
     <h1>{{header}}</h1>
     <div class="col-lg-6">
         <div class="panel panel-default">
@@ -44,33 +44,33 @@
                     <div class="form-group">
                         <label>Start Date (yyyy-mm-dd)</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" datepicker-popup ng-model="startDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                            <input type="date" class="form-control" datepicker-popup ng-model="is.startDate" is-open="startDatePickerOpened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="toggleStartDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label>Start Time (hh:mm)</label>
-                        <timepicker ng-model="startDate" show-meridian="false"></timepicker>
+                        <timepicker ng-model="is.startDate" show-meridian="false"></timepicker>
                     </div>
 
                     <div  class="form-group">      
                         <label>When to repeat?</label>
                         <div class="btn-group">
-                            <label class="btn btn-default" type="radio" ng-model="radioModel" value="NEVER" btn-radio="'NEVER'">Never</label>
-                            <label class="btn btn-default" type="radio" ng-model="radioModel" value="HOURLY" btn-radio="'HOURLY'">Hourly</label>
-                            <label class="btn btn-default" type="radio" ng-model="radioModel" value="DAILY" btn-radio="'DAILY'">Daily</label>
-                            <label class="btn btn-default" type="radio" ng-model="radioModel" value="WEEKLY" btn-radio="'WEEKLY'">Weekly</label>
-                            <label class="btn btn-default" type="radio" ng-model="radioModel" value="MONTHLY" btn-radio="'MONTHLY'">Monthly</label>
-                            <label class="btn btn-default" type="radio" ng-model="radioModel" value="OTHER" btn-radio="'OTHER'">Other</label>
+                            <label class="btn btn-default" type="radio" ng-model="is.readInterval" value="NEVER" btn-radio="'NEVER'">Never</label>
+                            <label class="btn btn-default" type="radio" ng-model="is.readInterval" value="HOURLY" btn-radio="'HOURLY'">Hourly</label>
+                            <label class="btn btn-default" type="radio" ng-model="is.readInterval" value="DAILY" btn-radio="'DAILY'">Daily</label>
+                            <label class="btn btn-default" type="radio" ng-model="is.readInterval" value="WEEKLY" btn-radio="'WEEKLY'">Weekly</label>
+                            <label class="btn btn-default" type="radio" ng-model="is.readInterval" value="MONTHLY" btn-radio="'MONTHLY'">Monthly</label>
+                            <label class="btn btn-default" type="radio" ng-model="is.readInterval" value="OTHER" btn-radio="'OTHER'">Other</label>
                         </div>
                     </div>
 
-                    <div ng-show="radioModel === 'OTHER'" class="form-group">    
+                    <div ng-show="is.readInterval === 'OTHER'" class="form-group">    
                         <div class="input-group">
-                            <input type="text" class="form-control" name="otherInterval" ng-model="otherInterval" placeholder="Read Interval as Seconds" />
+                            <input type="text" class="form-control" name="otherInterval" ng-model="is.otherInterval" placeholder="Read Interval as Seconds" />
                             <span class="input-group-addon">seconds</span>
                         </div>
                     </div>
@@ -78,9 +78,9 @@
                     <div class="form-group">
                         <label>Repeat Until</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" datepicker-popup ng-model="endDate" is-open="opened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+                            <input type="date" class="form-control" datepicker-popup ng-model="is.endDate" is-open="endDatePickerOpened" min-date="minDate" max-date="'2300-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="toggleEndDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                             </span>
                         </div>
                     </div>

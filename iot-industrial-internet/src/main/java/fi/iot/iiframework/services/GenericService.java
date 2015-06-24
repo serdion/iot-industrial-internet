@@ -7,6 +7,7 @@
 package fi.iot.iiframework.services;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import org.hibernate.criterion.Criterion;
 
@@ -14,7 +15,7 @@ public interface GenericService<T, ID extends Serializable> {
 
     public T save(T t);
 
-    public List<T> save(List<T> lt);
+    public Collection<T> save(Collection<T> lt);
 
     public T update(T t);
 
@@ -24,13 +25,13 @@ public interface GenericService<T, ID extends Serializable> {
 
     public List<T> get(int from, int to);
 
-    public List<T> getBy(int from, int to, List<Criterion> criterion);
+    public List<T> getBy(int from, int to, Collection<Criterion> criterion);
 
     public void delete(T t);
 
     public List<T> getAll();
 
-    public Long countByCriteria(List<Criterion> criterion);
+    public Long countByCriteria(Collection<Criterion> criterion);
 
     public Long count();
 

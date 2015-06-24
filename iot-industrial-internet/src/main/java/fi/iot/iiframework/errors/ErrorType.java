@@ -21,14 +21,14 @@ public enum ErrorType {
     PARSE_ERROR("Parse error", "PARSE_ERROR"),
     READ_ERROR("Read error", "READ_ERROR"),
     INVALID_OBJECT("Invalid Object", "INVALID_OBJECT"),
-    HTTP_ERROR("HTTP or HTTPS Error", "HTTP_ERROR"),
+    HTTP_ERROR("HTTP Error", "HTTP_ERROR"),
     ERRONOUS_DATA("Erronous Data", "ERRONOUS_DATA"),
     UNKNOWN_ERROR("Unknown error", "UNKNOWN_ERROR");
 
     private final String name;
     private final String id;
 
-    private ErrorType(String name, String id) {
+    private ErrorType(final String name, final String id) {
         this.name = name;
         this.id = id;
     }
@@ -57,7 +57,7 @@ public enum ErrorType {
      * @param typeid ID of the ErrorType
      * @return ErrorType
      */
-    public static ErrorType getType(String typeid) {
+    public static ErrorType getType(final String typeid) {
         ErrorType[] values = ErrorType.values();
 
         for (ErrorType value : values) {

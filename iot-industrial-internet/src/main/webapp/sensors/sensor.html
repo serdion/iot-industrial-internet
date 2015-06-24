@@ -14,22 +14,21 @@
                             <tr>
                                 <th>Time of measurement</th>
                                 <th>Quantity</th>
-                                <th>Value</th>
                                 <th>Unit</th>
-
+                                <th>Value</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="readout in readouts">
                                 <td>{{readout.time| date: 'yyyy-MM-dd HH:mm:ss:sss'}}</td>
                                 <td>{{sensor.quantity}}</td>
-                                <td>{{readout.value}}</td>
                                 <td>{{sensor.unit}}</td>
+                                <td>{{readout.value}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
+                <pagination total-items="sensor.numberOfReadouts" ng-model="currentPage" ng-change="pageChanged()" items-per-page="itemsPerPage"></pagination>
             </div>
         </div>
     </div>

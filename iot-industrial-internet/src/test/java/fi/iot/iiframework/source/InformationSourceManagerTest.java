@@ -33,7 +33,7 @@ public class InformationSourceManagerTest {
         source.setId(1l);
         source.setName("Example");
         source.setUrl("http://axwikstr.users.cs.helsinki.fi/data.xml");
-        source.setType(InformationSourceType.XML);
+        source.setType(InformationSourceType.JSON);
         source.setActive(false);
 
         Mockito.when(mockPersistence.addSource(source))

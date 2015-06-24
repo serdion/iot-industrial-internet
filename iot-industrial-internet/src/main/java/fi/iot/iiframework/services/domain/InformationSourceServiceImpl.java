@@ -10,6 +10,7 @@ import fi.iot.iiframework.services.GenericHibernateService;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.daos.domain.InformationSourceDAO;
 import javax.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +27,13 @@ public class InformationSourceServiceImpl
         super.dao = dao;
         informationSourceDAO = dao;
     }
-    
-    /**
-     *
-     * @return
-     */
+
     @Override
     public InformationSource getWithSensors(Long id) {
-        return informationSourceDAO.getWithSensors(id);
+        InformationSource source = informationSourceDAO.get(id);
+        Hibernate.initialize(source.getSensors());
+        return source;
     }
+    
+    
 }

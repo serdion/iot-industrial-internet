@@ -7,21 +7,27 @@
 package fi.iot.iiframework.parsers;
 
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.errors.ErrorLogger;
-import fi.iot.iiframework.errors.ErrorSeverity;
-import fi.iot.iiframework.errors.ErrorType;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
-public abstract class Parser {
-
+/**
+ * Parser to parse Sensors and their Readouts from given location.
+ */
+public interface Parser {
+    
     /**
-     * Attempts to parse data from given location to a InformationSourceObject.
-     *
-     * @param location Location of the data as a String
-     * @return InformationSourceObject
+     * Parse information from given location.
+     * @param location
+     * @return list of sensors containing their readouts.
      */
-    public static List<Sensor> parse(String location) {
-        ErrorLogger.log(ErrorType.UNKNOWN_ERROR, ErrorSeverity.NOTIFICATION, "Tried to call abstract class Parser and not extended classes.");
-        return null;
-    };
+    public List<Sensor> parse(String location);
+    
+    /**
+     * Parse information from given location.
+     * @param url
+     * @return list of sensors containing their readouts.
+     * @throws java.io.IOException
+     */
+    public List<Sensor> parse(URL url) throws IOException;
 }

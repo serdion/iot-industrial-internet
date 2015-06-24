@@ -13,8 +13,9 @@ informationSources.factory('InformationSource', ['$resource',
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
             read: {method: 'GET', params: {action: 'read'}},
+            count: {method: 'GET', params: {action: 'count'}},
             edit: {method: 'POST', params: {action: 'edit'}},
-            save: {method: 'POST', params: {action: 'add'}},
+            add: {method: 'POST', params: {action: 'add'}},
             delete: {method: 'DELETE', params: {action: 'delete'}}
         });
     }]);
@@ -32,7 +33,14 @@ informationSources.factory('Sensor', ['$resource',
 
 informationSources.factory('Readout', ['$resource',
     function($resource) {
-        return $resource('1.0/readouts/:sensorid/:action', {}, {
+        return $resource('1.0/readouts/:sensorid/:action/:from/:to', {}, {
             query: {method: 'GET', params: {action: 'list'}, isArray: true}
+        });
+    }]);
+
+informationSources.factory('InformationSourceType', ['$resource',
+    function($resource) {
+        return $resource('1.0/stats/informationsource/types', {}, {
+            query: {method: 'GET', isArray: true}
         });
     }]);

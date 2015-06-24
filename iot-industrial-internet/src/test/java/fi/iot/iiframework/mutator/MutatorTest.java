@@ -6,66 +6,51 @@
  */
 package fi.iot.iiframework.mutator;
 
-import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.domain.Readout;
+import fi.iot.iiframework.application.TestConfig;
 import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.domain.Sensor;
-import java.util.ArrayList;
+import fi.iot.iiframework.domain.Readout;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@Ignore
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = {TestConfig.class})
 public class MutatorTest {
 
     private Set<Sensor> sensors;
     private Set<Readout> readouts;
-    private InformationSource source;
     private Sensor testsensor;
 
     public MutatorTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
-
-        source = new InformationSource();
-        source.setId((long) 555);
         sensors = new HashSet<>();
         testsensor = new Sensor();
 
         readouts = new HashSet<>();
 
         testsensor.setActive(true);
-        testsensor.setThresholdMax((double) 20000);
-        testsensor.setThresholdMin((double) -1000);
+        testsensor.setThresholdMax(20000d);
+        testsensor.setThresholdMin(-1000d);
 
-        readouts.add(new Readout(9, -500, testsensor));
-        readouts.add(new Readout(10, 0, testsensor));
-        readouts.add(new Readout(11, 10, testsensor));
-        readouts.add(new Readout(12, 50, testsensor));
-        readouts.add(new Readout(13, 100, testsensor));
-        readouts.add(new Readout(14, 1000, testsensor));
+        testsensor.addReadout(new Readout(9, -500, testsensor));
+        testsensor.addReadout(new Readout(10, 0, testsensor));
+        testsensor.addReadout(new Readout(11, 10, testsensor));
+        testsensor.addReadout(new Readout(12, 50, testsensor));
+        testsensor.addReadout(new Readout(13, 100, testsensor));
+        testsensor.addReadout(new Readout(14, 1000, testsensor));
         
-        testsensor.setReadouts(readouts);
-        testsensor.setSource(source);
         sensors.add(testsensor);
-
     }
 
     @After
@@ -76,7 +61,6 @@ public class MutatorTest {
     public void spotsValueThatIsTooHigh() {
         double max = 50;
         testsensor.setThresholdMax(max);
-        source.setSensors(sensors);
 
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
@@ -96,7 +80,6 @@ public class MutatorTest {
     public void spotsValueThatIsTooLow() {
         double min = -60;
         testsensor.setThresholdMin(min);
-        source.setSensors(sensors);
 
         new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
         new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
@@ -104,12 +87,28 @@ public class MutatorTest {
         readouts = testsensor.getReadouts();
 
         for (Readout r : readouts) {
-            System.out.println(r.getFlag() + ", " + r.getValue());
+
             if (r.getFlag() == ReadoutFlag.TOO_LOW_VALUE) {
                 assertTrue("Value " + r.getValue() + " was marked as too low when limit was " + min, r.getValue() < min);
             } else {
                 assertTrue("Value " + r.getValue() + " was not marked as too low when limit was " + min, r.getValue() > min);
             }
+        }
+    }
+
+    @Test
+    @Ignore
+    public void thresholdsUnsetNoFlagsAreSet() {
+        testsensor.setThresholdMax(null);
+        testsensor.setThresholdMin(null);
+
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(testsensor);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(testsensor);
+
+        readouts = testsensor.getReadouts();
+
+        for (Readout r : readouts) {
+            assertTrue("A flag was set when thresholds were null!", r.getFlag() == ReadoutFlag.EMPTY);
         }
     }
 }

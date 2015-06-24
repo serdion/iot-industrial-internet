@@ -8,5 +8,12 @@ package fi.iot.iiframework.source;
 
 public enum InformationSourceType {
 
-    XML, JSON;
+    /**
+     * XML Prototype, not implemented ATM.
+     */
+    XML, 
+    /**
+     * Sparkfun JSON type data.
+     */
+    JSON;
 }

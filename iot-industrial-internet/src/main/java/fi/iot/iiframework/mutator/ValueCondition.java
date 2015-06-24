@@ -6,6 +6,9 @@
  */
 package fi.iot.iiframework.mutator;
 
+/*
+* Defines a condition that can be used to define and for a value.
+*/
 public enum ValueCondition {
 
     HIGHER_THAN("higher than"),
@@ -17,7 +20,7 @@ public enum ValueCondition {
 
     private final String literal;
 
-    private ValueCondition(String literal) {
+    private ValueCondition(final String literal) {
         this.literal = literal;
     }
 

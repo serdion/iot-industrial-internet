@@ -19,8 +19,14 @@ import java.util.logging.Level;
 
 public class MarkReadoutAsErronousIfValueIs implements Mutator {
 
-    private ValueCondition condition;
+    private final ValueCondition condition;
 
+    /**
+     * Creates a new Mutator with given condition.
+     *
+     * @param condition ValueCondition for the Mutator
+     * @see ValueCondition
+     */
     public MarkReadoutAsErronousIfValueIs(ValueCondition condition) {
         this.condition = condition;
     }
@@ -38,6 +44,24 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
                 Application.logger.log(Level.INFO, "Catched a NullPointerException while mutating one sensor.");
             }
         }
+    }
+
+    /**
+     * Mutates a single readout.
+     *
+     * @param readout Readout to mutate
+     */
+    public void mutateReadout(Readout readout) {
+        try {
+            if (condition == ValueCondition.HIGHER_THAN) {
+                mutateOneReadout(readout, condition, readout.getSensor().getThresholdMax());
+            } else if (condition == ValueCondition.LOWER_THAN) {
+                mutateOneReadout(readout, condition, readout.getSensor().getThresholdMin());
+            }
+        } catch (NullPointerException npe) {
+            Application.logger.log(Level.INFO, "Catched a NullPointerException while mutating one sensor.");
+        }
+
     }
 
     /**
@@ -69,9 +93,8 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
         ErrorLogger.log(error);
     }
 
-    private boolean isNotDefaultThreshold(double threshold) {
+    private boolean isNotDefaultThreshold(final double threshold) {
         return threshold != Integer.MIN_VALUE || threshold != Integer.MAX_VALUE;
     }
-
 
 }

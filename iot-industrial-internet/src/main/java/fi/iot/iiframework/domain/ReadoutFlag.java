@@ -8,6 +8,9 @@ package fi.iot.iiframework.domain;
 
 import fi.iot.iiframework.mutator.ValueCondition;
 
+/*
+* Defines which type a certain readout is.
+*/
 public enum ReadoutFlag {
 
     ERRONOUS,

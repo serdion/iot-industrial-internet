@@ -6,39 +6,42 @@
             </div>
             <div class="panel-body">
                 <div class="dataTable_wrapper">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                        <thead>
-                            <tr>
-                                <th>Source Name</th>
-                                <th>URL</th>
-                                <th>Start Date</th>
-                                <th>Interval</th>
-                                <th>End Date</th>
-                                <th>Last Readout</th>
-                                <th>Options</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="ds in sources" >
-                                <td>{{ds.name}}</td>
-                                <td>{{ds.url}}</td>
-                                <td>{{ds.startDate| date: 'dd.MM.yyyy HH:mm'}}</td>
-                                <td ng-if="ds.otherInterval <= 0 || ds.otherInterval === null">{{ds.readInterval}}</td>
-                                <td ng-if="ds.otherInterval > 0">{{ds.readInterval}}: {{ds.otherInterval}}</td>
-                                <td>{{ds.endDate| date: 'dd.MM.yyyy HH:mm'}}</td>
-                                <td>{{ds.lastReadout | date: 'dd.MM.yyyy HH:mm'}}</td>
-                                <td>
-                                    <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>
-                                    <a ng-href="#/sources/{{ds.id}}/edit" class="btn btn-warning btn-xs">Edit</a>
-                                    <a ng-click="deleteSource(ds.id)" class="btn btn-danger btn-xs">Delete</a>
-                                    <a ng-click="readSource(ds.id)" class="btn btn-info btn-xs">Read now</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p><a type="button" class="btn btn-primary fa fa-plus" ng-href="#/sources/add"> Add New</a></p>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Source Name</th>
+                                    <th>URL</th>
+                                    <th>Start Date</th>
+                                    <th>Interval</th>
+                                    <th>End Date</th>
+                                    <th>Last Readout</th>
+                                    <th>Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="ds in sources" >
+                                    <td>{{ds.name}}</td>
+                                    <td>{{ds.url}}</td>
+                                    <td>{{ds.startDate| date: 'dd.MM.yyyy HH:mm'}}</td>
+                                    <td ng-if="ds.readInterval !== 'OTHER'">{{ds.readInterval}}</td>
+                                    <td ng-if="ds.readInterval === 'OTHER'">{{ds.readInterval}}: {{ds.otherInterval}}</td>
+                                    <td>{{ds.endDate| date: 'dd.MM.yyyy HH:mm'}}</td>
+                                    <td>{{ds.lastReadout| date: 'dd.MM.yyyy HH:mm'}}</td>
+                                    <td>
+                                        <a ng-href="#/sources/{{ds.id}}" class="btn btn-primary btn-xs">View</a>
+                                        <a ng-href="#/sources/{{ds.id}}/edit" class="btn btn-warning btn-xs">Edit</a>
+                                        <a ng-click="deleteSource(ds.id)" class="btn btn-danger btn-xs">Delete</a>
+                                        <a ng-click="readSource(ds.id)" class="btn btn-info btn-xs">Read now</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination total-items="numberOfSources.value" ng-model="currentPage" ng-change="pageChanged()" items-per-page="itemsPerPage"></pagination>
+                        <p><a type="button" class="btn btn-primary fa fa-plus" ng-href="#/sources/add"> Add New</a></p>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>

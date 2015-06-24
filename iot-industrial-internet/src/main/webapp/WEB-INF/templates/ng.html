@@ -7,29 +7,26 @@
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head id="iothead">
+    <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="TODO" />
-        <meta name="author" content="TODO" />
-
-        <title th:text="${viewparams.pagetitle}">null</title>
-
+        <meta name="description" content="Industrial Internet Framework" />
+        <meta name="author" content="Helsingin Yliopisto, Ooppa, serdion, asaajh, Xatalos, Ecxo" />
+        <title>Industrial Internet Framework</title>
         <link th:href="@{/bower_components/morrisjs/morris.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/timeline.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/metisMenu/dist/metisMenu.min.css}" rel="stylesheet" />
         <link th:href="@{/dist/css/sb-admin-2.css}" rel="stylesheet" />
+        <link th:href="@{/dist/css/iiframework.css}" rel="stylesheet" />
         <link th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
+        <link th:href="@{/bower_components/jquery/ui/jquery-ui.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/bower_components/sweetalert/dist/sweetalert.css}" rel="stylesheet" type="text/css" />
     </head>
 
     <body ng-app="IIFramework">
-
         <div id="wrapper">
-
             <div th:fragment="loggedin">
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
@@ -41,69 +38,49 @@
                         </button>
                         <a class="navbar-brand">Industrial Internet Framework</a>
                     </div>
-                    <!-- /.navbar-header -->
 
                     <ul class="nav navbar-top-links navbar-right">
-
                         <li class="dropdown" ng-controller="ErrorNotificationController" ng-click="reloadErrors()" >
-
-
                             <a class="dropdown-toggle" data-toggle="dropdown" >
-                                <i class="fa fa-exclamation-triangle" ></i>  <i class="fa fa-caret-down"></i>
+                                <i class="fa fa-exclamation-triangle" ng-class="{unviewederrorsblink: unviewedErrors}"></i>  <i class="fa fa-caret-down" ng-class="{unviewederrors: unviewedErrors}"></i>
                             </a>
-
-
                             <ul class="dropdown-menu dropdown-alerts" >
-                                <li ng-repeat="error in alarmlist| limitTo:5">
+                                <li ng-repeat="error in alarmlist">
                                     <a href="#/syserrors/{{error.id}}">
                                         <div>
-                                            <div ng-if="error.severity == 'FATAL'">
-                                                <font color="red">
-                                                    <i class="fa fa-exclamation-triangle fa-fw"></i>{{error.name}}</font>
-                                            </div>
-                                            <div ng-if="error.severity != 'FATAL'">
-                                                <i class="fa fa-bell fa-fw"></i>{{error.name}}
-                                            </div>
+                                            <i class="fa fa-bell fa-fw"></i> {{error.name}}
                                             <span class="pull-right text-muted small" am-time-ago=error.time></span>
                                         </div>
                                     </a>
                                 </li>
-                                <li ng-if="alarmlist.length === 0" class="text-center"><i class="text-muted">No errors...</i></li>
-
+                                <li ng-if="alarmlist.length === 0" class="text-center"><i class="text-muted">No new errors...</i></li>
+                                <li class="divider"></li>
                                 <li>
                                     <a class="text-center" th:href="@{#/syserrors/}">
                                         <strong>See All Errors</strong>
                                         <i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
-
-
-
                             </ul>
 
-
-                            <!-- /.dropdown-alerts -->
                         </li>
-                        <!-- /.dropdown -->
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                <li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
+                                    <!-- Just a preview of possible functionality -->
                                 </li>
                                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                    <!-- Just a preview of possible functionality -->
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                <li><a th:href="@{/logout}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                                 </li>
                             </ul>
-                            <!-- /.dropdown-user -->
                         </li>
-                        <!-- /.dropdown -->
                     </ul>
-                    <!-- /.navbar-top-links -->
-
                     <div class="navbar-default sidebar" role="navigation">
                         <div class="sidebar-nav navbar-collapse">
                             <ul class="nav" id="side-menu">
@@ -120,44 +97,39 @@
                                             <a th:href="@{#}"><i class="fa fa-database fa-fw"></i> Database</a>
                                         </li>
                                         <li>
-                                            <a th:href="@{#}"><i class="fa fa-bell fa-fw"></i> Alerts</a>
-                                        </li>
-                                        <li>
                                             <a th:href="@{#}"><i class="fa fa-group fa-fw"></i> Users</a>
                                         </li>
                                         <li>
                                             <a th:href="@{#/syserrors/}"><i class="fa fa-exclamation-triangle"></i> Errors </a>
                                         </li>
                                     </ul>
-                                    <!-- /.nav-second-level -->
                                 </li>
                                 <li>
                                     <a th:href="@{#}"><i class="fa fa-info-circle fa-fw"></i> Help</a>
                                 </li>
                             </ul>
                         </div>
-                        <!-- /.sidebar-collapse -->
                     </div>
-                    <!-- /.navbar-static-side -->
                 </nav>
             </div>
-            <div id="page-wrapper">
+            <div id="page-wrapper" style="padding-top: 2em;">
                 <div class="container-fluid">
-                    <div id="error_container"></div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="error_container"></div>
+                        </div>
+                    </div>
                     <div ng-view></div>
                 </div>
             </div>
-
         </div>
-
         <script th:attr="src=@{/bower_components/jquery/dist/jquery.min.js}"></script>
-        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script th:attr="src=@{/bower_components/jquery/ui/jquery-ui.min.js}"></script>
         <script th:attr="src=@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
         <script th:attr="src=@{/bower_components/metisMenu/dist/metisMenu.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular/angular.js}"></script>
         <script th:attr="src=@{/bower_components/angular-route/angular-route.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular-resource/angular-resource.min.js}"></script>
-        <!-- Flot Charts JavaScript -->
         <script th:attr="src=@{/bower_components/flot/excanvas.min.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.js}"></script>
         <script th:attr="src=@{/bower_components/flot/jquery.flot.pie.js}"></script>
@@ -167,9 +139,9 @@
         <script th:attr="src=@{/bower_components/flot/jquery.flot.threshold.js}"></script>
         <script th:attr="src=@{/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular-flot/angular-flot.js}"></script>
-
+        <script th:attr="src=@{/bower_components/sweetalert/dist/sweetalert.min.js}" type="text/javascript"></script>
+        <script th:attr="src=@{/bower_components/angular-sweetalert/SweetAlert.min.js}" type="text/javascript"></script>
         <script th:attr="src=@{/dist/js/sb-admin-2.js}"></script>
-
         <script th:attr="src=@{/ngapp.js}"></script>
         <script th:attr="src=@{/lib/lib.js}"></script>
         <script th:attr="src=@{/front_controller.js}"></script>
@@ -181,11 +153,7 @@
         <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap.min.js}"></script>
         <script th:attr="src=@{/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js}"></script>
         <script th:attr="src=@{/directives/slider.js}"></script>
-
-        <!--        Angular Moment-->
         <script th:attr="src=@{/bower_components/moment/moment.js}"></script>
         <script th:attr="src=@{/bower_components/angular-moment/angular-moment.js}"></script>
-
     </body>
-
 </html>

@@ -7,51 +7,55 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+@Data
 @Entity
 @Table(name = "sensors")
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "sensor")
-@Data
 @ToString(exclude = {"readouts", "source"})
+@JsonIgnoreProperties("numberOfReadouts")
 public class Sensor implements Serializable {
 
     @Id
     @GeneratedValue
     protected Long id;
 
-    @XmlAttribute(name = "name")
     protected String name;
 
     @JsonIgnore
-    @XmlElement(name = "readout")
-    @XmlElementWrapper(name = "readouts")
     @OneToMany(mappedBy = "sensor", fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    protected Set<Readout> readouts = new HashSet<>();
+    @Cascade(CascadeType.SAVE_UPDATE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
+    protected Set<Readout> readouts;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source", nullable = false, updatable = false)
     protected InformationSource source;
 
-    @XmlAttribute
     protected String quantity;
 
-    @XmlAttribute
     protected String unit;
 
     protected boolean active;
@@ -68,11 +72,42 @@ public class Sensor implements Serializable {
         this.name = name;
     }
 
+    protected void setReadouts(Set<Readout> readouts) {
+        this.readouts = readouts;
+    }
+
+    public Set<Readout> getReadouts() {
+        return readouts;
+    }
+
+    @JsonProperty(required = false)
+    public long numberOfReadouts() {
+        return readouts.size();
+    }
+    
+    public void addReadout(Readout readout) {
+        if (readouts == null) {
+            readouts = new HashSet<>();
+        }
+        readout.setSensor(this);
+        readouts.add(readout);
+    }
+
+    public void addReadouts(Collection<Readout> readouts) {
+        List<Readout> readoutsToAdd = new ArrayList<>();
+        readouts.forEach(r -> readoutsToAdd.add(r));
+        readoutsToAdd.forEach(r -> addReadout(r));
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
         hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.source == null ? this.source.id : 0);
+        if (this.source != null) {
+            if (this.source.id != null) {
+                hash = 97 * hash + Objects.hashCode(this.source.id);
+            }
+        }
         return hash;
     }
 
@@ -88,7 +123,7 @@ public class Sensor implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        return (this.source == null ? other.source == null : this.source.id.equals(other.source.id));
+        return (Objects.equals(this.source, other.source));
     }
 
 }

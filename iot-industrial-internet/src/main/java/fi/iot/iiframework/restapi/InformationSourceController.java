@@ -13,13 +13,13 @@ import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.restapi.exceptions.InvalidObjectException;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
-import fi.iot.iiframework.restapi.exceptions.RestAPIExceptionObject;
 import fi.iot.iiframework.restapi.exceptions.TooManyRequestsException;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.source.InformationSourceManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,12 +63,12 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> addInformationSource(
-            @RequestBody InformationSource configuration,
+            @RequestBody InformationSource source,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.createSource(configuration);
-        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+        helper.checkIfObjectIsValid(source);
+        informationSourceManager.createSource(source);
+        return new ResponseEntity<>(source, HttpStatus.CREATED);
     }
 
     @Secured("ROLE_MODERATOR")
@@ -80,12 +80,12 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> editInformationSource(
-            @RequestBody InformationSource configuration,
+            @RequestBody InformationSource source,
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        helper.checkIfObjectIsValid(configuration);
-        informationSourceManager.updateSource(configuration);
-        return new ResponseEntity<>(configuration, HttpStatus.CREATED);
+        helper.checkIfObjectIsValid(source);
+        informationSourceManager.updateSource(source);
+        return new ResponseEntity<>(source, HttpStatus.CREATED);
     }
 
     @Secured("ROLE_MODERATOR")
@@ -100,13 +100,20 @@ public class InformationSourceController {
             @RequestParam(required = false) Map<String, String> params
     ) throws InvalidParametersException, ResourceNotFoundException {
 
-        InformationSource configuration
+        InformationSource source
                 = (InformationSource) helper.returnOrException(informationSourceService.get(sourceid));
-
+        informationSourceService.clear();
         informationSourceManager.removeSource(sourceid);
-        return new ResponseEntity<>(configuration, HttpStatus.OK);
+        return new ResponseEntity<>(source, HttpStatus.OK);
     }
 
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getInformationSourceCount() {
+        return new StatObject("numberOfSources","The number of information sources added to the system.",informationSourceService.count());
+    }
+    
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
@@ -157,21 +164,42 @@ public class InformationSourceController {
 
         informationSourceManager.readSource(sourceid);
         lastRequests.put(sourceid, System.currentTimeMillis());
-        return new ResponseEntity<>(new SuccessObject("Source [" + sourceid + "] was read successfully."), HttpStatus.OK);
+        return new ResponseEntity<>(new SuccessObject("Source was read successfully."), HttpStatus.OK);
     }
 
+    /*
+    * Only allows a single source to be read once every 10 seconds.
+    */
     private boolean lastRequestTooClose(long sourceid) {
-        return System.currentTimeMillis() - lastRequests.get(sourceid) < 10000;
+        return System.currentTimeMillis() - lastRequests.get(sourceid) < TimeUnit.SECONDS.toMillis(10);
     }
 
+    /**
+     * Manually set new InformationSourceService to be used.
+     *
+     * @param informationSourceService InformationSourceService to be set.
+     * @see InformationSourceService
+     */
     public void setInformationSourceService(InformationSourceService informationSourceService) {
         this.informationSourceService = informationSourceService;
     }
 
+    /**
+     * Manually set new InformationSourceManager to be used.
+     *
+     * @param informationSourceManager InformationSourceManager to be set.
+     * @see InformationSourceManager
+     */
     public void setInformationSourceManager(InformationSourceManager informationSourceManager) {
         this.informationSourceManager = informationSourceManager;
     }
 
+    /**
+     * Manually set new RestAPIHelper to be used.
+     *
+     * @param helper Helper to be set
+     * @see RestAPIHelper
+     */
     public void setRestAPIHelper(RestAPIHelper helper) {
         this.helper = helper;
     }

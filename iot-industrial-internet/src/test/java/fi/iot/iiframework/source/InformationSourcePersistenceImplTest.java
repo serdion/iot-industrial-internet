@@ -7,26 +7,16 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
-import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
-import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-/**
- *
- * @author atte
- */
 public class InformationSourcePersistenceImplTest {
 
     InformationSourcePersistence persistence;
@@ -45,7 +35,10 @@ public class InformationSourcePersistenceImplTest {
     @Before
     public void setUp() {
         initMocks(this);
-        persistence = new InformationSourcePersistenceImpl(mockSourceService, mockReadoutService);
+        persistence = new InformationSourcePersistenceImpl(
+                mockSourceService,
+                mockSensorService,
+                mockReadoutService);
 
         mockSource = new InformationSource();
         InformationSourceObjectProvider.provideSensorsWithChildren(mockSource);
