@@ -31,17 +31,17 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         expect(element(by.partialLinkText('Add New')).isPresent()).toBe(true);
     });
 
-//    it('should be able to move to the errors list, view an error and then return to the errors list', function () {
-//        browser.driver.get('http://localhost:8080/login');
-//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
-//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
-//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
-//        element(by.partialLinkText('Errors')).click();
-//        element(by.partialLinkText('Details')).click();
-//        element(by.id('backbutton')).click();
-//        expect(element(by.partialLinkText('Details')).isPresent()).toBe(true);
-//    });
-//
+    it('should be able to move to the errors list, view an error and then return to the errors list', function () {
+        browser.driver.get('http://localhost:8080/login');
+        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
+        element(by.partialLinkText('Errors')).click();
+        element(by.id('Details')).click();
+        element(by.id('options')).click();
+        expect(element(by.partialLinkText('Details')).isPresent()).toBe(true);
+    });
+
 //    it('should be able view a sensor and filter its readouts', function () {
 //        browser.driver.get('http://localhost:8080/login');
 //        browser.driver.findElement(by.name('username')).sendKeys('moderator');
