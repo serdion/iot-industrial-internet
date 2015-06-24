@@ -15,6 +15,7 @@ import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
 import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
+import fi.iot.iiframework.services.domain.SensorService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,15 +27,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class InformationSourcePersistenceImpl implements InformationSourcePersistence {
-    
+
     private final InformationSourceService sourceService;
+    private final SensorService sensorService;
     private final ReadoutService readoutService;
 
     @Autowired
     public InformationSourcePersistenceImpl(
             InformationSourceService sourceService,
+            SensorService sensorService,
             ReadoutService readoutService) {
         this.sourceService = sourceService;
+        this.sensorService = sensorService;
         this.readoutService = readoutService;
     }
 
@@ -44,16 +48,19 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     @Override
-    @Transactional
     public InformationSource writeReadoutsToSource(InformationSource source, List<Sensor> sensors) {
-        final InformationSource src = sourceService.get(source.getId());
-        sensors.forEach(s -> {
-            s.setSource(src);
-            src.getSensors().add(s);
-        });
+        final InformationSource src = sourceService.getWithSensors(source.getId());
+        addNewSensors(sensors, src);
+        sourceService.save(src);
         associateReadoutsWithPersistentSensors(src, sensors);
         sourceService.save(src);
         return src;
+    }
+
+    private void addNewSensors(List<Sensor> sensors, final InformationSource src) {
+        sensors.forEach(s -> {
+            src.addSensor(s);
+        });
     }
 
     /**
@@ -66,10 +73,12 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     private void associateReadoutsWithPersistentSensors(InformationSource source, List<Sensor> sensors) {
         sensors.forEach(s -> {
             source.getSensors().forEach(se -> {
-                if (s.equals(se)) {
-                    s.getReadouts().forEach(r -> r.setSensor(se));
-                    se.getReadouts().addAll(s.getReadouts());
-                    mutateReadouts(se);
+                if (s.equals(se) && s != se) {
+                    Sensor sensor = sensorService.getWithReadouts(se.getId());
+                    s.getReadouts().forEach(r -> {
+                        sensor.addReadout(r);
+                    });
+                    sensorService.save(sensor);
                 }
             });
         });
@@ -80,9 +89,11 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      *
      * @param sensor
      */
-    private void mutateReadouts(Sensor sensor) {
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN).mutateAll(sensor);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN).mutateAll(sensor);
+    private void mutateReadout(Readout readout) {
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN)
+                .mutateReadout(readout);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN)
+                .mutateReadout(readout);
     }
 
     @Override

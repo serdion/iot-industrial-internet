@@ -18,9 +18,9 @@ import lombok.ToString;
 
 @Data
 @Entity
-@Table(name = "readouts"//,
-//        uniqueConstraints
-//        = @UniqueConstraint(columnNames = {"readout_time", "sensor"})
+@Table(name = "readouts",
+        uniqueConstraints
+        = @UniqueConstraint(columnNames = {"readout_time", "sensor"})
         )
 @ToString(exclude = {"sensor"})
 public class Readout implements Serializable {

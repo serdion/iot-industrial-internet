@@ -40,6 +40,19 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
         }
     }
 
+    public void mutateReadout(Readout readout) {
+        try {
+            if (condition == ValueCondition.HIGHER_THAN) {
+                mutateOneReadout(readout, condition, readout.getSensor().getThresholdMax());
+            } else if (condition == ValueCondition.LOWER_THAN) {
+                mutateOneReadout(readout, condition, readout.getSensor().getThresholdMin());
+            }
+        } catch (NullPointerException npe) {
+            Application.logger.log(Level.INFO, "Catched a NullPointerException while mutating one sensor.");
+        }
+
+    }
+
     /**
      * Mutates one readout based on the threshold. Warning: Assumes that the
      * given readout has a sensor!
@@ -72,6 +85,5 @@ public class MarkReadoutAsErronousIfValueIs implements Mutator {
     private boolean isNotDefaultThreshold(double threshold) {
         return threshold != Integer.MIN_VALUE || threshold != Integer.MAX_VALUE;
     }
-
 
 }
