@@ -19,7 +19,7 @@ informationSources.controller('InformationSourcesController', ['$scope', 'Inform
         
         $scope.pageChanged = function () {
             $scope.getSources();
-        }
+        };
 
         $scope.deleteSource = function (id) {
             console.log("Pressed");

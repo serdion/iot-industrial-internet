@@ -109,8 +109,8 @@ public class InformationSourceController {
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/count", produces = "application/json")
     @ResponseBody
-    public long getInformationSourceCount() {
-        return informationSourceService.count();
+    public StatObject getInformationSourceCount() {
+        return new StatObject("numberOfSources","The number of information sources added to the system.",informationSourceService.count());
     }
     
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
