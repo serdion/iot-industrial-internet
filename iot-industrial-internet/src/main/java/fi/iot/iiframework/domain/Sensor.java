@@ -7,6 +7,9 @@
 package fi.iot.iiframework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,10 +29,11 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+@Data
 @Entity
 @Table(name = "sensors")
-@Data
 @ToString(exclude = {"readouts", "source"})
+@JsonIgnoreProperties("numberOfReadouts")
 public class Sensor implements Serializable {
 
     @Id
@@ -76,11 +80,11 @@ public class Sensor implements Serializable {
         return readouts;
     }
 
-    @JsonProperty
+    @JsonProperty(required = false)
     public long numberOfReadouts() {
         return readouts.size();
     }
-
+    
     public void addReadout(Readout readout) {
         if (readouts == null) {
             readouts = new HashSet<>();

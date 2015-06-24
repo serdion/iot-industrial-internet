@@ -30,7 +30,7 @@ public class SensorController {
 
     @Autowired
     private SensorService sensorService;
-    
+
     @Autowired
     private RestAPIHelper helper;
 
@@ -55,8 +55,7 @@ public class SensorController {
     public ResponseEntity<Sensor> editSensor(
             @PathVariable long sensorid,
             @RequestBody Sensor sensor
-    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        helper.returnOrException(sensorService.get(sensorid));
+    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException, Exception {
         sensorService.update(sensor);
         return new ResponseEntity<>(sensor, HttpStatus.CREATED);
     }
@@ -67,7 +66,7 @@ public class SensorController {
     public List<Sensor> listSensors(
             @PathVariable long sourceid,
             @RequestParam(required = false) Map<String, String> params
-    ) throws ResourceNotFoundException {
+    ) throws ResourceNotFoundException, Exception {
         InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         return sensorService.getBy(source);
     }
