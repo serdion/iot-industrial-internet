@@ -103,12 +103,12 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
      * @param readouts
      */
     private void addReadoutsToSensor(Sensor sen, Set<Readout> readouts) {
-        Sensor sensor = sensorService.getWithReadouts(sen.getId());
+        Sensor sensor = sensorService.get(sen.getId());
         readouts.forEach(r -> {
-            sensor.addReadout(r);
+            r.setSensor(sensor);
             mutateReadout(r);
         });
-        sensorService.save(sensor);
+        readoutService.save(readouts);
     }
 
     /**
