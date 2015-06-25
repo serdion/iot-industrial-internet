@@ -13,7 +13,7 @@ import fi.iot.iiframework.mutator.ValueCondition;
 */
 public enum ReadoutFlag {
 
-    ERRONOUS,
+    ERRONEOUS,
     POSSIBLE_ERRONOUS,
     TOO_HIGH_VALUE,
     TOO_LOW_VALUE,
