@@ -75,12 +75,15 @@ public class RestAPIHelper {
         this.maxObjectsRetrieved = maxObjectsRetrieved;
     }
 
-    /*
-     * {from} cannot be negative
-     * {to} cannot be negative
-     * {to} cannot be equal to {from}
-     * {to} cannot be smaller than {from}
-     * {from} minus {to} cannot be bigger than default max objects retrieved
+    /**
+     * Throws exception if the given limits are incorret based on the following
+     * criteria: {from} cannot be negative, {to} cannot be negative, {to} cannot
+     * be equal to {from}, {to} cannot be smaller than {from}, {from} minus {to}
+     * cannot be bigger than default max objects retrieved.
+     *
+     * @param from lower limit
+     * @param to higher limit
+     * @throws InvalidParametersException thrown if the criteria are not met
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if (from < 0 || to <= 0 || to == from || from > to
