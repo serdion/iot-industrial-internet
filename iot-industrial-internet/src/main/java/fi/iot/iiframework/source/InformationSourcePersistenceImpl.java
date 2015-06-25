@@ -94,7 +94,6 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
 
     /**
      * Get a sensor from database with its readouts, and add the new readouts.
-     * Inefficient, but sufficient for now.
      *
      * @param sen
      * @param readouts
