@@ -6,6 +6,7 @@
  */
 package fi.iot.iiframework.restapi;
 
+import fi.iot.iiframework.domain.ReadoutFlag;
 import fi.iot.iiframework.errors.ErrorSeverity;
 import fi.iot.iiframework.errors.ErrorType;
 import fi.iot.iiframework.source.InformationSourceType;
@@ -35,6 +36,12 @@ public class StatsController {
     @ResponseBody
     public ErrorSeverity[] listErrorSeverityTypes() {
         return ErrorSeverity.values();
+    }
+    
+    @RequestMapping(value = "/readoutflag/types", produces = "application/json")
+    @ResponseBody
+    public ReadoutFlag[] listReadoutFlagTypes() {
+        return ReadoutFlag.values();
     }
 
 }
