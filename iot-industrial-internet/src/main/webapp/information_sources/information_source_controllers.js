@@ -92,6 +92,7 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
+        $scope.numberOfReadouts = Readout.count({sensorid: $routeParams.sensorid});
 
         $scope.getReadouts = function () {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});

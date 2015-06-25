@@ -75,11 +75,6 @@ public class Sensor implements Serializable {
         return readouts;
     }
 
-    @JsonProperty
-    public long numberOfReadouts() {
-        return readouts.size();
-    }
-
     public void addReadout(Readout readout) {
         if (readouts == null) {
             readouts = new HashSet<>();
