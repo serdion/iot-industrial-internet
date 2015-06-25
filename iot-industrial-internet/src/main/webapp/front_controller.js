@@ -6,6 +6,8 @@
  */
 
 
-IIFramework.controller('FrontController', function ($scope, InformationSource){
+IIFramework.controller('FrontController', function ($scope, InformationSource, Sensor, Readout){
     $scope.numberOfSources = InformationSource.count();
+    $scope.numberOfSensors = Sensor.count();
+    $scope.numberOfReadouts = Readout.count();
 });
