@@ -128,12 +128,7 @@ public class InformationSource implements Serializable, Validatable {
         } catch (MalformedURLException ex) {
             return false;
         }
-
-        if (readInterval == IntervalType.OTHER) {
-            return startDate != null && readInterval != null && otherInterval > 0;
-        }
-
-        return startDate != null && readInterval != null;
+        return true;
     }
 
 }
