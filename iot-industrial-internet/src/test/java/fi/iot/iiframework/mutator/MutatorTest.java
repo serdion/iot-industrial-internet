@@ -97,7 +97,6 @@ public class MutatorTest {
     }
 
     @Test
-    @Ignore
     public void thresholdsUnsetNoFlagsAreSet() {
         testsensor.setThresholdMax(null);
         testsensor.setThresholdMin(null);
