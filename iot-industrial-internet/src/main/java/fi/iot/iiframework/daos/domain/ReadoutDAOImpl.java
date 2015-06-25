@@ -11,6 +11,7 @@ import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -25,6 +26,19 @@ public class ReadoutDAOImpl
         super();
         defaultOrder.add(Order.desc("time"));
         defaultOrder.add(Order.asc("sensor"));
+    }
+    
+    @Override
+    public Readout save(Readout readout) {
+        Query query = getSession().createQuery("INSERT INTO readouts "
+                + "(readout_time, readout_value, sensor, flag) "
+                + "VALUES (:readout_time, :readout_value, :sensor, :flag) "
+                + "WHERE NOT EXISTS "
+                + "(SELECT 1 FROM readouts "
+                + "WHERE sensor = :sensor AND readout_time = :readout_time");
+        query.setProperties(readout);
+        query.executeUpdate();
+        return readout;
     }
 
     @Override
