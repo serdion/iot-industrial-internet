@@ -76,14 +76,12 @@ public class RestAPIHelperTest {
     public void testExceptionIfWrongLimitsWhenFromIsGreaterThanTo() throws InvalidParametersException {
         assertTrue(testLimits(50, 20));
     }
-    
-    @Ignore // Fails to throw exception
+
     @Test(expected=InvalidParametersException.class)
     public void testExceptionIfWrongLimitsWhenTooHighAmount() throws InvalidParametersException {
         assertTrue(testLimits(0, (int) (helper.getMaxObjectsRetrieved()+10)));
     }
-    
-    @Ignore // Fails to throw exception
+
     @Test(expected=InvalidParametersException.class)
     public void testExceptionIfWrongLimitsWhenTooHighAmountAndAlreadyHigh() throws InvalidParametersException {
         int amountToAdd = 100000;

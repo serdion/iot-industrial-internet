@@ -87,7 +87,7 @@ public class RestAPIHelper {
      */
     public void exceptionIfWrongLimits(int from, int to) throws InvalidParametersException {
         if (from < 0 || to <= 0 || to == from || from > to
-                || (from - to) > maxObjectsRetrieved) {
+                || (to - from) > maxObjectsRetrieved) {
             logErrorIfAllowed(new SysError(ErrorType.BAD_REQUEST, ErrorSeverity.LOW, "Invalid parameters given for limits (" + from + ", " + to + ") in RestAPI."));
             throw new InvalidParametersException();
         }
