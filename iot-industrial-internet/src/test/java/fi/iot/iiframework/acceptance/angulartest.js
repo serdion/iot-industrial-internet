@@ -80,7 +80,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         expect(element.all(by.repeater('readout in readouts')).count()).toEqual(0);
     });
 
-    it('should be able create a new information source', function () {
+    it('should be able to create a new information source', function () {
         browser.driver.get('http://localhost:8080/login');
         browser.driver.findElement(by.name('username')).sendKeys('moderator');
         browser.driver.findElement(by.name('password')).sendKeys('moderator');
@@ -90,7 +90,7 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         var name = element(by.model("is.name"));
         var type = element(by.model("is.type"));
         var url = element(by.model("is.url"));
-        var startDate = element(by.model("is.startDate")); 2015-06-24
+        var startDate = element(by.model("is.startDate"));
         name.sendKeys('NewAcceptanceTestSource');
         element(by.cssContainingText('option', 'JSON')).click();
         url.sendKeys('https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1');
@@ -99,5 +99,20 @@ describe('Acceptance testing for the AngularJS web interface', function () {
         browser.get("http://localhost:8080/#/sources");
         expect(element.all(by.repeater('ds in sources')).count()).toEqual(2);
     });
+    
+//    it('should be able to edit an information source', function () {
+//        browser.driver.get('http://localhost:8080/login');
+//        browser.driver.findElement(by.name('username')).sendKeys('moderator');
+//        browser.driver.findElement(by.name('password')).sendKeys('moderator');
+//        browser.driver.findElement(By.xpath("//button[contains(.,'Login')]")).click();
+//        element(by.partialLinkText('Information Sources')).click();
+//        element(by.partialLinkText('Edit')).click();
+//        var name = element(by.model("is.name"));
+//        name.sendKeys('EditedAcceptanceTestSource');
+//        element(by.id('submitbutton')).click();
+//        browser.get("http://localhost:8080/#/sources");
+//        element(by.partialLinkText('Edit')).click();
+//        expect(element(by.model("is.name"))).toEqual("EditedAcceptanceTestSource");
+//    });
 
 });
