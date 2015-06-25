@@ -21,4 +21,6 @@ public interface ReadoutDAO extends GenericDAO<Readout, Long> {
     public List<Readout> getBy(int from, int to, Sensor sensor);
 
     public List<Readout> getBy(int amount, Sensor sensor);
+
+    public boolean isUnique(Readout readout);
 }

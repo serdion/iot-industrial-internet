@@ -20,6 +20,8 @@ public class GenericHibernateService<T, ID extends Serializable>
         implements GenericService<T, ID> {
 
     protected GenericDAO dao;
+    
+    protected static final int BATCHSIZE = 20;
 
     @Override
     public T save(T t) {
@@ -78,9 +80,15 @@ public class GenericHibernateService<T, ID extends Serializable>
     }
 
     @Override
-    public Collection<T> save(Collection<T> lt) {
-        lt.forEach(t -> dao.save(t));
-        return lt;
+    public void save(Collection<T> lt) {
+        int i = 0;
+        for (T t1 : lt) {
+            dao.save(t1);
+            if (i % BATCHSIZE == 0) {
+                dao.flush();
+                dao.clear();
+            }
+        }
     }
 
     @Override

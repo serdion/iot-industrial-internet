@@ -27,19 +27,6 @@ public class ReadoutDAOImpl
         defaultOrder.add(Order.desc("time"));
         defaultOrder.add(Order.asc("sensor"));
     }
-    
-    @Override
-    public Readout save(Readout readout) {
-        Query query = getSession().createQuery("INSERT INTO readouts "
-                + "(readout_time, readout_value, sensor, flag) "
-                + "VALUES (:readout_time, :readout_value, :sensor, :flag) "
-                + "WHERE NOT EXISTS "
-                + "(SELECT 1 FROM readouts "
-                + "WHERE sensor = :sensor AND readout_time = :readout_time");
-        query.setProperties(readout);
-        query.executeUpdate();
-        return readout;
-    }
 
     @Override
     public List<Readout> getBy(Sensor sensor) {
@@ -56,5 +43,13 @@ public class ReadoutDAOImpl
     @Override
     public List<Readout> getBy(int amount, Sensor sensor) {
         return getBy(0, amount - 1, sensor);
+    }
+
+    @Override
+    public boolean isUnique(Readout readout) {
+        List<Criterion> criterion = new ArrayList<>();
+        criterion.add(Restrictions.eq("sensor", readout.getSensor()));
+        criterion.add(Restrictions.eq("time", readout.getTime()));
+        return findByCriteria(criterion).isEmpty();
     }
 }
