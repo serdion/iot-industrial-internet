@@ -10,7 +10,9 @@ import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.GenericHibernateService;
+import java.util.Collection;
 import java.util.List;
+import static javafx.scene.input.KeyCode.T;
 import javax.transaction.Transactional;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +48,20 @@ public class ReadoutServiceImpl
                 buildCriterionList(Restrictions.eq("sensor", sensor))
         );
     }
+
+    @Override
+    public void save(Collection<Readout> readouts) {
+        int i = 0;
+        for (Readout readout : readouts) {
+            if (!readoutDAO.isUnique(readout)) {
+                continue;
+            }
+            dao.save(readout);
+            if (i % BATCHSIZE == 0) {
+                dao.flush();
+                dao.clear();
+            }
+        }
+    }
+
 }

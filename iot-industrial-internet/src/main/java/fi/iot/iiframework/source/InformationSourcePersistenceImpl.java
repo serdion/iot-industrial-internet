@@ -93,7 +93,7 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     /**
-     * Get a sensor from database with its readouts, and add the new readouts.
+     * Get a sensor from database, associate the found readouts with it, and save them.
      *
      * @param sen
      * @param readouts

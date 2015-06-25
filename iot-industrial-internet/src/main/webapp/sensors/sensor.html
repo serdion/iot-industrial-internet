@@ -15,15 +15,19 @@
                                 <th>Time of measurement</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
+                                <th>Flag</th>
                                 <th>Value</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="readout in readouts">
+                            <tr ng-repeat="readout in readouts" ng-switch="readout.flag">
                                 <td>{{readout.time| date: 'yyyy-MM-dd HH:mm:ss:sss'}}</td>
                                 <td>{{sensor.quantity}}</td>
                                 <td>{{sensor.unit}}</td>
-                                <td>{{readout.value}}</td>
+                                <td ng-class="{text-muted: readout.flag === 'EMPTY'}">{{readout.flag}}</td>
+                                <td ng-switch-when="TOO_HIGH_VALUE" class="text-danger">{{readout.value}} <i class="fa fa-arrow-up"></i></td>
+                                <td ng-switch-when="TOO_LOW_VALUE" class="text-info">{{readout.value}} <i class="fa fa-arrow-down"></i></td>
+                                <td ng-switch-default>{{readout.value}}</td>
                             </tr>
                         </tbody>
                     </table>
