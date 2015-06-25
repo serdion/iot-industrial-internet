@@ -48,7 +48,6 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "informationsources")
 @EqualsAndHashCode(of = {"url", "type"})
 @ToString(exclude = {"sensors"})
-@JsonIgnoreProperties("numberOfSensors")
 public class InformationSource implements Serializable, Validatable {
 
     /**
@@ -105,12 +104,6 @@ public class InformationSource implements Serializable, Validatable {
     @BatchSize(size = 10)
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Sensor> sensors;
-
-    @JsonProperty(required = false)
-    @JsonInclude(Include.NON_EMPTY)
-    public long numberOfSensors() {
-        return sensors.size();
-    }
 
     public Set<Sensor> getSensors() {
         return sensors;
