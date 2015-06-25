@@ -12,7 +12,6 @@ import fi.iot.iiframework.domain.Sensor;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.Collection;
 import java.util.List;
-import static javafx.scene.input.KeyCode.T;
 import javax.transaction.Transactional;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
