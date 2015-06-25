@@ -15,10 +15,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 
-@Ignore
 public class RestAPIHelperTest {
-    
-    private int maxObjects;
+
     private RestAPIHelper helper;
     
     public RestAPIHelperTest() {
@@ -33,9 +31,10 @@ public class RestAPIHelperTest {
     }
     
     @Before
-    public void setUp() {
-        maxObjects = 10000;
+    public void setUp(){
         helper = new RestAPIHelper();
+        helper.setMaxObjectsRetrieved(10000);
+        helper.setErrorLogging(false);
     }
     
     @After
@@ -78,15 +77,17 @@ public class RestAPIHelperTest {
         assertTrue(testLimits(50, 20));
     }
     
+    @Ignore // Fails to throw exception
     @Test(expected=InvalidParametersException.class)
     public void testExceptionIfWrongLimitsWhenTooHighAmount() throws InvalidParametersException {
-        assertTrue(testLimits(0, maxObjects+1));
+        assertTrue(testLimits(0, (int) (helper.getMaxObjectsRetrieved()+1)));
     }
     
+    @Ignore // Fails to throw exception
     @Test(expected=InvalidParametersException.class)
     public void testExceptionIfWrongLimitsWhenTooHighAmountAndAlreadyHigh() throws InvalidParametersException {
         int amountToAdd = 100000;
-        assertTrue(testLimits(amountToAdd, maxObjects+amountToAdd+1));
+        assertTrue(testLimits(amountToAdd, (int) (helper.getMaxObjectsRetrieved()+amountToAdd+10)));
     }
     
 }

@@ -20,24 +20,44 @@ import org.springframework.web.bind.annotation.RestController;
 @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
 public class StatsController {
 
+    /**
+     * Returns an array of ReaderTypes.
+     *
+     * @return array of ReaderTypes
+     */
     @RequestMapping(value = "/informationsource/types", produces = "application/json")
     @ResponseBody
     public InformationSourceType[] listReaderTypes() {
         return InformationSourceType.values();
     }
 
+    /**
+     * Returns an array of ErrorTypes.
+     *
+     * @return array of ErrorTypes
+     */
     @RequestMapping(value = "/error/types", produces = "application/json")
     @ResponseBody
     public ErrorType[] listErrorTypes() {
         return ErrorType.values();
     }
 
+    /**
+     * Returns an array of ErrorSeverities.
+     *
+     * @return array of ErrorSeverities
+     */
     @RequestMapping(value = "/severity/types", produces = "application/json")
     @ResponseBody
     public ErrorSeverity[] listErrorSeverityTypes() {
         return ErrorSeverity.values();
     }
-    
+
+    /**
+     * Returns an array of ReadoutFlags.
+     *
+     * @return array of ReadoutFlags
+     */
     @RequestMapping(value = "/readoutflag/types", produces = "application/json")
     @ResponseBody
     public ReadoutFlag[] listReadoutFlagTypes() {
