@@ -73,6 +73,7 @@ public class InformationSource implements Serializable, Validatable {
      * Read in intervals.
      */
     protected boolean active = true;
+    
     /**
      * A specified time to start the reading (date/time).
      */
