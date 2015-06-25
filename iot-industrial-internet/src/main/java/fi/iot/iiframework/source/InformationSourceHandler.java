@@ -8,7 +8,6 @@ package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.readers.InformationSourceReader;
 import java.util.List;
 
 /**
@@ -49,13 +48,6 @@ public interface InformationSourceHandler {
      * Stop all read-operations.
      */
     public void close();
-
-    /**
-     * Manually set.
-     *
-     * @param mockReader
-     */
-    public void setReader(InformationSourceReader mockReader);
 
     public void setScheduler(ReadScheduler scheduler);
 }

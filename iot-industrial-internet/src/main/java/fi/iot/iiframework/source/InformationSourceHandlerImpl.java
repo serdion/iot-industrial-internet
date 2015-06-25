@@ -7,10 +7,12 @@
 package fi.iot.iiframework.source;
 
 import fi.iot.iiframework.domain.InformationSource;
+import fi.iot.iiframework.domain.IntervalType;
 import fi.iot.iiframework.domain.Sensor;
-import fi.iot.iiframework.readers.InformationSourceReader;
-import fi.iot.iiframework.readers.SparkfunDataReader;
+import fi.iot.iiframework.parsers.ParserContainer;
+import fi.iot.iiframework.parsers.SparkfunDataParser;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public final class InformationSourceHandlerImpl implements InformationSourceHandler {
 
@@ -18,10 +20,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      * Configuration for the operations in this class.
      */
     private InformationSource source;
-    /**
-     * Reader used to read the server information.
-     */
-    private InformationSourceReader reader;
     /**
      * Scheduler that schedules the read operation based on configuration.
      */
@@ -35,21 +33,7 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
         this.source = source;
         this.persistence = persistence;
         this.scheduler = new ReadSchedulerImpl();
-        initReader();
         schedule();
-    }
-
-    /**
-     * Initialize the type of reader this class will use.
-     */
-    private void initReader() {
-        switch (source.getType()) {
-            case JSON:
-                this.reader = new SparkfunDataReader();
-                break;
-            default:
-                throw new AssertionError(source.getType().name());
-        }
     }
 
     /**
@@ -57,36 +41,13 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
      */
     private void schedule() {
         scheduler.cancel();
-
-        if (source.isActive() && source.getStartDate() != null) {
-            switch (source.getReadInterval()) {
-                case NEVER:
-                    scheduler.scheduleOnlyOnce(source.getStartDate(), this::readAndWrite);
-                    break;
-                case HOURLY:
-                    scheduler.scheduleAtSpecificInterval(3600000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    break;
-                case DAILY:
-                    scheduler.scheduleAtSpecificInterval(86400000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    break;
-                case WEEKLY:
-                    scheduler.scheduleAtSpecificInterval(604800000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    break;
-                case MONTHLY:
-                    scheduler.scheduleAtSpecificInterval(2419200000L, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    break;
-                case OTHER:
-                    scheduler.scheduleAtSpecificInterval(source.getOtherInterval() * 1000, source.getStartDate(), source.getEndDate(), this::readAndWrite);
-                    break;
-            }
-        }
+        scheduler.schedule(source, this::readAndWrite);
     }
 
     /**
      * Ensure that scheduler and reader match the configuration.
      */
     private void update() {
-        initReader();
         schedule();
     }
 
@@ -103,7 +64,9 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
 
     @Override
     public List<Sensor> read() {
-        List<Sensor> sensor = reader.read(source.getUrl());
+        List<Sensor> sensor = ParserContainer.getParsers()
+                .get(source.getType())
+                .parse(source.getUrl());
         return sensor;
     }
 
@@ -121,11 +84,6 @@ public final class InformationSourceHandlerImpl implements InformationSourceHand
     @Override
     public void close() {
         scheduler.cancel();
-    }
-
-    @Override
-    public void setReader(InformationSourceReader reader) {
-        this.reader = reader;
     }
 
     @Override

@@ -6,10 +6,16 @@
  */
 package fi.iot.iiframework.errors;
 
+<<<<<<< HEAD
 /**
  * Defines the severities of SysErrors
  */
 
+=======
+/*
+ * Defines severity for a SysError.
+ */
+>>>>>>> dev
 public enum ErrorSeverity {
 
     NONE(0, "NONE"),
@@ -22,15 +28,25 @@ public enum ErrorSeverity {
     private final int severity;
     private final String id;
 
-    ErrorSeverity(int severity, String id) {
+    private ErrorSeverity(int severity, String id) {
         this.severity = severity;
         this.id = id;
     }
 
+    /**
+     * Returns the String ID of the Severity.
+     *
+     * @return ID as a String
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Returns the severity of the error as an integer.
+     *
+     * @return Severity as an integer
+     */
     public int getSeverity() {
         return this.severity;
     }

@@ -26,9 +26,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 import org.joda.time.DateTime;
 
-public class SparkfunDataParser {
+public class SparkfunDataParser implements Parser{
 
-    public static List<Sensor> parse(String location) {
+    @Override
+    public List<Sensor> parse(String location) {
         try {
             URL url = new URL(location);
             return parse(url);
@@ -40,7 +41,8 @@ public class SparkfunDataParser {
         return null;
     }
 
-    public static List<Sensor> parse(URL url) throws IOException {
+    @Override
+    public List<Sensor> parse(URL url) throws IOException {
         JsonParser parser = new JsonParser();
         BufferedReader in
                 = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -53,7 +55,7 @@ public class SparkfunDataParser {
         return Arrays.asList(sensors.values().toArray(new Sensor[0]));
     }
 
-    private static void readSensors(JsonElement document, Map<String, Sensor> sensors) {
+    private void readSensors(JsonElement document, Map<String, Sensor> sensors) {
         document.getAsJsonArray().iterator().forEachRemaining(a -> {
             Set<Entry<String, JsonElement>> entrySet = a.getAsJsonObject().entrySet();
             long timestamp = findTimeStamp(entrySet);
@@ -61,7 +63,7 @@ public class SparkfunDataParser {
         });
     }
 
-    private static void readReadoutsToSensors(Set<Entry<String, JsonElement>> entrySet, Map<String, Sensor> sensors, long timestamp) {
+    private void readReadoutsToSensors(Set<Entry<String, JsonElement>> entrySet, Map<String, Sensor> sensors, long timestamp) {
         entrySet.forEach(entry -> {
             if (entry.getKey().equals("timestamp")) {
                 return;
@@ -79,7 +81,7 @@ public class SparkfunDataParser {
         });
     }
 
-    private static void addFoundSensor(Entry<String, JsonElement> e, Map<String, Sensor> sensors) {
+    private void addFoundSensor(Entry<String, JsonElement> e, Map<String, Sensor> sensors) {
         try {
             e.getValue().getAsDouble();
         } catch (NumberFormatException ex) {
@@ -90,7 +92,7 @@ public class SparkfunDataParser {
         sensors.put(e.getKey(), sensor);
     }
 
-    private static long findTimeStamp(Set<Entry<String, JsonElement>> entrySet) {
+    private long findTimeStamp(Set<Entry<String, JsonElement>> entrySet) {
         return new DateTime(entrySet.stream()
                 .filter(e -> e.getKey().equals("timestamp"))
                 .findFirst()

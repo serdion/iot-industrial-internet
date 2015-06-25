@@ -28,7 +28,7 @@ public enum ErrorType {
     private final String name;
     private final String id;
 
-    private ErrorType(String name, String id) {
+    private ErrorType(final String name, final String id) {
         this.name = name;
         this.id = id;
     }
@@ -57,7 +57,7 @@ public enum ErrorType {
      * @param typeid ID of the ErrorType
      * @return ErrorType
      */
-    public static ErrorType getType(String typeid) {
+    public static ErrorType getType(final String typeid) {
         ErrorType[] values = ErrorType.values();
 
         for (ErrorType value : values) {
