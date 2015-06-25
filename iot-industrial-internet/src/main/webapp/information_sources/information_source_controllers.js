@@ -67,6 +67,7 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
         $scope.getSensors();
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
+        $scope.numberOfSensors = Sensor.count({sourceid: $routeParams.sourceid});
         
         $scope.pageChanged = function () {
             $scope.getSensors();

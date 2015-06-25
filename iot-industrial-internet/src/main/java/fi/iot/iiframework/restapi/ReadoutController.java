@@ -54,6 +54,13 @@ public class ReadoutController {
     public StatObject getReadoutsCountForSensor(@PathVariable long sensorid) {
         return new StatObject("numberOfReadouts","",readoutservice.countBy(sensorservice.get(sensorid)));
     }
+    
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getReadoutsCount() {
+        return new StatObject("numberOfReadouts","",readoutservice.count());
+    }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sensorid}/list/{amount}", produces = "application/json")
