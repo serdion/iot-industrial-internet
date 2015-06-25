@@ -21,7 +21,7 @@ import lombok.ToString;
 @Table(name = "readouts",
         uniqueConstraints
         = @UniqueConstraint(columnNames = {"readout_time", "sensor"})
-        )
+)
 @ToString(exclude = {"sensor"})
 public class Readout implements Serializable {
 
@@ -94,7 +94,5 @@ public class Readout implements Serializable {
         }
         return true;
     }
-
-    
 
 }

@@ -7,7 +7,6 @@
 package fi.iot.iiframework.source;
 
 import java.util.List;
-import javax.transaction.Transactional;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
@@ -17,9 +16,7 @@ import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.Set;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
