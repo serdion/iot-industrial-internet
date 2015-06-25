@@ -26,7 +26,8 @@ informationSources.factory('Sensor', ['$resource',
         return $resource('1.0/sensors/:sourceid/:sensorid/:action', {}, {
             get: {method: 'GET', params: {action: 'view'}},
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
-            edit: {method: 'POST', params: {action: 'edit'}}
+            edit: {method: 'POST', params: {action: 'edit'}},
+            count: {method: 'GET', params: {action: 'count'}}
         });
     }]);
 
@@ -34,7 +35,8 @@ informationSources.factory('Sensor', ['$resource',
 informationSources.factory('Readout', ['$resource',
     function($resource) {
         return $resource('1.0/readouts/:sensorid/:action/:from/:to', {}, {
-            query: {method: 'GET', params: {action: 'list'}, isArray: true}
+            query: {method: 'GET', params: {action: 'list'}, isArray: true},
+            count: {method: 'GET', params: {action: 'count'}}
         });
     }]);
 

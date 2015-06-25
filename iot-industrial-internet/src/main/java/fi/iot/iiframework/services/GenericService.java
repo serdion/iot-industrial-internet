@@ -15,7 +15,7 @@ public interface GenericService<T, ID extends Serializable> {
 
     public T save(T t);
 
-    public Collection<T> save(Collection<T> lt);
+    public void save(Collection<T> lt);
 
     public T update(T t);
 
