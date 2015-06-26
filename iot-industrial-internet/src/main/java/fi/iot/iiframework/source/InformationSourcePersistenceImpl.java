@@ -102,21 +102,8 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
         Sensor sensor = sensorService.get(sen.getId());
         readouts.forEach(r -> {
             r.setSensor(sensor);
-            mutateReadout(r);
         });
         readoutService.save(readouts);
-    }
-
-    /**
-     * Based on sensor-configuration, mark erronous readouts.
-     *
-     * @param sensor
-     */
-    private void mutateReadout(Readout readout) {
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN)
-                .mutateReadout(readout);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN)
-                .mutateReadout(readout);
     }
 
     @Override

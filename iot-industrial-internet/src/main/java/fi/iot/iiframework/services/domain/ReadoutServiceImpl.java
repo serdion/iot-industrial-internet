@@ -9,6 +9,8 @@ package fi.iot.iiframework.services.domain;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
+import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.GenericHibernateService;
 import java.util.Collection;
 import java.util.List;
@@ -56,6 +58,7 @@ public class ReadoutServiceImpl
                 continue;
             }
             dao.save(readout);
+            mutateReadout(readout);
             if (i % BATCHSIZE == 0) {
                 dao.flush();
                 dao.clear();
@@ -63,4 +66,15 @@ public class ReadoutServiceImpl
         }
     }
 
+    /**
+     * Based on sensor-configuration, mark erronous readouts.
+     *
+     * @param sensor
+     */
+    private void mutateReadout(Readout readout) {
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN)
+                .mutateReadout(readout);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN)
+                .mutateReadout(readout);
+    }
 }
