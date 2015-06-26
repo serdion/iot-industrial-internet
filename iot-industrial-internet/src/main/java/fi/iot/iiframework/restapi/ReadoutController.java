@@ -116,8 +116,7 @@ public class ReadoutController {
 
     /**
      * Returns a list of Readouts in a single Sensor with given ID from index
-     * [to] to
-     * [from].
+     * [to] to [from].
      *
      * @param sensorid ID of the Sensor
      * @param from     Starting index to list InformationSources from
