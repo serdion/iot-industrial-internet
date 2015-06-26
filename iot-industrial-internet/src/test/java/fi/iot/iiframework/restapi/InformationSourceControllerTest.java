@@ -17,10 +17,9 @@ import fi.iot.iiframework.restapi.exceptions.TooManyRequestsException;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.source.InformationSourceManager;
-import java.util.Date;
-import java.util.HashSet;
 import org.junit.After;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -128,43 +127,43 @@ public class InformationSourceControllerTest {
 
     @Test
     public void testGetInformationSource() throws InvalidParametersException, ResourceNotFoundException {
-        InformationSource foundSource = controller.getInformationSource(1, null);
+        InformationSource foundSource = controller.getInformationSource(1);
         assertEquals(foundSource, sourceA);
     }
 
     @Test
     public void testAddInformationSource() throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
-        controller.addInformationSource(sourceB, null);
-        InformationSource foundSource = controller.getInformationSource(2, null);
+        controller.addInformationSource(sourceB);
+        InformationSource foundSource = controller.getInformationSource(2);
         assertEquals(foundSource, sourceB);
     }
 
 //    @Test
 //    public void testEditInformationSource() throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException  {
 //        sourceA.setReadFrequency(5555555);
-//        controller.editInformationSource(sourceA, null);
+//        controller.editInformationSource(sourceA);
 //        
 //        Mockito.verify(sourceManager, Mockito.times(1)).updateSource(sourceA);
 //    }
     @Test
     public void testDeleteInformationSource() throws InvalidParametersException, ResourceNotFoundException {
-        controller.deleteInformationSource(1, null);
+        controller.deleteInformationSource(1);
         Mockito.verify(sourceManager, Mockito.times(1)).removeSource(1);
     }
 
     @Test
     public void testListInformationSourcesList() throws InvalidParametersException {
-        assertFalse(controller.listInformationSourcesList(null) == null);
+        assertFalse(controller.listInformationSourcesList() == null);
     }
 
     @Test
     public void testListInformationSourcesListAmount() throws InvalidParametersException {
-        assertFalse(controller.listInformationSourcesListAmount(1, null) == null);
+        assertFalse(controller.listInformationSourcesListAmount(1) == null);
     }
 
     @Test
     public void testListInformationSourcesListFromTo() throws InvalidParametersException {
-        assertFalse(controller.listInformationSourcesListFromTo(0, 1, null) == null);
+        assertFalse(controller.listInformationSourcesListFromTo(0, 1) == null);
     }
 
     @Rule
