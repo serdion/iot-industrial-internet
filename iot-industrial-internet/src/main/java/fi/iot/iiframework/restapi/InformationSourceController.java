@@ -44,16 +44,44 @@ public class InformationSourceController {
     @Autowired
     private InformationSourceService informationSourceService;
 
+    /**
+     * Returns a single InformationSource based on the given ID.
+     *
+     * @param sourceid ID of the InformationSource
+     *
+     * @return InformationSource that was found
+     *
+     * @throws InvalidParametersException thrown if parameters given in the
+     *                                    request were incorrect of are in
+     *                                    conflict
+     * @throws ResourceNotFoundException  thrown if the resource requested could
+     *                                    not be found
+     */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/view", produces = "application/json")
     @ResponseBody
     public InformationSource getInformationSource(
-            @PathVariable long sourceid,
-            @RequestParam(required = false) Map<String, String> params
+            @PathVariable long sourceid
     ) throws InvalidParametersException, ResourceNotFoundException {
         return (InformationSource) helper.returnOrException(informationSourceService.get(sourceid));
     }
 
+    /**
+     * Add a single InformationSource to the system.
+     *
+     * @param source InformationSource to be added
+     *
+     * @return InformationSource that was created
+     *
+     * @throws InvalidParametersException thrown if parameters given in the
+     *                                    request were incorrect of are in
+     *                                    conflict
+     * @throws ResourceNotFoundException  thrown if the resource requested could
+     *                                    not be found
+     * @throws InvalidObjectException     thrown if the object provided was
+     *                                    invalid, which is determined by
+     *                                    isValid() function
+     */
     @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/add",
@@ -63,14 +91,25 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> addInformationSource(
-            @RequestBody InformationSource source,
-            @RequestParam(required = false) Map<String, String> params
+            @RequestBody InformationSource source
     ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(source);
         informationSourceManager.createSource(source);
         return new ResponseEntity<>(source, HttpStatus.CREATED);
     }
 
+    /**
+     * Edit a single InformationSource.
+     *
+     * @param source InformationSource to be edited
+     *
+     * @return InformationSource that was edited
+     * @throws ResourceNotFoundException  thrown if the resource requested could
+     *                                    not be found
+     * @throws InvalidObjectException     thrown if the object provided was
+     *                                    invalid, which is determined by
+     *                                    isValid() function
+     */
     @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/edit",
@@ -80,14 +119,26 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> editInformationSource(
-            @RequestBody InformationSource source,
-            @RequestParam(required = false) Map<String, String> params
-    ) throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException {
+            @RequestBody InformationSource source
+    ) throws ResourceNotFoundException, InvalidObjectException {
         helper.checkIfObjectIsValid(source);
         informationSourceManager.updateSource(source);
         return new ResponseEntity<>(source, HttpStatus.CREATED);
     }
 
+    /**
+     * Delete a single InformationSource with given ID.
+     *
+     * @param sourceid ID of the InformationSource
+     *
+     * @return InformationSource that was deleted
+     *
+     * @throws InvalidParametersException thrown if parameters given in the
+     *                                    request were incorrect of are in
+     *                                    conflict
+     * @throws ResourceNotFoundException  thrown if the resource requested could
+     *                                    not be found
+     */
     @Secured("ROLE_MODERATOR")
     @RequestMapping(
             value = "/{sourceid}/delete",
@@ -96,8 +147,7 @@ public class InformationSourceController {
     )
     @ResponseBody
     public ResponseEntity<InformationSource> deleteInformationSource(
-            @PathVariable long sourceid,
-            @RequestParam(required = false) Map<String, String> params
+            @PathVariable long sourceid
     ) throws InvalidParametersException, ResourceNotFoundException {
 
         InformationSource source
@@ -107,52 +157,98 @@ public class InformationSourceController {
         return new ResponseEntity<>(source, HttpStatus.OK);
     }
 
+    /**
+     * Returns StatObject containing the amount of InformationSources in the
+     * system.
+     *
+     * @return StatObject with number of sources in the system
+     */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/count", produces = "application/json")
     @ResponseBody
     public StatObject getInformationSourceCount() {
-        return new StatObject("numberOfSources","The number of information sources added to the system.",informationSourceService.count());
+        return new StatObject("numberOfSources", "The number of information sources added to the system.", informationSourceService.count());
     }
-    
+
+    /**
+     * List default amount (max 10) InformationSources in the system.
+     *
+     * @return List of InformationSources with max length of 10
+     *
+     * @throws InvalidParametersException thrown if parameters given in the
+     *                                    request were incorrect of are in
+     *                                    conflict
+     */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list", produces = "application/json")
     @ResponseBody
-    public List<InformationSource> listInformationSourcesList(
-            @RequestParam(required = false) Map<String, String> params
-    ) throws InvalidParametersException {
+    public List<InformationSource> listInformationSourcesList() throws InvalidParametersException {
         return informationSourceService.get(0, 10);
     }
 
+    /**
+     * List given amount of InformationSources in the system.
+     *
+     * @param amount Amount to be listed
+     *
+     * @return List of InformationSources
+     *
+     * @throws InvalidParametersException thrown if parameters given in the
+     *                                    request were incorrect of are in
+     *                                    conflict
+     */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesListAmount(
-            @PathVariable int amount,
-            @RequestParam(required = false) Map<String, String> params
+            @PathVariable int amount
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(0, amount);
         return informationSourceService.get(0, amount);
     }
 
+    /**
+     * Returns a list of InformationSources in the database from index [to] to
+     * [from].
+     *
+     * @param from Starting index to list InformationSources from
+     * @param to   Ending index to list InformationSources to
+     *
+     * @return List of InformationSources
+     *
+     * @throws InvalidParametersException thrown if parameters given in the
+     *                                    request were incorrect of are in
+     *                                    conflict
+     */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{to}/{from}", produces = "application/json")
     @ResponseBody
     public List<InformationSource> listInformationSourcesListFromTo(
             @PathVariable int from,
-            @PathVariable int to,
-            @RequestParam(required = false) Map<String, String> params
+            @PathVariable int to
     ) throws InvalidParametersException {
         helper.exceptionIfWrongLimits(to, from);
         return informationSourceService.get(to, from);
     }
 
+    /**
+     * Force a InformationSource to be read instantly, but not more frequently
+     * than once every 10 seconds.
+     *
+     * @param sourceid ID of the InformationSource to be read
+     *
+     * @return SuccessObject if the read was successful
+     *
+     * @throws TooManyRequestsException thrown if a request has been made too
+     *                                  early
+     */
     @Secured({"ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/read", produces = "application/json")
     @ResponseBody
     public ResponseEntity<SuccessObject> readInformationSource(
             @PathVariable long sourceid
     ) throws TooManyRequestsException {
-        if (lastRequests.containsKey(sourceid) && lastRequestTooClose(sourceid)) {
+        if(lastRequests.containsKey(sourceid)&&lastRequestTooClose(sourceid)) {
             ErrorLogger.log(
                     ErrorType.NOT_ACCEPTED,
                     ErrorSeverity.LOW,
@@ -168,16 +264,17 @@ public class InformationSourceController {
     }
 
     /*
-    * Only allows a single source to be read once every 10 seconds.
-    */
+     * Only allows a single source to be read once every 10 seconds.
+     */
     private boolean lastRequestTooClose(long sourceid) {
-        return System.currentTimeMillis() - lastRequests.get(sourceid) < TimeUnit.SECONDS.toMillis(10);
+        return System.currentTimeMillis()-lastRequests.get(sourceid)<TimeUnit.SECONDS.toMillis(10);
     }
 
     /**
      * Manually set new InformationSourceService to be used.
      *
      * @param informationSourceService InformationSourceService to be set.
+     *
      * @see InformationSourceService
      */
     public void setInformationSourceService(InformationSourceService informationSourceService) {
@@ -188,6 +285,7 @@ public class InformationSourceController {
      * Manually set new InformationSourceManager to be used.
      *
      * @param informationSourceManager InformationSourceManager to be set.
+     *
      * @see InformationSourceManager
      */
     public void setInformationSourceManager(InformationSourceManager informationSourceManager) {
@@ -198,6 +296,7 @@ public class InformationSourceController {
      * Manually set new RestAPIHelper to be used.
      *
      * @param helper Helper to be set
+     *
      * @see RestAPIHelper
      */
     public void setRestAPIHelper(RestAPIHelper helper) {
