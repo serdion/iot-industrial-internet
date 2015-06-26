@@ -17,7 +17,6 @@ import fi.iot.iiframework.restapi.exceptions.TooManyRequestsException;
 import fi.iot.iiframework.services.domain.InformationSourceObjectProvider;
 import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.source.InformationSourceManager;
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Before;
@@ -85,10 +84,10 @@ public class InformationSourceControllerTest {
      */
     private void initContext() {
         sourceA = new InformationSource();
-        sourceA.setId(1l);
+        sourceA.setId(1L);
 
         sourceB = new InformationSource();
-        sourceB.setId(2l);
+        sourceB.setId(2L);
 
         sensorA = InformationSourceObjectProvider.provideSensor();
         sensorB = InformationSourceObjectProvider.provideSensor();
@@ -120,10 +119,6 @@ public class InformationSourceControllerTest {
         );
     }
 
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void testGetInformationSource() throws InvalidParametersException, ResourceNotFoundException {
         InformationSource foundSource = controller.getInformationSource(1);
@@ -136,7 +131,7 @@ public class InformationSourceControllerTest {
         InformationSource foundSource = controller.getInformationSource(2);
         assertEquals(foundSource, sourceB);
     }
-    
+
     @Test
     public void testDeleteInformationSource() throws InvalidParametersException, ResourceNotFoundException {
         controller.deleteInformationSource(1);
