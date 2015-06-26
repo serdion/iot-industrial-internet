@@ -81,7 +81,7 @@ public class InformationSourceControllerTest {
     }
 
     /*
-     Initiates the context in which the tests are run in.
+     * Initiates the context in which the tests are run in.
      */
     private void initContext() {
         sourceA = new InformationSource();
@@ -109,11 +109,10 @@ public class InformationSourceControllerTest {
         sourceB.addSensor(sensorB);
 
         sourceService.save(sourceA);
-        // Don't save this sourceService.save(sourceB);
     }
 
     /*
-     Login as a moderator, broken if the in-memory logins are changed!
+     * Login as a moderator, broken if the in-memory logins are changed!
      */
     private void initLogin() {
         SecurityContextHolder.getContext().setAuthentication(
@@ -137,14 +136,7 @@ public class InformationSourceControllerTest {
         InformationSource foundSource = controller.getInformationSource(2);
         assertEquals(foundSource, sourceB);
     }
-
-//    @Test
-//    public void testEditInformationSource() throws InvalidParametersException, ResourceNotFoundException, InvalidObjectException  {
-//        sourceA.setReadFrequency(5555555);
-//        controller.editInformationSource(sourceA);
-//        
-//        Mockito.verify(sourceManager, Mockito.times(1)).updateSource(sourceA);
-//    }
+    
     @Test
     public void testDeleteInformationSource() throws InvalidParametersException, ResourceNotFoundException {
         controller.deleteInformationSource(1);
