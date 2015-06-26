@@ -17,6 +17,7 @@ sysErrors.factory('SysError', ['$resource',
         return $resource('1.0/errors/:errorid/:action/:setviewed/:from/:to/', {}, {
             query: {method: 'GET', params: {action: 'list'}, isArray: true},
             get: {method: 'GET', params: {action: 'view'}, isArray: false},
-            setstatus: {method: 'POST', params: {action: 'set'}, isArray: false}
+            setstatus: {method: 'POST', params: {action: 'set'}, isArray: false},
+            count: {method: 'GET', params: {action: 'count'}, isArray: false}
         });
     }]);

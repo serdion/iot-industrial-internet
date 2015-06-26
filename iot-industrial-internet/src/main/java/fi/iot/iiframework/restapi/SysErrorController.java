@@ -78,6 +78,18 @@ public class SysErrorController {
     ) {
         return errorservice.get(errorid);
     }
+    
+    /**
+     * Returns the number of SysErrors in the database.
+     * 
+     * @return StatObject with the error count as its value. 
+     */
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getErrorCount() {
+        return new StatObject("numberOfErrors","The number of errors in the system.",errorservice.count());
+    }
 
     /**
      * List default amount of SysErrors (25) that are ordered from newest to
