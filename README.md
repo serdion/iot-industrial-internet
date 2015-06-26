@@ -6,6 +6,8 @@ The purpose of this software development project is to generate ideas and to dev
 
 Master: [![Build Status](https://travis-ci.org/Ooppa/iot-industrial-internet.svg)](https://travis-ci.org/Ooppa/iot-industrial-internet)
 
+Dev: [![Build Status](https://travis-ci.org/Ooppa/iot-industrial-internet.svg?branch=dev)](https://travis-ci.org/Ooppa/iot-industrial-internet)
+
 ## Project members:
 
 [Ooppa](https://github.com/Ooppa)
