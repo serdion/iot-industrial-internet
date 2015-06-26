@@ -11,6 +11,7 @@ import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -42,5 +43,13 @@ public class ReadoutDAOImpl
     @Override
     public List<Readout> getBy(int amount, Sensor sensor) {
         return getBy(0, amount - 1, sensor);
+    }
+
+    @Override
+    public boolean isUnique(Readout readout) {
+        List<Criterion> criterion = new ArrayList<>();
+        criterion.add(Restrictions.eq("sensor", readout.getSensor()));
+        criterion.add(Restrictions.eq("time", readout.getTime()));
+        return findByCriteria(criterion).isEmpty();
     }
 }

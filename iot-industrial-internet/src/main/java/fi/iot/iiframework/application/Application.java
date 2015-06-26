@@ -42,20 +42,5 @@ public class Application extends SpringBootServletInitializer {
     public static void main(String[] args) throws JAXBException, MalformedURLException, IOException {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
         logger.log(Level.CONFIG, "Following beans found:\t{0}", Arrays.toString(ctx.getBeanDefinitionNames()));
-
-        initTestData(ctx);
-    }
-
-    private static void initTestData(ApplicationContext ctx) throws JAXBException, IOException {
-        InformationSourceManager infSourceManager = ctx.getBean(InformationSourceManager.class);
-
-        InformationSource config = new InformationSource();
-        config.setName("Example Config");
-        config.setType(InformationSourceType.JSON);
-        config.setUrl("https://data.sparkfun.com/output/dZ4EVmE8yGCRGx5XRX1W.json?page=1");
-        config.setActive(true);
-        config.setStartDate(new Date());
-        config.setReadInterval(IntervalType.HOURLY);
-        infSourceManager.createSource(config);
     }
 }

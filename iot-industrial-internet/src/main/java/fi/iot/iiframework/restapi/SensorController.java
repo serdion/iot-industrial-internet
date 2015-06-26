@@ -70,6 +70,20 @@ public class SensorController {
         InformationSource source = (InformationSource) helper.returnOrException(sourceService.get(sourceid));
         return sensorService.getBy(source);
     }
+    
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/{sourceid}/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getSensorCountForSource(@PathVariable long sourceid) {
+        return new StatObject("numberOfSensors","",sensorService.countBy(sourceService.get(sourceid)));
+    }
+    
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getSensorCount() {
+        return new StatObject("numberOfSensors","",sensorService.count());
+    }
 
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/{sourceid}/list/{amount}", produces = "application/json")

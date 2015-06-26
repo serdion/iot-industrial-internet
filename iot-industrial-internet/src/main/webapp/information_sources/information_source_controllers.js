@@ -63,14 +63,15 @@ informationSources.controller('InformationSourceController', ['$scope', '$routeP
         
         $scope.getSensors = function () {
             $scope.sensors = Sensor.query({sourceid: $routeParams.sourceid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
-        }
+        };
         $scope.getSensors();
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
+        $scope.numberOfSensors = Sensor.count({sourceid: $routeParams.sourceid});
         
         $scope.pageChanged = function () {
             $scope.getSensors();
-        }
+        };
         
         $scope.source = InformationSource.get({sourceid: $routeParams.sourceid});
         $scope.getSensors();
@@ -92,16 +93,17 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
 
         $scope.currentPage = 1;
         $scope.itemsPerPage = 25;
+        $scope.numberOfReadouts = Readout.count({sensorid: $routeParams.sensorid});
 
         $scope.getReadouts = function () {
             $scope.readouts = Readout.query({sensorid: $routeParams.sensorid, from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
-        }
+        };
         $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid});
         $scope.getReadouts();
 
         $scope.pageChanged = function () {
             $scope.getReadouts();
-        }
+        };
 
         //Function to allow reading of sensor.active value into the UI properly
         $scope.boolToStr = function (arg) {
@@ -115,7 +117,8 @@ informationSources.controller('SensorController', ['$scope', '$routeParams', 'Se
         $scope.save = function () {
             $scope.sensor.$edit({sensorid: $routeParams.sensorid}, function () {
                 $window.history.back();
-
+            }, function (error) {
+                showError(error.data.message);
             });
         };
     }]);

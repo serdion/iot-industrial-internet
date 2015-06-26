@@ -8,13 +8,6 @@
 
 IIFramework.controller('VisualRealtimeController', function ($scope, InformationSource, Sensor, Readout, $routeParams) {
     var dataToDisplay = [];
-
-    $scope.from = 0;
-    $scope.to = 100;
-
-    $scope.number = [0, 80];
-    $scope.threshold = 22.5;
-
     $scope.sensor = Sensor.get({sensorid: $routeParams.sensorid})
     $scope.readouts = Readout.query({sensorid: $routeParams.sensorid}, function () {
         $scope.name = $scope.sensor.name;
@@ -93,10 +86,6 @@ IIFramework.controller('VisualRealtimeController', function ($scope, Information
         xaxis: {
             mode: "time",
             timeformat: "%d.%m.%y %H:%M:%S"
-        },
-        yaxis: {
-            min: $scope.number[0],
-            max: $scope.number[1]
         },
         tooltip: true,
         tooltipOpts: {

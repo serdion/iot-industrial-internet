@@ -30,12 +30,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-@Ignore
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
 @SpringApplicationConfiguration(classes = {TestConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class DomainServiceTest {
+public class ServiceIntegrationTest {
 
     InformationSource i1;
     InformationSource i2;
@@ -88,17 +87,9 @@ public class DomainServiceTest {
     }
 
     @Test
-    public void sensorsAreSavedCascading() {
-        assertEquals(2, (long) sensorService.count());
-    }
-
-    @Test
-    public void readoutsAreSavedCascading() {
-        assertEquals(3, (long) readoutService.count());
-    }
-
-    @Test
     public void sensorsCanBeFoundBySource() {
+        sensorService.save(s1);
+        sensorService.save(s2);
         List<Sensor> sensors = sensorService.getBy(i1);
         assertEquals(1, sensors.size());
         assertTrue(sensors.contains(s1));
@@ -107,16 +98,20 @@ public class DomainServiceTest {
 
     @Test
     public void anIdIsGeneratedAutomaticallyWhenSaved() {
+        sensorService.save(s1);
         assertNotNull(s1.getId());
     }
 
     @Test
     public void sensorCanBeRetrieved() {
+        sensorService.save(s1);
         assertEquals(s1, sensorService.get(s1.getId()));
     }
 
     @Test
     public void allSensorsCanBeRetrieved() {
+        sensorService.save(s1);
+        sensorService.save(s2);
         List<Sensor> sensors = sensorService.getAll();
 
         assertTrue(sensors.contains(s1));
@@ -125,6 +120,8 @@ public class DomainServiceTest {
 
     @Test
     public void sensorsCanBeFoundFromIndexToIndex() {
+        sensorService.save(s1);
+        sensorService.save(s2);
         List<Sensor> sensors = sensorService.get(0, 0);
 
         assertEquals(1, sensors.size());
@@ -132,21 +129,32 @@ public class DomainServiceTest {
 
     @Test
     public void sensorsCanBeCounted() {
+        sensorService.save(s1);
+        sensorService.save(s2);
         assertEquals(2, (long) sensorService.count());
     }
 
     @Test
     public void sensorsCanBeCountedBySource() {
+        sensorService.save(s1);
+        sensorService.save(s2);
         assertEquals(1, (long) sensorService.countBy(i1));
     }
 
     @Test
     public void readoutCanBeSavedAndRetrieved() {
+        sensorService.save(s1);
+        readoutService.save(r1);
         assertEquals(r1, readoutService.get(r1.getId()));
     }
 
     @Test
     public void allReadoutsCanBeRetrieved() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         List<Readout> readouts = readoutService.getAll();
 
         assertTrue(readouts.contains(r1));
@@ -156,6 +164,11 @@ public class DomainServiceTest {
 
     @Test
     public void readoutsCanBeFoundFromIndexToIndex() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         List<Readout> readouts = readoutService.get(1, 2);
 
         assertEquals(2, readouts.size());
@@ -163,6 +176,11 @@ public class DomainServiceTest {
 
     @Test
     public void readoutsCanBeFoundBySensor() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         List<Readout> readReadouts = readoutService.getBy(s1);
 
         assertTrue(readReadouts.contains(r1));
@@ -171,22 +189,42 @@ public class DomainServiceTest {
 
     @Test
     public void readoutsNotConnectedToSensorNotReturnedWhenSearchingBySensor() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         List<Readout> readReadouts = readoutService.getBy(s1);
         assertFalse(readReadouts.contains(r3));
     }
 
     @Test
     public void readoutsCanBeCounted() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         assertEquals(3, (long) readoutService.count());
     }
 
     @Test
     public void readoutsCanBeCountedBySensor() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         assertEquals(2, (long) readoutService.countBy(s1));
     }
 
     @Test
     public void readoutsCanBeFiltered() {
+        sensorService.save(s1);
+        sensorService.save(s2);
+        readoutService.save(r1);
+        readoutService.save(r2);
+        readoutService.save(r3);
         List<Criterion> criterions = new ArrayList<>();
         Criterion c1 = Restrictions.ge("value", 22.0);
         criterions.add(c1);
@@ -195,10 +233,15 @@ public class DomainServiceTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void uniqueConstraintExceptionIsThrown() {
+        sensorService.save(s1);
+        readoutService.save(r1);
+        
         Readout r4 = new Readout();
         r4.setTime(r1.getTime());
         r4.setSensor(r1.getSensor());
         r4.setValue(r1.getValue());
         readoutService.save(r4);
     }
+    
+    
 }
