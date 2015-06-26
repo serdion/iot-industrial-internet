@@ -11,18 +11,8 @@ import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
-/**
- *
- * @author atte
- */
 public class InformationSourceObjectProvider {
 
     public static Set<Sensor> provideSensorsWithChildren(InformationSource parent) {

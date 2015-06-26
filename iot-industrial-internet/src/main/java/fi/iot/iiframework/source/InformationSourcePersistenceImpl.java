@@ -7,7 +7,6 @@
 package fi.iot.iiframework.source;
 
 import java.util.List;
-import javax.transaction.Transactional;
 import fi.iot.iiframework.domain.InformationSource;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.domain.Sensor;
@@ -17,9 +16,7 @@ import fi.iot.iiframework.services.domain.InformationSourceService;
 import fi.iot.iiframework.services.domain.ReadoutService;
 import fi.iot.iiframework.services.domain.SensorService;
 import java.util.Set;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -96,31 +93,17 @@ public class InformationSourcePersistenceImpl implements InformationSourcePersis
     }
 
     /**
-     * Get a sensor from database with its readouts, and add the new readouts.
-     * Inefficient, but sufficient for now.
+     * Get a sensor from database, associate the found readouts with it, and save them.
      *
      * @param sen
      * @param readouts
      */
     private void addReadoutsToSensor(Sensor sen, Set<Readout> readouts) {
-        Sensor sensor = sensorService.getWithReadouts(sen.getId());
+        Sensor sensor = sensorService.get(sen.getId());
         readouts.forEach(r -> {
-            sensor.addReadout(r);
-            mutateReadout(r);
+            r.setSensor(sensor);
         });
-        sensorService.save(sensor);
-    }
-
-    /**
-     * Based on sensor-configuration, mark erronous readouts.
-     *
-     * @param sensor
-     */
-    private void mutateReadout(Readout readout) {
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN)
-                .mutateReadout(readout);
-        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN)
-                .mutateReadout(readout);
+        readoutService.save(readouts);
     }
 
     @Override

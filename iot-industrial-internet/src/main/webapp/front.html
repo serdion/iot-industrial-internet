@@ -22,7 +22,9 @@
         <h4>System stats</h4>
         <p>
             IIFramework is up and running with 
-            <span ng-pluralize count="numberOfSources.value" when="{'0': 'no sources', 'one': 'one source', 'other': '{} sources'}"></span>.
+            <span ng-pluralize count="numberOfSources.value" when="{'0': 'no sources', 'one': 'one source', 'other': '{} sources'}"></span>, 
+            <span ng-pluralize count="numberOfSensors.value" when="{'0': 'no sensors', 'one': 'one sensor', 'other': '{} sensors'}"></span>, and 
+            <span ng-pluralize count="numberOfReadouts.value" when="{'0': 'no readouts', 'one': 'one readout', 'other': '{} readouts'}"></span>.
         </p>
     </div>
 </div>

@@ -9,7 +9,10 @@ package fi.iot.iiframework.services.domain;
 import fi.iot.iiframework.domain.Readout;
 import fi.iot.iiframework.daos.domain.ReadoutDAO;
 import fi.iot.iiframework.domain.Sensor;
+import fi.iot.iiframework.mutator.MarkReadoutAsErronousIfValueIs;
+import fi.iot.iiframework.mutator.ValueCondition;
 import fi.iot.iiframework.services.GenericHibernateService;
+import java.util.Collection;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.hibernate.criterion.Restrictions;
@@ -45,5 +48,33 @@ public class ReadoutServiceImpl
         return countByCriteria(
                 buildCriterionList(Restrictions.eq("sensor", sensor))
         );
+    }
+
+    @Override
+    public void save(Collection<Readout> readouts) {
+        int i = 0;
+        for (Readout readout : readouts) {
+            if (!readoutDAO.isUnique(readout)) {
+                continue;
+            }
+            dao.save(readout);
+            mutateReadout(readout);
+            if (i % BATCHSIZE == 0) {
+                dao.flush();
+                dao.clear();
+            }
+        }
+    }
+
+    /**
+     * Based on sensor-configuration, mark erronous readouts.
+     *
+     * @param sensor
+     */
+    private void mutateReadout(Readout readout) {
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.HIGHER_THAN)
+                .mutateReadout(readout);
+        new MarkReadoutAsErronousIfValueIs(ValueCondition.LOWER_THAN)
+                .mutateReadout(readout);
     }
 }

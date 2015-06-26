@@ -48,7 +48,6 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "informationsources")
 @EqualsAndHashCode(of = {"url", "type"})
 @ToString(exclude = {"sensors"})
-@JsonIgnoreProperties("numberOfSensors")
 public class InformationSource implements Serializable, Validatable {
 
     /**
@@ -73,6 +72,7 @@ public class InformationSource implements Serializable, Validatable {
      * Read in intervals.
      */
     protected boolean active = true;
+    
     /**
      * A specified time to start the reading (date/time).
      */
@@ -105,12 +105,6 @@ public class InformationSource implements Serializable, Validatable {
     @LazyCollection(LazyCollectionOption.EXTRA)
     protected Set<Sensor> sensors;
 
-    @JsonProperty(required = false)
-    @JsonInclude(Include.NON_EMPTY)
-    public long numberOfSensors() {
-        return sensors.size();
-    }
-
     public Set<Sensor> getSensors() {
         return sensors;
     }
@@ -134,12 +128,7 @@ public class InformationSource implements Serializable, Validatable {
         } catch (MalformedURLException ex) {
             return false;
         }
-
-        if (readInterval == IntervalType.OTHER) {
-            return startDate != null && readInterval != null && otherInterval > 0;
-        }
-
-        return startDate != null && readInterval != null;
+        return true;
     }
 
 }

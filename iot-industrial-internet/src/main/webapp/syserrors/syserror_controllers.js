@@ -16,29 +16,40 @@ var checkForNewAlarms = function (alarmlist) {
 
 // Get all syserrors in a list
 sysErrors.controller('SysErrorsListController', function ($scope, SysError, $routeParams) {
-    $scope.statusswitch = true;
+    $scope.statusswitch = false;
+
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = 25;
     
+    $scope.numberOfErrors = SysError.count()
+
+    $scope.getErrors = function () {
+        $scope.errorlist = SysError.query({from: ($scope.currentPage - 1) * $scope.itemsPerPage, to: $scope.currentPage * $scope.itemsPerPage - 1});
+    };
+    $scope.getErrors();
+
+    $scope.pageChanged = function () {
+        $scope.getErrors();
+    };
+
     $scope.statuschangetext = function () {
-        if($scope.statusswitch){
+        if ($scope.statusswitch) {
             return "Mark all un-read";
         } else {
             return "Mark all read";
         }
-    }
-    
-    $scope.errorlist = SysError.query(function () {
-    });
-    
+    };
+
     $scope.setstatusall = function (status) {
         $scope.statusswitch = status;
         for (var i = 0; i < $scope.errorlist.length; i++) {
             $scope.setstatus($scope.errorlist[i], status);
         }
-    }
+    };
 
     $scope.setstatus = function (error, status) {
         error.$setstatus({errorid: error.id, setviewed: status});
-    }
+    };
 });
 
 //Get one syserror based on id

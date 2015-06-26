@@ -6,11 +6,11 @@
  */
 package fi.iot.iiframework.restapi;
 
-import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.errors.SysError;
 import fi.iot.iiframework.restapi.exceptions.InvalidParametersException;
 import fi.iot.iiframework.restapi.exceptions.ResourceNotFoundException;
 import fi.iot.iiframework.restapi.exceptions.ShouldBeBooleanException;
+import fi.iot.iiframework.restapi.filters.CriterionFactory;
 import fi.iot.iiframework.services.errors.ErrorService;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +37,14 @@ public class SysErrorController {
      * as a status String.
      *
      * @param errorid Id of the SysError
-     * @param status Status to be set as a string ("true" or "false")
-     * @param params Given parameters in URL
+     * @param status  Status to be set as a string ("true" or "false")
+     * @param params  Given parameters in URL
+     *
      * @return SysError that was edited
-     * @throws ResourceNotFoundException
-     * @throws ShouldBeBooleanException thrown if boundaries are incorrect
+     *
+     * @throws ResourceNotFoundException thrown if the resource could not be
+     *                                   found in error service
+     * @throws ShouldBeBooleanException  thrown if boundaries are incorrect
      */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(
@@ -66,7 +69,8 @@ public class SysErrorController {
      * Returns a single SysError that matches the given id.
      *
      * @param errorid ID of the SysError
-     * @param params Given parameters in URL
+     * @param params  Given parameters in URL
+     *
      * @return SysError that matches the given ID.
      */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
@@ -80,10 +84,23 @@ public class SysErrorController {
     }
 
     /**
+     * Returns the number of SysErrors in the database.
+     *
+     * @return StatObject with the error count as its value.
+     */
+    @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
+    @RequestMapping(value = "/count", produces = "application/json")
+    @ResponseBody
+    public StatObject getErrorCount() {
+        return new StatObject("numberOfErrors", "The number of errors in the system.", errorservice.count());
+    }
+
+    /**
      * List default amount of SysErrors (25) that are ordered from newest to
      * oldest.
      *
      * @param params Parameters given in the URL.
+     *
      * @return a list of SysErrors
      */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
@@ -100,8 +117,11 @@ public class SysErrorController {
      *
      * @param amount Number of SysErrors to retrieve.
      * @param params Parameters given in the URL.
+     *
      * @return a list of SysErrors
-     * @throws InvalidParametersException thrown if given parameters are incorrect
+     *
+     * @throws InvalidParametersException thrown if given parameters are
+     *                                    incorrect
      */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{amount}", produces = "application/json")
@@ -118,11 +138,14 @@ public class SysErrorController {
      * List all SysErrors from given index to another given index that are
      * ordered from newest to oldest.
      *
-     * @param from Lower boundary
-     * @param to Higher boundary
+     * @param from   Lower boundary
+     * @param to     Higher boundary
      * @param params Parameters given in the URL
+     *
      * @return a list of SysErrors
-     * @throws InvalidParametersException thrown if given parameters are incorrect
+     *
+     * @throws InvalidParametersException thrown if given parameters are
+     *                                    incorrect
      */
     @Secured({"ROLE_VIEWER", "ROLE_MODERATOR"})
     @RequestMapping(value = "/list/{from}/{to}", produces = "application/json")
