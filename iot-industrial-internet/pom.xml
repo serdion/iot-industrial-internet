@@ -272,6 +272,10 @@
                         <version>5.0.3</version>  
                     </dependency>  
                 </dependencies>  
+                <configuration>
+                    <format>xml</format>
+                    <aggregate>true</aggregate>
+                </configuration>
             </plugin>  
             <plugin>
                 <groupId>org.pitest</groupId>
