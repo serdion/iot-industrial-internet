@@ -8,9 +8,7 @@ Forked to maintain a working copy of the work I did on the project.
 
 ## Build status:
 
-Master: [![Build Status](https://travis-ci.org/Ooppa/iot-industrial-internet.svg)](https://travis-ci.org/Ooppa/iot-industrial-internet)
-
-Dev: [![Build Status](https://travis-ci.org/Ooppa/iot-industrial-internet.svg?branch=dev)](https://travis-ci.org/Ooppa/iot-industrial-internet)
+Master: [![Build Status](https://travis-ci.org/Ooppa/iot-industrial-internet.svg)](https://travis-ci.org/Serdion/iot-industrial-internet)
 
 ## Project members:
 
